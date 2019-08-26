@@ -1,0 +1,53 @@
+{
+  "name": "beans-admin-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --target lib --name beansAdminPlugin src/plugin/index.js",
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "core-js": "^2.6.5",
+    "echarts": "^4.2.1",
+    "element-ui": "^2.11.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "nprogress": "^0.2.0",
+    "pell": "^1.0.6",
+    "qs": "^6.8.0",
+    "quill-image-resize-module": "^3.0.0",
+    "vue": "^2.6.10",
+    "vue-class-component": "^7.1.0",
+    "vue-echarts": "^4.0.3",
+    "vue-property-decorator": "^8.2.1",
+    "vue-quill-editor": "^3.0.6",
+    "vue-router": "^3.1.2"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-lodash": "^3.3.4",
+    "eslint": "^5.16.0",
+    "eslint-config-beansmile": "^1.2.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "bugs": {
+    "url": "https://github.com/beansmile/beans-admin-plugin/issues"
+  },
+  "homepage": "https://github.com/beansmile/beans-admin-plugin#readme",
+  "main": "dist/beansAdminPlugin.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beansmile/beans-admin-plugin.git"
+  }
+}

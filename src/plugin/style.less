@@ -1,0 +1,165 @@
+.flex {
+  display: flex;
+
+  &.wrap {
+    flex-wrap: wrap;
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.item-center {
+    align-items: center;
+  }
+
+  &.item-start {
+    align-items: flex-start;
+  }
+
+  &.content-center {
+    justify-content: center;
+  }
+
+  &.content-end {
+    justify-content: flex-end;
+  }
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+each(range(12, 24, 2), {
+  .font-@{value} {
+    font-size: @value * 1px;
+  }
+})
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+.page {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: #fbfbfb;
+  padding: 10px 30px;
+  overflow: auto;
+}
+
+p {
+  font-size: 12px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.el-dialog {
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 !important;
+  max-height: 100vh;
+  overflow: auto;
+
+  .el-dialog__header {
+    padding: 15px 20px;
+  }
+}
+
+each(range(10, 100, 10), {
+  .w-@{value} {
+    width: (@value * 1%);
+  }
+})
+
+.min-w-400 {
+  min-width: 400px;
+}
+
+.f-left {
+  float: left;
+}
+
+.f-right {
+  float: right;
+}
+
+.echarts {
+  width: 100%;
+  height: 100%;
+}
+
+.one-page-image {
+  cursor: pointer;
+  margin: 300px auto;
+  display: block;
+  width: 400px;
+}
+
+.el-form-item__label {
+  font-size: 13px;
+}
+
+.el-form-item__label,
+.el-form-item__content {
+  line-height: 33px;
+}
+
+.el-menu-item,
+.el-submenu__title {
+  font-size: 13px;
+
+  &:hover,
+  &:focus {
+    background: #ececec !important;
+  }
+}
+
+.el-date-editor {
+  max-width: 100% !important;
+
+  .el-range-separator {
+    font-size: 12px;
+  }
+
+  .el-range__icon,
+  .el-range-separator,
+  .el-range__close-icon {
+    line-height: 28px;
+  }
+}
+
+.el-table {
+  .sort-caret {
+    &.ascending {
+      border-bottom-color: #fff;
+    }
+
+    &.descending {
+      border-top-color: #fff;
+    }
+  }
+
+  .ascending .sort-caret.ascending {
+    border-bottom-color: #504e4e;
+  }
+  .descending .sort-caret.descending {
+    border-top-color: #504e4e;
+  }
+}
