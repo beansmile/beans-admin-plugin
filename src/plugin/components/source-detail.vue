@@ -125,6 +125,11 @@ export default class SourceDetail extends Vue {
       display: flex;
       align-items: center;
       padding: 0 15px;
+
+      .cell-action {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 </style>

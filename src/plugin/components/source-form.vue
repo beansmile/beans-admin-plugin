@@ -154,6 +154,7 @@ export const createSourceFormDialog = (h, {
         .content {
           box-sizing: border-box;
           width: 100%;
+          min-width: 100%;
           max-width: 100%;
           max-height: 70vh;
           overflow: auto;
