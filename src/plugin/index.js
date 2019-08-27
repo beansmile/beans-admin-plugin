@@ -89,7 +89,7 @@ const config = {
   logout: {
     request_url: ''
   },
-  permisson: {
+  permission: {
     request_url: ''
   }
 }
@@ -109,5 +109,6 @@ export default function install(Vue, options = {}) {
 }
 
 export * from './utils';
+export * from './services';
 export { createSourceFormDialog } from './components/source-form';
 export { default as AppLayout } from './app';

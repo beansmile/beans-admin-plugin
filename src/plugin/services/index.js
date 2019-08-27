@@ -1,2 +1,2 @@
-export { permissionService } from './permisson';
+export { permissionService } from './permission';
 export { loadingService } from './loading';
