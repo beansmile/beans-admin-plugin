@@ -24,7 +24,7 @@ class PermissionService {
   }
 
   async init() {
-    const { request_url } = Vue.appConfig.permisson;
+    const { request_url } = Vue.appConfig.permission;
     if (request_url) {
       this.usePermission = true;
       const permissionMap = this.getPermissionMapFromStorage();

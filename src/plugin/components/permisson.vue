@@ -1,6 +1,6 @@
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
-  import { permissionService } from '../services/permisson';
+  import { permissionService } from '../services';
 
   @Component
   export default class Permisson extends Vue {
