@@ -55,39 +55,6 @@
     @Model('change') value
     @Prop({ type: Array, default: () => ['image', 'video'] }) media
 
-    editorOption = {
-      modules: {
-        toolbar: {
-          container: [
-            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-            ['blockquote', 'code-block'],
-
-            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-            [{ 'direction': 'rtl' }],                         // text direction
-
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-            [{ 'font': [] }],
-            [{ 'align': [] }],
-
-            ['clean'],                      // remove formatting button
-            ['link', ...this.media]
-          ],
-          handlers: {
-            'image': () => this.$refs.imageFile.click(),
-            'video': () => this.$refs.videoFile.click(),
-          }
-        },
-        imageResize: {}
-      },
-      placeholder: ''
-    }
-
     async onChange(e, type) {
       const addRange = this.quill.getSelection()
       const url = await uploadToQiniu(e.target.files[0])
@@ -100,6 +67,41 @@
 
     get quill() {
       return this.$refs.quillEditor.quill
+    }
+
+    get editorOption() {
+      return {
+        modules: {
+          toolbar: {
+            container: [
+              ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+              ['blockquote', 'code-block'],
+
+              [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+              [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+              [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+              [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+              [{ 'direction': 'rtl' }],                         // text direction
+
+              [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+              [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+              [{ 'font': [] }],
+              [{ 'align': [] }],
+
+              ['clean'],                      // remove formatting button
+              ['link', ...this.media]
+            ],
+            handlers: {
+              'image': () => this.$refs.imageFile.click(),
+              'video': () => this.$refs.videoFile.click(),
+            }
+          },
+          imageResize: {}
+        },
+        placeholder: ''
+      }
     }
   }
 </script>
