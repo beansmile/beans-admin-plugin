@@ -27,6 +27,13 @@
   window.Quill = Quill
   require('quill-image-resize-module')
 
+  Quill.register(Quill.import('attributors/style/align'), true)
+  Quill.register(Quill.import('attributors/style/background'), true)
+  Quill.register(Quill.import('attributors/style/color'), true)
+  Quill.register(Quill.import('attributors/style/direction'), true)
+  Quill.register(Quill.import('attributors/style/font'), true)
+  Quill.register(Quill.import('attributors/style/size'), true)
+
   const VideoView = Quill.imports['formats/video']
   window.VideoView = VideoView
   VideoView.tagName = 'VIDEO'
@@ -34,7 +41,7 @@
     let node = VideoView.__proto__.create.call(this, value)
     node.setAttribute('src', this.sanitize(value))
     node.setAttribute('controls', '')
-    node.setAttribute('class', 'ql-video')
+    node.setAttribute('class', 'video')
     return node
   }
 
@@ -43,7 +50,7 @@
     let node = ImageView.__proto__.create.call(this, value)
     if (typeof value === 'string') {
       node.setAttribute('src', this.sanitize(value))
-      node.setAttribute('class', 'ql-image')
+      node.setAttribute('class', 'image')
     }
     return node
   }
