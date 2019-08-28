@@ -1,8 +1,25 @@
+<template>
+  <section>
+    <quill-editor
+      @change="onEditorChange" :content="value"
+      ref="quillEditor" :options="editorOption"
+    />
+    <input
+      ref="imageFile" type="file" style="display: none;"
+      @change="e => onChange(e, 'image')" accept="image/*"
+    />
+    <input
+      ref="videoFile" type="file" style="display: none;"
+      @change="e => onChange(e, 'video')" accept="video/*"
+    />
+  </section>
+</template>
+
 <script>
-  import { Component, Vue, Model } from 'vue-property-decorator'
+  import { Component, Vue, Model, Prop } from 'vue-property-decorator'
   import VueQuillEditor from 'vue-quill-editor'
   import Quill from 'quill'
-  import _ from 'lodash';
+  import { upload as uploadToQiniu } from '../utils'
   import 'quill/dist/quill.core.css'
   import 'quill/dist/quill.snow.css'
   import 'quill/dist/quill.bubble.css'
@@ -10,51 +27,71 @@
   window.Quill = Quill
   require('quill-image-resize-module')
 
+  const VideoView = Quill.imports['formats/video']
+  window.VideoView = VideoView
+  VideoView.tagName = 'VIDEO'
+  VideoView.create = function (value) {
+    let node = VideoView.__proto__.create.call(this, value)
+    node.setAttribute('src', this.sanitize(value))
+    node.setAttribute('controls', '')
+    node.setAttribute('class', 'ql-video')
+    return node
+  }
+
+  const ImageView = Quill.imports['formats/image']
+  ImageView.create = function (value) {
+    let node = ImageView.__proto__.create.call(this, value)
+    if (typeof value === 'string') {
+      node.setAttribute('src', this.sanitize(value))
+      node.setAttribute('class', 'ql-image')
+    }
+    return node
+  }
+
   Vue.use(VueQuillEditor, /* { default global options } */)
 
   @Component
   export default class RichEditor extends Vue {
     @Model('change') value
+    @Prop({ type: Array, default: () => ['image', 'video'] }) media
 
     editorOption = {
       modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-          ['blockquote', 'code-block'],
+        toolbar: {
+          container: [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            ['blockquote', 'code-block'],
 
-          [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-          [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-          [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-          [{ 'direction': 'rtl' }],                         // text direction
+            [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+            [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+            [{ 'direction': 'rtl' }],                         // text direction
 
-          [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-          [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-          [{ 'font': [] }],
-          [{ 'align': [] }],
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'font': [] }],
+            [{ 'align': [] }],
 
-          ['clean'],                      // remove formatting button
-          ['link', 'image']
-        ],
+            ['clean'],                      // remove formatting button
+            ['link', ...this.media]
+          ],
+          handlers: {
+            'image': () => this.$refs.imageFile.click(),
+            'video': () => this.$refs.videoFile.click(),
+          }
+        },
         imageResize: {}
       },
       placeholder: ''
     }
 
-    mounted() {
-      this.quill.getModule('toolbar').addHandler('image', this.imgHandler)
-    }
-
-    imgHandler() {
-      this.$refs.fileInput.click()
-    }
-
-    async onChange(e) {
+    async onChange(e, type) {
       const addRange = this.quill.getSelection()
-      const url = await this.$upload(e.target.files[0])
-      this.quill.insertEmbed(_.get(addRange, 'index', 0), 'image', url)
+      const url = await uploadToQiniu(e.target.files[0])
+      this.quill.insertEmbed(this.$get(addRange, 'index', 0), type, url)
     }
 
     onEditorChange({ html }) {
@@ -63,18 +100,6 @@
 
     get quill() {
       return this.$refs.quillEditor.quill
-    }
-
-    render() {
-      return (
-        <section>
-          <quill-editor
-            onChange={this.onEditorChange} content={this.value}
-            ref="quillEditor" options={this.editorOption}
-          />
-          <input ref="fileInput" type="file" style={{ display: 'none' }} onChange={this.onChange} accept="image/*"/>
-        </section>
-      )
     }
   }
 </script>
