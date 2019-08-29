@@ -62,9 +62,7 @@
       _.map(this.options.columns, (column) => {
         object[column.prop] = ''
       })
-      this.value.push(object)
-      const newResources = this.value.concat(object)
-      this.$emit('change', newResources)
+      this.$emit('change', this.value.concat(object))
     }
 
     hasManyRemove($event, index) {
