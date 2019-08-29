@@ -168,5 +168,9 @@ export default class SourceFormItem extends Vue {
       display: block;
     }
   }
+
+  .source-form-item .has_many_fieds .source-form-item {
+    margin-bottom: 22px;
+  }
 </style>
 

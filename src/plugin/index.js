@@ -3,7 +3,6 @@ import ElementUI from 'element-ui';
 import './components';
 import * as Utils from './utils';
 import { permissionService } from './services';
-import 'element-ui/lib/theme-chalk/index.css';
 import './style.less';
 
 function initRouter(router) {

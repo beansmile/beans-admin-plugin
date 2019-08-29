@@ -18,84 +18,87 @@
 </template>
 
 <script>
-import { Vue, Component, Prop, Model } from 'vue-property-decorator';
-import _ from 'lodash';
+  import { Vue, Component, Prop, Model } from 'vue-property-decorator';
+  import _ from 'lodash';
 
-@Component
-export default class DynamicNestForm extends Vue {
-  @Model('change', { type: Array, default: () => [] }) value;
-  @Prop({ type: Object, default: () => ({}) }) options;
+  @Component
+  export default class DynamicNestForm extends Vue {
+    @Model('change', { type: Array, default: () => [] }) value;
+    @Prop({ type: Object, default: () => ({}) }) options;
 
-  cascadeColumn = false
+    cascadeColumn = false
 
-  created() {
-    const columns = _.get(this.options, 'columns', [])
-    this.cascadeColumn =  _.isFunction(columns);
-  }
+    created() {
+      const columns = _.get(this.options, 'columns', [])
+      this.cascadeColumn = _.isFunction(columns);
+    }
 
-  computeColumns(resource) {
-    const columns = this.options.columns;
-    if (this.cascadeColumn) {
-      return columns({ resource: resource })
-    } else {
-      return columns;
+    computeColumns(resource) {
+      const columns = this.options.columns;
+      if (this.cascadeColumn) {
+        return columns({ resource: resource })
+      } else {
+        return columns;
+      }
+    }
+
+    get resources() {
+      const objects = this.value ? _.flatten([this.value]) : [];
+      return _.map(objects, (object) => {
+        object.columns = this.computeColumns(object)
+        return object;
+      });
+    }
+
+    handleResourceChange($event, index) {
+      this.value.splice(index, 1, $event)
+      const newResources = _.cloneDeep(this.value)
+      newResources.splice(index, 1, $event)
+      this.$emit('change', newResources)
+    }
+
+    hasManyAdd() {
+      const object = { 'id': null };
+      _.map(this.options.columns, (column) => {
+        object[column.prop] = ''
+      })
+      this.value.push(object)
+      const newResources = this.value.concat(object)
+      this.$emit('change', newResources)
+    }
+
+    hasManyRemove($event, index) {
+      const newResources = _.cloneDeep(this.value)
+      const current = newResources[index];
+      if (current.id) {
+        current._destroy = true
+        this.$set(this.value, index, current)
+        newResources.splice(index, 1, current)
+      } else {
+        this.value.splice(index, 1)
+        newResources.splice(index, 1)
+      }
+      this.$emit('change', newResources)
     }
   }
-
-  get resources() {
-    const objects = this.value ? _.flatten([this.value]) : [];
-    return _.map(objects, (object) => {
-      object.columns = this.computeColumns(object)
-      return object;
-    });
-  }
-
-  handleResourceChange($event, index) {
-    this.value.splice(index, 1, $event)
-    const newResources =  _.cloneDeep(this.value)
-    newResources.splice(index, 1, $event)
-    this.$emit('change', newResources)
-  }
-
-  hasManyAdd() {
-    const object = { 'id': null };
-    _.map(this.options.columns, (column) => {
-      object[column.prop] = ''
-    })
-    this.value.push(object)
-    const newResources = this.value.concat(object)
-    this.$emit('change', newResources)
-  }
-
-  hasManyRemove($event, index) {
-    const newResources =  _.cloneDeep(this.value)
-    const current = newResources[index];
-    if (current.id) {
-      current._destroy = true
-      this.$set(this.value, index, current)
-      newResources.splice(index, 1, current)
-    } else {
-      this.value.splice(index, 1)
-      newResources.splice(index, 1)
-    }
-    this.$emit('change', newResources)
-  }
-}
 </script>
 
 <style lang="less">
-  .inputs {
-    border: 1px solid #eaeef5;
-    padding: 20px;
-    margin-bottom: 10px;
-    position: relative;
-    .el-icon-delete {
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      z-index: 10;
-      cursor: pointer;
-      padding: 10px;
+  .has_many_fieds {
+    .inputs {
+      border: 1px solid #eaeef5;
+      padding: 30px 20px 20px;
+      margin-bottom: 10px;
+      position: relative;
+
+      .el-icon-delete {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        z-index: 10;
+        cursor: pointer;
+        padding: 10px;
+      }
     }
   }
 </style>
