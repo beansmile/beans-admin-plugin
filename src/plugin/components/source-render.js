@@ -10,8 +10,10 @@ export const renderCellByType = (h) => ({ column, scope }) => {
   const { prop, renderCell } = column;
   const value = _.get(row, prop)
 
-  const type = _.isString(renderCell) ? renderCell : _.get(renderCell, 'type');
+  let type = _.isString(renderCell) ? renderCell : _.get(renderCell, 'type');
   const options = _.isObject(renderCell) ? renderCell : {};
+
+  if (_.isFunction(type)) type = type(scope)
 
   switch (type) {
     case 'image': {
@@ -21,18 +23,35 @@ export const renderCellByType = (h) => ({ column, scope }) => {
           <div class="multi-images">
             {
               value.map(img =>
-                <c-preview-image current={img}><img src={img} style={{ width, height, borderRadius, objectFit, ...opts }} /></c-preview-image>
+                <c-preview-image current={img}>
+                  <img
+                    src={img}
+                    style={{ width, height, borderRadius, objectFit, ...opts }}
+                  />
+                </c-preview-image>
               )
             }
           </div>
         )
       } else {
-        return value && <c-preview-image current={value}><img src={value} style={{ width, height, borderRadius, objectFit, ...opts }} /></c-preview-image>;
+        return value && (
+          <c-preview-image current={value}>
+            <img
+              src={value}
+              style={{
+                width,
+                height,
+                borderRadius,
+                objectFit, ...opts
+              }}
+            />
+          </c-preview-image>
+        );
       }
     }
     case 'video': {
       const { style = { height: '200px' } } = options;
-      return value && <video controls style={style} src={ value }></video>
+      return value && <video controls style={style} src={value}></video>
     }
     case 'time': {
       const format = options.format || 'YYYY-MM-DD HH:mm';
@@ -58,7 +77,11 @@ export const renderCellByType = (h) => ({ column, scope }) => {
     case 'attachment': {
       if (!value) return '/';
       const { name = '下载' } = options;
-      const renderLink = (href = '') => <a href={href} style="display: block;" download><el-button type="primary">{name}</el-button></a>;
+      const renderLink = (href = '') => (
+        <a href={href} style="display: block;" download>
+          <el-button type="primary">{name}</el-button>
+        </a>
+      );
       if (_.isArray(value)) {
         return value.map(renderLink);
       }
@@ -98,9 +121,12 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
     {
       key: 'delete',
       render: ({ handler, permission = `${resource}.destroy`, buttonText = '删除' }) => {
-        const showConfirm = async() => {
+        const showConfirm = async () => {
           // eslint-disable-next-line
-          try { MessageBox.close() } catch (e) { }
+          try {
+            MessageBox.close()
+          } catch (e) {
+          }
           await MessageBox.confirm('删除操作不可恢复，确定删除？', buttonText);
           handler && await handler(scope);
         }
@@ -130,7 +156,7 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
     .map(renderActionButton)
     .concat(extraAction)
     .filter(Boolean);
-  return <c-dropdown-button buttons={buttons} buttonMode={actionButtonMode} buttonProps={actionButtonProps} />
+  return <c-dropdown-button buttons={buttons} buttonMode={actionButtonMode} buttonProps={actionButtonProps}/>
 }
 
 export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope }) => {

@@ -58,9 +58,9 @@ const handleResponseSuccess = response => {
   return res;
 }
 
-const handleResponseError = error => {
+const handleResponseError = err => {
   const app = Vue.appRouter.app;
-  const status = _.get(error, 'response.status');
+  const status = _.get(err, 'response.status');
   switch (status) {
     case 401: {
       if (app.$route.name !== 'login') {
@@ -73,9 +73,10 @@ const handleResponseError = error => {
       app.$router.replace({ name: '403' });
       break;
     default: {
-      const errorMessage = _.get(error, 'response.data.error') || _.get(error, 'response.data.message') || error.message;
-      MessageBox.alert(errorMessage, { title: '错误' });
-      return Promise.reject(error);
+      const { error_message, message, error } = _.get(err, 'response.data', {})
+      err.message = error_message || message || error || err.message
+      MessageBox.alert(err.message, { title: '错误' });
+      return Promise.reject(err);
     }
   }
 }
