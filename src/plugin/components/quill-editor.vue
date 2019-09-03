@@ -51,6 +51,7 @@
     if (typeof value === 'string') {
       node.setAttribute('src', this.sanitize(value))
       node.setAttribute('class', 'image')
+      node.style.maxWidth = '100%'
     }
     return node
   }
