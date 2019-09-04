@@ -128,7 +128,7 @@ export default class SourceFormItem extends Vue {
     const renderType = _.get(this.column, 'form.component');
     const formItem = { prop, props: {}, ..._.omit(form, 'component') };
 
-    if (!this.value[formItem.prop] && formItem.props.defaultValue) {
+    if (this.value[formItem.prop] === undefined && formItem.props.defaultValue !== undefined) {
       this.handleValueChange(formItem.prop)(formItem.props.defaultValue);
     }
 
