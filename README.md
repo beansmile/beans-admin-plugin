@@ -1,4 +1,4 @@
-# beans-admin-plugin
+# beans-admin-plugin [![Build Status](https://travis-ci.com/beansmile/beans-admin-plugin.svg?branch=master)](https://travis-ci.com/beansmile/beans-admin-plugin)
 
 ## Project setup
 ```
