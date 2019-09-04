@@ -123,10 +123,7 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
       render: ({ handler, permission = `${resource}.destroy`, buttonText = '删除' }) => {
         const showConfirm = async () => {
           // eslint-disable-next-line
-          try {
-            MessageBox.close()
-          } catch (e) {
-          }
+          try { MessageBox.close() } catch (e) {}
           await MessageBox.confirm('删除操作不可恢复，确定删除？', buttonText);
           handler && await handler(scope);
         }
