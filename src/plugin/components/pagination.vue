@@ -25,7 +25,8 @@ export default class Pagination extends Vue {
 
   onSizeChange(size) {
     const totalPage = Math.ceil(this.pagination.total / size);
-    this.$router.replace({ query: { ...this.$route.query, per_page: size, page: Math.min(this.$route.query.page, totalPage) } });
+    const page = this.pagination['current-page'];
+    this.$router.replace({ query: { ...this.$route.query, per_page: size, page: Math.min(page, totalPage) } });
   }
 }
 </script>
