@@ -87,6 +87,7 @@ export default class SourceTable extends Vue {
     return (
       <div class="c-source-table" v-loading={loadingService.state.count > 0}>
         <el-table
+          class="el-table--scrollable-y"
           default-sort={this.defaultSort}
           onsort-change={this.handleSortChange}
           props={table}
