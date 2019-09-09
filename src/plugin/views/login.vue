@@ -14,30 +14,31 @@
 </template>
 
 <script>
-import { Vue, Component } from 'vue-property-decorator';
-import { permissionService } from '../services';
-import _ from 'lodash';
+  import { Vue, Component } from 'vue-property-decorator';
+  import { permissionService } from '../services';
+  import _ from 'lodash';
 
-@Component
-export default class Login extends Vue {
+  @Component
+  export default class Login extends Vue {
 
-  email = '';
-  password = '';
+    email = '';
+    password = '';
 
-  mounted() {
-    // 重新登录获取新的权限表
-    permissionService.destroyPermission();
-  }
+    mounted() {
+      // 重新登录获取新的权限表
+      permissionService.destroyPermission();
+    }
 
-  async login() {
-    const { request_url, navigateTo } = _.get(this, '$appConfig.login') || {};
-    if (request_url) {
-      await this.$request.post(request_url, { email: this.email, password: this.password });
-      this.$message.success('登录成功');
-      this.$router.replace(navigateTo);
+    async login() {
+      const { request_url, navigateTo } = _.get(this, '$appConfig.login') || {};
+      if (request_url) {
+        const { access_token } = await this.$request.post(request_url, { email: this.email, password: this.password });
+        localStorage.setItem('access_token', access_token)
+        this.$message.success('登录成功');
+        this.$router.replace(navigateTo);
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>
