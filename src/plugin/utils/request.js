@@ -28,6 +28,7 @@ const hideNprogress = requestConfig => {
 
 const handleTransformRequest = requestConfig => {
   const $config = _.merge({}, Vue.appConfig.request, requestConfig);
+  $config.headers.common['Authorization'] = localStorage.getItem('access_token')
 
   if (!($config.params instanceof FormData)) {
     const params = {};
