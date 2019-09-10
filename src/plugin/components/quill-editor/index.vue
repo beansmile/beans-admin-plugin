@@ -17,46 +17,8 @@
 
 <script>
   import { Component, Vue, Model, Prop } from 'vue-property-decorator'
-  import VueQuillEditor from 'vue-quill-editor'
-  import Quill from 'quill'
-  import { upload as uploadToQiniu } from '../utils'
-  import 'quill/dist/quill.core.css'
-  import 'quill/dist/quill.snow.css'
-  import 'quill/dist/quill.bubble.css'
-
-  window.Quill = Quill
-  require('quill-image-resize-module')
-
-  Quill.register(Quill.import('attributors/style/align'), true)
-  Quill.register(Quill.import('attributors/style/background'), true)
-  Quill.register(Quill.import('attributors/style/color'), true)
-  Quill.register(Quill.import('attributors/style/direction'), true)
-  Quill.register(Quill.import('attributors/style/font'), true)
-  Quill.register(Quill.import('attributors/style/size'), true)
-
-  const VideoView = Quill.imports['formats/video']
-  window.VideoView = VideoView
-  VideoView.tagName = 'VIDEO'
-  VideoView.create = function (value) {
-    let node = VideoView.__proto__.create.call(this, value)
-    node.setAttribute('src', this.sanitize(value))
-    node.setAttribute('controls', '')
-    node.setAttribute('class', 'video')
-    return node
-  }
-
-  const ImageView = Quill.imports['formats/image']
-  ImageView.create = function (value) {
-    let node = ImageView.__proto__.create.call(this, value)
-    if (typeof value === 'string') {
-      node.setAttribute('src', this.sanitize(value))
-      node.setAttribute('class', 'image')
-      node.style.maxWidth = '100%'
-    }
-    return node
-  }
-
-  Vue.use(VueQuillEditor, /* { default global options } */)
+  import { upload as uploadToQiniu } from '../../utils'
+  import './quill-install'
 
   @Component
   export default class RichEditor extends Vue {
@@ -116,6 +78,7 @@
 
 <style>
   .ql-container {
+    font-size: 14px;
     height: 300px;
   }
 
