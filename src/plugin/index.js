@@ -3,7 +3,6 @@ import ElementUI from 'element-ui';
 import './components';
 import * as Utils from './utils';
 import { permissionService } from './services';
-import './style.less';
 
 function initRouter(router) {
   router.beforeEach(async (to, from, next) => {
@@ -68,9 +67,6 @@ function initRouter(router) {
 const config = {
   name: '后台管理',
   logo: '',
-  color: {
-    primary: '#399e63'
-  },
   request: {
     baseURL: '/admin_api/v1',
     timeout: 30000,

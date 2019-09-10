@@ -1,0 +1,58 @@
+.c-source-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #606266;
+  font-size: 13px;
+
+  .content {
+    box-sizing: border-box;
+    flex: 1;
+    padding: 15px;
+    overflow: auto;
+    background: #fff;
+  }
+
+  .multi-images {
+    .preview-image {
+      margin-right: 10px;
+    }
+  }
+
+  .item {
+    padding: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid $light-gray;
+    line-height: 1.5;
+
+    .label {
+      font-weight: bold;
+      min-width: 250px;
+    }
+
+    .value {
+      flex: 1;
+
+      button {
+        padding: 0;
+      }
+    }
+  }
+
+  .toolbar-action {
+    margin-top: 15px;
+    background: #fff;
+    height: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+
+    .cell-action {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

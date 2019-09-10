@@ -159,18 +159,3 @@ export default class SourceFormItem extends Vue {
 }
 </script>
 
-<style lang="less">
-  .source-form-item {
-    .hint {
-      font-size: 12px;
-      color: gray;
-      line-height: 24px;
-      display: block;
-    }
-  }
-
-  .source-form-item .has_many_fieds .source-form-item {
-    margin-bottom: 22px;
-  }
-</style>
-

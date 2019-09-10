@@ -14,7 +14,7 @@
           <video class="video" :src="item"/>
         </div>
         <div v-else :key="index" style="width: 100%">
-          <a :href="item" style="display: block;" :style="`color: ${$appConfig.color.primary}`" download>{{
+          <a :href="item" style="display: block;" class="download-url" download>{{
             item.split('/').pop() }}</a>
         </div>
       </template>
@@ -91,53 +91,3 @@
     }
   }
 </script>
-
-<style lang="less" scoped>
-
-  .upload-form-item {
-    .resource-content {
-      display: flex;
-      align-items: flex-start;
-      flex-wrap: wrap;
-
-      .item-resource {
-        position: relative;
-        margin-right: 15px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        .btn-close {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          font-size: 16px;
-          cursor: pointer;
-        }
-      }
-
-      .image {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border: 1px solid #EBEEF5;
-      }
-
-      .video {
-        width: 200px;
-      }
-    }
-  }
-
-  /deep/ .upload-dialog {
-    .el-dialog__body {
-      overflow: hidden;
-      padding: 20px;
-
-      .c-upload {
-        max-height: 70vh;
-      }
-    }
-  }
-</style>

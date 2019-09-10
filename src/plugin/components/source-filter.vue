@@ -106,10 +106,3 @@ export default class SourceFilter extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-  .box-search {
-    display: inline-block;
-  }
-
-</style>

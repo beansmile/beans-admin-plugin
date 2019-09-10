@@ -83,24 +83,3 @@
     }
   }
 </script>
-
-<style lang="less">
-  .c-nav-menu {
-    .el-menu-item [class^="el-icon-"],
-    .el-submenu [class^="el-icon-"] {
-      vertical-align: -1px;
-    }
-
-    .el-menu-item {
-      a {
-        display: block;
-        color: #000;
-
-        &.router-link-active {
-          // TODO 颜色变量
-          color: #399e63;
-        }
-      }
-    }
-  }
-</style>

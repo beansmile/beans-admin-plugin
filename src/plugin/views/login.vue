@@ -1,16 +1,18 @@
 <template>
-  <el-card class="box-card">
-    <h2>{{ $appConfig.name }}</h2>
-    <el-form ref="form" label-width="80px" @submit.native.prevent="login">
-      <el-form-item label="邮箱">
-        <el-input v-model="email"></el-input>
-      </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="password" show-password></el-input>
-      </el-form-item>
-      <el-button type="primary" native-type="submit">登录</el-button>
-    </el-form>
-  </el-card>
+  <div class="page-login">
+    <el-card class="box-card">
+      <h2>{{ $appConfig.name }}</h2>
+      <el-form ref="form" label-width="80px" @submit.native.prevent="login">
+        <el-form-item label="邮箱">
+          <el-input v-model="email"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="password" show-password></el-input>
+        </el-form-item>
+        <el-button type="primary" native-type="submit">登录</el-button>
+      </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -40,14 +42,3 @@
     }
   }
 </script>
-
-<style lang="less" scoped>
-  .box-card {
-    width: 500px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-</style>

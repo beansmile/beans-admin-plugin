@@ -6,6 +6,7 @@
     @current-change="onPageChange"
     @size-change="onSizeChange"
     v-bind="pagination"
+    class="c-pagination"
   />
 </template>
 
@@ -30,12 +31,3 @@ export default class Pagination extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-  .el-pagination {
-    flex-shrink: 0;
-    height: 70px;
-    display: flex;
-    align-items: center;
-  }
-</style>
