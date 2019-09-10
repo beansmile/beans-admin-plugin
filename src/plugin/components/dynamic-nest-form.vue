@@ -1,5 +1,5 @@
 <template>
-  <div class="has_many_fieds">
+  <div class="c-dynamic-nest-form">
     <div class="inputs" v-for="(resource, index) in resources" :key="index" v-show="!resource._destroy">
       <i class="el-icon-delete" @click="hasManyRemove($event, index)"></i>
       <c-source-form-item
@@ -80,23 +80,3 @@
     }
   }
 </script>
-
-<style lang="less">
-  .has_many_fieds {
-    .inputs {
-      border: 1px solid #eaeef5;
-      padding: 30px 20px 20px;
-      margin-bottom: 10px;
-      position: relative;
-
-      .el-icon-delete {
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        z-index: 10;
-        cursor: pointer;
-        padding: 10px;
-      }
-    }
-  }
-</style>

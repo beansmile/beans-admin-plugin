@@ -1,0 +1,21 @@
+@import './color.scss';
+@import './helper.scss';
+@import './element-ui.scss';
+@import './global.scss';
+
+// components
+@import './components/upload.scss';
+@import './components/upload-form-item.scss';
+@import './components/source-table.scss';
+@import './components/source-page.scss';
+@import './components/source-form.scss';
+@import './components/source-form-item.scss';
+@import './components/source-detail.scss';
+@import './components/preview-image.scss';
+@import './components/pagination.scss';
+@import './components/nav-menu.scss';
+@import './components/dynamic-nest-form.scss';
+
+// pages
+@import './pages/error.scss';
+@import './pages/login.scss';

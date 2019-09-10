@@ -1,0 +1,51 @@
+.c-source-table {
+  width: 100%;
+  background-color: #fff;
+  font-size: 14px;
+  overflow: auto;
+
+  .el-table {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    .el-table__header-wrapper {
+      flex-shrink: 0;
+    }
+
+    .el-table__body-wrapper {
+      flex: 1;
+      max-height: 100% !important;
+    }
+
+    th + th {
+      border-left: 1px solid $light-gray;
+    }
+
+    th, td {
+      padding: 8px 0;
+      font-size: 12px;
+    }
+
+    th {
+      color: #fff;
+      background: rgba($primary, 0.9);
+      padding: 4px 0;
+    }
+  }
+
+  .cell-action {
+    margin-right: -10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    button {
+      font-size: 12px;
+      margin-right: 10px;
+      margin-left: 0;
+    }
+  }
+}

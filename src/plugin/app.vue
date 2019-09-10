@@ -86,7 +86,7 @@
   }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

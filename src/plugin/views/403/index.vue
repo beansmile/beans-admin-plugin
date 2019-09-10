@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <img @click="goBack" class="one-page-image" :src="IMG403" alt="403-image" />
+    <img @click="goBack" class="error-page-image" :src="IMG403" alt="403-image" />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component
-export default class Login extends Vue {
+export default class Page403 extends Vue {
   IMG403 = require('./image').default
 
   goBack() {
