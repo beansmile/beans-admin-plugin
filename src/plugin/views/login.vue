@@ -8,6 +8,7 @@
         </el-form-item>
         <el-form-item label="密码">
           <el-input v-model="password" show-password></el-input>
+          <a @click="sendEmail" style="cursor: pointer;">忘记密码？</a>
         </el-form-item>
         <el-button type="primary" native-type="submit">登录</el-button>
       </el-form>
@@ -34,11 +35,24 @@
     async login() {
       const { request_url, navigateTo } = _.get(this, '$appConfig.login') || {};
       if (request_url) {
-        const { access_token } = await this.$request.post(request_url, { email: this.email, password: this.password });
+        const { access_token, admin_user } = await this.$autoLoading(this.$request.post(request_url, { email: this.email, password: this.password }));
         localStorage.setItem('access_token', access_token)
+        this.$root.currentUser = admin_user
         this.$message.success('登录成功');
         this.$router.replace(navigateTo);
       }
+    }
+
+    async sendEmail() {
+      const { value } = await this.$prompt('请输入邮箱', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputValue: this.email || void 0,
+        inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
+        inputErrorMessage: '邮箱格式不正确',
+      })
+      const { message } = await this.$autoLoading(this.$request.post(_.get(this.$appConfig, 'password.forgot_url'), { email: value }));
+      this.$message.success(message)
     }
   }
 </script>

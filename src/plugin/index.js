@@ -38,6 +38,15 @@ function initRouter(router) {
       }
     },
     {
+      path: '/reset_password',
+      name: 'reset_password',
+      component: require('./views/reset-password').default,
+      meta: {
+        auth: false,
+        layout: false
+      }
+    },
+    {
       path: '/500',
       name: '500',
       component: require('./views/500').default,
@@ -86,7 +95,11 @@ const config = {
   },
   permission: {
     request_url: ''
-  }
+  },
+  password: {
+    forgot_url: '',
+    edit_url: '',
+  },
 }
 
 export default function install(Vue, options = {}) {
