@@ -3,7 +3,8 @@
     <el-row class="btn-group">
       <el-button type="primary" class="btn-choose-file" :disabled="this.table.data.length >= limit">
         选择文件
-        <input type="file" @input="handleFileChange" :accept="accept" :multiple="limit > 1" />
+        <!-- safari不触发input事件 -->
+        <input type="file" @change="handleFileChange" :accept="accept" :multiple="limit > 1" />
       </el-button>
       <el-button type="warning" @click="handleUploadAll" :disabled="!canUploadData.length">全部上传</el-button>
       <el-button type="danger" @click="handleDeleteAll" :disabled="!table.data.length">全部移除</el-button>
@@ -88,7 +89,6 @@ export default class Upload extends Vue {
   handleFileChange(e) {
     const files = e.target.files;
     const checkSize = (file) => file.size <= this.size * 1024 * 1024;
-
     if (files.length + this.table.data.length > this.limit) {
       this.$message.error(`最多可上传${this.limit}个文件`);
       return;
