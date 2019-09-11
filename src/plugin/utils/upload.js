@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { request } from './request';
 
 export default async function upload(file) {
-  const { meta_url, customUpload } = Vue.appConfig.upload;
+  const { meta_url, customUpload, useHttps } = Vue.appConfig.upload;
   if (_.isFunction(customUpload)) {
     return customUpload(file);
   }
@@ -13,5 +13,5 @@ export default async function upload(file) {
   formData.append('file', file);
   formData.append('token', token);
   const { key } = await request.post(upload_url, formData, { baseURL: '', withCredentials: false, loading: false });
-  return `http://${bucket_domain}/${key}`;
+  return `${useHttps ? 'https' : 'http'}://${bucket_domain}/${key}`;
 }
