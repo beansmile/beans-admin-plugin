@@ -70,7 +70,7 @@ function initRouter(router) {
         title: '页面找不到'
       }
     }
-  ].filter(addRoute => router.options.routes.find(route => route.name !== addRoute.name))
+  ].filter(addRoute => !router.options.routes.find(route => route.name === addRoute.name))
 
   router.addRoutes(willAddRoutes);
 

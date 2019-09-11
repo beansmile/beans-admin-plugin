@@ -40,8 +40,24 @@ export default class SourceFormItem extends Vue {
     return (
       <el-checkbox-group {...{ props }} value={this.getPropValue(prop) || []} onInput={this.handleValueChange(prop)}>
         {
+          props.checkboxs.map(checkbox => {
+            const newProps = _.clone(checkbox);
+            const id = newProps.id
+            if (id) { newProps.id = String(id) }
+            // id 必须是string类型
+            return <el-checkbox props={newProps} key={checkbox.label}>{checkbox.title}</el-checkbox>
+          })
+        }
+      </el-checkbox-group>
+    )
+  }
+
+  renderCheckboxButtonGroup({ prop, props }) {
+    return (
+      <el-checkbox-group {...{ props }} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)}>
+        {
           props.checkboxs.map(checkbox =>
-            <el-checkbox props={checkbox} key={checkbox.label}>{checkbox.title}</el-checkbox>
+            <el-checkbox-button props={checkbox} key={checkbox.label}>{checkbox.title}</el-checkbox-button>
           )
         }
       </el-checkbox-group>
@@ -51,6 +67,10 @@ export default class SourceFormItem extends Vue {
   renderInput({ prop, props }) {
     // TODO placeholder 在props里面解构有问题
     return <el-input props={props} rows={props.rows} placeholder={props.placeholder} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
+  }
+
+  renderTextArea({ prop, props }) {
+    return <el-input type="textarea" props={props} placeholder={props.placeholder} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
   }
 
   renderInputNumber({ prop, props }) {
@@ -83,6 +103,10 @@ export default class SourceFormItem extends Vue {
     />
   }
 
+  renderTimePicker({ prop, props }) {
+    return <el-time-picker props={props} value-format="HH:mm" format="HH:mm" value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
+  }
+
   renderColorPicker({ prop, props }) {
     return <el-color-picker props={props} value={this.getPropValue(prop)} onChange={this.handleValueChange(prop)} />
   }
@@ -111,12 +135,15 @@ export default class SourceFormItem extends Vue {
     const renderMap = {
       radioGroup: this.renderRadioGroup,
       checkboxGroup: this.renderCheckboxGroup,
+      checkboxButtonGroup: this.renderCheckboxButtonGroup,
       input: this.renderInput,
+      textarea: this.renderTextArea,
       inputNumber: this.renderInputNumber,
       select: this.renderSelect,
       switch: this.renderSwitch,
       datePicker: this.renderDatePicker,
       dateTimePicker: this.renderDateTimePicker,
+      timePicker: this.renderTimePicker,
       colorPicker: this.renderColorPicker,
       upload: this.renderUpload,
       editor: this.renderEditor,
