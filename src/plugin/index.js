@@ -27,7 +27,7 @@ function initRouter(router) {
     }
   });
 
-  router.addRoutes([
+  const willAddRoutes = [
     {
       path: '/login',
       name: 'login',
@@ -70,7 +70,10 @@ function initRouter(router) {
         title: '页面找不到'
       }
     }
-  ])
+  ].filter(addRoute => router.options.routes.find(route => route.name !== addRoute.name))
+
+  router.addRoutes(willAddRoutes);
+
 }
 
 const config = {
@@ -82,6 +85,7 @@ const config = {
     withCredentials: true
   },
   upload: {
+    useHttps: false,
     meta_url: '/qiniu_meta',
     upload_url: 'https://upload-z2.qiniup.com',
     customUpload: undefined // function
