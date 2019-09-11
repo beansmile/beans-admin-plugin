@@ -14,19 +14,19 @@ export default {
       }
     },
     {
-      path: '/orders/:id',
-      name: 'orders.show',
-      component: require('./show').default,
-      meta: {
-        title: '详情'
-      }
-    },
-    {
       path: '/orders/new',
       name: 'orders.new',
       component: require('./new').default,
       meta: {
         title: '新增'
+      }
+    },
+    {
+      path: '/orders/:id',
+      name: 'orders.show',
+      component: require('./show').default,
+      meta: {
+        title: '详情'
       }
     },
     {
