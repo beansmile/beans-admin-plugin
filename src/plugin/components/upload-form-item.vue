@@ -9,8 +9,7 @@
           </c-preview-image>
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
-          <el-button class="btn-close" size="mini" type="danger" icon="el-icon-delete" circle
-                     @click="handleDelete(index)"></el-button>
+          <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
           <video class="video" :src="item"/>
         </div>
         <div v-else :key="index" style="width: 100%">
