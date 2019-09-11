@@ -12,6 +12,6 @@ export default async function upload(file) {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('token', token);
-  const { key } = await request.post(upload_url, formData, { baseURL: '', withCredentials: false });
+  const { key } = await request.post(upload_url, formData, { baseURL: '', withCredentials: false, loading: false });
   return `http://${bucket_domain}/${key}`;
 }
