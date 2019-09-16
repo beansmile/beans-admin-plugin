@@ -101,6 +101,7 @@ export default class SourceTable extends Vue {
                 align="center"
                 props={column}
                 scopedSlots={this.renderScopedSlots(column, index)}
+                class-name={column.className || column.class}
               />
             )
           }
