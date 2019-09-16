@@ -2,6 +2,8 @@
   <router-link :to="to" :replace="replace" v-if="show">
     <slot />
   </router-link>
+  <!-- 无权限时显示节点，不能操作 -->
+  <div v-else style="display: inline-block;"><slot /></div>
 </template>
 
 <script>

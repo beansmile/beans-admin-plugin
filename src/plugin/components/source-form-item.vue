@@ -74,7 +74,8 @@ export default class SourceFormItem extends Vue {
   }
 
   renderInputNumber({ prop, props }) {
-    return <el-input-number props={props} value={this.getPropValue(prop)} onChange={this.handleValueChange(prop)} />
+    const componentProps = { max: 999999, min: 0, ...props }
+    return <el-input-number props={componentProps} value={this.getPropValue(prop)} onChange={this.handleValueChange(prop)} />
   }
 
   renderSelect({ prop, props }) {

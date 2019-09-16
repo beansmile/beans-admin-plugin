@@ -1,6 +1,6 @@
 <template>
   <c-router-link :to="to" v-bind="linkProps">
-    <el-button type="text" v-bind="ButtonProps"><slot /></el-button>
+    <el-button type="text" v-bind="ButtonProps" style="white-space:normal;"><slot /></el-button>
   </c-router-link>
 </template>
 
