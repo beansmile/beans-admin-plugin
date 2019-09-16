@@ -152,7 +152,13 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
   const buttons = actions
     .map(renderActionButton)
     .concat(extraAction)
-    .filter(Boolean);
+    .filter(buttonConfig => {
+      if (buttonConfig) {
+        // 支持权限判断
+        return permissionService.hasPermission(buttonConfig.permission);
+      }
+      return false;
+    })
   return <c-dropdown-button buttons={buttons} buttonMode={actionButtonMode} buttonProps={actionButtonProps}/>
 }
 
