@@ -11,9 +11,24 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 
-    .el-table__header-wrapper {
+    .el-table__header-wrapper,
+    .el-table__fixed-header-wrapper {
       flex-shrink: 0;
+
+      .caret-wrapper {
+        width: 15px;
+        height: 25px;
+
+        .ascending {
+          margin-top: -5px;
+        }
+
+        .descending {
+          margin-bottom: -5px;
+        }
+      }
     }
+
 
     .el-table__body-wrapper {
       flex: 1;
