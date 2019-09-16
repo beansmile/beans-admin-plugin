@@ -34,7 +34,7 @@ export default class SourceTable extends Vue {
 
   handleSortChange({ order, prop }) {
     const query = Object.assign({}, this.$route.query, { page: 1 });
-    if (prop) {
+    if (order) {
       _.set(query, '_sort_field', prop);
       _.set(query, '_sort_value', order);
       const row = this.getRowByPropName(prop);
