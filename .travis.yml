@@ -6,16 +6,16 @@ install:
   - yarn install
 script:
   - yarn lint
+
 before_deploy:
   - yarn build
+
 deploy:
-  provider: pages
+  provider: releases
+  api_key: $GH_TOKEN
+  file_glob: true
+  file: dist/*
   skip_cleanup: true
-  github_token: $GH_TOKEN
-  keep_history: true
-  target_branch: master
+  overwrite: true
   on:
-    branch: master
-env:
-  global:
-    secure: AL6AOfN1mZN5XFjdDnCjLDa/re0Pi+GqAUOVvnrFWiqdfIMsPvk+tuHHI7+ArtcPxrPAEJyociVsiWWM0hrAmC900vJ/V/qU07i9bNR/bvdADib8RQRGoxPgH5oYUUzn++OLdDl7ILdExHnBQEalOIXFTWZE4F7n7V1B5aeupIEY82E9L2zxfe9I9Wbx6sGnrIlFa12EO0Ani4prFRJNRtbnPUUw0r1WSZH4K9VTMHO1b4xBFXuH3rWnlm7urmLe6ZPu+OQIK9PLVM/YM9TEuzl8tIP82xHZvoqEY5Dy+S8bT7mQFZmvpY3K4Vn/HMWxgmOHzTS+VPjbm+hrlHTESR2+8jA4WuPjBMQjrS5JYO60AfoBy95y3/GarM9eMaTjlh5cdAdb9MnESt5qh/S+Hw1aY5FdvHmbuEPkpIL97c+F4+IiFUtB02XXaXetsHoa1GYG8uTB+DuACWzftnX2RKej3sOvLlrOtJSC4vL7BuTAx5HI/kcAbJUOkYsZ2Bfu3Ni9NqbpdiJUNOPOVT25KniHjspcVgtCvAnH49wrl6+j8mitjkXY785/2teFCQRAxz+FLfjgqat+Mb0i2+ayzgGrC7OvTvzEwOPRyNKJA3pbOtrLu8QJdSOuHGYq5wp0DAe1PM7syM70Ns+cwGRuNMF4ZAsDoVC6JbprOHnfmpI=
+    branch: fix-travis-ci
