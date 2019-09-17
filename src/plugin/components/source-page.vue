@@ -52,7 +52,7 @@ export default class SourcePage extends Vue {
 
     return (
       <div class="source-page-btn-group">
-        {this.showCreateButton && <c-router-link to={createPageLocation}><el-button class="btn-create" type="primary">{this.createButtonText}</el-button></c-router-link>}
+        {this.showCreateButton && <c-router-link keep-node={false} to={createPageLocation}><el-button class="btn-create" type="primary">{this.createButtonText}</el-button></c-router-link>}
         {this.showExportButton && <el-button disabled={this.exporting} onClick={this.export} loading={this.exporting} type="primary">导出数据</el-button>}
         {
           $actionSlot && (

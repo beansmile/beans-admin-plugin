@@ -2,8 +2,7 @@
   <router-link :to="to" :replace="replace" v-if="show">
     <slot />
   </router-link>
-  <!-- 无权限时显示节点，不能操作 -->
-  <div v-else class="link-no-permission-wrap" style="display: inline-block;"><slot /></div>
+  <div v-else-if="!show && keepNode" class="link-no-permission-wrap"><slot /></div>
 </template>
 
 <script>
@@ -15,6 +14,7 @@ import _ from 'lodash';
 export default class CRouterLink extends Vue {
   @Prop([Object, String]) to;
   @Prop(Boolean) replace;
+  @Prop({ type: Boolean, default: true }) keepNode; // 没权限时保留节点
 
   show = false;
 

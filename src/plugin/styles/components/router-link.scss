@@ -1,8 +1,10 @@
 .link-no-permission-wrap {
-  color: $gray;
+  color: inherit;
+  display: inline-block;
 
   button.el-button {
-    color: $gray;
-    cursor: not-allowed;
+    color: inherit;
+    cursor: default;
+    font-weight: normal;
   }
 }
