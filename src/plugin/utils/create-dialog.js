@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import { Dialog } from 'element-ui';
 
-export default function createDialog(props = {}, slots = {}, events = {}) {
+export default function createDialog({ props = {}, slots = {}, events = {} } = {}) {
   const DialogConstructor = Vue.extend(Dialog);
   const instance = new DialogConstructor({
     propsData: {
