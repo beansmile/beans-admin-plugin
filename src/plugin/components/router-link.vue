@@ -3,7 +3,7 @@
     <slot />
   </router-link>
   <!-- 无权限时显示节点，不能操作 -->
-  <div v-else style="display: inline-block;"><slot /></div>
+  <div v-else class="link-no-permission-wrap" style="display: inline-block;"><slot /></div>
 </template>
 
 <script>
