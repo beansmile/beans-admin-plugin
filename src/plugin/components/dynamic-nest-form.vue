@@ -60,7 +60,7 @@
     hasManyAdd() {
       const object = { 'id': null };
       _.map(this.options.columns, (column) => {
-        object[column.prop] = ''
+        object[column.prop] = _.get(column.form, 'props', {}).defaultValue || ''
       })
       this.$emit('change', this.value.concat(object))
     }
