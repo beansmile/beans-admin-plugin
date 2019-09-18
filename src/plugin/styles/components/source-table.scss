@@ -41,7 +41,7 @@
 
     th, td {
       padding: 8px 0;
-      font-size: 12px;
+      font-size: $font-size-base;
     }
 
     th {
@@ -58,7 +58,7 @@
     flex-wrap: wrap;
 
     button {
-      font-size: 12px;
+      font-size: $font-size-base;
       margin-right: 10px;
       margin-left: 0;
     }

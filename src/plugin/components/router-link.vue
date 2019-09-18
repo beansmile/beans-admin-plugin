@@ -1,12 +1,5 @@
-<template>
-  <router-link :to="to" :replace="replace" v-if="show">
-    <slot />
-  </router-link>
-  <div v-else-if="!show && keepNode" class="link-no-permission-wrap"><slot /></div>
-</template>
-
 <script>
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { permissionService } from '../services';
 import _ from 'lodash';
 
@@ -14,16 +7,32 @@ import _ from 'lodash';
 export default class CRouterLink extends Vue {
   @Prop([Object, String]) to;
   @Prop(Boolean) replace;
-  @Prop({ type: Boolean, default: true }) keepNode; // 没权限时保留节点
+  @Prop({ type: Boolean, default: true }) keepNode;
 
-  show = false;
-
-  @Watch('to', { immediate: true })
-  onLocationChange(location) {
+  get show() {
     const router = Vue.appRouter;
-    if (location) {
+    if (this.to) {
       const { route } = router.resolve(this.to);
-      this.show = permissionService.hasPermission(_.get(route, 'meta.permission'));
+      return permissionService.hasPermission(_.get(route, 'meta.permission'))
+    }
+    return false;
+  }
+
+  showPermissionTip() {
+    this.$message({
+      message: '您没有权限',
+      type: 'warning'
+    })
+  }
+
+  render() {
+    if (this.show) {
+      return <router-link to={this.to} replace={this.replace}>{this.$slots.default}</router-link>
+    } else {
+      if (this.keepNode) {
+        return <div class="link-no-permission-wrap" onClick={() => this.showPermissionTip()}>{this.$slots.default}</div>
+      }
+      return null;
     }
   }
 
