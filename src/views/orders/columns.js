@@ -193,5 +193,23 @@ export const formColumn = [
     form: {
       component: 'editor'
     }
+  },
+  {
+    prop: 'nestForm',
+    label: 'nestForm',
+    form: {
+      component: 'nestForm',
+      props: {
+        columns: [
+          {
+            prop: 'input',
+            label: '输入框',
+            form: {
+              component: 'input'
+            }
+          }
+        ]
+      }
+    }
   }
 ]
