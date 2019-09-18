@@ -122,7 +122,7 @@ export default class SourceFormItem extends Vue {
 
   renderNestForm({ prop, props }) {
     return <c-nest-form
-      options={props}
+      props={props}
       value={this.getPropValue(prop)}
       onChange={this.handleValueChange(prop)}
     />

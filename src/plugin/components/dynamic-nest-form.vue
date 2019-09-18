@@ -3,7 +3,7 @@
     <div class="inputs" v-for="(resource, index) in resources" :key="index" v-show="!resource._destroy">
       <i class="el-icon-delete" @click="hasManyRemove($event, index)"></i>
       <c-source-form-item
-        v-for="column in resource.columns"
+        v-for="column in computedColumns"
         :key="column.prop"
         :column="column"
         :row="resource"
@@ -24,56 +24,38 @@
   @Component
   export default class DynamicNestForm extends Vue {
     @Model('change', { type: Array, default: () => [] }) value;
-    @Prop({ type: Object, default: () => ({}) }) options;
+    @Prop({ type: Array, default: () => [] }) columns;
+    @Prop({ type: String, default: 'id' }) addDestroyFlagFieldName; // 删除后添加_destory的数据标识
 
-    cascadeColumn = false
-
-    created() {
-      const columns = _.get(this.options, 'columns', [])
-      this.cascadeColumn = _.isFunction(columns);
+    get resources() {
+      return this.value ? _.flatten([this.value]) : [];
     }
 
-    computeColumns(resource) {
-      const columns = this.options.columns;
-      if (this.cascadeColumn) {
-        return columns({ resource: resource })
+    get computedColumns() {
+      if (_.isFunction(this.columns)) {
+        return this.columns({ resource: this.resources })
       } else {
-        return columns;
+        return this.columns;
       }
     }
 
-    get resources() {
-      const objects = this.value ? _.flatten([this.value]) : [];
-      return _.map(objects, (object) => {
-        object.columns = this.computeColumns(object)
-        return object;
-      });
-    }
-
     handleResourceChange($event, index) {
-      this.value.splice(index, 1, $event)
       const newResources = _.cloneDeep(this.value)
       newResources.splice(index, 1, $event)
       this.$emit('change', newResources)
     }
 
     hasManyAdd() {
-      const object = { 'id': null };
-      _.map(this.options.columns, (column) => {
-        object[column.prop] = ''
-      })
-      this.$emit('change', this.value.concat(object))
+      this.$emit('change', this.value.concat({}))
     }
 
     hasManyRemove($event, index) {
       const newResources = _.cloneDeep(this.value)
       const current = newResources[index];
-      if (current.id) {
+      if (current[this.addDestroyFlagFieldName]) {
         current._destroy = true
-        this.$set(this.value, index, current)
         newResources.splice(index, 1, current)
       } else {
-        this.value.splice(index, 1)
         newResources.splice(index, 1)
       }
       this.$emit('change', newResources)
