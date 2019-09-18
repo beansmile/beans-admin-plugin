@@ -7,6 +7,6 @@ install:
 script:
   - yarn lint
 after_success:
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then yarn build; fi
-  - if [ "$TRAVIS_BRANCH" = "master" ]; then bash travis-push.sh; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then yarn build; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash travis-push.sh; fi
 
