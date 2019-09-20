@@ -24,7 +24,7 @@
     password_confirmation = ''
 
     async submit() {
-      await this.$autoLoading(this.$request.put(this.$get(this.$appConfig, 'password.edit_url'), {
+      await this.$autoLoading(this.$fly.put(this.$get(this.$appConfig, 'password.edit_url'), {
         password: this.password,
         password_confirmation: this.password_confirmation,
         reset_password_token: this.$route.query.reset_password_token

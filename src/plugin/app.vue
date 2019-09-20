@@ -79,7 +79,7 @@
     async handleExit() {
       localStorage.removeItem('access_token');
       const requestUrl = _.get(this.$appConfig, 'logout.request_url');
-      if (requestUrl) await this.$request.delete(requestUrl);
+      if (requestUrl) await this.$fly.delete(requestUrl);
       this.$message.success('成功退出登录');
       this.$router.replace({ name: 'login' });
     }

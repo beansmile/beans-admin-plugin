@@ -1,4 +1,4 @@
-import { request } from '../utils';
+import { fly } from '../utils';
 import _ from 'lodash';
 import Vue from 'vue';
 
@@ -31,7 +31,7 @@ class PermissionService {
       if (permissionMap) {
         return this.permissionMap = permissionMap;
       }
-      const { abilities } = await request.get(request_url);
+      const { abilities } = await fly.get(request_url);
       this.savePermissionMapToStorage(abilities);
       return this.permissionMap = abilities;
     }

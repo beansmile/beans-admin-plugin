@@ -35,7 +35,10 @@
     async login() {
       const { request_url, navigateTo } = _.get(this, '$appConfig.login') || {};
       if (request_url) {
-        const { access_token, admin_user } = await this.$autoLoading(this.$request.post(request_url, { email: this.email, password: this.password }));
+        const { access_token, admin_user } = await this.$autoLoading(this.$fly.post(request_url, {
+          email: this.email,
+          password: this.password
+        }));
         localStorage.setItem('access_token', access_token)
         this.$root.currentUser = admin_user
         this.$message.success('登录成功');
@@ -51,7 +54,7 @@
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '邮箱格式不正确',
       })
-      const { message } = await this.$autoLoading(this.$request.post(_.get(this.$appConfig, 'password.forgot_url'), { email: value }));
+      const { message } = await this.$autoLoading(this.$fly.post(_.get(this.$appConfig, 'password.forgot_url'), { email: value }));
       this.$message.success(message)
     }
   }
