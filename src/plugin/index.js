@@ -116,6 +116,7 @@ export default function install(Vue, options = {}) {
   Vue.appConfig = config;
   Vue.prototype.$appConfig = config;
   Vue.prototype.$get = _.get;
+  _.merge(Utils.fly.config, config.request)
 
   _.forEach(Utils, (value, key) => Vue.prototype[`$${key}`] = value);
 }

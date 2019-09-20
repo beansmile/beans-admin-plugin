@@ -1,15 +1,15 @@
-import { request } from './request';
+import fly from './fly';
 
 export async function download({
   url,
   params,
   name = 'resource.xlsx'
 } = {}) {
-  const result = await request.get(url, { params, responseType: 'blob' });
+  const { data } = await fly.get(url, params, { responseType: 'blob' });
   const a = document.createElement('a');
   document.body.appendChild(a);
   a.style = 'display: none';
-  const blob = new Blob([result]);
+  const blob = new Blob([data]);
   a.href = window.URL.createObjectURL(blob);
   a.download = name;
   a.click();
