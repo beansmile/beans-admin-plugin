@@ -158,6 +158,7 @@ export default class SourceFormItem extends Vue {
 
     return {
       ...formItem,
+      label,
       rules: formRules
     };
   }
@@ -182,9 +183,7 @@ export default class SourceFormItem extends Vue {
       vNode: this.renderVNode
     }
 
-    // TODO 下个版本去掉
-    const { metaRender } = this.column;
-    const { prop, hint, props: { defaultValue } } = this.formItem;
+    const { prop, props: { defaultValue, hint } } = this.formItem;
     const { component = 'input', slots = {} } = this.column.form || {};
 
     if (this.value[prop] === undefined && defaultValue !== undefined) {
@@ -196,7 +195,6 @@ export default class SourceFormItem extends Vue {
 
     return (
       <el-form-item class="source-form-item" props={this.formItem}>
-        { metaRender ? metaRender(this.$createElement) : null }
         {headerVNode}
         {renderMap[component](this.formItem)}
         {footerVNode}
