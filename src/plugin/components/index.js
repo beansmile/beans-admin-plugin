@@ -11,7 +11,7 @@ Vue.component('c-upload', require('./upload').default);
 Vue.component('c-upload-form-item', require('./upload-form-item').default);
 Vue.component('c-nav-menu', require('./nav-menu').default);
 Vue.component('c-preview-image', require('./preview-image').default);
-Vue.component('c-editor', require('./quill-editor').default);
+Vue.component('c-editor', require('./ck-editor').default);
 Vue.component('v-node', require('./v-node').default);
 Vue.component('c-dropdown-button', require('./dropdown-button').default);
 Vue.component('c-link-button', require('./link-button').default);

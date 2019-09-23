@@ -104,6 +104,9 @@ const config = {
     forgot_url: '',
     edit_url: '',
   },
+  ckeditor: {
+    editorConfig: new Function
+  },
 }
 
 export default function install(Vue, options = {}) {
