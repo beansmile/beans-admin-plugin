@@ -98,11 +98,10 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
       key: 'detail',
       render: ({ location, permission = `${resource}.read`, buttonText = '详情' }) => {
         const routeLocation = location || { name: `${resource}.show`, params: { id: scope.row.id } };
-        if (permissionService.hasPermission(permission)) {
-          return {
-            text: buttonText,
-            handler: () => Vue.appRouter.push(routeLocation)
-          }
+        return {
+          permission,
+          text: buttonText,
+          handler: () => Vue.appRouter.push(routeLocation)
         }
       }
     },
@@ -110,11 +109,10 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
       key: 'edit',
       render: ({ location, permission = `${resource}.update`, buttonText = '编辑' }) => {
         const routeLocation = location || { name: `${resource}.edit`, params: { id: scope.row.id } };
-        if (permissionService.hasPermission(permission)) {
-          return {
-            text: buttonText,
-            handler: () => Vue.appRouter.push(routeLocation)
-          }
+        return {
+          permission,
+          text: buttonText,
+          handler: () => Vue.appRouter.push(routeLocation)
         }
       }
     },
@@ -127,11 +125,10 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
           await MessageBox.confirm('删除操作不可恢复，确定删除？', buttonText);
           handler && await handler(scope);
         }
-        if (permissionService.hasPermission(permission)) {
-          return {
-            text: buttonText,
-            handler: showConfirm
-          }
+        return {
+          permission,
+          text: buttonText,
+          handler: showConfirm
         }
       }
     }
@@ -159,7 +156,9 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
       }
       return false;
     })
-  return <c-dropdown-button buttons={buttons} buttonMode={actionButtonMode} buttonProps={actionButtonProps}/>
+  // 第一个按钮（一般是详情）放在外面
+  return [buttons.slice(0, 1), buttons.slice(1)]
+    .map(item => <c-dropdown-button buttons={item} buttonMode={actionButtonMode} buttonProps={actionButtonProps} />)
 }
 
 export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope }) => {
