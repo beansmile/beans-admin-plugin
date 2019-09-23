@@ -13,7 +13,7 @@ export default class SourceFormItem extends Vue {
     return _.get(this.value, prop);
   }
 
-  handleValueChange(prop) {
+  handleValueChange(prop, { triggerColumnChange = true } = {}) {
     return (val) => {
       const newValue = _.mergeWith({}, this.value, _.set({}, prop, val), (objValue, srcValue) => {
         if (_.isArray(objValue)) {
@@ -21,6 +21,10 @@ export default class SourceFormItem extends Vue {
         }
       });
       this.$emit('change', newValue);
+      if (triggerColumnChange) {
+        const { change } = this.formItem.events || {};
+        _.isFunction(change) && change(newValue[prop]);
+      }
     }
   }
 
@@ -132,6 +136,32 @@ export default class SourceFormItem extends Vue {
     return <v-node props={props} />
   }
 
+  get formItem() {
+    const { form, prop, label } = this.column;
+    const formItem = { prop, props: {}, ..._.omit(form, 'component') };
+    const { required, rules = [] } = formItem;
+
+    if (_.isFunction(formItem.props)) {
+      formItem.props = formItem.props(this.$createElement, { data: this.value, row: this.row });
+    }
+
+    const formRules = _.flatten([rules]);
+    if (required) {
+      if (!formRules.find(item => item.required)) {
+        formRules.push({
+          required: true,
+          message: required === true ? `${label}必填` : required,
+          trigger: 'blur'
+        })
+      }
+    }
+
+    return {
+      ...formItem,
+      rules: formRules
+    };
+  }
+
   render() {
     const renderMap = {
       radioGroup: this.renderRadioGroup,
@@ -152,35 +182,25 @@ export default class SourceFormItem extends Vue {
       vNode: this.renderVNode
     }
 
-    const { form, prop, label, metaRender } = this.column;
-    const renderType = _.get(this.column, 'form.component');
-    const formItem = { prop, props: {}, ..._.omit(form, 'component') };
+    // TODO 下个版本去掉
+    const { metaRender } = this.column;
+    const { prop, hint, props: { defaultValue } } = this.formItem;
+    const { component = 'input', slots = {} } = this.column.form || {};
 
-    if (this.value[formItem.prop] === undefined && formItem.props.defaultValue !== undefined) {
-      this.handleValueChange(formItem.prop)(formItem.props.defaultValue);
+    if (this.value[prop] === undefined && defaultValue !== undefined) {
+      this.handleValueChange(prop, { triggerColumnChange: false })(defaultValue);
     }
 
-    if (_.isFunction(formItem.props)) {
-      formItem.props = formItem.props(this.$createElement, { data: this.value, row: this.row });
-    }
-
-    const { required, rules = [] } = formItem;
-    let formRules = _.flatten([rules]);
-    if (required) {
-      if (!formRules.find(item => item.required)) {
-        formRules.push({
-          required: true,
-          message: required === true ? `${label}必填` : required,
-          trigger: 'blur'
-        })
-      }
-    }
+    const headerVNode = _.isFunction(slots.header) ? slots.header(this.$createElement, { value: this.value[prop] }) : slots.header;
+    const footerVNode = _.isFunction(slots.footer) ? slots.footer(this.$createElement, { value: this.value[prop] }) : slots.footer;
 
     return (
-      <el-form-item class="source-form-item" prop={prop} label={label} rules={formRules}>
+      <el-form-item class="source-form-item" props={this.formItem}>
         { metaRender ? metaRender(this.$createElement) : null }
-        {renderMap[renderType](formItem)}
-        {formItem.props.hint && <span class="hint">{ formItem.props.hint }</span>}
+        {headerVNode}
+        {renderMap[component](this.formItem)}
+        {footerVNode}
+        {hint && <span class="hint">{ hint }</span>}
       </el-form-item>
     )
   }

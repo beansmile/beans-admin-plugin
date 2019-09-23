@@ -138,6 +138,9 @@ export const formColumn = [
     label: '下拉选框',
     form: {
       component: 'select',
+      events: {
+        change: (val) => console.log(val)
+      },
       props: {
         options: [
           {
