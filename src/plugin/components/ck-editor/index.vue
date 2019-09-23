@@ -6,7 +6,7 @@
 
 <script>
   import { Component, Vue, Model, Prop, Watch } from 'vue-property-decorator'
-  import { randomString } from 'beans-admin-plugin/utils/random'
+  import { randomString } from '../../utils'
   import setConfig from './config'
   import 'ckeditor/ckeditor'
   import './upload-patch'
