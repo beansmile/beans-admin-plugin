@@ -4,38 +4,60 @@ import _ from 'lodash';
 
 @Component
 export default class Select extends Vue {
+  @Prop(Function) xRemoteSearch;
+  @Prop(Function) xRemotePreload;
+  @Prop(Object) xRemote;
+  @Prop(Array) options;
+  @Prop([String, Number, Object]) value;
   @Prop(Object) selectProps;
 
   localOptions = []
   localProps = {}
 
   async mounted() {
-    const { strategy, remoteMethod } = _.get(this.selectProps, 'x-remote') || {};
-    if (strategy) {
-      if (strategy === 'search') {
-        const search = _.debounce(async (keyword) => this.localOptions = await remoteMethod(keyword), 800);
-        const remoteObj = {
-          remote: true,
-          filterable: true,
-          'remote-method': keyword => keyword && search(keyword)
+    if (this.xRemotePreload) {
+      this.localOptions = await this.xRemotePreload();
+    }
+
+    if (this.xRemoteSearch) {
+      const search = _.debounce(async (keyword) => this.localOptions = await this.xRemoteSearch(keyword), 500);
+      const remoteObj = {
+        remote: true,
+        filterable: true,
+        'remote-method': keyword => keyword && search(keyword)
+      }
+      this.localProps = Object.assign({}, remoteObj);
+    }
+
+    // TODO 兼容之前的xRemote
+    if (this.xRemote) {
+      const { strategy, remoteMethod } = this.xRemote || {};
+      if (strategy) {
+        if (strategy === 'search') {
+          const search = _.debounce(async (keyword) => this.localOptions = await remoteMethod(keyword), 500);
+          const remoteObj = {
+            remote: true,
+            filterable: true,
+            'remote-method': keyword => keyword && search(keyword)
+          }
+          this.localProps = Object.assign({}, remoteObj);
+        } else {
+          // preload
+          this.localOptions = await remoteMethod();
         }
-        this.localProps = Object.assign({}, remoteObj);
-      } else {
-        // preload
-        this.localOptions = await remoteMethod();
       }
     }
   }
 
-  get options() {
-    return this.localOptions.length ? this.localOptions : this.selectProps.options || [];
+  get computedOptions() {
+    return this.localOptions.length ? this.localOptions : this.options || [];
   }
 
   renderOptions() {
-    const isGroup = this.options.length && this.options[0].options && this.options[0].options.length
+    const isGroup = this.computedOptions.length && this.computedOptions[0].options && this.computedOptions[0].options.length
 
     if (isGroup) {
-      return this.options.map(group => {
+      return this.computedOptions.map(group => {
         return (
           <el-option-group key={group.label} label={group.label}>
             {
@@ -45,13 +67,13 @@ export default class Select extends Vue {
         )
       })
     } else {
-      return this.options.map(option => <el-option label={option.label} value={option.value} key={option.value} />)
+      return this.computedOptions.map(option => <el-option label={option.label} value={option.value} key={option.value} />)
     }
   }
 
   render() {
     return (
-      <el-select props={{ ...this.selectProps, ...this.localProps }} onChange={val => this.$emit('change', val)}>
+      <el-select props={{ ...this.selectProps, options: this.options, value: this.value, ...this.localProps }} onChange={val => this.$emit('change', val)}>
         {
           this.renderOptions()
         }

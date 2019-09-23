@@ -53,6 +53,10 @@
     .cell-action {
       display: flex;
       align-items: center;
+
+      .el-button {
+        margin-right: 15px;
+      }
     }
   }
 }

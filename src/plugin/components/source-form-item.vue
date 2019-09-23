@@ -84,9 +84,11 @@ export default class SourceFormItem extends Vue {
 
   renderSelect({ prop, props }) {
     return <Select
-      selectProps={{ ...props, value: this.getPropValue(prop) }}
+      props={props}
+      selectProps={props}
+      value={this.getPropValue(prop)}
       onChange={this.handleValueChange(prop)}
-      row={this.data} />
+    />
   }
 
   renderSwitch({ prop, props }) {
