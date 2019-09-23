@@ -2139,6 +2139,10 @@ circular-json@^0.3.1:
   resolved "https://registry.npm.taobao.org/circular-json/download/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha1-gVyZ6oT2gJUp0vRXkb34JxE1LWY=
 
+"ckeditor@https://github.com/beansmile/ckeditor.git":
+  version "0.0.0"
+  resolved "https://github.com/beansmile/ckeditor.git#1f06cd2eba67b6efa07ee7ccdbe9428f6ffb3371"
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.npm.taobao.org/class-utils/download/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -4062,6 +4066,11 @@ getpass@^0.1.1:
   integrity sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
   dependencies:
     assert-plus "^1.0.0"
+
+github-markdown-css@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/github-markdown-css/download/github-markdown-css-3.0.1.tgz#d08db1060d2e182025e0d07d547cfe2afed30205"
+  integrity sha1-0I2xBg0uGCAl4NB9VHz+Kv7TAgU=
 
 glob-parent@^3.1.0:
   version "3.1.0"
