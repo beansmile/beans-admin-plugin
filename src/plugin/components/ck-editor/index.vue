@@ -48,9 +48,3 @@
     }
   }
 </script>
-
-<style lang="less">
-  body .cke_screen_reader_only {
-    position: fixed;
-  }
-</style>
