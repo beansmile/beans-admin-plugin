@@ -2,6 +2,7 @@ import Vue from 'vue'
 import router from './router';
 import BeansAdminPlugin, { AppLayout } from './plugin';
 import './theme.scss';
+import './components';
 
 Vue.config.productionTip = false
 
