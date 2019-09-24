@@ -5,5 +5,7 @@ export function randomString() {
 }
 
 export function randomFileName(fileName) {
-  return `${moment().format('YYMMDD')}/${randomString()}/${fileName}`
+  const splitArr = fileName.split('.');
+  const ext = splitArr.length > 1 ? splitArr.pop() : '';
+  return `${moment().format('YYMMDD')}/${randomString()}${ext ? '.' + ext : ''}`
 }

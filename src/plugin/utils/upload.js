@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import _ from 'lodash';
 import fly from './fly';
+import { randomFileName } from './random';
 
 export default async function upload(file, include_res = false) {
   const { meta_url, customUpload, useHttps } = Vue.appConfig.upload;
@@ -12,6 +13,7 @@ export default async function upload(file, include_res = false) {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('token', token);
+  formData.append('key', randomFileName(file.name));
   const res = await fly.post(upload_url, formData, {
     baseURL: '',
     withCredentials: false,
