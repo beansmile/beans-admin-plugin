@@ -12,6 +12,15 @@ export default {
         title: 'clipboard',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/dropdown-button',
+      name: 'doc.dropdown-button',
+      component: require('./dropdown-button').default,
+      meta: {
+        title: 'dropdown-button',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }

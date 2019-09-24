@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <h2 class="title">{{ title }}</h2>
+    <slot />
     <h3>Attributes</h3>
     <c-source-table
       :table="{ data: attributes }"
@@ -18,7 +19,7 @@
         <v-node :render-node="compile(item.code)" />
       </div>
       <c-clipboard class="example-clipboard">
-        <code>{{ item.code }}</code>
+        <pre class="code">{{ item.code }}</pre>
       </c-clipboard>
     </div>
   </div>
@@ -82,7 +83,7 @@
 
 <style lang="scss" scoped>
   .page {
-    code {
+    .code {
       display: block;
       background: #000;
       color: #fff;
