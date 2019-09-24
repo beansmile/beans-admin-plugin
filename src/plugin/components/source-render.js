@@ -163,23 +163,31 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
 
 export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope }) => {
   const createElement = h;
-  const { renderCell, prop } = column;
+  const { renderCell, prop, clipboard } = column;
 
-  if (prop === 'action') {
-    return (
-      <div class="cell-action">
-        {renderAction(createElement, params)({ columns, column, scope })}
-        {_.isFunction(renderCell) && renderCell(createElement, scope)}
-      </div>
-    );
+  const renderedVNode = () => {
+    if (prop === 'action') {
+      return (
+        <div class="cell-action">
+          {renderAction(createElement, params)({ columns, column, scope })}
+          {_.isFunction(renderCell) && renderCell(createElement, scope)}
+        </div>
+      );
+    }
+    if (_.isFunction(renderCell)) {
+      return renderCell(createElement, scope);
+    }
+    if (_.isString(renderCell) || _.isObject(renderCell)) {
+      return renderCellByType(createElement)({ column, scope });
+    }
+    return _.get(scope, `row.${prop}`, '/');
   }
 
-  if (_.isFunction(renderCell)) {
-    return renderCell(createElement, scope);
+  const renderClipboard = (clipboard, vNode = null) => {
+    return clipboard
+      ? <c-clipboard props={_.isObject(clipboard) ? clipboard : {}}>{vNode}</c-clipboard>
+      : vNode;
   }
 
-  if (_.isString(renderCell) || _.isObject(renderCell)) {
-    return renderCellByType(createElement)({ column, scope });
-  }
-  return null;
+  return renderClipboard(clipboard, renderedVNode());
 }

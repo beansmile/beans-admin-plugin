@@ -20,3 +20,4 @@ Vue.component('c-select', require('./select').default);
 Vue.component('c-nest-form', require('./dynamic-nest-form').default);
 Vue.component('c-router-link', require('./router-link').default);
 Vue.component('c-permisson', require('./permisson').default);
+Vue.component('c-clipboard', require('./clipboard').default);

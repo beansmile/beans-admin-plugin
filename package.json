@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "ckeditor": "https://github.com/beansmile/ckeditor.git",
+    "clipboard": "^2.0.4",
     "core-js": "^2.6.5",
     "echarts": "^4.2.1",
     "element-ui": "^2.11.1",
