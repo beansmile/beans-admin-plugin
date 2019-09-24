@@ -66,10 +66,6 @@ export default class SourceTable extends Vue {
   }
 
   renderScopedSlots(column) {
-    if (column.prop !== 'action' && !column.renderCell) {
-      return null;
-    }
-
     return {
       default: (scope) => sourceColumnRender(this.$createElement, { resource: this.resource })(
         {

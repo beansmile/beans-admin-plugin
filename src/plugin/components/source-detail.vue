@@ -1,7 +1,6 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { sourceColumnRender } from './source-render';
-import _ from 'lodash';
 import { loadingService } from '../services';
 
 @Component
@@ -27,14 +26,13 @@ export default class SourceDetail extends Vue {
     const scope = this.scope || {
       row: this.data
     };
-    const customCellRendered = sourceColumnRender(this.$createElement, { resource: this.resource, ...extra })(
+    return sourceColumnRender(this.$createElement, { resource: this.resource, ...extra })(
       {
         columns: this.columns,
         column,
         scope
       }
     );
-    return customCellRendered || _.get(scope.row, column.prop, '');
   }
 
   getClass(column) {

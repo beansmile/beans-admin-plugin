@@ -4,7 +4,8 @@ export default function createColumns({ actionColumn } = {}) {
   return [
     {
       prop: 'id',
-      label: '编号'
+      label: '编号',
+      clipboard: true
     },
     {
       prop: 'created_at',
@@ -41,7 +42,8 @@ export default function createColumns({ actionColumn } = {}) {
     {
       prop: 'pay_amount',
       label: '实际支付',
-      renderCell: 'currency'
+      renderCell: 'currency',
+      clipboard: true
     },
     {
       prop: 'cost_integral',
