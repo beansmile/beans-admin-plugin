@@ -57,6 +57,15 @@ export default {
         title: 'permission',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/router-link',
+      name: 'doc.router-link',
+      component: require('./router-link').default,
+      meta: {
+        title: 'router-link',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }
