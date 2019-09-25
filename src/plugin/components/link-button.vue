@@ -1,6 +1,6 @@
 <template>
   <c-router-link :to="to" v-bind="linkProps">
-    <el-button type="text" v-bind="ButtonProps" style="white-space:normal;"><slot /></el-button>
+    <el-button v-bind="buttonProps" style="white-space:normal;"><slot /></el-button>
   </c-router-link>
 </template>
 
@@ -11,6 +11,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class LinkButton  extends Vue {
   @Prop([Object, String]) to;
   @Prop(Object) linkProps;
-  @Prop(Object) ButtonProps;
+  @Prop({ type: Object, default: () => ({ type: 'text' }) }) buttonProps;
 }
 </script>

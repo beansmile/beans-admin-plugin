@@ -29,6 +29,7 @@
 
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
+  import _ from 'lodash';
 
   @Component
   export default class CreateDoc extends Vue {
@@ -45,7 +46,13 @@
       },
       {
         prop: 'desc',
-        label: '说明'
+        label: '说明',
+        renderCell: (h, { row }) => {
+          if (_.isFunction(row.desc)) {
+            return row.desc(h, { row });
+          }
+          return row.desc;
+        }
       },
       {
         prop: 'type',

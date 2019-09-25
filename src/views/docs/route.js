@@ -30,6 +30,15 @@ export default {
         title: 'dynamic-nest-form',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/link-button',
+      name: 'doc.link-button',
+      component: require('./link-button').default,
+      meta: {
+        title: 'link-button',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }
