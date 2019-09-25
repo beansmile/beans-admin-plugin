@@ -66,6 +66,15 @@ export default {
         title: 'router-link',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/select',
+      name: 'doc.select',
+      component: require('./select').default,
+      meta: {
+        title: 'select',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }

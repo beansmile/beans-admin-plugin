@@ -1,5 +1,5 @@
 <script>
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import _ from 'lodash';
 
 @Component
@@ -8,8 +8,8 @@ export default class Select extends Vue {
   @Prop(Function) xRemotePreload;
   @Prop(Object) xRemote;
   @Prop(Array) options;
-  @Prop([String, Number, Object]) value;
   @Prop(Object) selectProps;
+  @Model('change', [String, Number, Object]) value;
 
   localOptions = []
   localProps = {}
