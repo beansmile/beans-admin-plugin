@@ -39,6 +39,15 @@ export default {
         title: 'link-button',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/preview-image',
+      name: 'doc.preview-image',
+      component: require('./preview-image').default,
+      meta: {
+        title: 'preview-image',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }

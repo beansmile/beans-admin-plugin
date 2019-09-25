@@ -97,6 +97,7 @@
       color: #fff;
       padding: 15px;
       font-size: 16px;
+      overflow: auto;
     }
 
     .example {
