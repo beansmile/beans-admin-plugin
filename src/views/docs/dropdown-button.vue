@@ -12,7 +12,7 @@
   import { Vue, Component } from 'vue-property-decorator';
 
   @Component
-  export default class ClipboardDoc extends Vue {
+  export default class Doc extends Vue {
     attributes = [
       {
         prop: 'buttons',

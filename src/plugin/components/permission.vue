@@ -3,11 +3,11 @@
   import { permissionService } from '../services';
 
   @Component
-  export default class Permisson extends Vue {
-    @Prop([String, Array]) permisson;
+  export default class Permission extends Vue {
+    @Prop([String, Array]) permission;
 
     render() {
-      if (permissionService.hasPermission(this.permisson)) {
+      if (permissionService.hasPermission(this.permission)) {
         return this.$slots.default;
       }
       return null;

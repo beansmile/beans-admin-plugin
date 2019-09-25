@@ -48,6 +48,15 @@ export default {
         title: 'preview-image',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/permission',
+      name: 'doc.permission',
+      component: require('./permission').default,
+      meta: {
+        title: 'permission',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }

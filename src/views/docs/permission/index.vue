@@ -1,6 +1,6 @@
 <template>
   <create-doc
-    title="图片预览"
+    title="权限控制"
     :attributes="attributes"
     :events="events"
     :examples="examples"
@@ -14,16 +14,9 @@
   export default class Doc extends Vue {
     attributes = [
       {
-        prop: 'urls',
-        desc: '图片组urls（待实现）',
-        type: 'Array',
-        optionalValue: '',
-        defaultValue: ''
-      },
-      {
-        prop: 'current',
-        desc: '当前图片src',
-        type: 'Object',
+        prop: 'permisson',
+        desc: '需要的权限，需要配置permissionService，文档暂无', //TODO
+        type: 'String, Array',
         optionalValue: '',
         defaultValue: ''
       }
