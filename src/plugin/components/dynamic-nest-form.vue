@@ -24,7 +24,7 @@
   @Component
   export default class DynamicNestForm extends Vue {
     @Model('change', { type: Array, default: () => [] }) value;
-    @Prop({ type: Array, default: () => [] }) columns;
+    @Prop({ type: [Array, Function], default: () => [] }) columns;
     @Prop({ type: String, default: 'id' }) addDestroyFlagFieldName; // 删除后添加_destory的数据标识
 
     get resources() {

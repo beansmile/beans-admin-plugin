@@ -16,7 +16,8 @@
     <div class="example" v-for="(item, index) in examples" :key="index">
       <h3>{{ item.title }}</h3>
       <div class="example-exec">
-        <v-node :render-node="compile(item.code)" />
+        <v-node v-if="item.example" :render-node="item.example" />
+        <v-node v-else :render-node="compile(item.code)" />
       </div>
       <c-clipboard class="example-clipboard">
         <pre class="code">{{ item.code }}</pre>

@@ -21,6 +21,15 @@ export default {
         title: 'dropdown-button',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/dynamic-nest-form',
+      name: 'doc.dynamic-nest-form',
+      component: require('./dynamic-nest-form').default,
+      meta: {
+        title: 'dynamic-nest-form',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }
