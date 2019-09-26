@@ -85,7 +85,7 @@ const config = {
     withCredentials: true
   },
   upload: {
-    useHttps: false,
+    useHttps: true,
     meta_url: '/qiniu_meta',
     upload_url: 'https://upload-z2.qiniup.com',
     customUpload: undefined // function
@@ -105,7 +105,8 @@ const config = {
     edit_url: '',
   },
   ckeditor: {
-    editorConfig: new Function
+    editorConfig: new Function,
+    contentsCss: [],
   },
 }
 

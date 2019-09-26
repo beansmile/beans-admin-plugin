@@ -31,8 +31,10 @@
     }
 
     mounted() {
+      const { contentsCss } = Vue.prototype.$appConfig.ckeditor
       const config = Object.assign({ customConfig: '' }, this.config)
       this.editor = CKEDITOR.replace(this.instanceId, config)
+      contentsCss.forEach(link => this.editor.addContentsCss(link))
       this.editor.on('loaded', e => {
         this.onLoad(e)
         this.editor.setData(this.value)
