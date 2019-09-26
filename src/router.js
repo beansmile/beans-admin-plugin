@@ -20,7 +20,8 @@ const router = new Router({
       },
       component: require('@/views/home').default
     },
-    require('@/views/orders/route').default
+    require('@/views/orders/route').default,
+    require('@/views/docs/route').default
   ]
 })
 

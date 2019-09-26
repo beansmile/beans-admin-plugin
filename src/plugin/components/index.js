@@ -19,5 +19,5 @@ Vue.component('c-pagination', require('./pagination').default);
 Vue.component('c-select', require('./select').default);
 Vue.component('c-nest-form', require('./dynamic-nest-form').default);
 Vue.component('c-router-link', require('./router-link').default);
-Vue.component('c-permisson', require('./permisson').default);
+Vue.component('c-permission', require('./permission').default);
 Vue.component('c-clipboard', require('./clipboard').default);

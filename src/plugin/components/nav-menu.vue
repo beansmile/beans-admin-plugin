@@ -26,7 +26,7 @@
     renderMenuItem(route) {
       return (
         route && this.filter(route) && (
-        <c-permisson permisson={_.get(route, 'meta.permission')}>
+        <c-permission permission={_.get(route, 'meta.permission')}>
         <el-menu-item
       key={route.name}
       index={route.name}
@@ -36,7 +36,7 @@
         <i class={this.getIcon(route)}></i>{this.getTitle(route)}
         </c-router-link>
         </el-menu-item>
-        </c-permisson>
+        </c-permission>
     )
     )
     }
