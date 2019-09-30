@@ -38,7 +38,7 @@ export default function (config) {
 
   config.allowedContent = true
 
-  config.extraPlugins = 'html5video,widget,widgetselection,clipboard,lineutils'
+  config.extraPlugins = 'html5video,widget,widgetselection,clipboard,lineutils,lineheight'
 
   // Toolbar groups configuration.
   config.toolbar = [
@@ -59,7 +59,7 @@ export default function (config) {
       items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
     },
     '/',
-    { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
+    { name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize', 'lineheight' ] },
     { name: 'colors', items: ['TextColor', 'BGColor'] },
     {
       name: 'basicstyles',

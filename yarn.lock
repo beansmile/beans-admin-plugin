@@ -2141,7 +2141,7 @@ circular-json@^0.3.1:
 
 "ckeditor@https://github.com/beansmile/ckeditor.git":
   version "0.0.0"
-  resolved "https://github.com/beansmile/ckeditor.git#1f06cd2eba67b6efa07ee7ccdbe9428f6ffb3371"
+  resolved "https://github.com/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -8789,10 +8789,10 @@ vue-quill-editor@^3.0.6:
     object-assign "^4.1.1"
     quill "^1.3.4"
 
-vue-router@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/vue-router/-/vue-router-3.1.2.tgz#2e0904703545dabdd42b2b7a2e617f02f99a1969"
-  integrity sha512-WssQEHSEvIS1/CI4CO2T8LJdoK4Q9Ngox28K7FDNMTfzNTk2WS5D0dDlqYCaPG+AG4Z8wJkn1KrBc7AhspZJUQ==
+vue-router@^3.1.3:
+  version "3.1.3"
+  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-3.1.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-3.1.3.tgz#e6b14fabc0c0ee9fda0e2cbbda74b350e28e412b"
+  integrity sha1-5rFPq8DA7p/aDiy72nSzUOKOQSs=
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
