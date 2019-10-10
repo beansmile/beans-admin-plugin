@@ -8,7 +8,11 @@ class PermissionService {
   usePermission = false;
 
   getPermissionMapFromStorage() {
-    return JSON.parse(window.sessionStorage.getItem(this.PERMISSION_STORAGE_KEY));
+    try {
+      return JSON.parse(window.sessionStorage.getItem(this.PERMISSION_STORAGE_KEY));
+    } catch (e) {
+      return null;
+    }
   }
 
   savePermissionMapToStorage(data) {
