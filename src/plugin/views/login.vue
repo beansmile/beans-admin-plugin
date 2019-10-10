@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item label="密码">
           <el-input v-model="password" show-password></el-input>
-          <a @click="sendEmail" style="cursor: pointer;">忘记密码？</a>
+          <a v-if="$get($appConfig, 'password.forgot_url')" @click="sendEmail" style="cursor: pointer;">忘记密码？</a>
         </el-form-item>
         <el-button type="primary" native-type="submit">登录</el-button>
       </el-form>
