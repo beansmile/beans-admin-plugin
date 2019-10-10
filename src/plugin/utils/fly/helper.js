@@ -47,8 +47,8 @@ export function onSucceed(res) {
 
 export function onError(err) {
   hideNProgress(err.request)
-  const { error_message, messages, error, code } = _.get(err, 'response.data', {})
-  err.message = error_message || messages || error || err.message
+  const { error_message, message, messages, error, code } = _.get(err, 'response.data', {})
+  err.message = error_message || message || messages || error || err.message
   err.api_code = code
 
   const app = Vue.appRouter.app
