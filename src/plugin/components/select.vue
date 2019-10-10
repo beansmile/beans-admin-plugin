@@ -9,7 +9,7 @@ export default class Select extends Vue {
   @Prop(Object) xRemote;
   @Prop(Array) options;
   @Prop(Object) selectProps;
-  @Model('change', [String, Number, Object]) value;
+  @Model('change', [String, Number, Object, Array, Boolean]) value;
 
   localOptions = []
   localProps = {}
