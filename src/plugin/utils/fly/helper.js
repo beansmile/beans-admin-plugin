@@ -54,6 +54,7 @@ export function onError(err) {
   const app = Vue.appRouter.app
   switch (err.status) {
     case 401: {
+      localStorage.removeItem('access_token')
       if (app.$route.name !== 'login') {
         app.$router.replace({ name: 'login' })
         Message.info('请登录')
