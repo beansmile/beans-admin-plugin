@@ -18,6 +18,7 @@
 <script>
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import _ from 'lodash';
+import flatten, { unflatten } from 'flat';
 
 @Component
 export default class SourceFilter extends Vue {
@@ -43,7 +44,8 @@ export default class SourceFilter extends Vue {
 
   onSubmit() {
     // 空字符串不提交
-    const query = _.pickBy(this.formModel, val => val !== '');
+    const flattenFormModel = flatten(this.formModel);
+    const query = unflatten(_.pickBy(flattenFormModel, value => value !== ''));
     const searchKey = _.get(query, '_search.field');
     const searchValue = _.get(query, '_search.value');
     if (searchKey && searchValue) {
