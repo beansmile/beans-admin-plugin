@@ -33,14 +33,16 @@
     }
 
     async login() {
-      const { request_url, navigateTo } = _.get(this, '$appConfig.login') || {};
+      const { request_url, navigateTo, token_storage_key } = _.get(this, '$appConfig.login') || {};
       if (request_url) {
-        const { access_token, admin_user } = await this.$autoLoading(this.$fly.post(request_url, {
+        const { access_token, token, admin_user } = await this.$autoLoading(this.$fly.post(request_url, {
           email: this.email,
           password: this.password
         }));
-        localStorage.setItem('access_token', access_token)
-        this.$root.currentUser = admin_user
+        localStorage.setItem(token_storage_key, access_token || token || '');
+        if (admin_user) {
+          this.$root.currentUser = admin_user;
+        }
         this.$message.success('登录成功');
         this.$router.replace(navigateTo);
       }

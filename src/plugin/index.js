@@ -91,6 +91,8 @@ const config = {
     customUpload: undefined // function
   },
   login: {
+    token_storage_key: 'access_token',
+    token_header_key: 'Authorization',
     request_url: '',
     navigateTo: { name: 'home' }
   },
