@@ -9,7 +9,8 @@ import { loadingService } from '../../services'
 
 export function onSend(request) {
   showNProgress(request)
-  request.headers['Authorization'] = localStorage.getItem('access_token')
+  const { token_storage_key, token_header_key } = Vue.appConfig.login;
+  request.headers[token_header_key] = localStorage.getItem(token_storage_key);
   if (request.method === 'GET' && request.body) {
     const body = _.omitBy(request.body, (v, k) => k.startsWith('_'))
     request.params = qs.stringify(body, { arrayFormat: 'brackets' })
