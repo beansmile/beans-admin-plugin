@@ -79,6 +79,12 @@ function initRouter(router) {
 const config = {
   name: '后台管理',
   logo: '',
+  table: {
+    sort: {
+      ascending: 'asc',
+      descending: 'desc'
+    }
+  },
   request: {
     baseURL: '/admin_api/v1',
     timeout: 30000,
