@@ -33,6 +33,7 @@ export default class SourceTable extends Vue {
   }
 
   handleSortChange({ order, prop }) {
+    const { ascending, descending } = _.get(this.$appConfig, 'table.sort', {});
     const query = Object.assign({}, this.$route.query, { page: 1 });
     if (order) {
       _.set(query, '_sort_field', prop);
@@ -40,8 +41,8 @@ export default class SourceTable extends Vue {
       const row = this.getRowByPropName(prop);
       const sortQueryKey = row.sort;
       const sortQueryValue = {
-        ascending: 'asc',
-        descending: 'desc'
+        ascending,
+        descending
       }[order];
       _.set(query, sortQueryKey, `${prop} ${sortQueryValue}`);
     } else {
