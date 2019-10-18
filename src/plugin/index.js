@@ -106,7 +106,8 @@ const config = {
     request_url: ''
   },
   permission: {
-    request_url: ''
+    request_url: '',
+    getPermissionMap: null
   },
   password: {
     forgot_url: '',
