@@ -8,8 +8,7 @@ export default class Select extends Vue {
   @Prop(Function) xRemotePreload;
   @Prop(Object) xRemote;
   @Prop(Array) options;
-  @Prop(Object) selectProps;
-  @Model('change', [String, Number, Object, Array, Boolean]) value;
+  @Model('change', { type: [String, Number, Object, Array, Boolean], default: '' }) value;
 
   localOptions = []
   localProps = {}
@@ -73,7 +72,7 @@ export default class Select extends Vue {
 
   render() {
     return (
-      <el-select props={{ ...this.selectProps, options: this.options, value: this.value, ...this.localProps }} onChange={val => this.$emit('change', val)}>
+      <el-select props={{ value: this.value, ...this.$attrs, ...this.localProps }} onChange={val => this.$emit('change', val)}>
         {
           this.renderOptions()
         }

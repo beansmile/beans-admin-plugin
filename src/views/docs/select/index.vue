@@ -40,13 +40,6 @@
         type: 'String, Number, Object',
         optionalValue: '',
         defaultValue: ''
-      },
-      {
-        prop: 'selectProps',
-        desc: '',
-        type: 'Object',
-        optionalValue: '',
-        defaultValue: ''
       }
     ]
 
