@@ -152,9 +152,8 @@ export default class SourceFormItem extends Vue {
       if (!formRules.find(item => item.required)) {
         formRules.push({
           required: true,
-          message: required === true ? `${label}必填` : required,
-          trigger: 'blur'
-        })
+          message: required === true ? `${label}必填` : required
+        });
       }
     }
 
