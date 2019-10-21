@@ -28,14 +28,20 @@ class PermissionService {
   }
 
   async init() {
-    const { request_url } = Vue.appConfig.permission;
-    if (request_url) {
+    const { request_url, getPermissionMap } = Vue.appConfig.permission;
+    if (request_url || _.isFunction(getPermissionMap)) {
       this.usePermission = true;
       const permissionMap = this.getPermissionMapFromStorage();
       if (permissionMap) {
         return this.permissionMap = permissionMap;
       }
-      const { abilities } = await fly.get(request_url);
+      let abilities = [];
+      if (getPermissionMap) {
+        abilities = await getPermissionMap();
+      } else {
+        const data = await fly.get(request_url);
+        abilities = data.abilities;
+      }
       this.savePermissionMapToStorage(abilities);
       return this.permissionMap = abilities;
     }
