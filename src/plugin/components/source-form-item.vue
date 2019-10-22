@@ -13,6 +13,7 @@ export default class SourceFormItem extends Vue {
     return _.get(this.value, prop);
   }
 
+  // TODO: inputNumber组件中，当val为undefined时，也需替换原有数值
   handleValueChange(prop, { triggerColumnChange = true } = {}) {
     return (val) => {
       const newValue = _.mergeWith({}, this.value, _.set({}, prop, val), (objValue, srcValue) => {
@@ -134,6 +135,14 @@ export default class SourceFormItem extends Vue {
     />
   }
 
+  renderStaticNestForm({ prop, props }) {
+    return <c-static-nest-form
+      props={props}
+      value={this.getPropValue(prop)}
+      onChange={this.handleValueChange(prop)}
+    />
+  }
+
   renderVNode({ props }) {
     return <v-node props={props} />
   }
@@ -181,6 +190,7 @@ export default class SourceFormItem extends Vue {
       upload: this.renderUpload,
       editor: this.renderEditor,
       nestForm: this.renderNestForm,
+      staticNestForm: this.renderStaticNestForm,
       vNode: this.renderVNode
     }
 
