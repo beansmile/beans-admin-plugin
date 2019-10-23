@@ -6,7 +6,9 @@
     display: block;
   }
 
-  .c-dynamic-nest-form .source-form-item {
-    margin-bottom: 22px;
+  .c-dynamic-nest-form, .c-static-nest-form {
+    .source-form-item {
+      margin-bottom: 22px;
+    }
   }
 }
