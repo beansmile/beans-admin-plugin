@@ -54,7 +54,7 @@
     examples = [
       {
         title: '基本用法',
-        code: require('!raw-loader!./example.vue'),
+        code: require('!raw-loader!./example.vue').default,
         example: h => {
           const Example = require('./example.vue').default;
           return <Example h={h} />
