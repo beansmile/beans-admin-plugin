@@ -21,7 +21,7 @@ export default class SourceTable extends Vue {
         }
       })
       .filter(item => !(item.action || []).includes('hide-in-table'))
-      .map(item => ({ ...item, prop: String(item.prop) }));
+      .map(item => ({ ...item, prop: item.prop && String(item.prop) }));
   }
 
   getRowByPropName(propName) {
@@ -67,6 +67,9 @@ export default class SourceTable extends Vue {
   }
 
   renderScopedSlots(column) {
+    if (!column.prop) {
+      return null;
+    }
     return {
       default: (scope) => sourceColumnRender(this.$createElement, { resource: this.resource })(
         {
