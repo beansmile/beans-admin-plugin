@@ -13,7 +13,6 @@ export default class SourceFormItem extends Vue {
     return _.get(this.value, prop);
   }
 
-  // TODO: inputNumber组件中，当val为undefined时，也需替换原有数值
   handleValueChange(prop, { triggerColumnChange = true } = {}) {
     return (val) => {
       const newValue = _.mergeWith({}, this.value, _.set({}, prop, val), (objValue, srcValue) => {
@@ -27,6 +26,10 @@ export default class SourceFormItem extends Vue {
         _.isFunction(change) && change(newValue[prop]);
       }
     }
+  }
+
+  handleInputNumberChange(prop) {
+    return val => this.handleValueChange(prop)(val || 0);
   }
 
   renderRadioGroup({ prop, props }) {
@@ -79,8 +82,8 @@ export default class SourceFormItem extends Vue {
   }
 
   renderInputNumber({ prop, props }) {
-    const componentProps = { max: 999999, min: 0, ...props }
-    return <el-input-number props={componentProps} value={this.getPropValue(prop)} onChange={this.handleValueChange(prop)} />
+    const componentProps = { max: 2147483647, min: 0, ...props }
+    return <el-input-number props={componentProps} value={this.getPropValue(prop)} onChange={this.handleInputNumberChange(prop)} />
   }
 
   renderSelect({ prop, props }) {
