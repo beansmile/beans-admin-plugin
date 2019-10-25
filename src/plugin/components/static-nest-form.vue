@@ -1,6 +1,6 @@
 <template>
   <div class="c-static-nest-form">
-    <div class="inputs" v-if="canShow">
+    <div class="inputs" v-if="show">
       <c-source-form-item
         v-for="column in computedColumns"
         :key="column.prop"
@@ -11,13 +11,13 @@
       />
     </div>
     <div>
-      <el-button type="primary" @click="toggleShow" v-if="collapsible">{{toggleButtonText}}</el-button>
+      <el-button type="primary" @click="toggleShow" v-if="collapsible">{{ toggleButtonText }}</el-button>
     </div>
   </div>
 </template>
 
 <script>
-  import { Vue, Component, Prop, Model } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator';
   import _ from 'lodash';
 
   @Component
@@ -27,10 +27,9 @@
     @Prop({ type: Boolean, default: false }) collapsible;
 
     show = false;
-    toggleButtonText = '展开编辑';
 
-    get canShow() {
-      return this.collapsible ? this.show : true;
+    get toggleButtonText() {
+      return this.show ? '收起' : '展开编辑';
     }
 
     get resources() {
@@ -46,12 +45,16 @@
     }
 
     handleChange(data) {
-      this.$emit('change', data)
+      this.$emit('change', data);
     }
 
     toggleShow() {
       this.show = !this.show;
-      this.toggleButtonText = this.toggleButtonText === '展开编辑' ? '收起' : '展开编辑';
+    }
+
+    @Watch('collapsible', { immediate: true })
+    onCollapsibleChange(collapsible) {
+      this.show = !collapsible;
     }
   }
 </script>
