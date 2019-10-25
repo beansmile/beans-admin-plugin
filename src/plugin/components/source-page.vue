@@ -12,9 +12,11 @@ export default class SourcePage extends Vue {
   @Prop(String) createButtonText;
   @Prop(Object) createPageLocation; // 创建页面链接
   @Prop({ type: String, default: '' }) exportExcelURL;
+  @Prop({ type: Array, default: () => [] }) batchActions; // 批处理
 
   exporting = false;
   tableHeight = 0;
+  selectedRows = [];
 
   async export() {
     this.exporting = true;
@@ -44,6 +46,17 @@ export default class SourcePage extends Vue {
     return this.$refs.sourceTable.getTableComponent();
   }
 
+  renderSelectionButtons() {
+    return this.batchActions.map(item => {
+      const props = { type: 'primary', ...item.buttonProps }
+      return <el-button
+        disabled={!this.selectedRows.length}
+        props={props}
+        onClick={() => item.handler(JSON.parse(JSON.stringify(this.selectedRows)))}
+      >{item.text || item.title}</el-button>;
+    })
+  }
+
   renderButtons() {
     const createPageLocation = this.createPageLocation || { name: `${this.resource}.new` };
 
@@ -54,6 +67,7 @@ export default class SourcePage extends Vue {
       <div class="source-page-btn-group">
         {this.showCreateButton && <c-router-link keepNode={false} to={createPageLocation}><el-button class="btn-create" type="primary">{this.createButtonText}</el-button></c-router-link>}
         {this.showExportButton && <el-button disabled={this.exporting} onClick={this.export} loading={this.exporting} type="primary">导出数据</el-button>}
+        {this.renderSelectionButtons()}
         {
           $actionSlot && (
             <div class="action">
@@ -77,7 +91,19 @@ export default class SourcePage extends Vue {
     // window.addEventListener('resize', () => this.calcTableHeight(), false);
   }
 
+  get tableColumns() {
+    return this.batchActions.length ? [{ type: 'selection', width: 55 }].concat(this.columns) : this.columns;
+  }
+
+  get tableProps() {
+    if (this.batchActions.length) {
+      _.set(this.table, 'events.selection-change', selectedRows => this.selectedRows = selectedRows);
+    }
+    return this.table;
+  }
+
   render() {
+
     return (
       <div class="source-page">
         <div class="source-page-header">
@@ -87,7 +113,13 @@ export default class SourcePage extends Vue {
           this.renderButtons()
         }
         {
-          <c-source-table ref="sourceTable" table-height={this.tableHeight} resource={this.resource} table={this.table} columns={this.columns} />
+          <c-source-table
+            ref="sourceTable"
+            table-height={this.tableHeight}
+            resource={this.resource}
+            table={this.tableProps}
+            columns={this.tableColumns}
+          />
         }
         <c-pagination pagination={this.pagination} />
       </div>

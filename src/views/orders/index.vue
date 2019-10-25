@@ -7,6 +7,7 @@
       :pagination="pagination"
       createButtonText="新建"
       resource="orders"
+      :batch-actions="batchActions"
     />
   </div>
 </template>
@@ -32,6 +33,18 @@ export default class Index extends Vue {
   ]
 
   memberOptions = []
+
+  batchActions = [
+    {
+      text: '批量删除',
+      buttonProps: {
+        type: 'danger'
+      },
+      handler: (selectedRows) => {
+        console.log(selectedRows)
+      }
+    }
+  ]
 
   table = {
     data: []
