@@ -87,6 +87,9 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       }
       return renderLink(value);
     }
+    case 'html': {
+      return <div class="markdown-body html-content" domProps={{ innerHTML: value || '' }}/>
+    }
     default:
       return value;
   }
