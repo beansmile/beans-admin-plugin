@@ -5,30 +5,19 @@ import { loadingService } from '../services';
 
 @Component
 export default class SourceDetail extends Vue {
-  @Prop(Array) columns;
+  @Prop({ type: Array, default: () => [] }) pages;
+  @Prop({ type: Array, default: () => [] }) columns;
   @Prop(Object) scope;
   @Prop({ type: String }) resource;
   @Prop({ type: Object, default: () => ({}) }) data;
 
-  get showColumns() {
-    return this.columns.filter(item => (item.action || []).indexOf('hide-in-detail') === -1);
-  }
-
-  get detailColumns() {
-    return this.showColumns.filter(item => item.prop !== 'action');
-  }
-
-  get actionColumn() {
-    return this.showColumns.find(item => item.prop === 'action');
-  }
-
-  renderCell(column, extra = {}) {
+  renderCell(columns, column, extra = {}) {
     const scope = this.scope || {
       row: this.data
     };
     return sourceColumnRender(this.$createElement, { resource: this.resource, ...extra })(
       {
-        columns: this.columns,
+        columns,
         column,
         scope
       }
@@ -39,31 +28,49 @@ export default class SourceDetail extends Vue {
     return `item item-${column.prop}`;
   }
 
-  render() {
-    const { default: defaultSlot, action: actionSlot } = this.$slots;
-    const $actionSlot = actionSlot || defaultSlot;
+  renderColumns(columns) {
+    const showColumns = columns.filter(item => (item.action || []).indexOf('hide-in-detail') === -1);
+    const detailColumns = showColumns.filter(item => item.prop !== 'action');
+    const actionColumn = showColumns.find(item => item.prop === 'action');
+
     return (
-      <div class="c-source-detail" v-loading={loadingService.state.count > 0}>
-        {
-          $actionSlot && (
-            <div class="action">
-              {$actionSlot}
-            </div>
-          )
-        }
+      <div class="render-columns">
         <div class="content">
           {
-            this.detailColumns.map(column => (
+            detailColumns.map(column => (
               <div class={this.getClass(column)} key={column.prop}>
                 <div class="label">{column.label}：</div>
-                <div class="value">{this.renderCell(column)}</div>
+                <div class="value">{this.renderCell(columns, column)}</div>
               </div>
-          ))
+            ))
           }
         </div>
-        {
-          this.actionColumn && <div class="toolbar-action">{this.renderCell(this.actionColumn, { actionButtonMode: true, actionButtonProps: { type: 'primary' } })}</div>
-        }
+        {actionColumn && <div class="toolbar-action">{this.renderCell(this.columns, actionColumn, { actionButtonMode: true, actionButtonProps: { type: 'primary' } })}</div>}
+      </div>
+    )
+  }
+
+  renderComponent(component) {
+    // eslint-disable-next-line
+    return <div class="render-component"><v-node renderNode={h => component} /></div>
+  }
+
+  renderPages() {
+    return (
+      <el-tabs type="border-card">
+        {this.pages.map((page, index) => (
+          <el-tab-pane label={page.name || page.label} name={String(index)}>
+           {page.columns ? this.renderColumns(page.columns) : this.renderComponent(page.component)}
+          </el-tab-pane>
+        ))}
+      </el-tabs>
+    )
+  }
+
+  render() {
+    return (
+      <div class="c-source-detail" v-loading={loadingService.state.count > 0}>
+        {this.columns.length ? this.renderColumns(this.columns) : this.renderPages()}
       </div>
     )
   }
