@@ -14,7 +14,7 @@
   }
 
   .multi-images {
-    .preview-image {
+    .image:not(:last-child) {
       margin-right: 10px;
     }
   }

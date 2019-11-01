@@ -18,36 +18,22 @@ export const renderCellByType = (h) => ({ column, scope }) => {
   switch (type) {
     case 'image': {
       const { width = '50px', height = '50px', borderRadius = 0, objectFit = 'cover', ...opts } = options;
-      if (value instanceof Array) {
-        return (
-          <div class="multi-images">
-            {
-              value.map(img =>
-                <c-preview-image current={img}>
-                  <img
-                    src={img}
-                    style={{ width, height, borderRadius, objectFit, ...opts }}
-                  />
-                </c-preview-image>
-              )
-            }
-          </div>
-        )
-      } else {
-        return value && (
-          <c-preview-image current={value}>
-            <img
-              src={value}
-              style={{
-                width,
-                height,
-                borderRadius,
-                objectFit, ...opts
-              }}
-            />
-          </c-preview-image>
-        );
-      }
+      const images = _.flatten([value]);
+      return (
+        <div class="multi-images">
+          {
+            images.map(img =>
+              <el-image
+                class="image"
+                style={{ width, height, borderRadius, ...opts }}
+                src={img}
+                fit={objectFit}
+                preview-src-list={images}
+              />
+            )
+          }
+        </div>
+      );
     }
     case 'video': {
       const { style = { height: '200px' } } = options;
