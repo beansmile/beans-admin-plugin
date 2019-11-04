@@ -11,6 +11,30 @@ export default class SourceDetail extends Vue {
   @Prop({ type: String }) resource;
   @Prop({ type: Object, default: () => ({}) }) data;
 
+  activeTab = '0'
+  tabSessionKey = '';
+
+  created() {
+    const TAB_SESSION_STORAGE_KEY = 'tab_session';
+    const { path } = this.$route;
+    this.tabSessionKey = TAB_SESSION_STORAGE_KEY + path;
+    this.activeTab = this.getTabSession();
+  }
+
+  removeTabSession() {
+    return sessionStorage.removeItem(this.tabSessionKey);
+  }
+
+  getTabSession() {
+    return sessionStorage.getItem(this.tabSessionKey);
+  }
+
+  setTabSession(value) {
+    const activeTab = String(value);
+    this.activeTab = activeTab;
+    sessionStorage.setItem(this.tabSessionKey, activeTab);
+  }
+
   renderCell(columns, column, extra = {}) {
     const scope = this.scope || {
       row: this.data
@@ -56,11 +80,21 @@ export default class SourceDetail extends Vue {
   }
 
   renderPages() {
+    const event = {
+      'tab-click': ({ name }) => {
+        this.setTabSession(name);
+      }
+    }
+    const activeTab = (+this.activeTab > this.pages.length - 1 ? '0' : this.activeTab) || '0';
+
     return (
-      <el-tabs type="border-card">
+      <el-tabs type="border-card" value={activeTab} on={event}>
         {this.pages.map((page, index) => (
           <el-tab-pane label={page.name || page.label} name={String(index)}>
-           {page.columns ? this.renderColumns(page.columns) : this.renderComponent(page.component)}
+            {
+              activeTab === String(index) &&
+              (page.columns ? this.renderColumns(page.columns) : this.renderComponent(page.component))
+            }
           </el-tab-pane>
         ))}
       </el-tabs>
