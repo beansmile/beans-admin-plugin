@@ -21,4 +21,13 @@
   .c-source-table {
     flex: 1;
   }
+
+  .page-bottom {
+    display: flex;
+    align-items: center;
+
+    & > .pagination {
+      flex: 1;
+    }
+  }
 }
