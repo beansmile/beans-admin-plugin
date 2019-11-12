@@ -85,10 +85,15 @@ export default class SourcePage extends Vue {
     this.tableHeight = table.$el.offsetHeight;
   }
 
+  debouncedCalcTableHeight = _.debounce(this.calcTableHeight, 500);
+
   mounted() {
     this.calcTableHeight();
-    // TODO tableHeight 变了之后table不会重新渲染
-    // window.addEventListener('resize', () => this.calcTableHeight(), false);
+    window.addEventListener('resize', this.debouncedCalcTableHeight, false);
+  }
+
+  beforeDestroy() {
+    window.removeEventListener('resize', this.debouncedCalcTableHeight, false);
   }
 
   get tableColumns() {
