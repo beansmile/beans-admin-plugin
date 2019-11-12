@@ -98,7 +98,8 @@ export default class SourcePage extends Vue {
   }
 
   get tableKey() {
-    return _.get(this, '$route.name');
+    const key = _.get(this, '$route.name');
+    return key ? `table_${key}` : '';
   }
 
   get tableFieldSelected() {
@@ -106,7 +107,11 @@ export default class SourcePage extends Vue {
     const data = localStorage.getItem(key);
     if (data) {
       try {
-        return JSON.parse(data) || [];
+        const { selected = [], origin = [] } = JSON.parse(data);
+        // 对比当前版本和之前版本字段
+        if (String(origin) === String(this.tableColumnsProp)) {
+          return selected;
+        }
       } catch (e) {
         localStorage.removeItem(key);
       }
@@ -116,6 +121,10 @@ export default class SourcePage extends Vue {
 
   get tableColumns() {
     return this.batchActions.length ? [{ type: 'selection', width: 55 }].concat(this.columns) : this.columns;
+  }
+
+  get tableColumnsProp() {
+    return this.tableColumns.map(item => item.prop).filter(Boolean);
   }
 
   get tableRenderColumns() {
@@ -134,11 +143,11 @@ export default class SourcePage extends Vue {
     createSourceFormDialog(this.$createElement, {
       title: '表格设置',
       data: {
-        filedSelected: this.tableFieldSelected
+        fieldSelected: this.tableFieldSelected
       },
       columns: [
         {
-          prop: 'filedSelected',
+          prop: 'fieldSelected',
           label: '选择渲染列',
           form: {
             component: 'checkboxGroup',
@@ -148,8 +157,12 @@ export default class SourcePage extends Vue {
           }
         }
       ],
-      onConfirm: ({ filedSelected }) => {
-        localStorage.setItem(this.tableKey, JSON.stringify(filedSelected));
+      onConfirm: ({ fieldSelected }) => {
+        const data = {
+          selected: fieldSelected,
+          origin: this.tableColumnsProp
+        }
+        localStorage.setItem(this.tableKey, JSON.stringify(data));
         location.reload();
       }
     })
