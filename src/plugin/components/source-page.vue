@@ -1,6 +1,7 @@
 <script lang="jsx">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
+import { createSourceFormDialog } from './source-form';
 
 @Component
 export default class SourcePage extends Vue {
@@ -91,8 +92,29 @@ export default class SourcePage extends Vue {
     // window.addEventListener('resize', () => this.calcTableHeight(), false);
   }
 
+  get tableKey() {
+    return _.get(this, '$route.name');
+  }
+
+  get tableFieldSelected() {
+    const key = this.tableKey;
+    const data = localStorage.getItem(key);
+    if (data) {
+      try {
+        return JSON.parse(data) || [];
+      } catch (e) {
+        localStorage.removeItem(key);
+      }
+    }
+    return this.tableColumns.map(item => item.prop).filter(Boolean);
+  }
+
   get tableColumns() {
     return this.batchActions.length ? [{ type: 'selection', width: 55 }].concat(this.columns) : this.columns;
+  }
+
+  get tableRenderColumns() {
+    return this.tableColumns.filter(item => !item.prop || this.tableFieldSelected.includes(item.prop));
   }
 
   get tableProps() {
@@ -102,8 +124,33 @@ export default class SourcePage extends Vue {
     return this.table;
   }
 
-  render() {
+  handleTableSetting() {
+    const columns = this.tableColumns.filter(item => item.label && item.prop);
+    createSourceFormDialog(this.$createElement, {
+      title: '表格设置',
+      data: {
+        filedSelected: this.tableFieldSelected
+      },
+      columns: [
+        {
+          prop: 'filedSelected',
+          label: '选择渲染列',
+          form: {
+            component: 'checkboxGroup',
+            props: {
+              checkboxs: columns.map(item => ({ label: item.prop, title: item.label }))
+            }
+          }
+        }
+      ],
+      onConfirm: ({ filedSelected }) => {
+        localStorage.setItem(this.tableKey, JSON.stringify(filedSelected));
+        location.reload();
+      }
+    })
+  }
 
+  render() {
     return (
       <div class="source-page">
         <div class="source-page-header">
@@ -118,10 +165,13 @@ export default class SourcePage extends Vue {
             table-height={this.tableHeight}
             resource={this.resource}
             table={this.tableProps}
-            columns={this.tableColumns}
+            columns={this.tableRenderColumns}
           />
         }
-        <c-pagination pagination={this.pagination} />
+        <div class="page-bottom">
+          <c-pagination pagination={this.pagination} class="pagination" />
+          <el-button type="primary" icon="el-icon-setting" onClick={this.handleTableSetting}>表格设置</el-button>
+        </div>
       </div>
     )
   }
