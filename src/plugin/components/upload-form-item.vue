@@ -4,9 +4,7 @@
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
-          <c-preview-image :current="item">
-            <img class="image" :src="item"/>
-          </c-preview-image>
+          <c-preview-image class="image" fit="cover" :current="item" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
