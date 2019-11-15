@@ -73,8 +73,7 @@ export default class SourceFormItem extends Vue {
   }
 
   renderInput({ prop, props }) {
-    // TODO placeholder 在props里面解构有问题
-    return <el-input props={props} rows={props.rows} placeholder={props.placeholder} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
+    return <el-input attrs={props} props={props} rows={props.rows} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
   }
 
   renderTextArea({ prop, props }) {
