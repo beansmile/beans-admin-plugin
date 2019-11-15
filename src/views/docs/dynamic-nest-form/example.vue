@@ -1,5 +1,8 @@
 <template>
-  <el-form>
+  <el-form
+    label-position="left"
+    label-width="auto"
+  >
     <c-nest-form
       v-model="formModel"
       :columns="columns"

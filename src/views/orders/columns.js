@@ -201,7 +201,7 @@ export const formColumn = [
   },
   {
     prop: 'nestForm',
-    label: 'nestForm',
+    label: '动态表单',
     form: {
       component: 'nestForm',
       props: {
@@ -214,6 +214,25 @@ export const formColumn = [
             }
           }
         ]
+      }
+    }
+  },
+  {
+    prop: 'staticNestForm',
+    label: '静态表单',
+    form: {
+      component: 'staticNestForm',
+      props: {
+        columns: [
+          {
+            prop: 'staticInput',
+            label: '输入框',
+            form: {
+              component: 'input'
+            }
+          }
+        ],
+        collapsible: true
       }
     }
   }

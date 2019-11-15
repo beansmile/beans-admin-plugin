@@ -5,8 +5,8 @@
         v-for="column in computedColumns"
         :key="column.prop"
         :column="column"
-        :row="value"
-        :value="value"
+        :row="resource"
+        :value="resource"
         @change="handleChange"
       />
     </div>
@@ -32,13 +32,13 @@
       return this.show ? '收起' : '展开编辑';
     }
 
-    get resources() {
-      return this.value ? _.flatten([this.value]) : [];
+    get resource() {
+      return this.value || {};
     }
 
     get computedColumns() {
       if (_.isFunction(this.columns)) {
-        return this.columns({ resource: this.resources });
+        return this.columns({ resource: this.resource });
       } else {
         return this.columns;
       }

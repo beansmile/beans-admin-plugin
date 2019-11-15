@@ -32,6 +32,15 @@ export default {
       }
     },
     {
+      path: '/static-nest-form',
+      name: 'doc.static-nest-form',
+      component: require('./static-nest-form').default,
+      meta: {
+        title: 'static-nest-form',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
       path: '/link-button',
       name: 'doc.link-button',
       component: require('./link-button').default,
