@@ -11,6 +11,7 @@ export default class SourceTable extends Vue {
   @Prop(String) resource;
   @Prop(Number) tableHeight;
 
+  // source page会用到
   get tableColumns() {
     return this.columns
       .map(item => {
