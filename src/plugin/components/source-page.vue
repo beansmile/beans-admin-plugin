@@ -139,8 +139,9 @@ export default class SourcePage extends Vue {
   }
 
   handleTableSetting() {
-    // source-table computed tableColumns
-    const columns = _.get(this.$refs.sourceTable, 'tableColumns', []).filter(item => item.label && item.prop);
+    // source-table filterTableColumns
+    const tableColumnsFilter = _.get(this.$refs.sourceTable, 'filterTableColumns', a => a);
+    const columns = tableColumnsFilter(this.tableColumns).filter(item => item.label && item.prop);
     createSourceFormDialog(this.$createElement, {
       title: '表格设置',
       data: {
