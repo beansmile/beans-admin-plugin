@@ -11,18 +11,19 @@ export default class SourceTable extends Vue {
   @Prop(String) resource;
   @Prop(Number) tableHeight;
 
-  // source page会用到
   get tableColumns() {
-    return this.columns
-      .map(item => {
-        return {
-          ...item,
-          sortable: item.sort ? 'custom' : false,
-          'sort-orders': ['ascending', 'descending', null]
-        }
-      })
-      .filter(item => !(item.action || []).includes('hide-in-table'))
-      .map(item => ({ ...item, prop: item.prop && String(item.prop) }));
+    return this.filterTableColumns(this.columns)
+    .map(item => ({
+      ...item,
+      sortable: item.sort ? 'custom' : false,
+      'sort-orders': ['ascending', 'descending', null]
+    }))
+    .map(item => ({ ...item, prop: item.prop && String(item.prop) }));
+  }
+
+  // source page会用到
+  filterTableColumns(columns) {
+    return columns.filter(item => !(item.action || []).includes('hide-in-table'))
   }
 
   getRowByPropName(propName) {
