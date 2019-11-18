@@ -1,6 +1,10 @@
 <template>
   <el-image
-    v-bind="{ src: current, 'preview-src-list': [current || $attrs['preview-src-list']],  ...$attrs }"
+    v-bind="{
+      src: current,
+      previewSrcList: [current],
+      ...$attrs
+    }"
   />
 </template>
 
