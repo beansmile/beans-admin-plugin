@@ -17,7 +17,8 @@ export const renderCellByType = (h) => ({ column, scope }) => {
 
   switch (type) {
     case 'image': {
-      const { width = '50px', height = '50px', borderRadius = 0, objectFit = 'cover', ...opts } = options;
+      const { width = '50px', height = '50px', borderRadius = 0, ...opts } = options;
+      const fit = opts.fit || opts.objectFit || 'cover';
       const images = _.flatten([value]).filter(Boolean);
       return (
         <div class="multi-images">
@@ -27,7 +28,7 @@ export const renderCellByType = (h) => ({ column, scope }) => {
                 class="image"
                 style={{ width, height, borderRadius, ...opts }}
                 src={img}
-                fit={objectFit}
+                fit={fit}
                 preview-src-list={images}
               />
             )
