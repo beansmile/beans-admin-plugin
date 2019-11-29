@@ -77,7 +77,7 @@ export default class SourceFormItem extends Vue {
   }
 
   renderTextArea({ prop, props }) {
-    return <el-input type="textarea" props={props} placeholder={props.placeholder} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
+    return <el-input attrs={props} props={props} type="textarea" value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
   }
 
   renderInputNumber({ prop, props }) {
