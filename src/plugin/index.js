@@ -110,6 +110,8 @@ const config = {
     getPermissionMap: null
   },
   password: {
+    onSendVerificationCode: null,
+    onResetPass: null,
     forgot_url: '',
     edit_url: '',
   },
