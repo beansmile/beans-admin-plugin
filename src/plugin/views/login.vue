@@ -8,7 +8,7 @@
         </el-form-item>
         <el-form-item label="密码">
           <el-input v-model="password" show-password></el-input>
-          <a v-if="$get($appConfig, 'password.forgot_url')" @click="sendEmail" style="cursor: pointer;">忘记密码？</a>
+          <a v-if="showForgetPass" @click="onSendVerificationCode" style="cursor: pointer;">忘记密码？</a>
         </el-form-item>
         <el-button type="primary" native-type="submit">登录</el-button>
       </el-form>
@@ -48,7 +48,16 @@
       }
     }
 
-    async sendEmail() {
+    get showForgetPass() {
+      const { onSendVerificationCode, forgot_url } = this.$appConfig.password || {};
+      return !!(onSendVerificationCode || forgot_url);
+    }
+
+    async onSendVerificationCode() {
+      const { onSendVerificationCode, forgot_url } = this.$appConfig.password || {};
+      if (onSendVerificationCode) {
+        return onSendVerificationCode({ email: this.email });
+      }
       const { value } = await this.$prompt('请输入邮箱', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -56,7 +65,7 @@
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '邮箱格式不正确',
       })
-      const { message } = await this.$autoLoading(this.$fly.post(_.get(this.$appConfig, 'password.forgot_url'), { email: value }));
+      const { message } = await this.$autoLoading(this.$fly.post(forgot_url, { email: value }));
       this.$message.success(message)
     }
   }
