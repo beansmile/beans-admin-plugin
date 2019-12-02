@@ -7,3 +7,4 @@ export { default as fly } from './fly';
 export { default as upload } from './upload';
 export { randomFileName, randomString } from './random';
 export { sleep } from './sleep';
+export { createSentryIgnoreError, initSentry } from './sentry';

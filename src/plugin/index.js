@@ -119,6 +119,7 @@ const config = {
     editorConfig: new Function,
     contentsCss: [],
   },
+  sentry: {}
 }
 
 export default function install(Vue, options = {}) {
@@ -126,6 +127,8 @@ export default function install(Vue, options = {}) {
   const router = options.router;
   router && initRouter(router);
   _.merge(config, options.config);
+
+  Utils.initSentry(config.sentry);
 
   Vue.appRouter = router;
   Vue.appConfig = config;

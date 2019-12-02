@@ -6,6 +6,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import decoder from '../decoder'
 import { loadingService } from '../../services'
+import { createSentryIgnoreError } from '../sentry';
 
 export function onSend(request) {
   showNProgress(request)
@@ -69,7 +70,7 @@ export function onError(err) {
       MessageBox.alert(err.message, { title: '错误' })
     }
   }
-  return err
+  return createSentryIgnoreError(err);
 }
 
 function useNProgress(request) {
