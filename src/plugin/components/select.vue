@@ -49,7 +49,8 @@ export default class Select extends Vue {
   }
 
   get computedOptions() {
-    return this.localOptions.length ? this.localOptions : this.options || [];
+    const options = (this.options || []).concat(this.localOptions || []);
+    return _.uniqBy(options, 'value');
   }
 
   renderOptions() {
