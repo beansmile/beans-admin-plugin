@@ -49,8 +49,12 @@ export default class Select extends Vue {
   }
 
   get computedOptions() {
-    const options = (this.localOptions || []).concat(this.options || []);
-    return _.uniqBy(options, 'value');
+    // 分组select不去重，不合并
+    const isGroupOption = _.get(this.localOptions, '0.options.length', 0) > 0 || _.get(this.options, '0.options.length', 0) > 0;
+    if (isGroupOption) {
+      return this.localOptions.length ? this.localOptions : this.options || [];
+    }
+    return _.uniqBy((this.localOptions || []).concat(this.options || []), 'value');
   }
 
   renderOptions() {
