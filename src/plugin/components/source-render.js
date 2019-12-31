@@ -20,6 +20,9 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       const { width = '50px', height = '50px', borderRadius = 0, ...opts } = options;
       const fit = opts.fit || opts.objectFit || 'cover';
       const images = _.flatten([value]).filter(Boolean);
+      if (!images.length) {
+        return '/';
+      }
       return (
         <div class="multi-images">
           {
@@ -38,15 +41,24 @@ export const renderCellByType = (h) => ({ column, scope }) => {
     }
     case 'video': {
       const { style = { height: '200px' } } = options;
-      return value && <video controls style={style} src={value}></video>
+      if (!value) {
+        return '/'
+      }
+      return <video controls style={style} src={value}></video>
     }
     case 'time': {
       const format = options.format || 'YYYY-MM-DD HH:mm';
-      return value && moment(value).format(format);
+      if (!value) {
+        return '/'
+      }
+      return moment(value).format(format);
     }
     case 'date': {
       const format = options.format || 'YYYY-MM-DD';
-      return value && moment(value).format(format);
+      if (!value) {
+        return '/'
+      }
+      return moment(value).format(format);
     }
     case 'bool': {
       const textArr = options.textArr || ['否', '是'];
@@ -55,6 +67,9 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       return <el-tag type={classArr[num]}>{textArr[num]}</el-tag>
     }
     case 'currency': {
+      if (!value) {
+        return '/'
+      }
       if (!+value) {
         return value;
       }
@@ -75,7 +90,10 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       return renderLink(value);
     }
     case 'html': {
-      return <div class="markdown-body html-content" domProps={{ innerHTML: value || '' }}/>
+      if (!value) {
+        return '/'
+      }
+      return <div class="markdown-body html-content" domProps={{ innerHTML: value }}/>
     }
     default:
       return value;
@@ -170,7 +188,10 @@ export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope 
     if (_.isString(renderCell) || _.isObject(renderCell)) {
       return renderCellByType(createElement)({ column, scope });
     }
-    return _.get(scope, `row.${prop}`, '/');
+
+    const value = _.get(scope, `row.${prop}`, '/');
+
+    return value === null ? '/' : value
   }
 
   const renderClipboard = (clipboard, vNode = null) => {
