@@ -191,7 +191,7 @@ export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope 
 
     const value = _.get(scope, `row.${prop}`, '/');
 
-    return value === null ? '/' : value
+    return (value === null || value === '') ? '/' : value
   }
 
   const renderClipboard = (clipboard, vNode = null) => {
