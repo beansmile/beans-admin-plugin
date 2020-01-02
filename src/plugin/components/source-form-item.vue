@@ -3,6 +3,18 @@ import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import _ from 'lodash';
 import Select from './select.vue'
 
+function isValidDate(d) {
+  return d instanceof Date && !isNaN(d);
+}
+
+function getDate(val) {
+  const dateArr = _.flatten([val]).map(item => {
+    const date = new Date(item);
+    return isValidDate(date) ? date : new Date()
+  });
+  return _.isArray(val) ? dateArr : dateArr[0];
+}
+
 @Component
 export default class SourceFormItem extends Vue {
   @Prop(Object) column;
@@ -99,14 +111,17 @@ export default class SourceFormItem extends Vue {
   }
 
   renderDatePicker({ prop, props }) {
+    const value = getDate(this.getPropValue(prop));
     // 文档上的change事件不会触发
-    return <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" props={props} value={this.getPropValue(prop)} onInput={this.handleValueChange(prop)} />
+    return <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" props={props} value={value} onInput={this.handleValueChange(prop)} />
   }
 
   renderDateTimePicker({ prop, props }) {
+    const value = getDate(this.getPropValue(prop));
+
     return <el-date-picker
       props={props}
-      value={this.getPropValue(prop)}
+      value={value}
       onInput={this.handleValueChange(prop)}
       type="datetime"
       placeholder="选择日期时间"
