@@ -8,9 +8,13 @@ function isValidDate(d) {
 }
 
 function getDate(val) {
+  if (!val) return val;
   const dateArr = _.flatten([val]).map(item => {
+    if (!item) {
+      return item;
+    }
     const date = new Date(item);
-    return isValidDate(date) ? date : new Date()
+    return isValidDate(date) ? date : new Date();
   });
   return _.isArray(val) ? dateArr : dateArr[0];
 }
