@@ -61,10 +61,10 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       return moment(value).format(format);
     }
     case 'bool': {
-      const textArr = options.textArr || ['否', '是'];
-      const classArr = options.classArr || ['danger', '']
+      const { textArr = ['否', '是'], classArr = ['danger', ''], ...opts } = options;
+      delete opts['type'];
       const num = +Boolean(value);
-      return <el-tag type={classArr[num]}>{textArr[num]}</el-tag>
+      return <el-tag type={classArr[num]} props={opts}>{ textArr[num] }</el-tag>
     }
     case 'currency': {
       if (!value) {
@@ -81,7 +81,7 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       const { name = '下载' } = options;
       const renderLink = (href = '') => (
         <a href={href} style="display: block;" download>
-          <el-button type="primary">{name}</el-button>
+          <el-button type="primary">{ name }</el-button>
         </a>
       );
       if (_.isArray(value)) {
@@ -196,7 +196,7 @@ export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope 
 
   const renderClipboard = (clipboard, vNode = null) => {
     return clipboard
-      ? <c-clipboard props={_.isObject(clipboard) ? clipboard : {}}>{vNode}</c-clipboard>
+      ? <c-clipboard props={_.isObject(clipboard) ? clipboard : {}}>{ vNode }</c-clipboard>
       : vNode;
   }
 
