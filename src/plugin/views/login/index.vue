@@ -1,29 +1,48 @@
 <template>
   <div class="page-login">
-    <el-card class="box-card">
-      <h2>{{ $appConfig.name }}</h2>
-      <el-form ref="form" label-width="80px" @submit.native.prevent="login">
-        <el-form-item label="邮箱">
-          <el-input v-model="email"></el-input>
-        </el-form-item>
-        <el-form-item label="密码">
-          <el-input v-model="password" show-password></el-input>
-          <a v-if="showForgetPass" @click="onSendVerificationCode" style="cursor: pointer;">忘记密码？</a>
-        </el-form-item>
-        <el-button type="primary" native-type="submit">登录</el-button>
-      </el-form>
+    <div class="background"><Background /></div>
+    <el-card id="wrap_box_card">
+      <p class="page-title">{{ $appConfig.name }}登录</p>
+      <el-card class="box-card" :body-style="{ padding: '0px' }">
+        <el-col :span="15" class="input-row">
+          <el-row class="img-row">
+            <el-image :src="require('@/assets/logo.png')" fit="cover" style="width: 200px; height: 30px"></el-image>
+          </el-row>
+
+          <el-row>
+            <el-form ref="form" @submit.native.prevent="login">
+              <el-input v-model="email" placeholder="输入邮箱" size="medium"></el-input>
+
+              <div style="margin: 20px 0;"></div>
+              <el-input v-model="password" show-password placeholder="输入密码" size="medium"></el-input>
+
+              <div style="margin: 20px 0;"></div>
+              <el-row justify="center" size="medium">
+                <el-button type="primary" native-type="submit" class="submit-btn">登录</el-button>
+              </el-row>
+              <el-row justify="end" size="medium" style="margin-top: 5px;">
+                <a v-if="showForgetPass" @click="onSendVerificationCode" style="cursor: pointer">忘记密码？</a>
+              </el-row>
+            </el-form>
+          </el-row>
+        </el-col>
+        <el-col :span="9" class="sidebar">
+          <Sidebar /><p class="slogan">welcome</p>
+        </el-col>
+      </el-card>
     </el-card>
   </div>
 </template>
 
 <script>
   import { Vue, Component } from 'vue-property-decorator';
-  import { permissionService } from '../services';
+  import { permissionService } from '../../services';
   import _ from 'lodash';
+  import Sidebar from './components/welcome';
+  import Background from './components/background';
 
-  @Component
+  @Component({ components: { Sidebar, Background } })
   export default class Login extends Vue {
-
     email = '';
     password = '';
 

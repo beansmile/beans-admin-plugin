@@ -31,7 +31,7 @@ function initRouter(router) {
     {
       path: '/login',
       name: 'login',
-      component: require('./views/login').default,
+      component: require('./views/login/index').default,
       meta: {
         auth: false,
         layout: false
