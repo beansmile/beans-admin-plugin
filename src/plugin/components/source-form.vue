@@ -1,8 +1,7 @@
 <template>
   <el-form
+    v-bind="formProps"
     class="c-source-form"
-    label-position="left"
-    label-width="auto"
     v-loading="loading || loadingService.state.count > 0"
     :model="formData"
     ref="source-form"
@@ -42,6 +41,13 @@ export default class SourceForm extends Vue {
 
   loading = false;
   formData = {};
+
+  get formProps() {
+    return _.merge({}, {
+      'label-position': 'left',
+      'label-width': 'auto',
+    }, this.$attrs)
+  }
 
   get editColumns() {
     return this.columns.filter(item => _.get(item, 'form.component'));
