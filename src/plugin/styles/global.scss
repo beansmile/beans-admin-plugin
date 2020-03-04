@@ -34,3 +34,7 @@ a {
     height: auto !important;
   }
 }
+
+.el-message-box__wrapper, .el-loading-mask {
+  z-index: 20030 !important;
+}
