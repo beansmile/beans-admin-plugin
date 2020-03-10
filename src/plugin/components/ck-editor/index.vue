@@ -16,7 +16,7 @@
 
   @Component
   export default class CKEditor extends Vue {
-    @Model('change') value
+    @Model('change', { type: String, default: '' }) value
     @Prop({ type: String, default: () => 'ck_' + randomString() }) instanceId
     @Prop(Object) config
     @Prop({ type: Function, default: new Function }) onLoad
@@ -32,11 +32,11 @@
     mounted() {
       const { contentsCss, fileUploadRequest = this.fileUploadRequest, fileUploadResponse = this.fileUploadResponse } = Vue.prototype.$appConfig.ckeditor
       const config = Object.assign({ customConfig: '' }, this.config)
+      document.getElementById(this.instanceId).value = this.value
       this.editor = CKEDITOR.replace(this.instanceId, config)
       contentsCss.forEach(link => this.editor.addContentsCss(link))
       this.editor.on('loaded', e => {
         this.onLoad(e)
-        this.editor.setData(this.value)
         this.editor.on('change', e => {
           this.$emit('change', e.editor.getData())
         })
