@@ -19,8 +19,8 @@
       <slot />
     </div>
     <el-form-item class="btn-group">
-      <el-button type="primary" @click="onSubmit('source-form')">确定</el-button>
-      <el-button @click="$emit('cancel')" v-if="showCancelButton">取消</el-button>
+      <el-button type="primary" @click="onSubmit('source-form')">Submit</el-button>
+      <el-button @click="$emit('cancel')" v-if="showCancelButton">Cancel</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -73,7 +73,7 @@ export default class SourceForm extends Vue {
 }
 
 export const createSourceFormDialog = (h, {
-  title = '弹窗',
+  title = 'Popup',
   columns = [],
   data = {},
   onConfirm,

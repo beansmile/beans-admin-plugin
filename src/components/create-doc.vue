@@ -42,11 +42,11 @@
     attributesColumn = [
       {
         prop: 'prop',
-        label: '参数'
+        label: 'Argument'
       },
       {
         prop: 'desc',
-        label: '说明',
+        label: 'Description',
         renderCell: (h, { row }) => {
           if (_.isFunction(row.desc)) {
             return row.desc(h, { row });
@@ -56,30 +56,30 @@
       },
       {
         prop: 'type',
-        label: '类型'
+        label: 'Type'
       },
       {
         prop: 'optionalValue',
-        label: '可选值'
+        label: 'Options'
       },
       {
         prop: 'defaultValue',
-        label: '默认值'
+        label: 'Default'
       }
     ]
 
     eventsColumn = [
       {
         prop: 'name',
-        label: '事件名称'
+        label: 'Name'
       },
       {
         prop: 'desc',
-        label: '说明'
+        label: 'Description'
       },
       {
         prop: 'args',
-        label: '回调参数'
+        label: 'Callback args'
       }
     ]
 

@@ -31,7 +31,7 @@
         <div class="c-clipboard" ref="container">
           {this.$slots.default}
           <el-tooltip
-            content="内容已复制"
+            content="Copied"
             value={this.showTip}
             hide-after={hideAfter}
             manual

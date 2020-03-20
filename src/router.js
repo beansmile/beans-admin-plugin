@@ -17,7 +17,7 @@ const router = new Router({
       name: 'home',
       meta: {
         navbar: 'el-icon-s-home',
-        title: '概览'
+        title: 'Dashboard'
       },
       component: require('@/views/home').default
     },

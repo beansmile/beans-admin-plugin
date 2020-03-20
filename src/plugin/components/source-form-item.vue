@@ -128,7 +128,7 @@ export default class SourceFormItem extends Vue {
       value={value}
       onInput={this.handleValueChange(prop)}
       type="datetime"
-      placeholder="选择日期时间"
+      placeholder="Select Time"
     />
   }
 

@@ -5,7 +5,7 @@ export default function (config) {
 
   // Define changes to default configuration here. For example:
   // config.language = 'fr'
-  config.language = 'zh-CN'
+  config.language = 'en'
   // config.uiColor = '#AADC6E'
 
   /* Filebrowser routes */

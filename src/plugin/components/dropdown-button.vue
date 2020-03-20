@@ -26,7 +26,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 export default class DropdownButton extends Vue {
   @Prop({ type: Array, default: () => [] }) buttons;
   @Prop({ type: Object, default: () => ({ type: 'text' }) }) buttonProps;
-  @Prop({ type: String, default: '操作' }) buttonText;
+  @Prop({ type: String, default: 'Action' }) buttonText;
   @Prop(Boolean) buttonMode;
 
   getButtonPropsMerged(button) {

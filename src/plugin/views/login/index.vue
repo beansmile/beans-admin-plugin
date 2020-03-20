@@ -2,7 +2,7 @@
   <div class="page-login">
     <div class="background"><Background /></div>
     <el-card id="wrap_box_card">
-      <p class="page-title">{{ $appConfig.name }}登录</p>
+      <p class="page-title">{{ $appConfig.name }}Login</p>
       <el-card class="box-card" :body-style="{ padding: '0px' }">
         <el-col :span="15" class="input-row">
           <el-row class="img-row">
@@ -11,23 +11,23 @@
 
           <el-row>
             <el-form ref="form" @submit.native.prevent="login">
-              <el-input v-model="email" placeholder="输入邮箱" size="medium"></el-input>
+              <el-input v-model="email" placeholder="Email" size="medium"></el-input>
 
               <div style="margin: 20px 0;"></div>
-              <el-input v-model="password" show-password placeholder="输入密码" size="medium"></el-input>
+              <el-input v-model="password" show-password placeholder="Password" size="medium"></el-input>
 
               <div style="margin: 20px 0;"></div>
               <el-row justify="center" size="medium">
-                <el-button type="primary" native-type="submit" class="submit-btn">登录</el-button>
+                <el-button type="primary" native-type="submit" class="submit-btn">Login</el-button>
               </el-row>
               <el-row justify="end" size="medium" style="margin-top: 5px;">
-                <a v-if="showForgetPass" @click="onSendVerificationCode" style="cursor: pointer">忘记密码？</a>
+                <a v-if="showForgetPass" @click="onSendVerificationCode" style="cursor: pointer">Forgot Password?</a>
               </el-row>
             </el-form>
           </el-row>
         </el-col>
         <el-col :span="9" class="sidebar">
-          <Sidebar /><p class="slogan">welcome</p>
+          <Sidebar /><p class="slogan">Welcome</p>
         </el-col>
       </el-card>
     </el-card>
@@ -62,7 +62,7 @@
         if (admin_user) {
           this.$root.currentUser = admin_user;
         }
-        this.$message.success('登录成功');
+        this.$message.success('Login successfully.');
         this.$router.replace(navigateTo);
       }
     }
@@ -77,12 +77,12 @@
       if (onSendVerificationCode) {
         return onSendVerificationCode({ email: this.email });
       }
-      const { value } = await this.$prompt('请输入邮箱', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      const { value } = await this.$prompt('Please enter email', 'Tips', {
+        confirmButtonText: 'Submit',
+        cancelButtonText: 'Cancel',
         inputValue: this.email || void 0,
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-        inputErrorMessage: '邮箱格式不正确',
+        inputErrorMessage: 'Incorrect email format.',
       })
       const { message } = await this.$autoLoading(this.$fly.post(forgot_url, { email: value }));
       this.$message.success(message)

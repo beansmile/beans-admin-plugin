@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import ElementUI from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en';
 import './components';
 import * as Utils from './utils';
 import { permissionService } from './services';
@@ -51,7 +52,7 @@ function initRouter(router) {
       name: '500',
       component: require('./views/500').default,
       meta: {
-        title: '服务器异常'
+        title: 'Server Unavailable'
       },
     },
     {
@@ -59,7 +60,7 @@ function initRouter(router) {
       name: '403',
       component: require('./views/403').default,
       meta: {
-        title: '无访问权限'
+        title: 'Access Denied'
       },
     },
     {
@@ -67,7 +68,7 @@ function initRouter(router) {
       name: '404',
       component: require('./views/404').default,
       meta: {
-        title: '页面找不到'
+        title: 'Not Found'
       }
     }
   ].filter(addRoute => !router.options.routes.find(route => route.name === addRoute.name))
@@ -77,7 +78,7 @@ function initRouter(router) {
 }
 
 const config = {
-  name: '后台管理',
+  name: 'Dashboard',
   logo: '',
   table: {
     sort: {
@@ -122,7 +123,7 @@ const config = {
 }
 
 export default function install(Vue, options = {}) {
-  Vue.use(ElementUI);
+  Vue.use(ElementUI, { locale });
   const router = options.router;
   router && initRouter(router);
   _.merge(config, options.config);

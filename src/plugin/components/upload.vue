@@ -2,21 +2,21 @@
   <div class="c-upload" v-loading="loading">
     <el-row class="btn-group">
       <el-button type="primary" class="btn-choose-file" :disabled="this.table.data.length >= limit">
-        选择文件
+        Select File
         <!-- safari不触发input事件 -->
         <input type="file" @change="handleFileChange" :accept="accept" :multiple="limit > 1" />
       </el-button>
-      <el-button type="warning" @click="handleUploadAll" :disabled="!canUploadData.length">全部上传</el-button>
-      <el-button type="danger" @click="handleDeleteAll" :disabled="!table.data.length">全部移除</el-button>
+      <el-button type="warning" @click="handleUploadAll" :disabled="!canUploadData.length">Upload All</el-button>
+      <el-button type="danger" @click="handleDeleteAll" :disabled="!table.data.length">Remove All</el-button>
     </el-row>
 
-    <el-alert show-icon type="warning" :title="`文件格式：${ accept }，文件最大大小为${ size }M，最多上传${ limit }个文件${tip ? '，' + tip : ''}`" :closable="false"></el-alert>
+    <el-alert show-icon type="warning" :title="`File Type: ${ accept }, Limited file size is ${ size }M, Up to ${ limit } File(s) ${tip ? '，' + tip : ''}`" :closable="false"></el-alert>
 
     <c-source-table :table="table" :columns="columns" />
 
     <el-row class="btn-group">
-      <el-button type="primary" @click="onSubmit">确定</el-button>
-      <el-button v-if="showCancelButton" @click="$emit('cancel')">取消</el-button>
+      <el-button type="primary" @click="onSubmit">Submit</el-button>
+      <el-button v-if="showCancelButton" @click="$emit('cancel')">Cancel</el-button>
     </el-row>
   </div>
 </template>
@@ -44,32 +44,32 @@ export default class Upload extends Vue {
   columns = [
     {
       prop: 'file.name',
-      label: '文件名'
+      label: 'File Name'
     },
     {
       prop: 'file.size',
-      label: '文件大小',
+      label: 'File Size',
       renderCell(h, { row }) {
         return (_.get(row, 'file.size') / 1024 / 1024).toFixed(2) + 'M';
       }
     },
     {
       prop: 'file.type',
-      label: '文件类型'
+      label: 'File Type'
     },
     {
       prop: 'src',
-      label: '上传完成',
+      label: 'Done',
       renderCell: 'bool'
     },
     {
       prop: 'action',
-      label: '操作',
+      label: 'Action',
       width: 200,
       renderCell: (h, scope) => {
         return (
           <div class="btn-group">
-            <el-button type="danger" size="mini" onClick={() => this.handleDelete(scope)}>移除</el-button>
+            <el-button type="danger" size="mini" onClick={() => this.handleDelete(scope)}>Remove</el-button>
           </div>
         )
       }
@@ -90,7 +90,7 @@ export default class Upload extends Vue {
     const files = e.target.files;
     const checkSize = (file) => file.size <= this.size * 1024 * 1024;
     if (files.length + this.table.data.length > this.limit) {
-      this.$message.error(`最多可上传${this.limit}个文件`);
+      this.$message.error(`Up to ${this.limit} File(s)`);
       return;
     }
 
@@ -99,7 +99,7 @@ export default class Upload extends Vue {
       .map(file => ({ file, src: '' }));
 
     if (fileDataFiltered.length !== files.length) {
-      this.$message.info('已过滤不符合要求的文件');
+      this.$message.info('Inappropriate files have been filtered');
     }
 
     this.table.data.push(...fileDataFiltered);
@@ -139,7 +139,7 @@ export default class Upload extends Vue {
 }
 
 export const createUploadDialog = (h, {
-  title = '弹窗',
+  title = 'Popup',
   limit,
   accept,
   size,

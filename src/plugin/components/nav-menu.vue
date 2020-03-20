@@ -12,7 +12,7 @@
     active = '';
 
     getTitle(route) {
-      return _.get(route, 'meta.title', '未命名');
+      return _.get(route, 'meta.title', 'untitle');
     }
 
     getIcon(route) {

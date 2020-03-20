@@ -58,7 +58,7 @@ export function onError(err) {
       localStorage.removeItem('access_token')
       if (app.$route.name !== 'login') {
         app.$router.replace({ name: 'login' })
-        Message.info('请登录')
+        Message.info('Please login first.')
       }
       break;
     }
@@ -66,7 +66,7 @@ export function onError(err) {
       app.$router.replace({ name: '403' })
       break;
     default: {
-      MessageBox.alert(err.message, { title: '错误' })
+      MessageBox.alert(err.message, { title: 'Error' })
     }
   }
   return err
