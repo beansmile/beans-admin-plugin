@@ -6,7 +6,7 @@
       <el-card class="box-card" :body-style="{ padding: '0px' }">
         <el-col :span="15" class="input-row">
           <el-row class="img-row">
-            <el-image :src="require('@/assets/logo.png')" fit="cover" style="width: 200px; height: 30px"></el-image>
+            <el-image :src="require('@/assets/logo.png')" fit="contain" style="width: 200px; height: 30px"></el-image>
           </el-row>
 
           <el-row>
