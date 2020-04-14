@@ -56,7 +56,7 @@
       const { fileLoader } = evt.data
       const { xhr } = fileLoader
       xhr.$uploadResult = await autoLoading(upload(fileLoader.file))
-      xhr.open('get', '/', true)
+      xhr.open('get', location.origin, true)
       xhr.send()
     }
 
