@@ -51,12 +51,13 @@
     }
 
     async fileUploadRequest(evt) {
+      const { fakeUploadUrl = location.origin } = Vue.prototype.$appConfig.ckeditor
       // Prevented the default behavior.
       evt.stop()
       const { fileLoader } = evt.data
       const { xhr } = fileLoader
       xhr.$uploadResult = await autoLoading(upload(fileLoader.file))
-      xhr.open('get', location.origin, true)
+      xhr.open('get', fakeUploadUrl, true)
       xhr.send()
     }
 

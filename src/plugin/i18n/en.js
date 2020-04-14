@@ -1,5 +1,5 @@
 export default {
-  必填: 'Required',
+  必填提示: '{label} Required',
   返回: 'Back',
   退出登录: 'Logout',
   成功退出登录: 'Logout successfully.',
