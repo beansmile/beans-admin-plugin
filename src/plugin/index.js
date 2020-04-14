@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import ElementUI from 'element-ui';
 import './components';
+import { i18n } from './i18n';
 import * as Utils from './utils';
 import { permissionService } from './services';
 
@@ -51,7 +52,7 @@ function initRouter(router) {
       name: '500',
       component: require('./views/500').default,
       meta: {
-        title: '服务器异常'
+        title: i18n.t('服务器异常')
       },
     },
     {
@@ -59,7 +60,7 @@ function initRouter(router) {
       name: '403',
       component: require('./views/403').default,
       meta: {
-        title: '无访问权限'
+        title: i18n.t('无访问权限')
       },
     },
     {
@@ -67,7 +68,7 @@ function initRouter(router) {
       name: '404',
       component: require('./views/404').default,
       meta: {
-        title: '页面找不到'
+        title: i18n.t('页面找不到')
       }
     }
   ].filter(addRoute => !router.options.routes.find(route => route.name === addRoute.name))
@@ -77,7 +78,7 @@ function initRouter(router) {
 }
 
 const config = {
-  name: '后台管理',
+  name: i18n.t('后台管理'),
   logo: '',
   table: {
     sort: {
@@ -122,7 +123,7 @@ const config = {
 }
 
 export default function install(Vue, options = {}) {
-  Vue.use(ElementUI);
+  Vue.use(ElementUI, options.elementUIConfig);
   const router = options.router;
   router && initRouter(router);
   _.merge(config, options.config);

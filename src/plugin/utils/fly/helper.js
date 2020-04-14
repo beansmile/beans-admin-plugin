@@ -4,8 +4,9 @@ import { MessageBox, Message } from 'element-ui'
 import qs from 'qs'
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import decoder from '../decoder'
+import { i18n } from '../../i18n'
 import { loadingService } from '../../services'
+import decoder from '../decoder'
 
 export function onSend(request) {
   showNProgress(request)
@@ -58,7 +59,7 @@ export function onError(err) {
       localStorage.removeItem('access_token')
       if (app.$route.name !== 'login') {
         app.$router.replace({ name: 'login' })
-        Message.info('请登录')
+        Message.info(i18n.t('请登录'))
       }
       break;
     }
@@ -66,7 +67,7 @@ export function onError(err) {
       app.$router.replace({ name: '403' })
       break;
     default: {
-      MessageBox.alert(err.message, { title: '错误' })
+      MessageBox.alert(err.message, { title: i18n.t('错误') })
     }
   }
   return err

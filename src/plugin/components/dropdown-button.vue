@@ -21,12 +21,13 @@
 
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { i18n } from '../i18n';
 
 @Component
 export default class DropdownButton extends Vue {
   @Prop({ type: Array, default: () => [] }) buttons;
   @Prop({ type: Object, default: () => ({ type: 'text' }) }) buttonProps;
-  @Prop({ type: String, default: '操作' }) buttonText;
+  @Prop({ type: String, default: i18n.t('操作') }) buttonText;
   @Prop(Boolean) buttonMode;
 
   getButtonPropsMerged(button) {

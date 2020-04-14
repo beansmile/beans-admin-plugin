@@ -20,7 +20,7 @@ export default class CRouterLink extends Vue {
 
   showPermissionTip() {
     this.$message({
-      message: '您没有权限',
+      message: this.$t('您没有权限'),
       type: 'warning'
     })
   }

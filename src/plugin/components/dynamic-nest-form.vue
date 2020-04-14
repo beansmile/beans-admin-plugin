@@ -12,7 +12,7 @@
       />
     </div>
     <div>
-      <el-button type="primary" size="small" icon="el-icon-plus" @click="hasManyAdd">添加</el-button>
+      <el-button type="primary" size="small" icon="el-icon-plus" @click="hasManyAdd">{{ $t('添加') }}</el-button>
     </div>
   </div>
 </template>

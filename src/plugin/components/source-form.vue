@@ -19,8 +19,8 @@
       <slot />
     </div>
     <el-form-item class="btn-group">
-      <el-button type="primary" @click="onSubmit('source-form')">确定</el-button>
-      <el-button @click="$emit('cancel')" v-if="showCancelButton">取消</el-button>
+      <el-button type="primary" @click="onSubmit('source-form')">{{ $t('确定') }}</el-button>
+      <el-button @click="$emit('cancel')" v-if="showCancelButton">{{ $t('取消') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -28,6 +28,7 @@
 <script>
 import { Vue, Component, Prop, Watch, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
+import { i18n } from '../i18n';
 import { loadingService } from '../services';
 import { createDialog } from '../utils';
 
@@ -73,7 +74,7 @@ export default class SourceForm extends Vue {
 }
 
 export const createSourceFormDialog = (h, {
-  title = '弹窗',
+  title = i18n.t('弹窗'),
   columns = [],
   data = {},
   onConfirm,

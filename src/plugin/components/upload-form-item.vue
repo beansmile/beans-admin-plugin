@@ -16,14 +16,14 @@
         </div>
       </template>
     </div>
-    <el-button type="primary" @click="handleShow" :disabled="isMultiple && filesResouces.length >= limit">上传<i
+    <el-button type="primary" @click="handleShow" :disabled="isMultiple && filesResouces.length >= limit">{{ $t('上传') }}<i
       class="el-icon-upload el-icon--right"></i></el-button>
 
     <el-dialog
       v-if="show"
       :visible="visible"
       append-to-body
-      title="上传"
+      :title="$t('上传')"
       custom-class="upload-dialog"
       @close="handleHide"
       @closed="handleClosed"

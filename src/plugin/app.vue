@@ -18,11 +18,11 @@
               size="small" icon="el-icon-arrow-left" class="btn-go-back" @click="goBack" type="primary"
               v-if="showBackButton"
             >
-              返回
+              {{ $t('返回') }}
             </el-button>
             <h2 class="global-title">{{ $get($route, 'meta.title') }}</h2>
           </div>
-          <el-button type="text" @click="handleExit">退出登录</el-button>
+          <el-button type="text" @click="handleExit">{{ $t('退出登录') }}</el-button>
         </header>
         <div class="box-view">
           <router-view :key="routerViewKey"/>
@@ -80,7 +80,7 @@
       localStorage.removeItem('access_token');
       const requestUrl = _.get(this.$appConfig, 'logout.request_url');
       if (requestUrl) await this.$fly.delete(requestUrl);
-      this.$message.success('成功退出登录');
+      this.$message.success(this.$t('成功退出登录'));
       this.$router.replace({ name: 'login' });
     }
   }
