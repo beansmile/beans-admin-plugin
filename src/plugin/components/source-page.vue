@@ -67,7 +67,7 @@ export default class SourcePage extends Vue {
     return (
       <div class="source-page-btn-group">
         {this.showCreateButton && <c-router-link keepNode={false} to={createPageLocation}><el-button class="btn-create" type="primary">{this.createButtonText}</el-button></c-router-link>}
-        {this.showExportButton && <el-button disabled={this.exporting} onClick={this.export} loading={this.exporting} type="primary">导出数据</el-button>}
+        {this.showExportButton && <el-button disabled={this.exporting} onClick={this.export} loading={this.exporting} type="primary">{this.$t('导出数据')}</el-button>}
         {this.renderSelectionButtons()}
         {
           $actionSlot && (
@@ -143,14 +143,14 @@ export default class SourcePage extends Vue {
     const tableColumnsFilter = _.get(this.$refs.sourceTable, 'filterTableColumns', a => a);
     const columns = tableColumnsFilter(this.tableColumns).filter(item => item.label && item.prop);
     createSourceFormDialog(this.$createElement, {
-      title: '表格设置',
+      title: this.$t('表格设置'),
       data: {
         fieldSelected: this.tableFieldSelected
       },
       columns: [
         {
           prop: 'fieldSelected',
-          label: '选择渲染列',
+          label: this.$t('选择渲染列'),
           form: {
             component: 'checkboxGroup',
             props: {
@@ -190,7 +190,7 @@ export default class SourcePage extends Vue {
         }
         <div class="page-bottom">
           <c-pagination pagination={this.pagination} class="pagination" />
-          <el-button type="primary" icon="el-icon-setting" onClick={this.handleTableSetting}>表格设置</el-button>
+          <el-button type="primary" icon="el-icon-setting" onClick={this.handleTableSetting}>{this.$t('表格设置')}</el-button>
         </div>
       </div>
     )

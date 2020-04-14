@@ -1,8 +1,9 @@
+import Vue from 'vue';
 import moment from 'moment';
 import _ from 'lodash';
 import { MessageBox } from 'element-ui';
 import { permissionService } from '../services';
-import Vue from 'vue';
+import { i18n } from '../i18n';
 
 // eslint-disable-next-line
 export const renderCellByType = (h) => ({ column, scope }) => {
@@ -61,7 +62,7 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       return moment(value).format(format);
     }
     case 'bool': {
-      const { textArr = ['否', '是'], classArr = ['danger', ''], ...opts } = options;
+      const { textArr = [i18n.t('否'), i18n.t('是')], classArr = ['danger', ''], ...opts } = options;
       delete opts['type'];
       const num = +Boolean(value);
       return <el-tag type={classArr[num]} props={opts}>{ textArr[num] }</el-tag>
@@ -78,7 +79,7 @@ export const renderCellByType = (h) => ({ column, scope }) => {
     }
     case 'attachment': {
       if (!value) return '/';
-      const { name = '下载' } = options;
+      const { name = i18n.t('下载') } = options;
       const renderLink = (href = '') => (
         <a href={href} style="display: block;" download>
           <el-button type="primary">{ name }</el-button>
@@ -104,7 +105,7 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
   const actions = [
     {
       key: 'detail',
-      render: ({ location, permission = `${resource}.read`, buttonText = '详情' }) => {
+      render: ({ location, permission = `${resource}.read`, buttonText = i18n.t('详情') }) => {
         const routeLocation = location || { name: `${resource}.show`, params: { id: scope.row.id } };
         return {
           permission,
@@ -115,7 +116,7 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
     },
     {
       key: 'edit',
-      render: ({ location, permission = `${resource}.update`, buttonText = '编辑' }) => {
+      render: ({ location, permission = `${resource}.update`, buttonText = i18n.t('编辑') }) => {
         const routeLocation = location || { name: `${resource}.edit`, params: { id: scope.row.id } };
         return {
           permission,
@@ -126,11 +127,11 @@ export const renderAction = (h, { resource, actionButtonMode, actionButtonProps 
     },
     {
       key: 'delete',
-      render: ({ handler, permission = `${resource}.destroy`, buttonText = '删除' }) => {
+      render: ({ handler, permission = `${resource}.destroy`, buttonText = i18n.t('删除') }) => {
         const showConfirm = async () => {
           // eslint-disable-next-line
           try { MessageBox.close() } catch (e) {}
-          await MessageBox.confirm('删除操作不可恢复，确定删除？', buttonText);
+          await MessageBox.confirm(i18n.t('删除操作不可恢复，确定删除？'), buttonText);
           handler && await handler(scope);
         }
         return {

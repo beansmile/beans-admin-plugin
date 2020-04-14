@@ -7,10 +7,10 @@
     <c-source-form-item v-for="(item, index) in filterColumns" :column="item" v-model="formModel" :key="item.prop" :class="`item-${item.prop} item-${index}`" />
 
     <el-form-item>
-      <el-button type="primary" native-type="submit">查询</el-button>
+      <el-button type="primary" native-type="submit">{{ $t('查询') }}</el-button>
     </el-form-item>
     <el-form-item>
-      <el-button type="default" @click="onClear">清除</el-button>
+      <el-button type="default" @click="onClear">{{ $t('清除') }}</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -77,13 +77,13 @@ export default class SourceFilter extends Vue {
           component: 'input',
           props: {
             // TODO placeholder没渲染出来
-            placeholder: '请输入关键字'
+            placeholder: this.$t('请输入关键字')
           }
         }
       });
       filterTransformed.unshift({
         prop: '_search.field',
-        label: '搜索',
+        label: this.$t('搜索'),
         form: {
           component: 'select',
           props: {

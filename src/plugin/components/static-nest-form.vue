@@ -29,7 +29,7 @@
     show = false;
 
     get toggleButtonText() {
-      return this.show ? '收起' : '展开编辑';
+      return this.show ? this.$t('收起') : this.$t('展开编辑');
     }
 
     get resource() {
