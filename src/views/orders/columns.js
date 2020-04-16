@@ -84,6 +84,49 @@ export default function createColumns({ actionColumn } = {}) {
 
 export const formColumn = [
   {
+    prop: 'cascader',
+    label: '级联选择器',
+    form: {
+      component: 'cascader',
+      props: {
+        clearable: true,
+        props: {
+          checkStrictly: true
+        },
+        options: [
+          {
+            label: '人气美妆',
+            value: 1,
+            children: [
+              {
+                label: '口红',
+                value: 2
+              },
+              {
+                label: '口红1',
+                value: 3
+              }
+            ]
+          },
+          {
+            label: '人气美妆2',
+            value: 2,
+            children: [
+              {
+                label: '口红',
+                value: 4
+              },
+              {
+                label: '口红1',
+                value: 5
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
     prop: 'radioGroup',
     label: '单选',
     form: {

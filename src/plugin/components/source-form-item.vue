@@ -168,6 +168,14 @@ export default class SourceFormItem extends Vue {
     return <v-node props={props} />
   }
 
+  renderCascader({ prop, props }) {
+    return <el-cascader
+      props={props}
+      value={this.getPropValue(prop)}
+      onChange={this.handleValueChange(prop)}
+    />
+  }
+
   get formItem() {
     const { form, prop, label } = this.column;
     const formItem = { prop, props: {}, ..._.omit(form, 'component') };
@@ -212,7 +220,8 @@ export default class SourceFormItem extends Vue {
       editor: this.renderEditor,
       nestForm: this.renderNestForm,
       staticNestForm: this.renderStaticNestForm,
-      vNode: this.renderVNode
+      vNode: this.renderVNode,
+      cascader: this.renderCascader
     }
 
     const { prop, props: { defaultValue, hint } } = this.formItem;
