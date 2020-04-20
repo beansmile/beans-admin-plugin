@@ -75,6 +75,15 @@ export default {
         title: 'select',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/page-editor',
+      name: 'doc.pageEdidtor',
+      component: require('./page-editor').default,
+      meta: {
+        title: 'page-editor',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }

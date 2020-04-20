@@ -22,3 +22,4 @@ Vue.component('c-static-nest-form', require('./static-nest-form').default);
 Vue.component('c-router-link', require('./router-link').default);
 Vue.component('c-permission', require('./permission').default);
 Vue.component('c-clipboard', require('./clipboard').default);
+Vue.component('c-page-editor', require('./page-editor').default);
