@@ -67,6 +67,19 @@
       this.$emit('change', value);
     }
 
+    renderComponent(row, index) {
+      const component = _.get(this.renderComponents.find(item => item.name === row.name), 'component');
+      if (!component) {
+        return null;
+      }
+      return <component
+        value={row.data}
+        data={this.data}
+        show-controller={this.currentKey === row.key}
+        onChange={e => this.handleComponentDataChange(e, index)}
+      />
+    }
+
     render() {
       return (
         <div class="c-page-editor">
@@ -84,12 +97,7 @@
                       { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
                       <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />
                     </div>
-                    <row.component
-                      value={row.data}
-                      data={this.data}
-                      show-controller={this.currentKey === row.key}
-                      onChange={e => this.handleComponentDataChange(e, index)}
-                    />
+                    {this.renderComponent(row, index)}
                   </div>
                 ))
               }
