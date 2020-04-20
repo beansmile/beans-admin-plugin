@@ -1,10 +1,15 @@
 <template>
   <div class="upload-form-item">
-    <div class="resource-content" :class="{ column: type !== 'image' || type !== 'video' }">
+    <draggable
+      :value="filesResouces"
+      class="resource-content"
+      :class="{ column: type !== 'image' || type !== 'video' }"
+      @end="handleDragChange"
+    >
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
-          <c-preview-image class="image" fit="cover" :current="item" />
+          <el-image :src="item" class="image" fit="cover" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
@@ -15,7 +20,8 @@
             item.split('/').pop() }}</a>
         </div>
       </template>
-    </div>
+    </draggable>
+    <div v-if="filesResouces.length > 1" class="drag-tip">可拖拽排序</div>
     <el-button type="primary" @click="handleShow" :disabled="isMultiple && filesResouces.length >= limit">{{ $t('上传') }}<i
       class="el-icon-upload el-icon--right"></i></el-button>
 
@@ -41,8 +47,14 @@
 <script>
   import { Vue, Component, Prop, Model } from 'vue-property-decorator';
   import _ from 'lodash';
+  import { arrayMove } from '../utils';
+  import draggable from 'vuedraggable';
 
-  @Component
+  @Component({
+    components: {
+      draggable
+    }
+  })
   export default class UploadFormItem extends Vue {
     @Prop({ type: Number, default: 1 }) limit;
     @Prop({ type: String, default: 'image' }) type;
@@ -53,6 +65,13 @@
 
     get filesResouces() {
       return this.value ? _.flatten([this.value]) : [];
+    }
+
+    handleDragChange({ oldIndex, newIndex }) {
+      if (oldIndex !== newIndex) {
+        const filesResoucesSorted = arrayMove(this.filesResouces, oldIndex, newIndex);
+        this.$emit('change', this.limit > 1 ? filesResoucesSorted : filesResoucesSorted[0]);
+      }
     }
 
     handleShow() {
