@@ -1,0 +1,96 @@
+.c-page-editor {
+  .btn-save {
+    margin: 15px;
+  }
+
+  .box-preview {
+    width: 375px;
+    border: 1px solid $border-light;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .item-component {
+    position: relative;
+    min-height: 80px;
+    border: 1px dashed $border-light;
+
+    &.active {
+      border-color: $primary;
+    }
+
+    .box-control {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      display: flex;
+      z-index: 99;
+
+      i {
+        cursor: pointer;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .box-components {
+    padding-left: 15px;
+    padding-top: 15px;
+
+    .box-title {
+      margin: 15px 0;
+      font-size: 18px;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+    }
+
+    .item {
+      font-size: 14px;
+      text-align: center;
+      min-width: 80px;
+      padding: 6px 8px;
+      border: 1px solid $border-light;
+      cursor: pointer;
+      margin-right: 15px;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.c-control-box {
+  background: #fff;
+  padding: 15px;
+  position: absolute;
+  top: 0;
+  right: -20px;
+  width: 500px;
+  transform: translateX(100%);
+  border: 1px solid $border-light;
+  margin-bottom: 30px;
+
+  .title {
+    font-size: 16px;
+    margin: 0 0 15px;
+  }
+}
+
+.c-image-control-box {
+  .btn-add {
+    margin-bottom: 20px;
+  }
+
+  .upload-form-item {
+    .resource-content {
+      justify-content: center;
+
+      .preview-image .image {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}
