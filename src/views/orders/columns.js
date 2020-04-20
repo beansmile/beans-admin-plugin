@@ -232,7 +232,10 @@ export const formColumn = [
     prop: 'upload',
     label: '上传',
     form: {
-      component: 'upload'
+      component: 'upload',
+      props: {
+        limit: 3
+      }
     }
   },
   {
