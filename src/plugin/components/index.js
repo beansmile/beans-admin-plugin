@@ -23,3 +23,4 @@ Vue.component('c-router-link', require('./router-link').default);
 Vue.component('c-permission', require('./permission').default);
 Vue.component('c-clipboard', require('./clipboard').default);
 Vue.component('c-page-editor', require('./page-editor').default);
+Vue.component('c-transfer', require('./transfer').default);
