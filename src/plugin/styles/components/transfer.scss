@@ -3,8 +3,8 @@
 
   .panel {
     flex: 1;
-    max-width: 500px;
-    min-height: 300px;
+    max-width: 400px;
+    min-height: 250px;
     border: 1px solid $border-light;
     border-radius: 4px;
     overflow: hidden;
@@ -23,7 +23,7 @@
 
   .panel-content {
     .el-checkbox-group, .drag-content {
-      max-height: 500px;
+      max-height: 400px;
       display: flex;
       flex-direction: column;
       overflow: auto;

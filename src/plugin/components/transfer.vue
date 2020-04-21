@@ -22,7 +22,7 @@
       </div>
       <div class="panel-content">
         <el-checkbox-group v-model="rightSelected">
-          <draggable class="drag-content" :value="pabelData[1]" @end="handleDragChange($event, pabelData[1])">
+          <draggable class="drag-content" :value="pabelData[1]" @end="handleDragChange">
             <el-checkbox v-for="item in pabelData[1]" :key="item.value" :label="item.value" :class="{ active: rightSelected.includes(item.value) }">{{ item.name }}</el-checkbox>
           </draggable>
         </el-checkbox-group>
@@ -57,7 +57,8 @@
       this.dataLocal.forEach(item => {
         this.value.includes(item.value) ? rightPanel.push(item) : leftPanel.push(item);
       });
-      return [leftPanel, rightPanel];
+      const rightPanelSorted = this.value.map(value => rightPanel.find(item => item.value === value));
+      return [leftPanel, rightPanelSorted];
     }
 
     handleToRight() {
@@ -78,11 +79,9 @@
       this.rightSelected = val ? this.pabelData[1].map(item => item.value) : [];
     }
 
-    handleDragChange({ oldIndex, newIndex }, container) {
-      const truelyOldIndex = this.dataLocal.findIndex(item => item.value === container[oldIndex].value);
-      const truelyNewIndex = this.dataLocal.findIndex(item => item.value === container[newIndex].value);
-      if (truelyOldIndex !== truelyNewIndex) {
-        this.dataLocal = arrayMove(this.dataLocal, truelyOldIndex, truelyNewIndex);
+    handleDragChange({ oldIndex, newIndex }) {
+      if (oldIndex !== newIndex) {
+        this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
       }
     }
 
