@@ -21,11 +21,18 @@
         defaultValue: '[]'
       },
       {
-        prop: 'components',
+        prop: 'customComponents',
         desc: '自定义新的页面组件(如果自带的组件不满足需求，暂无文档，参考源码)',
-        type: 'Object',
+        type: 'Array',
         optionalValue: '',
-        defaultValue: ''
+        defaultValue: '[]'
+      },
+      {
+        prop: 'useComponents',
+        desc: '选择要使用的组件，不传或者[]则全部使用',
+        type: 'Array',
+        optionalValue: '',
+        defaultValue: '[]'
       },
       {
         prop: 'data',
