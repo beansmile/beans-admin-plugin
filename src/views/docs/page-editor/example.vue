@@ -2,7 +2,8 @@
   <c-page-editor
     v-model="pageValue"
     :data="pageData"
-    :components="components"
+    :custom-components="customComponents"
+    :use-components="useComponents"
     @submit="handleSubmit"
   />
 </template>
@@ -22,7 +23,8 @@
       ]
     }
     // TODO 自定义新组件文档
-    components = []
+    customComponents = []
+    useComponents = ['custom-image', 'custom-video', 'custom-swiper', 'custom-scroll-x', 'custom-contact-service', 'custom-product-list', 'custom-block']
 
     handleSubmit(pageValue) {
       console.log(this.pageValue, pageValue);

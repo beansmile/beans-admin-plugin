@@ -9,14 +9,16 @@
   @Component
   export default class PageEditor extends Vue {
     @Model('change', { type: Array, default: () => [] }) value;
-    @Prop({ type: Array, default: () => [] }) components;
+    @Prop({ type: Array, default: () => [] }) customComponents;
+    @Prop({ type: Array, default: () => [] }) useComponents;
     @Prop({ type: Object, default: () => ({}) }) data;
 
     currentKey = '';
 
     get renderComponents() {
       // 组件name不能重复
-      return _.uniqBy(defaultComponents.concat(this.components), 'name');
+      const useedDefaultComponents = this.useComponents.length ? defaultComponents.filter(item => this.useComponents.includes(item.name)) : defaultComponents;
+      return _.uniqBy(useedDefaultComponents.concat(this.customComponents), 'name');
     }
 
     handleFocusComponent(key) {
