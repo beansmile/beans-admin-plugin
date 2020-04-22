@@ -47,6 +47,11 @@
     password = '';
 
     mounted() {
+      const { token_storage_key, navigateTo } = _.get(this, '$appConfig.login') || {};
+      if (localStorage.getItem(token_storage_key)) {
+        this.$router.replace(navigateTo);
+        return;
+      }
       // 重新登录获取新的权限表
       permissionService.destroyPermission();
     }
