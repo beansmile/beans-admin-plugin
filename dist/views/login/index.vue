@@ -34,9 +34,9 @@
   </div>
 </template>
 
-<script>import "core-js/modules/es6.regexp.replace";
-import "regenerator-runtime/runtime";
+<script>import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
+import "core-js/modules/es6.regexp.replace";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
 import _possibleConstructorReturn from "@babel/runtime-corejs2/helpers/esm/possibleConstructorReturn";
@@ -80,7 +80,16 @@ function (_Vue) {
   _createClass(Login, [{
     key: "mounted",
     value: function mounted() {
-      // 重新登录获取新的权限表
+      var _ref = _get(this, '$appConfig.login') || {},
+          token_storage_key = _ref.token_storage_key,
+          navigateTo = _ref.navigateTo;
+
+      if (localStorage.getItem(token_storage_key)) {
+        this.$router.replace(navigateTo);
+        return;
+      } // 重新登录获取新的权限表
+
+
       permissionService.destroyPermission();
     }
   }, {
@@ -89,13 +98,13 @@ function (_Vue) {
       var _login = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var _ref, request_url, navigateTo, token_storage_key, _ref2, access_token, token, admin_user;
+        var _ref2, request_url, navigateTo, token_storage_key, _ref3, access_token, token, admin_user;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _ref = _get(this, '$appConfig.login') || {}, request_url = _ref.request_url, navigateTo = _ref.navigateTo, token_storage_key = _ref.token_storage_key;
+                _ref2 = _get(this, '$appConfig.login') || {}, request_url = _ref2.request_url, navigateTo = _ref2.navigateTo, token_storage_key = _ref2.token_storage_key;
 
                 if (!request_url) {
                   _context.next = 12;
@@ -109,10 +118,10 @@ function (_Vue) {
                 }));
 
               case 4:
-                _ref2 = _context.sent;
-                access_token = _ref2.access_token;
-                token = _ref2.token;
-                admin_user = _ref2.admin_user;
+                _ref3 = _context.sent;
+                access_token = _ref3.access_token;
+                token = _ref3.token;
+                admin_user = _ref3.admin_user;
                 localStorage.setItem(token_storage_key, access_token || token || '');
 
                 if (admin_user) {
@@ -142,13 +151,13 @@ function (_Vue) {
       var _onSendVerificationCode = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var _ref3, onSendVerificationCode, forgot_url, _ref4, value, _ref5, message;
+        var _ref4, onSendVerificationCode, forgot_url, _ref5, value, _ref6, message;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _ref3 = this.$appConfig.password || {}, onSendVerificationCode = _ref3.onSendVerificationCode, forgot_url = _ref3.forgot_url;
+                _ref4 = this.$appConfig.password || {}, onSendVerificationCode = _ref4.onSendVerificationCode, forgot_url = _ref4.forgot_url;
 
                 if (!onSendVerificationCode) {
                   _context2.next = 3;
@@ -170,16 +179,16 @@ function (_Vue) {
                 });
 
               case 5:
-                _ref4 = _context2.sent;
-                value = _ref4.value;
+                _ref5 = _context2.sent;
+                value = _ref5.value;
                 _context2.next = 9;
                 return this.$autoLoading(this.$fly.post(forgot_url, {
                   email: value
                 }));
 
               case 9:
-                _ref5 = _context2.sent;
-                message = _ref5.message;
+                _ref6 = _context2.sent;
+                message = _ref6.message;
                 this.$message.success(message);
 
               case 12:
@@ -199,9 +208,9 @@ function (_Vue) {
   }, {
     key: "showForgetPass",
     get: function get() {
-      var _ref6 = this.$appConfig.password || {},
-          onSendVerificationCode = _ref6.onSendVerificationCode,
-          forgot_url = _ref6.forgot_url;
+      var _ref7 = this.$appConfig.password || {},
+          onSendVerificationCode = _ref7.onSendVerificationCode,
+          forgot_url = _ref7.forgot_url;
 
       return !!(onSendVerificationCode || forgot_url);
     }
