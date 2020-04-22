@@ -1,0 +1,14 @@
+.source-form-item {
+  .hint {
+    font-size: $font-size-base;
+    color: gray;
+    line-height: 24px;
+    display: block;
+  }
+
+  .c-dynamic-nest-form, .c-static-nest-form {
+    .source-form-item {
+      margin-bottom: 22px;
+    }
+  }
+}

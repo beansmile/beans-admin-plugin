@@ -1,0 +1,92 @@
+.c-source-detail {
+  height: 100%;
+  color: #606266;
+  font-size: 13px;
+
+  .el-tabs {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .el-tabs__header {
+      flex-shrink: 0;
+    }
+
+    .el-tabs__content {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+
+    .el-tab-pane {
+      height: 100%;
+    }
+  }
+
+  .render-component {
+    box-sizing: border-box;
+    padding: 15px;
+    height: 100%;
+  }
+
+  .render-columns {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .content {
+      flex: 1;
+      box-sizing: border-box;
+      padding: 15px;
+      overflow: auto;
+      background: #fff;
+    }
+
+    .toolbar-action {
+      margin-top: 15px;
+      background: #fff;
+      height: 60px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+
+      .cell-action {
+        display: flex;
+        align-items: center;
+
+        .el-button {
+          margin-right: 15px;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .multi-images {
+    .image:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+
+  .item {
+    padding: 15px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid $light-gray;
+    line-height: 1.5;
+
+    .label {
+      font-weight: bold;
+      min-width: 250px;
+    }
+
+    .value {
+      flex: 1;
+      overflow: auto;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.c-nav-menu {
+  .el-menu-item [class^="el-icon-"],
+  .el-submenu [class^="el-icon-"] {
+    vertical-align: -1px;
+  }
+
+  .el-menu-item {
+    a {
+      display: block;
+      color: #000;
+
+      &.router-link-active {
+        color: $primary;
+      }
+    }
+  }
+}

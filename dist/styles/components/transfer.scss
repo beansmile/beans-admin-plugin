@@ -1,0 +1,59 @@
+.c-transfer {
+  display: flex;
+
+  .panel {
+    flex: 1;
+    max-width: 400px;
+    min-height: 250px;
+    border: 1px solid $border-light;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    background: #F5F7FA;
+    padding: 0 15px;
+    border-bottom: 1px solid $border-light;
+    color: #000000;
+  }
+
+  .panel-content {
+    .el-checkbox-group, .drag-content {
+      max-height: 400px;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+
+      .el-checkbox {
+        padding: 5px 15px;
+
+        &.active {
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  .btns {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    flex-shrink: 0;
+    justify-content: center;
+
+    .el-button {
+      margin-bottom: 15px;
+      width: 40px;
+      height: 40px;
+      margin-left: 0;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

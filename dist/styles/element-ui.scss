@@ -1,0 +1,67 @@
+.el-dialog {
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0 !important;
+  max-height: 100vh;
+  overflow: auto;
+
+  .el-dialog__header {
+    padding: 15px 20px;
+  }
+}
+
+.el-form-item__label {
+  font-size: 13px;
+}
+
+.el-form-item__label,
+.el-form-item__content {
+  line-height: 33px !important;
+}
+
+.el-menu-item,
+.el-submenu__title {
+  font-size: 13px;
+
+  &:hover,
+  &:focus {
+    background: #ececec !important;
+  }
+}
+
+.el-date-editor {
+  max-width: 100% !important;
+
+  .el-range-separator {
+    font-size: $font-size-base;
+  }
+
+  .el-range__icon,
+  .el-range-separator,
+  .el-range__close-icon {
+    line-height: 28px;
+  }
+}
+
+.el-table {
+  .sort-caret {
+    &.ascending {
+      border-bottom-color: #fff;
+    }
+
+    &.descending {
+      border-top-color: #fff;
+    }
+  }
+
+  .ascending .sort-caret.ascending {
+    border-bottom-color: #504e4e;
+  }
+  .descending .sort-caret.descending {
+    border-top-color: #504e4e;
+  }
+}
+

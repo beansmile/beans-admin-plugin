@@ -1,0 +1,50 @@
+.upload-form-item {
+  .resource-content {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    .item-resource {
+      position: relative;
+      margin-right: 15px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .btn-close {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        z-index: 1;
+      }
+    }
+
+    .image {
+      width: 100px;
+      height: 100px;
+      border: 1px solid $light-gray;
+    }
+
+    .video {
+      width: 200px;
+    }
+  }
+
+  .download-url {
+    color: $primary;
+  }
+}
+
+.upload-dialog {
+  .el-dialog__body {
+    overflow: hidden;
+    padding: 20px;
+
+    .c-upload {
+      max-height: 70vh;
+    }
+  }
+}
