@@ -1,6 +1,6 @@
 module.exports = {
   presets: [
-    '@vue/app'
+    ['@vue/app', { absoluteRuntime: false }]
   ],
   plugins: [
     ['@babel/plugin-proposal-decorators', { 'legacy': true }],

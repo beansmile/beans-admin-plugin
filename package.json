@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name beansAdminPlugin src/plugin/index.js",
+    "build": "node build.js",
     "lint": "vue-cli-service lint",
     "start": "vue-cli-service serve"
   },
