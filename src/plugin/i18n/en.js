@@ -1,4 +1,7 @@
+import enLocale from 'element-ui/lib/locale/lang/en'
+
 export default {
+  ...enLocale,
   必填提示: '{label} Required',
   返回: 'Back',
   退出登录: 'Logout',

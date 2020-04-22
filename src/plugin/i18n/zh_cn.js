@@ -1,4 +1,7 @@
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+
 export default {
+  ...zhLocale,
   必填提示: '{label}必填',
   返回: '返回',
   退出登录: '退出登录',
