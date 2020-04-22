@@ -1,5 +1,46 @@
 import _ from 'lodash';
-import ElementUI from 'element-ui';
+import {
+  Form,
+  Button,
+  Card,
+  FormItem,
+  Input,
+  Row,
+  Image,
+  Col,
+  Pagination,
+  Tooltip,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  Dialog,
+  Tabs,
+  TabPane,
+  CheckboxGroup,
+  Alert,
+  Table,
+  TableColumn,
+  OptionGroup,
+  Option,
+  Select,
+  Menu,
+  MenuItem,
+  Submenu,
+  Tag,
+  RadioGroup,
+  Radio,
+  Checkbox,
+  CheckboxButton,
+  InputNumber,
+  Switch,
+  DatePicker,
+  TimePicker,
+  ColorPicker,
+  Cascader,
+  Loading,
+  MessageBox, Notification, Message,
+} from 'element-ui';
+import ElementLocale from 'element-ui/lib/locale'
 import './components';
 import { i18n } from './i18n';
 import * as Utils from './utils';
@@ -123,7 +164,23 @@ const config = {
 }
 
 export default function install(Vue, options = {}) {
-  Vue.use(ElementUI, options.elementUIConfig);
+  ElementLocale.i18n((key, value) => i18n.t(key, value))
+  Vue.use(Form).use(Button).use(Card).use(FormItem).use(Input).use(Row).use(Image).use(Col)
+    .use(Pagination).use(Tooltip).use(Dropdown).use(DropdownMenu).use(DropdownItem)
+    .use(Dialog).use(Tabs).use(TabPane).use(Checkbox).use(CheckboxGroup).use(Alert).use(Table)
+    .use(TableColumn).use(OptionGroup).use(Option).use(Select).use(MenuItem).use(Submenu).use(Tag)
+    .use(RadioGroup).use(Radio).use(CheckboxButton).use(InputNumber).use(Menu)
+    .use(Switch).use(DatePicker).use(TimePicker).use(ColorPicker).use(Cascader);
+
+  Vue.use(Loading.directive);
+
+  Vue.prototype.$loading = Loading.service;
+  Vue.prototype.$msgbox = MessageBox;
+  Vue.prototype.$alert = MessageBox.alert;
+  Vue.prototype.$confirm = MessageBox.confirm;
+  Vue.prototype.$prompt = MessageBox.prompt;
+  Vue.prototype.$notify = Notification;
+  Vue.prototype.$message = Message;
   const router = options.router;
   router && initRouter(router);
   _.merge(config, options.config);
