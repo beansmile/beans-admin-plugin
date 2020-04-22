@@ -1,5 +1,7 @@
 import "core-js/modules/es7.array.includes";
 import "core-js/modules/es6.string.includes";
+import _MessageBox from "element-ui/lib/message-box";
+import _Message from "element-ui/lib/message";
 import "core-js/modules/es6.function.name";
 import "core-js/modules/es6.regexp.replace";
 import "core-js/modules/es6.string.starts-with";
@@ -8,7 +10,6 @@ import _snakeCase from "lodash/snakeCase";
 import _forEach from "lodash/forEach";
 import _omitBy from "lodash/omitBy";
 import Vue from 'vue';
-import { MessageBox, Message } from 'element-ui';
 import qs from 'qs';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -90,7 +91,8 @@ export function onError(err) {
           app.$router.replace({
             name: 'login'
           });
-          Message.info(i18n.t('请登录'));
+
+          _Message.info(i18n.t('请登录'));
         }
 
         break;
@@ -104,7 +106,7 @@ export function onError(err) {
 
     default:
       {
-        MessageBox.alert(err.message, {
+        _MessageBox.alert(err.message, {
           title: i18n.t('错误')
         });
       }

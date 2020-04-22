@@ -1,4 +1,14 @@
-export default {
+import "core-js/modules/es7.object.get-own-property-descriptors";
+import "core-js/modules/web.dom.iterable";
+import "core-js/modules/es6.object.keys";
+import _defineProperty from "@babel/runtime-corejs2/helpers/esm/defineProperty";
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+import enLocale from 'element-ui/lib/locale/lang/en';
+export default _objectSpread({}, enLocale, {
   必填提示: '{label} Required',
   返回: 'Back',
   退出登录: 'Logout',
@@ -59,4 +69,4 @@ export default {
   新密码确认: 'New Password Confrimation',
   提交: 'Submit',
   '重置密码成功，请重新登录': 'Reset password successfully, please login.'
-};
+});

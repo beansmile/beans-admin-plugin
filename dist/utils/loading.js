@@ -1,6 +1,6 @@
+import _Loading from "element-ui/lib/loading";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
-import { Loading } from 'element-ui';
 export default function autoLoading(_x) {
   return _autoLoading.apply(this, arguments);
 }
@@ -19,7 +19,7 @@ function _autoLoading() {
               break;
             }
 
-            loadingInstance = Loading.service({
+            loadingInstance = _Loading.service({
               fullscreen: true,
               lock: true
             });

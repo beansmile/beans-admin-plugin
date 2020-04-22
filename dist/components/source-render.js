@@ -2,6 +2,7 @@ import "core-js/modules/es7.object.get-own-property-descriptors";
 import "core-js/modules/web.dom.iterable";
 import "core-js/modules/es6.object.keys";
 import _mergeJSXProps3 from "@vue/babel-helper-vue-jsx-merge-props";
+import _MessageBox from "element-ui/lib/message-box";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import _mergeJSXProps2 from "@vue/babel-helper-vue-jsx-merge-props";
@@ -23,7 +24,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import Vue from 'vue';
 import moment from 'moment';
-import { MessageBox } from 'element-ui';
 import { permissionService } from "../services";
 import { i18n } from "../i18n"; // eslint-disable-next-line
 
@@ -277,11 +277,11 @@ export var renderAction = function renderAction(h, _ref2) {
                   case 0:
                     // eslint-disable-next-line
                     try {
-                      MessageBox.close();
+                      _MessageBox.close();
                     } catch (e) {}
 
                     _context.next = 3;
-                    return MessageBox.confirm(i18n.t('删除操作不可恢复，确定删除？'), buttonText);
+                    return _MessageBox.confirm(i18n.t('删除操作不可恢复，确定删除？'), buttonText);
 
                   case 3:
                     _context.t0 = handler;
