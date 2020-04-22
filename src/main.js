@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import i18n from './i18n-import'
-import BeansAdminPlugin, { AppLayout } from './plugin';
+import BeansAdminPlugin from './plugin';
 import router from './router';
 import './theme.scss';
 import './components';
@@ -11,5 +11,5 @@ Vue.use(BeansAdminPlugin, { router });
 
 new Vue({
   router, i18n,
-  render: h => h(AppLayout),
+  render: h => h(require('./app').default),
 }).$mount('#app')
