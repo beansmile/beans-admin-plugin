@@ -50,9 +50,11 @@ export default class SourcePage extends Vue {
   renderSelectionButtons() {
     return this.batchActions.map(item => {
       const props = { type: 'primary', ...item.buttonProps }
+      const className = props.class || props.className;
       return <el-button
         disabled={!this.selectedRows.length}
         props={props}
+        class={className || null}
         onClick={() => item.handler(JSON.parse(JSON.stringify(this.selectedRows)))}
       >{item.text || item.title}</el-button>;
     })
