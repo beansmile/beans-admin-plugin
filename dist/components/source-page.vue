@@ -167,6 +167,7 @@ function (_Vue) {
           type: 'primary'
         }, item.buttonProps);
 
+        var className = props.class || props.className;
         return h("el-button", _mergeJSXProps([{
           "attrs": {
             "disabled": !_this2.selectedRows.length
@@ -174,6 +175,7 @@ function (_Vue) {
         }, {
           "props": props
         }, {
+          "class": className || null,
           "on": {
             "click": function click() {
               return item.handler(JSON.parse(JSON.stringify(_this2.selectedRows)));
