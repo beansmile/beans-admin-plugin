@@ -2,6 +2,7 @@
 import "core-js/modules/web.dom.iterable";
 import "core-js/modules/es6.object.keys";
 import "core-js/modules/es6.array.find";
+import _mergeJSXProps21 from "@vue/babel-helper-vue-jsx-merge-props";
 import _mergeJSXProps20 from "@vue/babel-helper-vue-jsx-merge-props";
 import _mergeJSXProps19 from "@vue/babel-helper-vue-jsx-merge-props";
 import _mergeJSXProps18 from "@vue/babel-helper-vue-jsx-merge-props";
@@ -490,6 +491,23 @@ function (_Vue) {
       }]));
     }
   }, {
+    key: "renderListSelect",
+    value: function renderListSelect(_ref21) {
+      var prop = _ref21.prop,
+          props = _ref21.props;
+      var h = this.$createElement;
+      return h("c-list-select", _mergeJSXProps20([{}, {
+        "props": props
+      }, {
+        "attrs": {
+          "value": this.getPropValue(prop)
+        },
+        "on": {
+          "change": this.handleValueChange(prop)
+        }
+      }]));
+    }
+  }, {
     key: "render",
     value: function render() {
       var h = arguments[0];
@@ -511,7 +529,8 @@ function (_Vue) {
         nestForm: this.renderNestForm,
         staticNestForm: this.renderStaticNestForm,
         vNode: this.renderVNode,
-        cascader: this.renderCascader
+        cascader: this.renderCascader,
+        listSelect: this.renderListSelect
       };
       var _this$formItem = this.formItem,
           prop = _this$formItem.prop,
@@ -519,11 +538,11 @@ function (_Vue) {
           defaultValue = _this$formItem$props.defaultValue,
           hint = _this$formItem$props.hint;
 
-      var _ref21 = this.column.form || {},
-          _ref21$component = _ref21.component,
-          component = _ref21$component === void 0 ? 'input' : _ref21$component,
-          _ref21$slots = _ref21.slots,
-          slots = _ref21$slots === void 0 ? {} : _ref21$slots;
+      var _ref22 = this.column.form || {},
+          _ref22$component = _ref22.component,
+          component = _ref22$component === void 0 ? 'input' : _ref22$component,
+          _ref22$slots = _ref22.slots,
+          slots = _ref22$slots === void 0 ? {} : _ref22$slots;
 
       if (this.value[prop] === undefined && defaultValue !== undefined) {
         this.handleValueChange(prop, {
@@ -537,7 +556,7 @@ function (_Vue) {
       var footerVNode = _isFunction(slots.footer) ? slots.footer(this.$createElement, {
         value: this.value[prop]
       }) : slots.footer;
-      return h("el-form-item", _mergeJSXProps20([{
+      return h("el-form-item", _mergeJSXProps21([{
         "class": "source-form-item"
       }, {
         "props": this.formItem
