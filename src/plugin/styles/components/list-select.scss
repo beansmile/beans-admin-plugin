@@ -1,0 +1,71 @@
+.c-list-select {
+  .form-filter {
+    margin-bottom: 15px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 10px;
+    color: #ccc;
+  }
+
+  .panel-container {
+    display: flex;
+  }
+
+  .box-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    border: 1px solid $border-light;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .panel-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    line-height: 40px;
+    background: #F5F7FA;
+    padding: 0 15px;
+    border-bottom: 1px solid $border-light;
+    color: #000000;
+    margin: 0;
+    font-size: 15px;
+  }
+
+  .panel-content {
+    flex: 1;
+    overflow: auto;
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      padding: 6px 10px;
+      cursor: pointer;
+      border-bottom: 1px solid $border-light;
+
+      .item-label {
+        flex: 1;
+        font-size: 15px;
+      }
+
+      .el-button {
+        margin-left: 10px;
+        flex-shrink: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+}

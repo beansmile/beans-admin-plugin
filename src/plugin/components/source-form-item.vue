@@ -176,6 +176,14 @@ export default class SourceFormItem extends Vue {
     />
   }
 
+  renderListSelect({ prop, props }) {
+    return <c-list-select
+      props={props}
+      value={this.getPropValue(prop)}
+      onChange={this.handleValueChange(prop)}
+    />
+  }
+
   get formItem() {
     const { form, prop, label } = this.column;
     const formItem = { prop, props: {}, ..._.omit(form, 'component') };
@@ -221,7 +229,8 @@ export default class SourceFormItem extends Vue {
       nestForm: this.renderNestForm,
       staticNestForm: this.renderStaticNestForm,
       vNode: this.renderVNode,
-      cascader: this.renderCascader
+      cascader: this.renderCascader,
+      listSelect: this.renderListSelect
     }
 
     const { prop, props: { defaultValue, hint } } = this.formItem;
