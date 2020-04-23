@@ -7,6 +7,7 @@
     label="label"
     track-by="id"
     v-model="value"
+    sort
   />
 </template>
 
