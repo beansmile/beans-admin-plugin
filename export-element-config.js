@@ -2,7 +2,7 @@
 const _ = require('lodash')
 
 const arr = _.uniq(
-  ['form', 'button', 'card', 'form-item', 'input', 'row', 'image', 'col', 'pagination', 'tooltip', 'dropdown', 'dropdown-menu', 'dropdown-item', 'dialog', 'tabs', 'tab-pane', 'checkbox-group', 'alert', 'table', 'table-column', 'option-group', 'option', 'select', 'menu', 'menu-item', 'submenu', 'tag', 'radio-group', 'radio', 'checkbox', 'checkbox-button', 'input-number', 'switch', 'date-picker', 'time-picker', 'color-picker', 'cascader', 'loading', 'message-box', 'notification', 'message',]
+  ['form', 'button', 'card', 'form-item', 'input', 'row', 'image', 'col', 'pagination', 'tooltip', 'dropdown', 'dropdown-menu', 'dropdown-item', 'dialog', 'tabs', 'tab-pane', 'checkbox-group', 'alert', 'table', 'table-column', 'option-group', 'option', 'select', 'menu', 'menu-item', 'submenu', 'tag', 'radio-group', 'radio', 'checkbox', 'checkbox-button', 'input-number', 'switch', 'date-picker', 'time-picker', 'color-picker', 'cascader', 'loading', 'message-box', 'notification', 'message', 'Carousel', 'CarouselItem', ]
 )
 
 const components = arr.map(text => _.upperFirst(_.camelCase(text)))

@@ -39,6 +39,7 @@ import {
   Cascader,
   Loading,
   MessageBox, Notification, Message,
+  Carousel, CarouselItem
 } from 'element-ui';
 import ElementLocale from 'element-ui/lib/locale'
 import './components';
@@ -170,7 +171,7 @@ export default function install(Vue, options = {}) {
     .use(Dialog).use(Tabs).use(TabPane).use(Checkbox).use(CheckboxGroup).use(Alert).use(Table)
     .use(TableColumn).use(OptionGroup).use(Option).use(Select).use(MenuItem).use(Submenu).use(Tag)
     .use(RadioGroup).use(Radio).use(CheckboxButton).use(InputNumber).use(Menu)
-    .use(Switch).use(DatePicker).use(TimePicker).use(ColorPicker).use(Cascader);
+    .use(Switch).use(DatePicker).use(TimePicker).use(ColorPicker).use(Cascader).use(Carousel).use(CarouselItem)
 
   Vue.use(Loading.directive);
 
