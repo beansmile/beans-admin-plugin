@@ -35,6 +35,13 @@
         defaultValue: 'label'
       },
       {
+        prop: 'sort',
+        desc: '支持拖拽排序',
+        type: 'Boolean',
+        optionalValue: '',
+        defaultValue: 'true'
+      },
+      {
         prop: 'renderLabel',
         desc: '自定义渲染label',
         type: 'Function',
@@ -52,7 +59,7 @@
         prop: 'onFilter',
         desc: '筛选时触发的函数',
         type: 'Function',
-         optionalValue: '',
+        optionalValue: '',
         defaultValue: ''
       },
       {

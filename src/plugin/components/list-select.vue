@@ -20,10 +20,15 @@
     <div class="panel-container">
       <div class="box-panel">
         <div class="panel-header">
-          <span>已选择（拖拽排序）</span>
+          <span>已选择
+            <template v-if="sort">
+            （拖拽排序）
+            </template>
+          </span>
           <span class="num">{{ value.length }}</span>
         </div>
-        <draggable
+        <component
+          :is="sort ? 'draggable' : 'div'"
           :value="value"
           class="panel-content"
           @end="handleDragChange"
@@ -44,7 +49,7 @@
             </div>
             <el-button icon="el-icon-close" circle @click="handleCancelSelect(index)"></el-button>
           </div>
-        </draggable>
+        </component>
         <div class="empty" v-else>已选择为空</div>
       </div>
       <div class="box-panel">
@@ -90,6 +95,7 @@
     @Model('change', { type: Array, default: () => [] }) value;
     @Prop({ type: String, default: 'id' }) trackBy;
     @Prop({ type: String, default: 'label' }) label;
+    @Prop({ type: Boolean, default: true }) sort;
     @Prop({ type: Function }) renderLabel;
     @Prop({ type: Array, default: () => [] }) filterColumns;
     @Prop({ type: Function, default: () => [] }) onFilter;
