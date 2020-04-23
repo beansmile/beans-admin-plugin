@@ -84,6 +84,53 @@ export default function createColumns({ actionColumn } = {}) {
 
 export const formColumn = [
   {
+    prop: 'list-select',
+    label: '选择列表',
+    form: {
+      component: 'listSelect',
+      required: true,
+      props: {
+        trackBy: 'id',
+        label: 'label',
+        renderLabel: (h, { item, penel, index }) => <div style="color: red">{item.label}，penel: { penel }，index: { index }</div>,
+        filterColumns: [
+          {
+            prop: 'keyword',
+            label: '搜索产品',
+            form: {
+              component: 'input',
+              props: {
+                placeholder: '搜索'
+              }
+            }
+          }
+        ],
+        onLoad: () => {
+          return new Array(20).fill(20).map((item, index) => {
+            return {
+              label: 'text' + index,
+              id: index
+            }
+          });
+        },
+        onFilter: (params) => {
+          console.log(params);
+          return new Promise(resolve => {
+            setTimeout(() => {
+              const data = new Array(10).fill(20).map((item, index) => {
+                return {
+                  label: 'textFilter' + index,
+                  id: index
+                }
+              });
+              resolve(data);
+            }, 2000)
+          })
+        }
+      }
+    }
+  },
+  {
     prop: 'cascader',
     label: '级联选择器',
     form: {
