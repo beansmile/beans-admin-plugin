@@ -20,10 +20,15 @@
     <div class="panel-container">
       <div class="box-panel">
         <div class="panel-header">
-          <span>已选择（拖拽排序）</span>
+          <span>已选择
+            <template v-if="sort">
+            （拖拽排序）
+            </template>
+          </span>
           <span class="num">{{ value.length }}</span>
         </div>
-        <draggable
+        <component
+          :is="sort ? 'draggable' : 'div'"
           :value="value"
           class="panel-content"
           @end="handleDragChange"
@@ -44,7 +49,7 @@
             </div>
             <el-button icon="el-icon-close" circle @click="handleCancelSelect(index)"></el-button>
           </div>
-        </draggable>
+        </component>
         <div class="empty" v-else>已选择为空</div>
       </div>
       <div class="box-panel">
@@ -89,7 +94,7 @@ import _inherits from "@babel/runtime-corejs2/helpers/esm/inherits";
 import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyDecoratedDescriptor";
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _temp;
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
@@ -111,18 +116,21 @@ var ListSelect = (_dec = Component({
   type: String,
   default: 'label'
 }), _dec5 = Prop({
-  type: Function
+  type: Boolean,
+  default: true
 }), _dec6 = Prop({
+  type: Function
+}), _dec7 = Prop({
   type: Array,
   default: function _default() {
     return [];
   }
-}), _dec7 = Prop({
+}), _dec8 = Prop({
   type: Function,
   default: function _default() {
     return [];
   }
-}), _dec8 = Prop({
+}), _dec9 = Prop({
   type: Function
 }), _dec(_class = (_class2 = (_temp =
 /*#__PURE__*/
@@ -148,13 +156,15 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "label", _descriptor3, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "renderLabel", _descriptor4, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "sort", _descriptor4, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "filterColumns", _descriptor5, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "renderLabel", _descriptor5, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "onFilter", _descriptor6, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "filterColumns", _descriptor6, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "onLoad", _descriptor7, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "onFilter", _descriptor7, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "onLoad", _descriptor8, _assertThisInitialized(_this));
 
     _this.loading = false;
     _this.data = [];
@@ -312,22 +322,27 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "renderLabel", [_dec5], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "sort", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "filterColumns", [_dec6], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "renderLabel", [_dec6], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "onFilter", [_dec7], {
+}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "filterColumns", [_dec7], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "onLoad", [_dec8], {
+}), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "onFilter", [_dec8], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor8 = _applyDecoratedDescriptor(_class2.prototype, "onLoad", [_dec9], {
   configurable: true,
   enumerable: true,
   writable: true,
