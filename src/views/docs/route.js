@@ -84,6 +84,15 @@ export default {
         title: 'page-editor',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/list-select',
+      name: 'doc.listSelect',
+      component: require('./list-select').default,
+      meta: {
+        title: 'list-select',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }
