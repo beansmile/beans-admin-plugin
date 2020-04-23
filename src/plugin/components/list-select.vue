@@ -80,7 +80,6 @@
   import draggable from 'vuedraggable';
   import { arrayMove } from '../utils';
   // TODO i18n
-  // TODO 文档
 
   @Component({
     components: {
