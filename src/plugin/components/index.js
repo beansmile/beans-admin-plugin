@@ -1,6 +1,8 @@
 import Vue from 'vue';
 
-Vue.component('c-echarts', require('./custom-chart').default);
+Vue.component('c-echarts', () => import('./custom-chart'));
+Vue.component('c-editor', () => import('./ck-editor'));
+
 Vue.component('c-source-detail', require('./source-detail').default);
 Vue.component('c-source-filter', require('./source-filter').default);
 Vue.component('c-source-form-item', require('./source-form-item').default);
@@ -11,7 +13,6 @@ Vue.component('c-upload', require('./upload').default);
 Vue.component('c-upload-form-item', require('./upload-form-item').default);
 Vue.component('c-nav-menu', require('./nav-menu').default);
 Vue.component('c-preview-image', require('./preview-image').default);
-Vue.component('c-editor', require('./ck-editor').default);
 Vue.component('v-node', require('./v-node').default);
 Vue.component('c-dropdown-button', require('./dropdown-button').default);
 Vue.component('c-link-button', require('./link-button').default);
