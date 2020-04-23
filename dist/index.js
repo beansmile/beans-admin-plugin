@@ -41,6 +41,7 @@ import _ColorPicker from "element-ui/lib/color-picker";
 import _Cascader from "element-ui/lib/cascader";
 import _Carousel from "element-ui/lib/carousel";
 import _CarouselItem from "element-ui/lib/carousel-item";
+import _Popover from "element-ui/lib/popover";
 import "core-js/modules/es6.function.name";
 import "core-js/modules/es6.array.find";
 import "regenerator-runtime/runtime";
@@ -215,7 +216,7 @@ export default function install(Vue) {
   ElementLocale.i18n(function (key, value) {
     return i18n.t(key, value);
   });
-  Vue.use(_Form).use(_Button).use(_Card).use(_FormItem).use(_Input).use(_Row).use(_Image).use(_Col).use(_Pagination).use(_Tooltip).use(_Dropdown).use(_DropdownMenu).use(_DropdownItem).use(_Dialog).use(_Tabs).use(_TabPane).use(_Checkbox).use(_CheckboxGroup).use(_Alert).use(_Table).use(_TableColumn).use(_OptionGroup).use(_Option).use(_Select).use(_MenuItem).use(_Submenu).use(_Tag).use(_RadioGroup).use(_Radio).use(_CheckboxButton).use(_InputNumber).use(_Menu).use(_Switch).use(_DatePicker).use(_TimePicker).use(_ColorPicker).use(_Cascader).use(_Carousel).use(_CarouselItem);
+  Vue.use(_Form).use(_Button).use(_Card).use(_FormItem).use(_Input).use(_Row).use(_Image).use(_Col).use(_Pagination).use(_Tooltip).use(_Dropdown).use(_DropdownMenu).use(_DropdownItem).use(_Dialog).use(_Tabs).use(_TabPane).use(_Checkbox).use(_CheckboxGroup).use(_Alert).use(_Table).use(_TableColumn).use(_OptionGroup).use(_Option).use(_Select).use(_MenuItem).use(_Submenu).use(_Tag).use(_RadioGroup).use(_Radio).use(_CheckboxButton).use(_InputNumber).use(_Menu).use(_Switch).use(_DatePicker).use(_TimePicker).use(_ColorPicker).use(_Cascader).use(_Carousel).use(_CarouselItem).use(_Popover);
   Vue.use(_Loading.directive);
   Vue.prototype.$loading = _Loading.service;
   Vue.prototype.$msgbox = _MessageBox;
