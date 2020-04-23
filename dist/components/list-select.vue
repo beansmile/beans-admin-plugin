@@ -94,7 +94,6 @@ var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _des
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
 import { arrayMove } from "../utils"; // TODO i18n
-// TODO 文档
 
 var ListSelect = (_dec = Component({
   components: {
