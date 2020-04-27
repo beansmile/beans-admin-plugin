@@ -24,7 +24,7 @@
     }
     // TODO 自定义新组件文档
     customComponents = []
-    useComponents = ['custom-image', 'custom-video', 'custom-swiper', 'custom-scroll-x', 'custom-contact-service', 'custom-product-list', 'custom-block']
+    useComponents = ['custom-image', 'custom-video', 'custom-swiper', 'custom-scroll-x', 'custom-contact-service', 'custom-product-list', 'custom-block', 'custom-text', 'custom-notice-bar']
 
     handleSubmit(pageValue) {
       console.log(this.pageValue, pageValue);

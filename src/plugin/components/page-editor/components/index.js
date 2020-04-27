@@ -41,4 +41,9 @@ export default [
     name: 'custom-text',
     component: require('./text').default
   },
+  {
+    title: '通知栏',
+    name: 'custom-notice-bar',
+    component: require('./notice-bar').default
+  },
 ];
