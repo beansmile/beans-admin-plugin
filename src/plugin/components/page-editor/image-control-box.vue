@@ -31,6 +31,7 @@
             return <c-upload-form-item
               value={row.src}
               onSubmit={imageInfoArr => this.handleUpdateImage(imageInfoArr[0], $index)}
+              onDelete={() => this.handleUpdateImage({ src: '', width: 0, height: 0 }, $index)}
             />
           }
         },
