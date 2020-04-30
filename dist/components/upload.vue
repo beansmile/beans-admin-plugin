@@ -25,6 +25,8 @@
 import "core-js/modules/es6.object.keys";
 import "core-js/modules/web.dom.iterable";
 import "core-js/modules/es6.string.iterator";
+import _slicedToArray from "@babel/runtime-corejs2/helpers/esm/slicedToArray";
+import "core-js/modules/es6.string.starts-with";
 import _toConsumableArray from "@babel/runtime-corejs2/helpers/esm/toConsumableArray";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
@@ -42,15 +44,15 @@ import _defineProperty from "@babel/runtime-corejs2/helpers/esm/defineProperty";
 import _objectWithoutProperties from "@babel/runtime-corejs2/helpers/esm/objectWithoutProperties";
 import _get from "lodash/get";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { i18n } from "../i18n";
-import { createDialog } from "../utils";
+import { createDialog, getImageInfo } from "../utils";
 var Upload = (_dec = Prop({
   type: Number,
   default: 1
@@ -66,7 +68,7 @@ var Upload = (_dec = Prop({
 }), _dec5 = Prop({
   type: Boolean,
   default: true
-}), _dec6 = Emit('submit'), Component(_class = (_class2 = (_temp =
+}), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(Upload, _Vue);
@@ -145,6 +147,7 @@ function (_Vue) {
       var _onSubmit = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
+        var data;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -158,13 +161,19 @@ function (_Vue) {
                 return this.handleUploadAll();
 
               case 3:
-                return _context2.abrupt("return", this.table.data.filter(function (item) {
+                _context2.next = 5;
+                return this.table.data.filter(function (item) {
                   return item.src;
-                }).map(function (item) {
+                });
+
+              case 5:
+                data = _context2.sent;
+                this.$emit('submit', data.map(function (item) {
                   return item.src;
                 }));
+                this.$emit('change', JSON.parse(JSON.stringify(data)));
 
-              case 4:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -220,25 +229,78 @@ function (_Vue) {
     value: function () {
       var _handleUpload = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(row, index) {
-        var fileUrl;
-        return regeneratorRuntime.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return this.upload(row.file);
+      regeneratorRuntime.mark(function _callee4(row, index) {
+        var _this3 = this;
 
-              case 2:
-                fileUrl = _context3.sent;
+        var setImagInfo, _ref5, _ref6, fileUrl;
+
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                setImagInfo =
+                /*#__PURE__*/
+                function () {
+                  var _ref4 = _asyncToGenerator(
+                  /*#__PURE__*/
+                  regeneratorRuntime.mark(function _callee3(file) {
+                    var res;
+                    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            if (!file.type.startsWith('image')) {
+                              _context3.next = 11;
+                              break;
+                            }
+
+                            _context3.prev = 1;
+                            _context3.next = 4;
+                            return getImageInfo(URL.createObjectURL(file));
+
+                          case 4:
+                            res = _context3.sent;
+
+                            _this3.$set(_this3.table.data[index], 'width', res.width);
+
+                            _this3.$set(_this3.table.data[index], 'height', res.height); // eslint-disable-next-line no-empty
+
+
+                            _context3.next = 11;
+                            break;
+
+                          case 9:
+                            _context3.prev = 9;
+                            _context3.t0 = _context3["catch"](1);
+
+                          case 11:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3, null, [[1, 9]]);
+                  }));
+
+                  return function setImagInfo(_x4) {
+                    return _ref4.apply(this, arguments);
+                  };
+                }();
+
+                _context4.next = 3;
+                return Promise.all([this.upload(row.file), setImagInfo(row.file)]);
+
+              case 3:
+                _ref5 = _context4.sent;
+                _ref6 = _slicedToArray(_ref5, 1);
+                fileUrl = _ref6[0];
                 this.$set(this.table.data[index], 'src', fileUrl);
 
-              case 4:
+              case 7:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee4, this);
       }));
 
       function handleUpload(_x2, _x3) {
@@ -252,31 +314,31 @@ function (_Vue) {
     value: function () {
       var _handleUploadAll = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4() {
-        var _this3 = this;
+      regeneratorRuntime.mark(function _callee5() {
+        var _this4 = this;
 
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 this.loading = true;
-                _context4.prev = 1;
-                _context4.next = 4;
+                _context5.prev = 1;
+                _context5.next = 4;
                 return Promise.all(this.table.data.map(function (row, index) {
-                  return !row.src && _this3.handleUpload(row, index);
+                  return !row.src && _this4.handleUpload(row, index);
                 }));
 
               case 4:
-                _context4.prev = 4;
+                _context5.prev = 4;
                 this.loading = false;
-                return _context4.finish(4);
+                return _context5.finish(4);
 
               case 7:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this, [[1,, 4, 7]]);
+        }, _callee5, this, [[1,, 4, 7]]);
       }));
 
       function handleUploadAll() {
@@ -335,7 +397,7 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _applyDecoratedDescriptor(_class2.prototype, "onSubmit", [_dec6], Object.getOwnPropertyDescriptor(_class2.prototype, "onSubmit"), _class2.prototype)), _class2)) || _class);
+})), _class2)) || _class);
 export { Upload as default };
 export var createUploadDialog = function createUploadDialog(h) {
   var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},

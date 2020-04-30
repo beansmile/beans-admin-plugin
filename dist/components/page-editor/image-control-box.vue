@@ -88,8 +88,10 @@ function (_Vue) {
     }
   }, {
     key: "handleUpdateImage",
-    value: function handleUpdateImage(imageUrl, $index) {
-      this.$set(this.value[$index], 'src', imageUrl);
+    value: function handleUpdateImage(imageInfo, $index) {
+      this.$set(this.value[$index], 'src', imageInfo.src);
+      this.$set(this.value[$index], 'width', imageInfo.width);
+      this.$set(this.value[$index], 'height', imageInfo.height);
       this.syncChange();
     }
   }, {
@@ -129,8 +131,8 @@ function (_Vue) {
               "value": row.src
             },
             "on": {
-              "change": function change(val) {
-                return _this2.handleUpdateImage(val, $index);
+              "submit": function submit(imageInfoArr) {
+                return _this2.handleUpdateImage(imageInfoArr[0], $index);
               }
             }
           });
