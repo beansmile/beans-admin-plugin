@@ -28,7 +28,10 @@
           prop: 'src',
           label: '图片',
           renderCell: (h, { row, $index }) => {
-            return <c-upload-form-item value={row.src} onChange={(val) => this.handleUpdateImage(val, $index)}/>
+            return <c-upload-form-item
+              value={row.src}
+              onSubmit={imageInfoArr => this.handleUpdateImage(imageInfoArr[0], $index)}
+            />
           }
         },
         {
@@ -81,8 +84,10 @@
       this.syncChange();
     }
 
-    handleUpdateImage(imageUrl, $index) {
-      this.$set(this.value[$index], 'src', imageUrl);
+    handleUpdateImage(imageInfo, $index) {
+      this.$set(this.value[$index], 'src', imageInfo.src);
+      this.$set(this.value[$index], 'width', imageInfo.width);
+      this.$set(this.value[$index], 'height', imageInfo.height);
       this.syncChange();
     }
 

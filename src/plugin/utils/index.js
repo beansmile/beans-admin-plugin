@@ -8,3 +8,4 @@ export { default as upload } from './upload';
 export { randomFileName, randomString } from './random';
 export { sleep } from './sleep';
 export { arrayMove } from './array';
+export { getImageInfo } from './getImageInfo';

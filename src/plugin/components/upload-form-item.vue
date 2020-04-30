@@ -37,7 +37,7 @@
       <c-upload
         v-bind="$attrs"
         :limit="isMultiple ? limit - filesResouces.length : 1"
-        @submit="handleSubmit"
+        @change="handleSubmit"
         @cancel="handleHide"
       />
     </el-dialog>
@@ -90,7 +90,9 @@
     handleSubmit(data) {
       this.handleHide();
       if (data.length) {
-        this.$emit('change', this.limit > 1 ? this.filesResouces.concat(data) : data[0]);
+        const dataSrcArr = data.map(item => item.src);
+        this.$emit('change', this.limit > 1 ? this.filesResouces.concat(dataSrcArr) : dataSrcArr[0]);
+        this.$emit('submit', data);
       }
     }
 
