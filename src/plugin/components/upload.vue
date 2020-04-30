@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
 import { i18n } from '../i18n';
-import { createDialog } from '../utils';
+import { createDialog, getImageInfo } from '../utils';
 
 @Component
 export default class Upload extends Vue {
@@ -81,14 +81,13 @@ export default class Upload extends Vue {
     return this.$t('上传提示', this) + (this.tip ? '，' + this.tip : '')
   }
 
-  @Emit('submit')
   async onSubmit() {
     if (this.canUploadData.length) {
       await this.handleUploadAll();
     }
-    return this.table.data
-      .filter(item => item.src)
-      .map(item => item.src);
+    const data = await this.table.data.filter(item => item.src)
+    this.$emit('submit', data.map(item => item.src));
+    this.$emit('change', JSON.parse(JSON.stringify(data)));
   }
 
   handleFileChange(e) {
@@ -117,7 +116,21 @@ export default class Upload extends Vue {
   }
 
   async handleUpload(row, index) {
-    const fileUrl = await this.upload(row.file);
+    const setImagInfo = async (file) => {
+      if (file.type.startsWith('image')) {
+        try {
+          const res = await getImageInfo(URL.createObjectURL(file));
+          this.$set(this.table.data[index], 'width', res.width);
+          this.$set(this.table.data[index], 'height', res.height);
+        // eslint-disable-next-line no-empty
+        } catch (e) {}
+      }
+    }
+
+    const [fileUrl] = await Promise.all([
+      this.upload(row.file),
+      setImagInfo(row.file)
+    ]);
     this.$set(this.table.data[index], 'src', fileUrl);
   }
 
