@@ -159,6 +159,7 @@ function (_Vue) {
       }
 
       this.$emit('change', value);
+      this.$emit('delete', index);
     }
   }, {
     key: "filesResouces",

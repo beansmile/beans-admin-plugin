@@ -133,6 +133,13 @@ function (_Vue) {
             "on": {
               "submit": function submit(imageInfoArr) {
                 return _this2.handleUpdateImage(imageInfoArr[0], $index);
+              },
+              "delete": function _delete() {
+                return _this2.handleUpdateImage({
+                  src: '',
+                  width: 0,
+                  height: 0
+                }, $index);
               }
             }
           });
