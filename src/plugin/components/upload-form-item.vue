@@ -105,7 +105,8 @@
       if (_.isArray(this.value)) {
         value = this.value.filter((v, i) => i !== index)
       }
-      this.$emit('change', value)
+      this.$emit('change', value);
+      this.$emit('delete', index);
     }
   }
 </script>
