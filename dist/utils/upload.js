@@ -14,6 +14,7 @@ function _upload() {
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee(file) {
     var include_res,
+        uploadOptions,
         _Vue$appConfig$upload,
         meta_url,
         customUpload,
@@ -33,29 +34,30 @@ function _upload() {
         switch (_context.prev = _context.next) {
           case 0:
             include_res = _args.length > 1 && _args[1] !== undefined ? _args[1] : false;
+            uploadOptions = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
             _Vue$appConfig$upload = Vue.appConfig.upload, meta_url = _Vue$appConfig$upload.meta_url, customUpload = _Vue$appConfig$upload.customUpload, useHttps = _Vue$appConfig$upload.useHttps;
 
             if (!_isFunction(customUpload)) {
-              _context.next = 4;
+              _context.next = 5;
               break;
             }
 
-            return _context.abrupt("return", customUpload(file, include_res));
+            return _context.abrupt("return", customUpload(file, include_res, uploadOptions));
 
-          case 4:
-            _context.next = 6;
+          case 5:
+            _context.next = 7;
             return fly.get(meta_url, null, {
               loading: false
             });
 
-          case 6:
+          case 7:
             qiniuMeta = _context.sent;
             bucket_domain = qiniuMeta.bucket_domain, token = qiniuMeta.token, _qiniuMeta$upload_url = qiniuMeta.upload_url, upload_url = _qiniuMeta$upload_url === void 0 ? Vue.appConfig.upload.upload_url : _qiniuMeta$upload_url;
             formData = new FormData();
             formData.append('file', file);
             formData.append('token', token);
             formData.append('key', randomFileName(file.name));
-            _context.next = 14;
+            _context.next = 15;
             return fly.post(upload_url, formData, {
               baseURL: '',
               withCredentials: false,
@@ -63,12 +65,12 @@ function _upload() {
               return_res: true
             });
 
-          case 14:
+          case 15:
             res = _context.sent;
             url = "".concat(useHttps ? 'https' : 'http', "://").concat(bucket_domain, "/").concat(res.data.key);
             return _context.abrupt("return", include_res ? [url, res] : url);
 
-          case 17:
+          case 18:
           case "end":
             return _context.stop();
         }

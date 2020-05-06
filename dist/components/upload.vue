@@ -52,7 +52,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import { i18n } from "../i18n";
-import { createDialog, getImageInfo } from "../utils";
+import { createDialog, getImageInfo, upload as _upload } from "../utils";
 var Upload = (_dec = Prop({
   type: Number,
   default: 1
@@ -221,8 +221,8 @@ function (_Vue) {
     }
   }, {
     key: "upload",
-    value: function upload(file, qiniuMeta) {
-      return this.$upload(file, qiniuMeta);
+    value: function upload(file) {
+      return _upload(file, false, this.$attrs);
     }
   }, {
     key: "handleUpload",
