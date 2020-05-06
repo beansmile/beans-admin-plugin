@@ -125,7 +125,7 @@
     }
 
     handleSelect(item) {
-      this.$emit('change', this.value.concat(item));
+      this.$emit('change', [item].concat(this.value));
     }
 
     handleCancelSelect(index) {
