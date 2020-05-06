@@ -217,7 +217,7 @@ function (_Vue) {
   }, {
     key: "handleSelect",
     value: function handleSelect(item) {
-      this.$emit('change', this.value.concat(item));
+      this.$emit('change', [item].concat(this.value));
     }
   }, {
     key: "handleCancelSelect",
