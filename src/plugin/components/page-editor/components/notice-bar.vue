@@ -2,7 +2,7 @@
   <div class="c-notice-bar">
     <div class="notice-bar" v-for="(item, index) in value.data" :key="index" :style="noticeBarStyle">{{ item.text }}</div>
     <div class="tip" style="font-size: 12px; color: #ccc; text-align: center; padding: 10px;">通知栏: {{ tip }}</div>
-    <ControlBox>
+    <ControlBox v-if="showController">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item label="文本" v-for="(item, index) in value.data" :key="index">
           <el-input type="textarea" :rows="5" autosize v-model="item.text" @change="syncChange" :placeholder="tip" />
