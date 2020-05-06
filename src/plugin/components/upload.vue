@@ -25,7 +25,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
 import { i18n } from '../i18n';
-import { createDialog, getImageInfo } from '../utils';
+import { createDialog, getImageInfo, upload } from '../utils';
 
 @Component
 export default class Upload extends Vue {
@@ -111,8 +111,8 @@ export default class Upload extends Vue {
     e.target.value = '';
   }
 
-  upload(file, qiniuMeta) {
-    return this.$upload(file, qiniuMeta);
+  upload(file) {
+    return upload(file, false, this.$attrs);
   }
 
   async handleUpload(row, index) {

@@ -3,10 +3,10 @@ import _ from 'lodash';
 import fly from './fly';
 import { randomFileName } from './random';
 
-export default async function upload(file, include_res = false) {
+export default async function upload(file, include_res = false, uploadOptions = {}) {
   const { meta_url, customUpload, useHttps } = Vue.appConfig.upload;
   if (_.isFunction(customUpload)) {
-    return customUpload(file, include_res);
+    return customUpload(file, include_res, uploadOptions);
   }
   const qiniuMeta = await fly.get(meta_url, null, { loading: false });
   const { bucket_domain, token, upload_url = Vue.appConfig.upload.upload_url } = qiniuMeta;
