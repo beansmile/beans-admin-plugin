@@ -8,8 +8,8 @@
     >
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
-          <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
-          <el-image :src="item" class="image" fit="cover" />
+          <i class="el-icon-close btn-close" @click.stop="handleDelete(index)"></i>
+          <el-image :src="item" class="image" :preview-src-list="imagePreview ? filesResouces : []" fit="cover" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
@@ -58,6 +58,7 @@
   export default class UploadFormItem extends Vue {
     @Prop({ type: Number, default: 1 }) limit;
     @Prop({ type: String, default: 'image' }) type;
+    @Prop({ type: String, default: true }) imagePreview;
     @Model('change', { type: [Array, String] }) value;
 
     visible = false;
