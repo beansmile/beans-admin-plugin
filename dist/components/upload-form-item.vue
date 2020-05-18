@@ -73,7 +73,7 @@ var UploadFormItem = (_dec = Component({
   type: String,
   default: 'image'
 }), _dec4 = Prop({
-  type: String,
+  type: Boolean,
   default: true
 }), _dec5 = Model('change', {
   type: [Array, String]
