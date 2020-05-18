@@ -9,15 +9,15 @@
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
           <i class="el-icon-close btn-close" @click.stop="handleDelete(index)"></i>
-          <el-image :src="item" class="image" :preview-src-list="imagePreview ? filesResouces : []" fit="cover" />
+          <el-image :src="transformLink(item)" class="image" :preview-src-list="imagePreview ? filesResouces.map(transformLink) : []" fit="cover" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
-          <video class="video" :src="item"/>
+          <video class="video" :src="transformLink(item)"/>
         </div>
         <div v-else :key="index" style="width: 100%">
           <a :href="item" style="display: block;" class="download-url" download>{{
-            item.split('/').pop() }}</a>
+            transformLink(item).split('/').pop() }}</a>
         </div>
       </template>
     </draggable>
@@ -59,6 +59,7 @@
     @Prop({ type: Number, default: 1 }) limit;
     @Prop({ type: String, default: 'image' }) type;
     @Prop({ type: Boolean, default: true }) imagePreview;
+    @Prop({ type: Function, default: src => src }) transformLink;
     @Model('change', { type: [Array, String] }) value;
 
     visible = false;
