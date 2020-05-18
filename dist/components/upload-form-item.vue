@@ -9,15 +9,15 @@
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
           <i class="el-icon-close btn-close" @click.stop="handleDelete(index)"></i>
-          <el-image :src="item" class="image" :preview-src-list="imagePreview ? filesResouces : []" fit="cover" />
+          <el-image :src="transformLink(item)" class="image" :preview-src-list="imagePreview ? filesResouces.map(transformLink) : []" fit="cover" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
-          <video class="video" :src="item"/>
+          <video class="video" :src="transformLink(item)"/>
         </div>
         <div v-else :key="index" style="width: 100%">
           <a :href="item" style="display: block;" class="download-url" download>{{
-            item.split('/').pop() }}</a>
+            transformLink(item).split('/').pop() }}</a>
         </div>
       </template>
     </draggable>
@@ -57,7 +57,7 @@ import "core-js/modules/es6.number.constructor";
 import _isArray from "lodash/isArray";
 import _flatten from "lodash/flatten";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import { arrayMove } from "../utils";
@@ -75,7 +75,12 @@ var UploadFormItem = (_dec = Component({
 }), _dec4 = Prop({
   type: Boolean,
   default: true
-}), _dec5 = Model('change', {
+}), _dec5 = Prop({
+  type: Function,
+  default: function _default(src) {
+    return src;
+  }
+}), _dec6 = Model('change', {
   type: [Array, String]
 }), _dec(_class = (_class2 = (_temp =
 /*#__PURE__*/
@@ -101,7 +106,9 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "imagePreview", _descriptor3, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "value", _descriptor4, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "transformLink", _descriptor4, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "value", _descriptor5, _assertThisInitialized(_this));
 
     _this.visible = false;
     _this.show = true;
@@ -194,7 +201,12 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec5], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "transformLink", [_dec5], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec6], {
   configurable: true,
   enumerable: true,
   writable: true,
