@@ -26,6 +26,12 @@
       width: 100px;
       height: 100px;
       border: 1px solid $light-gray;
+
+      img {
+        // object-fit有性能问题
+        // https://coderwall.com/p/j5udlw/improve-scroll-performance-of-chrome-when-using-background-size-cover
+        transform: translate3d(0, 0, 0);
+      }
     }
 
     .video {
