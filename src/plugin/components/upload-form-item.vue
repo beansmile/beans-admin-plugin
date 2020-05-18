@@ -58,7 +58,7 @@
   export default class UploadFormItem extends Vue {
     @Prop({ type: Number, default: 1 }) limit;
     @Prop({ type: String, default: 'image' }) type;
-    @Prop({ type: String, default: true }) imagePreview;
+    @Prop({ type: Boolean, default: true }) imagePreview;
     @Model('change', { type: [Array, String] }) value;
 
     visible = false;
