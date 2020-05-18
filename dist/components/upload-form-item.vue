@@ -8,8 +8,8 @@
     >
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
-          <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
-          <el-image :src="item" class="image" fit="cover" />
+          <i class="el-icon-close btn-close" @click.stop="handleDelete(index)"></i>
+          <el-image :src="item" class="image" :preview-src-list="imagePreview ? filesResouces : []" fit="cover" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
           <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
@@ -57,7 +57,7 @@ import "core-js/modules/es6.number.constructor";
 import _isArray from "lodash/isArray";
 import _flatten from "lodash/flatten";
 
-var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import { arrayMove } from "../utils";
@@ -72,7 +72,10 @@ var UploadFormItem = (_dec = Component({
 }), _dec3 = Prop({
   type: String,
   default: 'image'
-}), _dec4 = Model('change', {
+}), _dec4 = Prop({
+  type: String,
+  default: true
+}), _dec5 = Model('change', {
   type: [Array, String]
 }), _dec(_class = (_class2 = (_temp =
 /*#__PURE__*/
@@ -96,7 +99,9 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "type", _descriptor2, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "value", _descriptor3, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "imagePreview", _descriptor3, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "value", _descriptor4, _assertThisInitialized(_this));
 
     _this.visible = false;
     _this.show = true;
@@ -184,7 +189,12 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec4], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "imagePreview", [_dec4], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
