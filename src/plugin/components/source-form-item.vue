@@ -243,8 +243,14 @@ export default class SourceFormItem extends Vue {
     const headerVNode = _.isFunction(slots.header) ? slots.header(this.$createElement, { value: this.value[prop] }) : slots.header;
     const footerVNode = _.isFunction(slots.footer) ? slots.footer(this.$createElement, { value: this.value[prop] }) : slots.footer;
 
+    let className = 'source-form-item';
+
+    if (this.formItem.className) {
+      className += ` ${this.formItem.className}`
+    }
+
     return (
-      <el-form-item class="source-form-item" props={this.formItem}>
+      <el-form-item class={className} props={this.formItem}>
         {headerVNode}
         {renderMap[component](this.formItem)}
         {footerVNode}
