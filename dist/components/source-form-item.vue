@@ -556,8 +556,14 @@ function (_Vue) {
       var footerVNode = _isFunction(slots.footer) ? slots.footer(this.$createElement, {
         value: this.value[prop]
       }) : slots.footer;
+      var className = 'source-form-item';
+
+      if (this.formItem.className) {
+        className += " ".concat(this.formItem.className);
+      }
+
       return h("el-form-item", _mergeJSXProps21([{
-        "class": "source-form-item"
+        "class": className
       }, {
         "props": this.formItem
       }]), [headerVNode, renderMap[component](this.formItem), footerVNode, hint && h("span", {
