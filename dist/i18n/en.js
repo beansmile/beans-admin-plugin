@@ -68,5 +68,10 @@ export default _objectSpread({}, enLocale, {
   新密码: 'New Password',
   新密码确认: 'New Password Confrimation',
   提交: 'Submit',
-  '重置密码成功，请重新登录': 'Reset password successfully, please login.'
+  '重置密码成功，请重新登录': 'Reset password successfully, please login.',
+  拖拽排序: 'Drag and drop sorting',
+  已选择: 'Selected',
+  已选择为空: 'Selected empty',
+  列表: 'List',
+  没有可选择项: 'empty'
 });

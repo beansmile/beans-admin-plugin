@@ -20,9 +20,9 @@
     <div class="panel-container">
       <div class="box-panel">
         <div class="panel-header">
-          <span>已选择
+          <span>{{ $t('已选择') }}
             <template v-if="sort">
-            （拖拽排序）
+            （{{ $t('拖拽排序') }}）
             </template>
           </span>
           <span class="num">{{ value.length }}</span>
@@ -50,11 +50,11 @@
             <el-button icon="el-icon-close" circle @click="handleCancelSelect(index)"></el-button>
           </div>
         </component>
-        <div class="empty" v-else>已选择为空</div>
+        <div class="empty" v-else>{{ $t('已选择为空') }}</div>
       </div>
       <div class="box-panel">
         <div class="panel-header">
-          <span>列表</span>
+          <span>{{ $t('列表') }}</span>
           <span class="num">{{ renderList.length }}</span>
         </div>
         <div class="panel-content" v-if="renderList.length" v-loading="loading">
@@ -74,7 +74,7 @@
             <el-button icon="el-icon-check" circle @click="handleSelect(item)"></el-button>
           </div>
         </div>
-        <div class="empty" v-else>没有可选择项</div>
+        <div class="empty" v-else>{{ $t('没有可选择项') }}</div>
       </div>
     </div>
   </div>
@@ -98,8 +98,7 @@ var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import draggable from 'vuedraggable';
-import { arrayMove } from "../utils"; // TODO i18n
-
+import { arrayMove } from "../utils";
 var ListSelect = (_dec = Component({
   components: {
     draggable: draggable
