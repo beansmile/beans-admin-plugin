@@ -4,7 +4,7 @@
   </div>
   <div class="dropdown-button" v-else>
     <el-dropdown @command="handleCommand" v-if="buttons.length > 1">
-      <el-button v-bind="buttonProps">{{ buttonText }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
+      <el-button v-bind="buttonProps">{{ shownButtonText }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           v-for="(button, index) in buttons"
@@ -21,14 +21,17 @@
 
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { i18n } from '../i18n';
 
 @Component
 export default class DropdownButton extends Vue {
   @Prop({ type: Array, default: () => [] }) buttons;
   @Prop({ type: Object, default: () => ({ type: 'text' }) }) buttonProps;
-  @Prop({ type: String, default: i18n.t('操作') }) buttonText;
+  @Prop({ type: String, default: '' }) buttonText;
   @Prop(Boolean) buttonMode;
+
+  get shownButtonText() {
+    return this.buttonText || this.$t('操作');
+  }
 
   getButtonPropsMerged(button) {
     return Object.assign({}, this.buttonProps, button.props);
