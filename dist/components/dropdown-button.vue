@@ -4,7 +4,7 @@
   </div>
   <div class="dropdown-button" v-else>
     <el-dropdown @command="handleCommand" v-if="buttons.length > 1">
-      <el-button v-bind="buttonProps">{{ buttonText }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
+      <el-button v-bind="buttonProps">{{ shownButtonText }}<i class="el-icon-arrow-down el-icon--right" /></el-button>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           v-for="(button, index) in buttons"
@@ -32,7 +32,6 @@ import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initia
 var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { i18n } from "../i18n";
 var DropdownButton = (_dec = Prop({
   type: Array,
   default: function _default() {
@@ -47,7 +46,7 @@ var DropdownButton = (_dec = Prop({
   }
 }), _dec3 = Prop({
   type: String,
-  default: i18n.t('操作')
+  default: ''
 }), _dec4 = Prop(Boolean), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
@@ -87,6 +86,11 @@ function (_Vue) {
     value: function handleCommand(index) {
       var button = this.buttons[index];
       button.handler && button.handler(this.$createElement);
+    }
+  }, {
+    key: "shownButtonText",
+    get: function get() {
+      return this.buttonText || this.$t('操作');
     }
   }]);
 
