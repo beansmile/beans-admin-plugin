@@ -42,7 +42,7 @@ import _get from "lodash/get";
 import _isArray from "lodash/isArray";
 import _flatten from "lodash/flatten";
 
-var _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp;
+var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -70,7 +70,10 @@ function getDate(val) {
   return _isArray(val) ? dateArr : dateArr[0];
 }
 
-var SourceFormItem = (_dec = Prop(Object), _dec2 = Prop(Object), _dec3 = Model('change', {
+var SourceFormItem = (_dec = Prop(Object), _dec2 = Prop(Object), _dec3 = Prop({
+  type: Boolean,
+  default: true
+}), _dec4 = Model('change', {
   type: Object
 }), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
@@ -94,7 +97,9 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "row", _descriptor2, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "value", _descriptor3, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "inForm", _descriptor3, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "value", _descriptor4, _assertThisInitialized(_this));
 
     return _this;
   }
@@ -562,13 +567,17 @@ function (_Vue) {
         className += " ".concat(this.formItem.className);
       }
 
-      return h("el-form-item", _mergeJSXProps21([{
-        "class": className
-      }, {
-        "props": this.formItem
-      }]), [headerVNode, renderMap[component](this.formItem), footerVNode, hint && h("span", {
-        "class": "hint"
-      }, [hint])]);
+      if (this.inForm) {
+        return h("el-form-item", _mergeJSXProps21([{
+          "class": className
+        }, {
+          "props": this.formItem
+        }]), [headerVNode, renderMap[component](this.formItem), footerVNode, hint && h("span", {
+          "class": "hint"
+        }, [hint])]);
+      }
+
+      return renderMap[component](this.formItem);
     }
   }, {
     key: "formItem",
@@ -627,7 +636,12 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec3], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "inForm", [_dec3], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec4], {
   configurable: true,
   enumerable: true,
   writable: true,
