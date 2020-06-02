@@ -93,6 +93,15 @@ export default {
         title: 'list-select',
         navbar: 'el-icon-document'
       }
+    },
+    {
+      path: '/sku-editor',
+      name: 'doc.skuEditor',
+      component: require('./sku-editor').default,
+      meta: {
+        title: 'sku编辑',
+        navbar: 'el-icon-document'
+      }
     }
   ]
 }

@@ -23,6 +23,7 @@ function getDate(val) {
 export default class SourceFormItem extends Vue {
   @Prop(Object) column;
   @Prop(Object) row;
+  @Prop({ type: Boolean, default: true }) inForm;
   @Model('change', { type: Object }) value;
 
   getPropValue(prop) {
@@ -249,14 +250,19 @@ export default class SourceFormItem extends Vue {
       className += ` ${this.formItem.className}`
     }
 
-    return (
-      <el-form-item class={className} props={this.formItem}>
-        {headerVNode}
-        {renderMap[component](this.formItem)}
-        {footerVNode}
-        {hint && <span class="hint">{ hint }</span>}
-      </el-form-item>
-    )
+    if (this.inForm) {
+      return (
+        <el-form-item class={className} props={this.formItem}>
+          {headerVNode}
+          {renderMap[component](this.formItem)}
+          {footerVNode}
+          {hint && <span class="hint">{ hint }</span>}
+        </el-form-item>
+      )
+    }
+
+    return renderMap[component](this.formItem);
+
   }
 }
 </script>
