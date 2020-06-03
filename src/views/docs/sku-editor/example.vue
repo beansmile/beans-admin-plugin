@@ -6,7 +6,7 @@
     :sku-columns="skuColumns"
     @add-property="handleAddProperty"
     @add-property-value="handleAddPropertyValue"
-    @edit-property-value="handleEditPropertyValue"
+    @edit-property-text="handleEditPropertyText"
   />
 </template>
 
@@ -59,6 +59,7 @@
 
     skus = [
       {
+        id: 1,
         properties: '1:1;3:2',
         code: '323333',
         price: 100,
@@ -111,10 +112,8 @@
       this.skuProperties[index].children.push({ id: 'xxx', text: value })
     }
 
-    handleEditPropertyValue({ value, id, child_id }) {
-      const property = this.skuProperties.find(item => String(item.value) === String(id));
-      const child = property.children.find(item => String(item.value) === String(child_id));
-      child.text = value;
+    handleEditPropertyText({ value, id }) {
+      console.log(value, id)
     }
   }
 </script>
