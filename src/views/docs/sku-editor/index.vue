@@ -63,6 +63,11 @@
         name: 'edit-property-text',
         desc: '编辑规格名',
         args: '{ value, id }'
+      },
+      {
+        name: 'edit-property-value-text',
+        desc: '编辑规格值名',
+        args: '{ value, id }'
       }
     ]
 

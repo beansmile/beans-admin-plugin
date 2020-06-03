@@ -31,7 +31,7 @@
             :label="item.text"
             :value="item.value"
           >
-            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyText(item.value, item.text)"></el-button>
+            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
@@ -125,6 +125,16 @@
       });
       if (value) {
         this.$emit('edit-property-text', { value, id: propertyValue });
+      }
+    }
+
+    async handleEditPropertyValueText(propertyValue, valueText) {
+      const { value } = await this.$prompt('请输入新名称', valueText, {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      });
+      if (value) {
+        this.$emit('edit-property-value-text', { value, id: propertyValue });
       }
     }
 

@@ -7,6 +7,7 @@
     @add-property="handleAddProperty"
     @add-property-value="handleAddPropertyValue"
     @edit-property-text="handleEditPropertyText"
+    @edit-property-value-text="handleEditPropertyValueText"
   />
 </template>
 
@@ -113,6 +114,10 @@
     }
 
     handleEditPropertyText({ value, id }) {
+      console.log(value, id)
+    }
+
+    handleEditPropertyValueText({ value, id }) {
       console.log(value, id)
     }
   }
