@@ -7,14 +7,26 @@
     </div>
 
     <el-form label-position="right" label-width="auto">
+
+      <el-form-item label="选择使用规格">
+        <el-select
+          v-model="shownProperty"
+          multiple
+          filterable
+          default-first-option
+          @remove-tag="handleRemoveShownProperty"
+        >
+          <el-option v-for="item in localSkuProperties" :key="item.value" :label="item.text" :value="item.value" />
+        </el-select>
+      </el-form-item>
+
       <el-form-item
-        v-for="property in localSkuProperties"
+        v-for="property in localSkuPropertiesShown"
         :key="property.text"
       >
         <template v-slot:label>
           <div>
             {{ property.text }}
-            <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
             <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
           </div>
         </template>
@@ -35,6 +47,7 @@
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
+        <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
       </el-form-item>
     </el-form>
 
@@ -58,6 +71,7 @@
     @Model('change', { type: Array, default: () => [] }) value;
 
     propertySelected = {};
+    shownProperty = []; // 显示在外面的规格
 
     get localSkuProperties() {
       return this.skuProperties.map(item => {
@@ -66,7 +80,11 @@
           value: String(item.value),
           children: item.children.map(child => ({ ...child, value: String(child.value) }))
         }
-      })
+      });
+    }
+
+    get localSkuPropertiesShown() {
+      return this.localSkuProperties.filter(item => this.shownProperty.includes(item.value));
     }
 
     get tableColumns() {
@@ -89,7 +107,19 @@
     mounted() {
       if (this.value.length) {
         this.propertySelected = this.initPropertySelected(this.value);
+        const shownProperty = [];
+        _.forEach(this.propertySelected, (val, key) => {
+          if (val.length) {
+            shownProperty.push(key);
+          }
+        })
+        this.shownProperty = shownProperty;
       }
+    }
+
+    handleRemoveShownProperty(val) {
+      this.$set(this.propertySelected, val, []);
+      this.onPropertySelected();
     }
 
     handleSkuChange($index, prop, value) {
