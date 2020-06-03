@@ -60,9 +60,9 @@
         args: '{ value, id }'
       },
       {
-        name: 'edit-property-value',
-        desc: '编辑规格值',
-        args: '{ value, id, child_id }'
+        name: 'edit-property-text',
+        desc: '编辑规格名',
+        args: '{ value, id }'
       }
     ]
 

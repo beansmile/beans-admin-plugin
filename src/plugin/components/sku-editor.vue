@@ -2,16 +2,22 @@
   <div class="c-sku-editor">
     <h4 class="page-header">{{ title }}</h4>
 
-    <el-form>
-      <el-form-item>
-        <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
-      </el-form-item>
+    <div style="margin-bottom: 20px">
+      <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
+    </div>
 
+    <el-form label-position="right" label-width="auto">
       <el-form-item
         v-for="property in localSkuProperties"
         :key="property.text"
-        :label="property.text"
       >
+        <template v-slot:label>
+          <div>
+            {{ property.text }}
+            <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
+            <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
+          </div>
+        </template>
         <el-select
           v-model="propertySelected[property.value]"
           multiple
@@ -25,11 +31,10 @@
             :label="item.text"
             :value="item.value"
           >
-            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValue(property.value, item.value, item.text)"></el-button>
+            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyText(item.value, item.text)"></el-button>
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
-        <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
       </el-form-item>
     </el-form>
 
@@ -42,7 +47,7 @@
 </template>
 
 <script>
-  import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Model } from 'vue-property-decorator';
   import _ from 'lodash';
 
   @Component
@@ -81,6 +86,12 @@
       return [propertyColumn].concat(columns);
     }
 
+    mounted() {
+      if (this.value.length) {
+        this.propertySelected = this.initPropertySelected(this.value);
+      }
+    }
+
     handleSkuChange($index, prop, value) {
       const skus = _.cloneDeep(this.value);
       skus[$index][prop] = value[prop];
@@ -107,13 +118,13 @@
       }
     }
 
-    async handleEditPropertyValue(propertyCategory, propertyValue, valueText) {
-      const { value } = await this.$prompt('请输入新规格', valueText, {
+    async handleEditPropertyText(propertyValue, valueText) {
+      const { value } = await this.$prompt('请输入新名称', valueText, {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       });
       if (value) {
-        this.$emit('edit-property-value', { value, id: propertyCategory, child_id: propertyValue });
+        this.$emit('edit-property-text', { value, id: propertyValue });
       }
     }
 
@@ -179,19 +190,9 @@
       });
       // 去重
       _.forEach(selected, (values, key) => {
-        selected[key] = _.flatten(values);
+        selected[key] = _.uniq(values);
       });
       return selected;
-    }
-
-    @Watch('value', { immediate: true })
-    onValueChange(val) {
-      if (val) {
-        if (!Object.keys(JSON.parse(JSON.stringify(this.propertySelected))).length) {
-          // 只需要初始化一次
-          this.propertySelected = this.initPropertySelected(val);
-        }
-      }
     }
 
   }
