@@ -31,7 +31,7 @@
             :label="item.text"
             :value="item.value"
           >
-            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyText(item.value, item.text)"></el-button>
+            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
@@ -268,6 +268,49 @@ function (_Vue) {
       return handleEditPropertyText;
     }()
   }, {
+    key: "handleEditPropertyValueText",
+    value: function () {
+      var _handleEditPropertyValueText = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee4(propertyValue, valueText) {
+        var _ref4, value;
+
+        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return this.$prompt('请输入新名称', valueText, {
+                  confirmButtonText: '确定',
+                  cancelButtonText: '取消'
+                });
+
+              case 2:
+                _ref4 = _context4.sent;
+                value = _ref4.value;
+
+                if (value) {
+                  this.$emit('edit-property-value-text', {
+                    value: value,
+                    id: propertyValue
+                  });
+                }
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function handleEditPropertyValueText(_x5, _x6) {
+        return _handleEditPropertyValueText.apply(this, arguments);
+      }
+
+      return handleEditPropertyValueText;
+    }()
+  }, {
     key: "getPropertyText",
     value: function getPropertyText(property) {
       var _property$split = property.split(':'),
@@ -303,15 +346,15 @@ function (_Vue) {
     value: function () {
       var _onPropertySelected = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee4() {
+      regeneratorRuntime.mark(function _callee5() {
         var _this2 = this;
 
         var propertySelected, skuProperties, skus;
-        return regeneratorRuntime.wrap(function _callee4$(_context4) {
+        return regeneratorRuntime.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
-                _context4.next = 2;
+                _context5.next = 2;
                 return this.$nextTick();
 
               case 2:
@@ -353,10 +396,10 @@ function (_Vue) {
 
               case 7:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee5, this);
       }));
 
       function onPropertySelected() {
@@ -370,8 +413,8 @@ function (_Vue) {
     value: function initPropertySelected() {
       var skus = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
       var selected = {};
-      skus.forEach(function (_ref4) {
-        var properties = _ref4.properties;
+      skus.forEach(function (_ref5) {
+        var properties = _ref5.properties;
         properties.split(';').forEach(function (item) {
           var _item$split = item.split(':'),
               _item$split2 = _slicedToArray(_item$split, 2),
@@ -415,16 +458,16 @@ function (_Vue) {
       var propertyColumn = {
         prop: 'properties',
         label: '规格',
-        renderCell: function renderCell(h, _ref5) {
-          var row = _ref5.row;
+        renderCell: function renderCell(h, _ref6) {
+          var row = _ref6.row;
           return row.properties.split(';').map(_this3.getPropertyText).join('、');
         }
       };
       var columns = this.skuColumns.map(function (item) {
         return _objectSpread({
-          renderCell: item.form ? function (h, _ref6) {
-            var row = _ref6.row,
-                $index = _ref6.$index;
+          renderCell: item.form ? function (h, _ref7) {
+            var row = _ref7.row,
+                $index = _ref7.$index;
             return h("c-source-form-item", {
               "attrs": {
                 "in-form": false,
