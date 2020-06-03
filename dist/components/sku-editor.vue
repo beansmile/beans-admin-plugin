@@ -7,14 +7,26 @@
     </div>
 
     <el-form label-position="right" label-width="auto">
+
+      <el-form-item label="选择使用规格">
+        <el-select
+          v-model="shownProperty"
+          multiple
+          filterable
+          default-first-option
+          @remove-tag="handleRemoveShownProperty"
+        >
+          <el-option v-for="item in localSkuProperties" :key="item.value" :label="item.text" :value="item.value" />
+        </el-select>
+      </el-form-item>
+
       <el-form-item
-        v-for="property in localSkuProperties"
+        v-for="property in localSkuPropertiesShown"
         :key="property.text"
       >
         <template v-slot:label>
           <div>
             {{ property.text }}
-            <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
             <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
           </div>
         </template>
@@ -35,6 +47,7 @@
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
+        <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
       </el-form-item>
     </el-form>
 
@@ -48,6 +61,8 @@
 
 <script>import "core-js/modules/es7.object.get-own-property-descriptors";
 import "core-js/modules/es6.object.keys";
+import "core-js/modules/es7.array.includes";
+import "core-js/modules/es6.string.includes";
 import "core-js/modules/web.dom.iterable";
 import _defineProperty from "@babel/runtime-corejs2/helpers/esm/defineProperty";
 import "core-js/modules/es6.array.sort";
@@ -67,9 +82,9 @@ import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyD
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
 import _uniq from "lodash/uniq";
 import _reduce from "lodash/reduce";
-import _forEach from "lodash/forEach";
 import _get from "lodash/get";
 import _cloneDeep from "lodash/cloneDeep";
+import _forEach from "lodash/forEach";
 
 var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
@@ -123,6 +138,7 @@ function (_Vue) {
     _initializerDefineProperty(_this, "value", _descriptor4, _assertThisInitialized(_this));
 
     _this.propertySelected = {};
+    _this.shownProperty = [];
     return _this;
   }
 
@@ -131,7 +147,22 @@ function (_Vue) {
     value: function mounted() {
       if (this.value.length) {
         this.propertySelected = this.initPropertySelected(this.value);
+        var shownProperty = [];
+
+        _forEach(this.propertySelected, function (val, key) {
+          if (val.length) {
+            shownProperty.push(key);
+          }
+        });
+
+        this.shownProperty = shownProperty;
       }
+    }
+  }, {
+    key: "handleRemoveShownProperty",
+    value: function handleRemoveShownProperty(val) {
+      this.$set(this.propertySelected, val, []);
+      this.onPropertySelected();
     }
   }, {
     key: "handleSkuChange",
@@ -437,6 +468,7 @@ function (_Vue) {
     }
   }, {
     key: "localSkuProperties",
+    // 显示在外面的规格
     get: function get() {
       return this.skuProperties.map(function (item) {
         return _objectSpread({}, item, {
@@ -450,9 +482,18 @@ function (_Vue) {
       });
     }
   }, {
-    key: "tableColumns",
+    key: "localSkuPropertiesShown",
     get: function get() {
       var _this3 = this;
+
+      return this.localSkuProperties.filter(function (item) {
+        return _this3.shownProperty.includes(item.value);
+      });
+    }
+  }, {
+    key: "tableColumns",
+    get: function get() {
+      var _this4 = this;
 
       var h = this.$createElement;
       var propertyColumn = {
@@ -460,7 +501,7 @@ function (_Vue) {
         label: '规格',
         renderCell: function renderCell(h, _ref6) {
           var row = _ref6.row;
-          return row.properties.split(';').map(_this3.getPropertyText).join('、');
+          return row.properties.split(';').map(_this4.getPropertyText).join('、');
         }
       };
       var columns = this.skuColumns.map(function (item) {
@@ -476,7 +517,7 @@ function (_Vue) {
               },
               "on": {
                 "change": function change(val) {
-                  return _this3.handleSkuChange($index, item.prop, val);
+                  return _this4.handleSkuChange($index, item.prop, val);
                 }
               }
             });
