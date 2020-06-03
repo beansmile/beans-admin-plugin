@@ -2,16 +2,22 @@
   <div class="c-sku-editor">
     <h4 class="page-header">{{ title }}</h4>
 
-    <el-form>
-      <el-form-item>
-        <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
-      </el-form-item>
+    <div style="margin-bottom: 20px">
+      <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
+    </div>
 
+    <el-form label-position="right" label-width="auto">
       <el-form-item
         v-for="property in localSkuProperties"
         :key="property.text"
-        :label="property.text"
       >
+        <template v-slot:label>
+          <div>
+            {{ property.text }}
+            <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
+            <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
+          </div>
+        </template>
         <el-select
           v-model="propertySelected[property.value]"
           multiple
@@ -25,11 +31,10 @@
             :label="item.text"
             :value="item.value"
           >
-            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValue(property.value, item.value, item.text)"></el-button>
+            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyText(item.value, item.text)"></el-button>
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
-        <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
       </el-form-item>
     </el-form>
 
@@ -60,19 +65,19 @@ import _assertThisInitialized from "@babel/runtime-corejs2/helpers/esm/assertThi
 import _inherits from "@babel/runtime-corejs2/helpers/esm/inherits";
 import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyDecoratedDescriptor";
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
-import _flatten from "lodash/flatten";
+import _uniq from "lodash/uniq";
 import _reduce from "lodash/reduce";
 import _forEach from "lodash/forEach";
 import _get from "lodash/get";
 import _cloneDeep from "lodash/cloneDeep";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
+var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator';
+import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 var SkuEditor = (_dec = Prop({
   type: String,
   default: 'sku信息'
@@ -91,8 +96,6 @@ var SkuEditor = (_dec = Prop({
   default: function _default() {
     return [];
   }
-}), _dec5 = Watch('value', {
-  immediate: true
 }), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
@@ -124,6 +127,13 @@ function (_Vue) {
   }
 
   _createClass(SkuEditor, [{
+    key: "mounted",
+    value: function mounted() {
+      if (this.value.length) {
+        this.propertySelected = this.initPropertySelected(this.value);
+      }
+    }
+  }, {
     key: "handleSkuChange",
     value: function handleSkuChange($index, prop, value) {
       var skus = _cloneDeep(this.value);
@@ -215,11 +225,11 @@ function (_Vue) {
       return handleAddPropertyValue;
     }()
   }, {
-    key: "handleEditPropertyValue",
+    key: "handleEditPropertyText",
     value: function () {
-      var _handleEditPropertyValue = _asyncToGenerator(
+      var _handleEditPropertyText = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee3(propertyCategory, propertyValue, valueText) {
+      regeneratorRuntime.mark(function _callee3(propertyValue, valueText) {
         var _ref3, value;
 
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
@@ -227,7 +237,7 @@ function (_Vue) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return this.$prompt('请输入新规格', valueText, {
+                return this.$prompt('请输入新名称', valueText, {
                   confirmButtonText: '确定',
                   cancelButtonText: '取消'
                 });
@@ -237,10 +247,9 @@ function (_Vue) {
                 value = _ref3.value;
 
                 if (value) {
-                  this.$emit('edit-property-value', {
+                  this.$emit('edit-property-text', {
                     value: value,
-                    id: propertyCategory,
-                    child_id: propertyValue
+                    id: propertyValue
                   });
                 }
 
@@ -252,11 +261,11 @@ function (_Vue) {
         }, _callee3, this);
       }));
 
-      function handleEditPropertyValue(_x3, _x4, _x5) {
-        return _handleEditPropertyValue.apply(this, arguments);
+      function handleEditPropertyText(_x3, _x4) {
+        return _handleEditPropertyText.apply(this, arguments);
       }
 
-      return handleEditPropertyValue;
+      return handleEditPropertyText;
     }()
   }, {
     key: "getPropertyText",
@@ -378,20 +387,10 @@ function (_Vue) {
       }); // 去重
 
       _forEach(selected, function (values, key) {
-        selected[key] = _flatten(values);
+        selected[key] = _uniq(values);
       });
 
       return selected;
-    }
-  }, {
-    key: "onValueChange",
-    value: function onValueChange(val) {
-      if (val) {
-        if (!Object.keys(JSON.parse(JSON.stringify(this.propertySelected))).length) {
-          // 只需要初始化一次
-          this.propertySelected = this.initPropertySelected(val);
-        }
-      }
     }
   }, {
     key: "localSkuProperties",
@@ -466,5 +465,5 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _applyDecoratedDescriptor(_class2.prototype, "onValueChange", [_dec5], Object.getOwnPropertyDescriptor(_class2.prototype, "onValueChange"), _class2.prototype)), _class2)) || _class);
+})), _class2)) || _class);
 export { SkuEditor as default };</script>
