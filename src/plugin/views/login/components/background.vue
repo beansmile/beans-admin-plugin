@@ -1,5 +1,5 @@
 <template>
-  <svg width="700px" height="680px" viewBox="0 0 835 806" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg style="transform: translate3d(0, 0, 0)" width="700px" height="680px" viewBox="0 0 835 806" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
     <title>Group 2353</title>
     <desc>Created with Sketch.</desc>
