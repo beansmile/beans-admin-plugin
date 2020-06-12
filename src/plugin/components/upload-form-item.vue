@@ -19,11 +19,35 @@
           <a :href="item" style="display: block;" class="download-url" download>{{
             transformLink(item).split('/').pop() }}</a>
         </div>
-      </template>
+    </template>
     </draggable>
     <div v-if="filesResouces.length > 1" class="drag-tip">可拖拽排序</div>
-    <el-button type="primary" @click="handleShow" :disabled="isMultiple && filesResouces.length >= limit">{{ $t('上传') }}<i
-      class="el-icon-upload el-icon--right"></i></el-button>
+
+    <c-upload-single
+      v-if="uploadInSingleMode"
+      v-bind="$attrs"
+      :disabled="isMultiple && filesResouces.length >= limit"
+      :cropper="cropper"
+      @change="handleSubmit"
+    >
+      <el-button
+        type="primary"
+        :disabled="isMultiple && filesResouces.length >= limit"
+      >
+        {{ $t('上传') }}
+        <i class="el-icon-upload el-icon--right"></i>
+      </el-button>
+    </c-upload-single>
+
+    <el-button
+      v-else
+      type="primary"
+      @click="handleShow"
+      :disabled="isMultiple && filesResouces.length >= limit"
+    >
+      {{ $t('上传') }}
+      <i class="el-icon-upload el-icon--right"></i>
+    </el-button>
 
     <el-dialog
       v-if="show"
@@ -60,6 +84,7 @@
     @Prop({ type: String, default: 'image' }) type;
     @Prop({ type: Boolean, default: true }) imagePreview;
     @Prop({ type: Function, default: src => src }) transformLink;
+    @Prop({ type: Object }) cropper;
     @Model('change', { type: [Array, String] }) value;
 
     visible = false;
@@ -67,6 +92,16 @@
 
     get filesResouces() {
       return this.value ? _.flatten([this.value]) : [];
+    }
+
+    get uploadInSingleMode() {
+      if (this.limit === 1) {
+        return true;
+      }
+      if (this.type === 'image' && this.cropper && this.cropper.width) {
+        return true;
+      }
+      return false;
     }
 
     handleDragChange({ oldIndex, newIndex }) {

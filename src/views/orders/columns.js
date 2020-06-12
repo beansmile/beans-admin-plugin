@@ -281,7 +281,11 @@ export const formColumn = [
     form: {
       component: 'upload',
       props: {
-        limit: 3
+        limit: 3,
+        cropper: {
+          width: 100,
+          height: 100,
+        }
       }
     }
   },
