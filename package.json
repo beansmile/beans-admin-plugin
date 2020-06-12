@@ -11,6 +11,7 @@
   "dependencies": {
     "ckeditor": "https://github.com/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7",
     "clipboard": "^2.0.4",
+    "cropperjs": "^1.5.7",
     "echarts": "^4.2.1",
     "element-ui": "^2.11.1",
     "flat": "^4.1.0",
