@@ -29,3 +29,5 @@ Vue.component('c-page-editor', require("./page-editor").default);
 Vue.component('c-transfer', require("./transfer").default);
 Vue.component('c-list-select', require("./list-select").default);
 Vue.component('c-sku-editor', require("./sku-editor").default);
+Vue.component('c-image-cropper', require("./image-cropper").default);
+Vue.component('c-upload-single', require("./upload-single").default);

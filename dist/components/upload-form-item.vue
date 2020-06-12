@@ -19,11 +19,35 @@
           <a :href="item" style="display: block;" class="download-url" download>{{
             transformLink(item).split('/').pop() }}</a>
         </div>
-      </template>
+    </template>
     </draggable>
     <div v-if="filesResouces.length > 1" class="drag-tip">可拖拽排序</div>
-    <el-button type="primary" @click="handleShow" :disabled="isMultiple && filesResouces.length >= limit">{{ $t('上传') }}<i
-      class="el-icon-upload el-icon--right"></i></el-button>
+
+    <c-upload-single
+      v-if="uploadInSingleMode"
+      v-bind="$attrs"
+      :disabled="isMultiple && filesResouces.length >= limit"
+      :cropper="cropper"
+      @change="handleSubmit"
+    >
+      <el-button
+        type="primary"
+        :disabled="isMultiple && filesResouces.length >= limit"
+      >
+        {{ $t('上传') }}
+        <i class="el-icon-upload el-icon--right"></i>
+      </el-button>
+    </c-upload-single>
+
+    <el-button
+      v-else
+      type="primary"
+      @click="handleShow"
+      :disabled="isMultiple && filesResouces.length >= limit"
+    >
+      {{ $t('上传') }}
+      <i class="el-icon-upload el-icon--right"></i>
+    </el-button>
 
     <el-dialog
       v-if="show"
@@ -57,7 +81,7 @@ import "core-js/modules/es6.number.constructor";
 import _isArray from "lodash/isArray";
 import _flatten from "lodash/flatten";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _temp;
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import { arrayMove } from "../utils";
@@ -80,7 +104,9 @@ var UploadFormItem = (_dec = Component({
   default: function _default(src) {
     return src;
   }
-}), _dec6 = Model('change', {
+}), _dec6 = Prop({
+  type: Object
+}), _dec7 = Model('change', {
   type: [Array, String]
 }), _dec(_class = (_class2 = (_temp =
 /*#__PURE__*/
@@ -108,7 +134,9 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "transformLink", _descriptor4, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "value", _descriptor5, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "cropper", _descriptor5, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "value", _descriptor6, _assertThisInitialized(_this));
 
     _this.visible = false;
     _this.show = true;
@@ -179,6 +207,19 @@ function (_Vue) {
       return this.value ? _flatten([this.value]) : [];
     }
   }, {
+    key: "uploadInSingleMode",
+    get: function get() {
+      if (this.limit === 1) {
+        return true;
+      }
+
+      if (this.type === 'image' && this.cropper && this.cropper.width) {
+        return true;
+      }
+
+      return false;
+    }
+  }, {
     key: "isMultiple",
     get: function get() {
       return this.limit > 1;
@@ -206,7 +247,12 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec6], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "cropper", [_dec6], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec7], {
   configurable: true,
   enumerable: true,
   writable: true,
