@@ -85,8 +85,8 @@
       }
       try {
         const [fileUrl, imageInfo] = await Promise.all([
-          upload(blob, false, this.$attrs),
-          this.getImageInfo(blob)
+          upload(file, false, this.$attrs),
+          this.getImageInfo(file)
         ]);
         this.$emit('change', [{ src: fileUrl, ...imageInfo }]);
         this.$emit('success', fileUrl);
