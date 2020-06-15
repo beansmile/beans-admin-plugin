@@ -194,7 +194,7 @@ function (_Vue) {
 
                 _context2.prev = 3;
                 _context2.next = 6;
-                return Promise.all([upload(blob, false, this.$attrs), this.getImageInfo(blob)]);
+                return Promise.all([upload(file, false, this.$attrs), this.getImageInfo(file)]);
 
               case 6:
                 _ref = _context2.sent;
