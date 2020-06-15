@@ -37,6 +37,7 @@ import _slicedToArray from "@babel/runtime-corejs2/helpers/esm/slicedToArray";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import "core-js/modules/es6.string.starts-with";
+import "core-js/modules/es6.function.name";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
@@ -96,6 +97,7 @@ function (_Vue) {
     _this.renderCropper = true;
     _this.showCropper = false;
     _this.img = '';
+    _this.fileName = '';
     return _this;
   }
 
@@ -113,6 +115,7 @@ function (_Vue) {
     key: "handleFileChange",
     value: function handleFileChange(e) {
       var file = e.target.files[0];
+      this.fileName = file.name;
 
       if (file.size > this.size * 1024 * 1024) {
         this.$message.error("\u6587\u4EF6\u6700\u5927 ".concat(this.size, "M"));
@@ -176,18 +179,24 @@ function (_Vue) {
       var _handleUpload = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2(blob) {
-        var _ref, _ref2, fileUrl, imageInfo;
+        var file, _ref, _ref2, fileUrl, imageInfo;
 
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 this.loading = true;
-                _context2.prev = 1;
-                _context2.next = 4;
+                file = blob.slice();
+
+                if (!file.name) {
+                  file.name = this.fileName;
+                }
+
+                _context2.prev = 3;
+                _context2.next = 6;
                 return Promise.all([upload(blob, false, this.$attrs), this.getImageInfo(blob)]);
 
-              case 4:
+              case 6:
                 _ref = _context2.sent;
                 _ref2 = _slicedToArray(_ref, 2);
                 fileUrl = _ref2[0];
@@ -198,17 +207,17 @@ function (_Vue) {
                 this.$emit('success', fileUrl);
                 this.showCropper = false;
 
-              case 11:
-                _context2.prev = 11;
+              case 13:
+                _context2.prev = 13;
                 this.loading = false;
-                return _context2.finish(11);
+                return _context2.finish(13);
 
-              case 14:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, this, [[1,, 11, 14]]);
+        }, _callee2, this, [[3,, 13, 16]]);
       }));
 
       function handleUpload(_x2) {
