@@ -43,6 +43,7 @@
     renderCropper = true;
     showCropper = false;
     img = '';
+    fileName = '';
 
     handleDialogClosed() {
       this.renderCropper = false;
@@ -51,6 +52,7 @@
 
     handleFileChange(e) {
       const file = e.target.files[0];
+      this.fileName = file.name;
       if (file.size > this.size * 1024 * 1024) {
         this.$message.error(`文件最大 ${this.size}M`);
         return;
@@ -77,6 +79,10 @@
 
     async handleUpload(blob) {
       this.loading = true;
+      let file = blob.slice();
+      if (!file.name) {
+        file.name = this.fileName;
+      }
       try {
         const [fileUrl, imageInfo] = await Promise.all([
           upload(blob, false, this.$attrs),
