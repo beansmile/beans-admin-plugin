@@ -5,6 +5,15 @@ export default {
   },
   children: [
     {
+      path: '/config',
+      name: 'doc.config',
+      component: require('./config').default,
+      meta: {
+        title: '配置',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
       path: '/clipboard',
       name: 'doc.clipboard',
       component: require('./clipboard').default,

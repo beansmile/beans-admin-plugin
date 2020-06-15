@@ -16,23 +16,23 @@
       {
         prop: 'value/v-model',
         desc: '表单数据',
-        tupe: 'Object',
+        type: 'Object',
         optionalValue: '',
         defaultValue: '{}'
       },
       {
         prop: 'columns',
         desc: '', // TODO doc
-        tupe: 'Object',
+        type: 'Object',
         optionalValue: '传函数回调参数{ resource: 当前表单数据 }',
         defaultValue: '[]'
       },
       {
         prop: 'collapsible',
         desc: '是否使用折叠方式',
-        tupe: 'Boolean',
+        type: 'Boolean',
         optionalValue: 'true/false',
-        defaultValue: 'bfalse'
+        defaultValue: 'false'
       }
     ]
 

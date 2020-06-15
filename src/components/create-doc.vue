@@ -2,11 +2,15 @@
   <div class="page">
     <h2 class="title">{{ title }}</h2>
     <slot />
-    <h3>Attributes</h3>
-    <c-source-table
-      :table="{ data: attributes }"
-      :columns="attributesColumn"
-    />
+
+    <div v-for="item in renderAttributes" :key="item.title">
+      <h3>{{ item.title }}</h3>
+      <c-source-table
+        :table="{ data: item.attributes }"
+        :columns="attributesColumn"
+      />
+    </div>
+
     <h3>Events</h3>
     <c-source-table
       :table="{ data: events }"
@@ -38,6 +42,7 @@
     @Prop(Array) attributes;
     @Prop(Array) events;
     @Prop(Array) examples;
+    @Prop(Boolean) multipleAttributes;
 
     attributesColumn = [
       {
@@ -82,6 +87,18 @@
         label: '回调参数'
       }
     ]
+
+    get renderAttributes() {
+      if (_.get(this.attributes[0], 'attributes')) {
+        return this.attributes
+      }
+      return [
+        {
+          title: 'Props',
+          attributes: this.attributes
+        }
+      ]
+    }
 
     compile(code) {
       return Vue.compile(code).render
