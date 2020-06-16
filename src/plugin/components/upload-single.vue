@@ -4,7 +4,7 @@
     <input
       :disabled="disabled"
       type="file"
-      @input="handleFileChange"
+      @change="handleFileChange"
       :accept="accept"
     />
 
@@ -52,6 +52,8 @@
 
     handleFileChange(e) {
       const file = e.target.files[0];
+      // 相同文件change事件不会触发
+      e.target.value = '';
       this.fileName = file.name;
       if (file.size > this.size * 1024 * 1024) {
         this.$message.error(`文件最大 ${this.size}M`);
