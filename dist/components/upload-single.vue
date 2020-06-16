@@ -4,7 +4,7 @@
     <input
       :disabled="disabled"
       type="file"
-      @input="handleFileChange"
+      @change="handleFileChange"
       :accept="accept"
     />
 
@@ -114,7 +114,9 @@ function (_Vue) {
   }, {
     key: "handleFileChange",
     value: function handleFileChange(e) {
-      var file = e.target.files[0];
+      var file = e.target.files[0]; // 相同文件change事件不会触发
+
+      e.target.value = '';
       this.fileName = file.name;
 
       if (file.size > this.size * 1024 * 1024) {
