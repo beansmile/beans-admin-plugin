@@ -17,6 +17,8 @@
       </el-form-item>
     </el-form>
 
+    <slot />
+
     <div class="panel-container">
       <div class="box-panel">
         <div class="panel-header">
