@@ -14,6 +14,33 @@ export default {
       }
     },
     {
+      path: '/source-filter',
+      name: 'doc.sourceFilter',
+      component: require('./source-filter').default,
+      meta: {
+        title: '筛选',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
+      path: '/source-form',
+      name: 'doc.sourceForm',
+      component: require('./source-form').default,
+      meta: {
+        title: '表单',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
+      path: '/source-form-item',
+      name: 'doc.sourceFormItem',
+      component: require('./source-form-item').default,
+      meta: {
+        title: '表单项',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
       path: '/clipboard',
       name: 'doc.clipboard',
       component: require('./clipboard').default,

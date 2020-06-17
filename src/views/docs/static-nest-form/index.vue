@@ -12,7 +12,7 @@
 
   @Component
   export default class Doc extends Vue {
-    attributes= [
+    attributes = [
       {
         prop: 'value/v-model',
         desc: '表单数据',
