@@ -42,7 +42,6 @@
     @Prop(Array) attributes;
     @Prop(Array) events;
     @Prop(Array) examples;
-    @Prop(Boolean) multipleAttributes;
 
     attributesColumn = [
       {
