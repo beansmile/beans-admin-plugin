@@ -5,6 +5,7 @@
   import draggable from 'vuedraggable';
   import defaultComponents from './components';
   import { arrayMove } from '../../utils';
+  import './devices.css';
 
   @Component
   export default class PageEditor extends Vue {
@@ -25,17 +26,6 @@
       this.currentKey = key;
     }
 
-    handleAddComponent({ component, title, name }) {
-      const newComponent = {
-        component,
-        name,
-        title,
-        key: uuid()
-      }
-      this.$emit('change', this.value.concat(newComponent));
-      this.currentKey = newComponent.key;
-    }
-
     handleDelete(e, $index) {
       e.stopPropagation();
       const value = _.cloneDeep(this.value);
@@ -51,12 +41,6 @@
     handleDown(e, $index) {
       e.stopPropagation();
       this.$emit('change', arrayMove(this.value, $index, $index + 1));
-    }
-
-    handleSort({ oldIndex, newIndex }) {
-      if (oldIndex !== newIndex) {
-        this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
-      }
     }
 
     handleSave() {
@@ -78,50 +62,107 @@
         value={row.data}
         data={this.data}
         show-controller={this.currentKey === row.key}
+        onClose={() => this.currentKey = ''}
         onChange={e => this.handleComponentDataChange(e, index)}
       />
+    }
+
+    handleMove({ oldIndex, newIndex }) {
+      if (oldIndex !== newIndex) {
+        this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
+      }
+    }
+
+    handleAdd({ component, title, name }, index = this.value.length) {
+      const newComponent = {
+        component,
+        name,
+        title,
+        key: uuid()
+      }
+
+      const value = _.cloneDeep(this.value);
+      value.splice(index, 0, newComponent);
+      this.$emit('change', value);
+      this.currentKey = newComponent.key;
+    }
+
+    handleChange(e) {
+      const { moved, added } = e;
+      if (moved) {
+        this.handleMove(moved)
+      }
+      if (added) {
+        this.handleAdd(added.element, added.newIndex)
+      }
     }
 
     render() {
       return (
         <div class="c-page-editor">
-          <div class="box-preview">
-            <draggable value={this.value} onEnd={this.handleSort}>
-              {
-                this.value.map((row, index) => (
-                  <div
-                    key={row.key}
-                    class={`item-component ${this.currentKey === row.key && 'active'}`}
-                    onClick={() => this.handleFocusComponent(row.key)}
-                  >
-                    <div class="box-control">
-                      { index - 1 >= 0 && <i class="el-icon-arrow-up" onClick={e => this.handleUp(e, index)} /> }
-                      { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
-                      <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />
-                    </div>
-                    {this.renderComponent(row, index)}
-                  </div>
-                ))
-              }
-            </draggable>
+
+          <portal-target name="page-editor" multiple>
+          </portal-target>
+
+          <div class="page-content">
             <div class="box-components">
-              <h5 class="box-title">选择组件</h5>
-              <div class="content">
+              <h2>选择模块</h2>
+              <draggable
+                class="content"
+                sort={false}
+                group={{ name: 'component', pull: 'clone', put: false }}
+                value={this.renderComponents}
+              >
                 {
                   this.renderComponents.map(item => (
-                    <div
-                      class="item"
-                      key={item.name}
-                      onClick={() => this.handleAddComponent(item)}
-                    >
+                    <el-button size="medium" key={item.name} icon={item.icon} class="item" onClick={() => this.handleAdd(item)}>
                       {item.title}
-                    </div>
+                    </el-button>
                   ))
                 }
+              </draggable>
+            </div>
+
+            <div class="box-preview">
+              <div class="marvel-device iphone8 gold">
+                <div class="top-bar"></div>
+                <div class="sleep"></div>
+                <div class="volume"></div>
+                <div class="camera"></div>
+                <div class="sensor"></div>
+                <div class="speaker"></div>
+                <div class="screen">
+                  <draggable
+                    class="device-content"
+                    value={this.value}
+                    group="component"
+                    onChange={this.handleChange}
+                  >
+                    {
+                      this.value.map((row, index) => (
+                        <div
+                          key={row.key}
+                          class={`item-component ${this.currentKey === row.key && 'active'}`}
+                          onClick={() => this.handleFocusComponent(row.key)}
+                        >
+                          <div class="box-control">
+                            <i>{row.title}</i>
+                            { index - 1 >= 0 && <i class="el-icon-arrow-up" onClick={e => this.handleUp(e, index)} /> }
+                            { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
+                            <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />
+                          </div>
+                          {this.renderComponent(row, index)}
+                        </div>
+                      ))
+                    }
+                  </draggable>
+                </div>
+                <div class="home"></div>
+                <div class="bottom-bar"></div>
               </div>
             </div>
-            <el-button class="btn-save" type="primary" onClick={this.handleSave}>保存</el-button>
           </div>
+          <el-button size="medium" class="btn-save" type="primary" onClick={this.handleSave}>保存</el-button>
         </div>
       )
     }

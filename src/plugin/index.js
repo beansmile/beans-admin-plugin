@@ -40,8 +40,10 @@ import {
   Loading,
   MessageBox, Notification, Message,
   Carousel, CarouselItem,
-  Popover
+  Popover,
+  Drawer,
 } from 'element-ui';
+import PortalVue from 'portal-vue'
 import ElementLocale from 'element-ui/lib/locale'
 import './components';
 import { i18n } from './i18n';
@@ -174,6 +176,8 @@ export default function install(Vue, options = {}) {
     .use(RadioGroup).use(Radio).use(CheckboxButton).use(InputNumber).use(Menu)
     .use(Switch).use(DatePicker).use(TimePicker).use(ColorPicker).use(Cascader).use(Carousel).use(CarouselItem)
     .use(Popover)
+    .use(Drawer)
+    .use(PortalVue)
 
   Vue.use(Loading.directive);
 

@@ -1,95 +1,90 @@
+.c-control-box {
+  padding: 20px;
+
+  .btn-add {
+    margin-bottom: 20px;
+  }
+}
+
 .c-page-editor {
-  .btn-save {
-    margin: 15px;
-  }
-
-  .box-preview {
-    width: 375px;
-    border: 1px solid $border-light;
-    overflow: visible;
-    background: #fff;
-  }
-
-  .item-component {
-    position: relative;
-    min-height: 80px;
-    border: 1px dashed $border-light;
-
-    &.active {
-      border-color: $primary;
-    }
-
-    .box-control {
-      position: absolute;
-      top: 5px;
-      right: 0;
-      display: flex;
-      z-index: 99;
-
-      i {
-        cursor: pointer;
-        margin-right: 5px;
-      }
-    }
+  .page-content {
+    display: flex;
   }
 
   .box-components {
-    padding-left: 15px;
-    padding-top: 15px;
-
-    .box-title {
-      margin: 15px 0;
-      font-size: 18px;
-    }
+    width: 300px;
 
     .content {
       display: flex;
       flex-wrap: wrap;
-      box-sizing: border-box;
+      margin-right: -20px;
+      overflow: hidden;
+
+      .el-button {
+        width: 130px;
+        height: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        font-size: 16px;
+
+        i {
+          font-size: 20px;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+
+  .box-preview {
+    margin-left: 20px;
+
+    .device {
+      transform: unset;
     }
 
-    .item {
-      font-size: 14px;
-      text-align: center;
-      min-width: 80px;
-      padding: 6px 8px;
-      border: 1px solid $border-light;
-      cursor: pointer;
-      margin-right: 15px;
-      margin-bottom: 15px;
+    .device-content {
+      height: 100%;
+      overflow-y: auto;
     }
-  }
-}
 
-.c-control-box {
-  background: #fff;
-  padding: 15px;
-  position: absolute;
-  top: 0;
-  right: -20px;
-  width: 500px;
-  transform: translateX(100%);
-  border: 1px solid $border-light;
-  margin-bottom: 30px;
+    .sortable-ghost,
+    .sortable-chosen,
+    .sortable-drag {
+      border: 2px dashed $primary !important;
+    }
 
-  .title {
-    font-size: 16px;
-    margin: 0 0 15px;
-  }
-}
+    .item-component {
+      position: relative;
+      min-height: 80px;
+      border: 2px dashed $border-light;
 
-.c-image-control-box {
-  .btn-add {
-    margin-bottom: 20px;
-  }
+      &.active {
+        border-width: 2px;
+        border-color: $primary;
+      }
 
-  .upload-form-item {
-    .resource-content {
-      justify-content: center;
+      .box-control {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 5px;
+        background: rgba(0, 0, 0, .3);
+        color: #fff;
 
-      .preview-image .image {
-        width: 50px;
-        height: 50px;
+        i {
+          cursor: pointer;
+          margin-right: 5px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
       }
     }
   }

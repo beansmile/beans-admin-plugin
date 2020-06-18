@@ -3,7 +3,7 @@
 
     <div class="list-title">{{ name }}</div>
 
-    <ControlBox title="商品列表" v-if="showController">
+    <ControlBox title="商品列表" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent>
         <el-form-item label="选择商品列表">
           <c-select :value="id" :options="selectOptions" @change="handleChange" />

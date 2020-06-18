@@ -3,7 +3,7 @@
 
     <div class="block" :style="blockStyle"></div>
 
-    <ControlBox title="占位块" v-if="showController">
+    <ControlBox title="占位块" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item label="块高度">
           <el-input-number v-model="value.config.height" @change="syncChange" />

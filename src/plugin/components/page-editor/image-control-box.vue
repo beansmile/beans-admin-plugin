@@ -1,6 +1,6 @@
 <template>
   <div class="c-image-control-box">
-    <ControlBox :title="title">
+    <ControlBox :title="title" :visible="visible" @close="$emit('close')">
       <slot />
       <el-button class="btn-add" type="primary" @click="handleAdd">添加图片</el-button>
       <c-source-table :table="{ data: value }" :columns="columns" />
@@ -21,6 +21,7 @@
     @Model('change', { type: Array, default: () => [] }) value;
     @Prop({ type: Array, default: () => [] }) links;
     @Prop(String) title;
+    @Prop(Boolean) visible;
 
     get columns() {
       return [

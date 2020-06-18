@@ -14,7 +14,7 @@
       />
     </template>
 
-    <ControlBox title="视频" v-if="showController">
+    <ControlBox title="视频" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item label="视频高度">
           <el-input-number v-model="value.config.height" @change="syncChange" />

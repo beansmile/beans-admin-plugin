@@ -4,7 +4,7 @@
       <img class="image" :key="index" :src="item.src" v-if="item.src" />
     </template>
 
-    <ControlBox title="客服" v-if="showController">
+    <ControlBox title="客服" :visible="showController" @close="$emit('close')">
 
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item label="要复制的客服名字">
