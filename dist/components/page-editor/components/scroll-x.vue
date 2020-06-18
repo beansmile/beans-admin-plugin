@@ -5,7 +5,7 @@
       <img v-for="(item, index) in value.data" :key="index" :src="item.src" className="item-image" :style="{ width: value.config.width + 'px', height: value.config.height + 'px', objectFit: 'cover', verticalAlign: 'top', flexShrink: 0 }" />
     </div>
 
-    <ImageControlBox v-if="showController" title="横向滚动" :links="links" v-model="value.data" @change="syncChange">
+    <ImageControlBox :visible="showController" title="横向滚动" :links="links" v-model="value.data" @change="syncChange" @close="$emit('close')">
       <el-form @submit.native.prevent>
         <el-form-item label="图片宽度">
           <el-input-number v-model="value.config.width" @change="syncChange" />

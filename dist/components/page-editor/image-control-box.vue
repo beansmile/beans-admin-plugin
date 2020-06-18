@@ -1,6 +1,6 @@
 <template>
   <div class="c-image-control-box">
-    <ControlBox :title="title">
+    <ControlBox :title="title" :visible="visible" @close="$emit('close')">
       <slot />
       <el-button class="btn-add" type="primary" @click="handleAdd">添加图片</el-button>
       <c-source-table :table="{ data: value }" :columns="columns" />
@@ -20,7 +20,7 @@ import _inherits from "@babel/runtime-corejs2/helpers/esm/inherits";
 import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyDecoratedDescriptor";
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
 
-var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import ControlBox from "./control-box";
@@ -38,7 +38,7 @@ var ImageControlBox = (_dec = Component({
   default: function _default() {
     return [];
   }
-}), _dec4 = Prop(String), _dec(_class = (_class2 = (_temp =
+}), _dec4 = Prop(String), _dec5 = Prop(Boolean), _dec(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(ImageControlBox, _Vue);
@@ -61,6 +61,8 @@ function (_Vue) {
     _initializerDefineProperty(_this, "links", _descriptor2, _assertThisInitialized(_this));
 
     _initializerDefineProperty(_this, "title", _descriptor3, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "visible", _descriptor4, _assertThisInitialized(_this));
 
     return _this;
   }
@@ -207,6 +209,11 @@ function (_Vue) {
   writable: true,
   initializer: null
 }), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "title", [_dec4], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "visible", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,

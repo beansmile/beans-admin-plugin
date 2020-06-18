@@ -12,7 +12,7 @@
       </el-carousel-item>
     </el-carousel>
 
-    <ImageControlBox v-if="showController" title="轮播图" :links="links" v-model="value.data" @change="syncChange">
+    <ImageControlBox :visible="showController" title="轮播图" :links="links" v-model="value.data" @change="syncChange" @close="$emit('close')">
       <el-form @submit.native.prevent>
         <el-form-item label="轮播图高度">
           <el-input-number v-model="value.config.height" @change="syncChange" />

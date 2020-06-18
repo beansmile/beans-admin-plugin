@@ -11,7 +11,7 @@
         <i class="el-icon-picture-outline"></i>
       </div>
     </el-image>
-    <ImageControlBox v-if="showController" title="图片" :links="links" :value="value.data" @change="handleChange" />
+    <ImageControlBox :visible="showController" title="图片" :links="links" :value="value.data" @change="handleChange" @close="$emit('close')" />
   </div>
 </template>
 

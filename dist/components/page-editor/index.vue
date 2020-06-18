@@ -1,7 +1,7 @@
 <script>import "core-js/modules/es7.array.includes";
 import "core-js/modules/es6.string.includes";
-import "core-js/modules/es6.array.find";
 import "core-js/modules/es6.function.name";
+import "core-js/modules/es6.array.find";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
@@ -23,6 +23,7 @@ import uuid from 'uuid/v4';
 import draggable from 'vuedraggable';
 import defaultComponents from "./components";
 import { arrayMove } from "../../utils";
+import "./devices.css";
 var PageEditor = (_dec = Model('change', {
   type: Array,
   default: function _default() {
@@ -79,21 +80,6 @@ function (_Vue) {
       this.currentKey = key;
     }
   }, {
-    key: "handleAddComponent",
-    value: function handleAddComponent(_ref) {
-      var component = _ref.component,
-          title = _ref.title,
-          name = _ref.name;
-      var newComponent = {
-        component: component,
-        name: name,
-        title: title,
-        key: uuid()
-      };
-      this.$emit('change', this.value.concat(newComponent));
-      this.currentKey = newComponent.key;
-    }
-  }, {
     key: "handleDelete",
     value: function handleDelete(e, $index) {
       e.stopPropagation();
@@ -114,16 +100,6 @@ function (_Vue) {
     value: function handleDown(e, $index) {
       e.stopPropagation();
       this.$emit('change', arrayMove(this.value, $index, $index + 1));
-    }
-  }, {
-    key: "handleSort",
-    value: function handleSort(_ref2) {
-      var oldIndex = _ref2.oldIndex,
-          newIndex = _ref2.newIndex;
-
-      if (oldIndex !== newIndex) {
-        this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
-      }
     }
   }, {
     key: "handleSave",
@@ -161,11 +137,58 @@ function (_Vue) {
           "show-controller": this.currentKey === row.key
         },
         "on": {
+          "close": function close() {
+            return _this2.currentKey = '';
+          },
           "change": function change(e) {
             return _this2.handleComponentDataChange(e, index);
           }
         }
       });
+    }
+  }, {
+    key: "handleMove",
+    value: function handleMove(_ref) {
+      var oldIndex = _ref.oldIndex,
+          newIndex = _ref.newIndex;
+
+      if (oldIndex !== newIndex) {
+        this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
+      }
+    }
+  }, {
+    key: "handleAdd",
+    value: function handleAdd(_ref2) {
+      var component = _ref2.component,
+          title = _ref2.title,
+          name = _ref2.name;
+      var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+      var newComponent = {
+        component: component,
+        name: name,
+        title: title,
+        key: uuid()
+      };
+
+      var value = _cloneDeep(this.value);
+
+      value.splice(index, 0, newComponent);
+      this.$emit('change', value);
+      this.currentKey = newComponent.key;
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      var moved = e.moved,
+          added = e.added;
+
+      if (moved) {
+        this.handleMove(moved);
+      }
+
+      if (added) {
+        this.handleAdd(added.element, added.newIndex);
+      }
     }
   }, {
     key: "render",
@@ -175,14 +198,66 @@ function (_Vue) {
       var h = arguments[0];
       return h("div", {
         "class": "c-page-editor"
-      }, [h("div", {
-        "class": "box-preview"
-      }, [h(draggable, {
+      }, [h("portal-target", {
         "attrs": {
-          "value": this.value
+          "name": "page-editor",
+          "multiple": true
+        }
+      }), h("div", {
+        "class": "page-content"
+      }, [h("div", {
+        "class": "box-components"
+      }, [h("h2", ["\u9009\u62E9\u6A21\u5757"]), h(draggable, {
+        "class": "content",
+        "attrs": {
+          "sort": false,
+          "group": {
+            name: 'component',
+            pull: 'clone',
+            put: false
+          },
+          "value": this.renderComponents
+        }
+      }, [this.renderComponents.map(function (item) {
+        return h("el-button", {
+          "attrs": {
+            "size": "medium",
+            "icon": item.icon
+          },
+          "key": item.name,
+          "class": "item",
+          "on": {
+            "click": function click() {
+              return _this3.handleAdd(item);
+            }
+          }
+        }, [item.title]);
+      })])]), h("div", {
+        "class": "box-preview"
+      }, [h("div", {
+        "class": "marvel-device iphone8 gold"
+      }, [h("div", {
+        "class": "top-bar"
+      }), h("div", {
+        "class": "sleep"
+      }), h("div", {
+        "class": "volume"
+      }), h("div", {
+        "class": "camera"
+      }), h("div", {
+        "class": "sensor"
+      }), h("div", {
+        "class": "speaker"
+      }), h("div", {
+        "class": "screen"
+      }, [h(draggable, {
+        "class": "device-content",
+        "attrs": {
+          "value": this.value,
+          "group": "component"
         },
         "on": {
-          "end": this.handleSort
+          "change": this.handleChange
         }
       }, [this.value.map(function (row, index) {
         return h("div", {
@@ -195,7 +270,7 @@ function (_Vue) {
           }
         }, [h("div", {
           "class": "box-control"
-        }, [index - 1 >= 0 && h("i", {
+        }, [h("i", [row.title]), index - 1 >= 0 && h("i", {
           "class": "el-icon-arrow-up",
           "on": {
             "click": function click(e) {
@@ -217,31 +292,20 @@ function (_Vue) {
             }
           }
         })]), _this3.renderComponent(row, index)]);
-      })]), h("div", {
-        "class": "box-components"
-      }, [h("h5", {
-        "class": "box-title"
-      }, ["\u9009\u62E9\u7EC4\u4EF6"]), h("div", {
-        "class": "content"
-      }, [this.renderComponents.map(function (item) {
-        return h("div", {
-          "class": "item",
-          "key": item.name,
-          "on": {
-            "click": function click() {
-              return _this3.handleAddComponent(item);
-            }
-          }
-        }, [item.title]);
-      })])]), h("el-button", {
-        "class": "btn-save",
+      })])]), h("div", {
+        "class": "home"
+      }), h("div", {
+        "class": "bottom-bar"
+      })])])]), h("el-button", {
         "attrs": {
+          "size": "medium",
           "type": "primary"
         },
+        "class": "btn-save",
         "on": {
           "click": this.handleSave
         }
-      }, ["\u4FDD\u5B58"])])]);
+      }, ["\u4FDD\u5B58"])]);
     }
   }, {
     key: "renderComponents",
