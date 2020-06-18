@@ -1,10 +1,15 @@
 <template>
-  <div class="c-control-box">
-    <h5 class="title">{{ title }}</h5>
-    <div class="content">
-      <slot />
-    </div>
-  </div>
+  <portal to="page-editor">
+    <el-drawer
+      :visible="visible"
+      @close="$emit('close')"
+      :title="title"
+    >
+      <div class="c-control-box">
+        <slot />
+      </div>
+    </el-drawer>
+  </portal>
 </template>
 
 <script>
@@ -12,6 +17,12 @@
 
   @Component
   export default class controlBox extends Vue {
+    @Prop(Boolean) visible;
     @Prop(String) title;
+
+    created() {
+      const component = this.$mount();
+      document.querySelector('body').appendChild(component.$el)
+    }
   }
 </script>

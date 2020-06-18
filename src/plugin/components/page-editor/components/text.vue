@@ -3,7 +3,7 @@
 
     <div class="text" v-for="(item, index) in value.data" :key="index" :style="textStyle">{{ item.text }}</div>
 
-    <ControlBox title="文本" v-if="showController">
+    <ControlBox title="文本" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item label="文本" v-for="(item, index) in value.data" :key="index">
           <el-input type="textarea" :rows="5" autosize v-model="item.text" @change="syncChange" />
