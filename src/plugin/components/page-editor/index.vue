@@ -73,6 +73,15 @@
       }
     }
 
+    async handleAddByClick(component) {
+      this.handleAdd(component);
+      await this.$nextTick();
+      const oDraggableContent = _.get(this.$refs.draggableContent, '$el');
+      if (oDraggableContent) {
+        oDraggableContent.scrollTop = 99999;
+      }
+    }
+
     handleAdd({ component, title, name }, index = this.value.length) {
       const newComponent = {
         component,
@@ -115,7 +124,7 @@
               >
                 {
                   this.renderComponents.map(item => (
-                    <el-button size="medium" key={item.name} icon={item.icon} class="item" onClick={() => this.handleAdd(item)}>
+                    <el-button size="medium" key={item.name} icon={item.icon} class="item" onClick={() => this.handleAddByClick(item)}>
                       {item.title}
                     </el-button>
                   ))
@@ -137,6 +146,7 @@
                     value={this.value}
                     group="component"
                     onChange={this.handleChange}
+                    ref="draggableContent"
                   >
                     {
                       this.value.map((row, index) => (
