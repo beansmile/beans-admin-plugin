@@ -115,7 +115,7 @@
 
           <div class="page-content">
             <div class="box-components">
-              <h2>选择模块</h2>
+              <h2>{this.$t('选择模块')}</h2>
               <draggable
                 class="content"
                 sort={false}
@@ -125,7 +125,7 @@
                 {
                   this.renderComponents.map(item => (
                     <el-button size="medium" key={item.name} icon={item.icon} class="item" onClick={() => this.handleAddByClick(item)}>
-                      {item.title}
+                      {this.$t(item.title)}
                     </el-button>
                   ))
                 }
@@ -156,7 +156,7 @@
                           onClick={() => this.handleFocusComponent(row.key)}
                         >
                           <div class="box-control">
-                            <i>{row.title}</i>
+                            <i>{this.$t(row.title)}</i>
                             { index - 1 >= 0 && <i class="el-icon-arrow-up" onClick={e => this.handleUp(e, index)} /> }
                             { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
                             <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />
@@ -172,7 +172,7 @@
               </div>
             </div>
           </div>
-          <el-button size="medium" class="btn-save" type="primary" onClick={this.handleSave}>保存</el-button>
+          <el-button size="medium" class="btn-save" type="primary" onClick={this.handleSave}>{this.$t('保存')}</el-button>
         </div>
       )
     }
