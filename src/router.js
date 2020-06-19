@@ -10,16 +10,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/home'
-    },
-    {
-      path: '/home',
-      name: 'home',
-      meta: {
-        navbar: 'el-icon-s-home',
-        title: '概览'
-      },
-      component: require('@/views/home').default
+      redirect: '/install'
     },
     require('@/views/orders/route').default,
     require('@/views/docs/route').default
