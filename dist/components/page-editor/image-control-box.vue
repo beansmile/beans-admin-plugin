@@ -2,7 +2,7 @@
   <div class="c-image-control-box">
     <ControlBox :title="title" :visible="visible" @close="$emit('close')">
       <slot />
-      <el-button class="btn-add" type="primary" @click="handleAdd">添加图片</el-button>
+      <el-button class="btn-add" type="primary" @click="handleAdd">{{ $t('pageEditor.添加图片') }}</el-button>
       <c-source-table :table="{ data: value }" :columns="columns" />
     </ControlBox>
   </div>
@@ -124,7 +124,7 @@ function (_Vue) {
       var h = this.$createElement;
       return [{
         prop: 'src',
-        label: '图片',
+        label: this.$t('pageEditor.图片'),
         renderCell: function renderCell(h, _ref) {
           var row = _ref.row,
               $index = _ref.$index;
@@ -148,7 +148,7 @@ function (_Vue) {
         }
       }, {
         prop: 'link',
-        label: '跳转链接',
+        label: this.$t('跳转链接'),
         renderCell: function renderCell(h, _ref2) {
           var row = _ref2.row,
               $index = _ref2.$index;
@@ -173,21 +173,21 @@ function (_Vue) {
         }
       }, {
         prop: 'action',
-        label: '操作',
+        label: this.$t('操作'),
         extraAction: function extraAction(h, _ref3) {
           var $index = _ref3.$index;
           return [$index - 1 >= 0 && {
-            title: '上移',
+            title: _this2.$t('上移'),
             handler: function handler() {
               return _this2.handleUp($index);
             }
           }, $index + 1 < _this2.value.length && {
-            title: '下移',
+            title: _this2.$t('下移'),
             handler: function handler() {
               return _this2.handleDown($index);
             }
           }, {
-            title: '移除图片',
+            title: _this2.$t('移除图片'),
             handler: function handler() {
               return _this2.handleDelete($index);
             }

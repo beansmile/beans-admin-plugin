@@ -4,11 +4,11 @@
       <img class="image" :key="index" :src="item.src" v-if="item.src" />
     </template>
 
-    <ControlBox title="客服" :visible="showController" @close="$emit('close')">
+    <ControlBox :title="$t('pageEditor.客服')" :visible="showController" @close="$emit('close')">
 
       <el-form @submit.native.prevent label-position="left" label-width="auto">
-        <el-form-item label="要复制的客服名字">
-          <el-input v-model="value.config.text" @change="syncChange" placeholder="默认直接联系小程序客服"/>
+        <el-form-item :label="$t('pageEditor.需要复制的客服名字')">
+          <el-input v-model="value.config.text" @change="syncChange" :placeholder="$t('pageEditor.默认直接联系小程序客服')"/>
         </el-form-item>
       </el-form>
 
@@ -96,7 +96,7 @@ function (_Vue) {
       var h = this.$createElement;
       return [{
         prop: 'src',
-        label: '图片',
+        label: this.$t('pageEditor.图片'),
         renderCell: function renderCell(h, _ref) {
           var row = _ref.row;
           return h("c-upload-form-item", {

@@ -269,7 +269,7 @@ function (_Vue) {
               return _this3.handleAddByClick(item);
             }
           }
-        }, [_this3.$t(item.title)]);
+        }, [_this3.$t("pageEditor.".concat(item.title))]);
       })])]), h("div", {
         "class": "box-preview"
       }, [h("div", {
@@ -309,7 +309,7 @@ function (_Vue) {
           }
         }, [h("div", {
           "class": "box-control"
-        }, [h("i", [_this3.$t(row.title)]), index - 1 >= 0 && h("i", {
+        }, [h("i", [_this3.$t("pageEditor.".concat(row.title))]), index - 1 >= 0 && h("i", {
           "class": "el-icon-arrow-up",
           "on": {
             "click": function click(e) {

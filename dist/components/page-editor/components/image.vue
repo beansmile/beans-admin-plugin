@@ -11,7 +11,7 @@
         <i class="el-icon-picture-outline"></i>
       </div>
     </el-image>
-    <ImageControlBox :visible="showController" title="图片" :links="links" :value="value.data" @change="handleChange" @close="$emit('close')" />
+    <ImageControlBox :visible="showController" :title="$t('pageEditor.图片')" :links="links" :value="value.data" @change="handleChange" @close="$emit('close')" />
   </div>
 </template>
 

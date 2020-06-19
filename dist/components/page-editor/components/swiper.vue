@@ -12,37 +12,37 @@
       </el-carousel-item>
     </el-carousel>
 
-    <ImageControlBox :visible="showController" title="轮播图" :links="links" v-model="value.data" @change="syncChange" @close="$emit('close')">
-      <el-form @submit.native.prevent>
-        <el-form-item label="轮播图高度">
+    <ImageControlBox :visible="showController" :title="$t('pageEditor.轮播图')" :links="links" v-model="value.data" @change="syncChange" @close="$emit('close')">
+      <el-form @submit.native.prevent label-position="left" label-width="auto">
+        <el-form-item :label="$t('pageEditor.轮播图高度')">
           <el-input-number v-model="value.config.height" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="是否显示面板指示点">
+        <el-form-item :label="$t('pageEditor.是否显示面板指示点')">
           <el-switch v-model="value.config.indicatorDots" @change="syncChange" />
-          <small>（无预览效果）</small>
+          <small>（{{$t('pageEditor.无预览效果')}}）</small>
         </el-form-item>
-        <el-form-item label="指示点颜色">
+        <el-form-item :label="$t('pageEditor.指示点颜色')">
           <el-color-picker show-alpha v-model="value.config.indicatorColor" @change="syncChange"></el-color-picker>
-          <small>（无预览效果）</small>
+          <small>（{{$t('pageEditor.无预览效果')}}）</small>
         </el-form-item>
-        <el-form-item label="当前选中的指示点颜色">
+        <el-form-item :label="$t('pageEditor.当前选中的指示点颜色')">
           <el-color-picker show-alpha v-model="value.config.indicatorActiveColor" @change="syncChange"></el-color-picker>
-          <small>（无预览效果）</small>
+          <small>（{{$t('pageEditor.无预览效果')}}）</small>
         </el-form-item>
-        <el-form-item label="是否自动切换">
+        <el-form-item :label="$t('pageEditor.是否自动切换')">
           <el-switch v-model="value.config.autoplay" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="自动切换时间间隔(毫秒)">
+        <el-form-item :label="$t('pageEditor.自动切换时间间隔(毫秒)')">
           <el-input-number v-model="value.config.interval" @change="syncChange" />
-          <small>（无预览效果）</small>
+          <small>（{{$t('pageEditor.无预览效果')}}）</small>
         </el-form-item>
-        <el-form-item label="滑动动画时长(毫秒)">
+        <el-form-item :label="$t('pageEditor.滑动动画时长(毫秒)')">
           <el-input-number v-model="value.config.duration" @change="syncChange" />
-          <small>（无预览效果）</small>
+          <small>（{{$t('pageEditor.无预览效果')}}）</small>
         </el-form-item>
-        <el-form-item label="是否采用衔接滑动">
+        <el-form-item :label="$t('pageEditor.是否采用衔接滑动')">
           <el-switch v-model="value.config.circular" @change="syncChange" />
-          <small>（无预览效果）</small>
+          <small>（{{$t('pageEditor.无预览效果')}}）</small>
         </el-form-item>
       </el-form>
     </ImageControlBox>

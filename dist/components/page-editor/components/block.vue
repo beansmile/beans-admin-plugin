@@ -3,12 +3,12 @@
 
     <div class="block" :style="blockStyle"></div>
 
-    <ControlBox title="占位块" :visible="showController" @close="$emit('close')">
+    <ControlBox :title="$t('pageEditor.占位块')" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
-        <el-form-item label="块高度">
+        <el-form-item :label="$t('pageEditor.块高度')">
           <el-input-number v-model="value.config.height" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="块背景颜色">
+        <el-form-item :label="$t('pageEditor.块背景颜色')">
           <el-color-picker show-alpha v-model="value.config.backgroundColor" @change="syncChange"></el-color-picker>
         </el-form-item>
       </el-form>
