@@ -170,9 +170,9 @@
                 <div class="home"></div>
                 <div class="bottom-bar"></div>
               </div>
+              <el-button size="medium" class="btn-save" type="primary" onClick={this.handleSave}>{this.$t('保存')}</el-button>
             </div>
           </div>
-          <el-button size="medium" class="btn-save" type="primary" onClick={this.handleSave}>{this.$t('保存')}</el-button>
         </div>
       )
     }

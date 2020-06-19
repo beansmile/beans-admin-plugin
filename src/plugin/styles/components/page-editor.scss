@@ -42,6 +42,13 @@
 
   .box-preview {
     margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .btn-save {
+      margin-top: 20px;
+    }
 
     .device {
       transform: unset;
