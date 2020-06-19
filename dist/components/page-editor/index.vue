@@ -1,5 +1,7 @@
 <script>import "core-js/modules/es7.array.includes";
 import "core-js/modules/es6.string.includes";
+import "regenerator-runtime/runtime";
+import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import "core-js/modules/es6.function.name";
 import "core-js/modules/es6.array.find";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
@@ -157,6 +159,42 @@ function (_Vue) {
       }
     }
   }, {
+    key: "handleAddByClick",
+    value: function () {
+      var _handleAddByClick = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(component) {
+        var oDraggableContent;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.handleAdd(component);
+                _context.next = 3;
+                return this.$nextTick();
+
+              case 3:
+                oDraggableContent = _get(this.$refs.draggableContent, '$el');
+
+                if (oDraggableContent) {
+                  oDraggableContent.scrollTop = 99999;
+                }
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleAddByClick(_x) {
+        return _handleAddByClick.apply(this, arguments);
+      }
+
+      return handleAddByClick;
+    }()
+  }, {
     key: "handleAdd",
     value: function handleAdd(_ref2) {
       var component = _ref2.component,
@@ -228,7 +266,7 @@ function (_Vue) {
           "class": "item",
           "on": {
             "click": function click() {
-              return _this3.handleAdd(item);
+              return _this3.handleAddByClick(item);
             }
           }
         }, [item.title]);
@@ -258,7 +296,8 @@ function (_Vue) {
         },
         "on": {
           "change": this.handleChange
-        }
+        },
+        "ref": "draggableContent"
       }, [this.value.map(function (row, index) {
         return h("div", {
           "key": row.key,
