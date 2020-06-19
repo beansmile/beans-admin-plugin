@@ -3,12 +3,12 @@
 
     <div class="list-title">{{ name }}</div>
 
-    <ControlBox title="商品列表" :visible="showController" @close="$emit('close')">
+    <ControlBox :title="$t('pageEditor.商品列表')" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent>
-        <el-form-item label="选择商品列表">
+        <el-form-item :label="$t('pageEditor.选择商品列表')">
           <c-select :value="id" :options="selectOptions" @change="handleChange" />
         </el-form-item>
-        <el-form-item label="是否横向展示">
+        <el-form-item :label="$t('pageEditor.是否横向展示')">
           <el-switch :value="value.config.scrollX" @change="handleSwitchChange" />
         </el-form-item>
       </el-form>
