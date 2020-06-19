@@ -1,6 +1,6 @@
 <template>
   <create-doc
-    title="表单想"
+    title="表单项"
     :attributes="attributes"
     :events="events"
     :examples="examples"

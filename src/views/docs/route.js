@@ -5,6 +5,15 @@ export default {
   },
   children: [
     {
+      path: '/install',
+      name: 'doc.install',
+      component: require('./install').default,
+      meta: {
+        title: '安装',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
       path: '/config',
       name: 'doc.config',
       component: require('./config').default,
@@ -45,7 +54,7 @@ export default {
       name: 'doc.clipboard',
       component: require('./clipboard').default,
       meta: {
-        title: 'clipboard',
+        title: '剪切板',
         navbar: 'el-icon-document'
       }
     },
@@ -54,7 +63,7 @@ export default {
       name: 'doc.dropdown-button',
       component: require('./dropdown-button').default,
       meta: {
-        title: 'dropdown-button',
+        title: '下拉按钮',
         navbar: 'el-icon-document'
       }
     },
@@ -63,7 +72,7 @@ export default {
       name: 'doc.dynamic-nest-form',
       component: require('./dynamic-nest-form').default,
       meta: {
-        title: 'dynamic-nest-form',
+        title: '动态表单',
         navbar: 'el-icon-document'
       }
     },
@@ -72,7 +81,7 @@ export default {
       name: 'doc.static-nest-form',
       component: require('./static-nest-form').default,
       meta: {
-        title: 'static-nest-form',
+        title: '静态表单',
         navbar: 'el-icon-document'
       }
     },
@@ -81,7 +90,7 @@ export default {
       name: 'doc.link-button',
       component: require('./link-button').default,
       meta: {
-        title: 'link-button',
+        title: '按钮链接',
         navbar: 'el-icon-document'
       }
     },
@@ -90,7 +99,7 @@ export default {
       name: 'doc.permission',
       component: require('./permission').default,
       meta: {
-        title: 'permission',
+        title: '权限控制',
         navbar: 'el-icon-document'
       }
     },
@@ -99,7 +108,7 @@ export default {
       name: 'doc.router-link',
       component: require('./router-link').default,
       meta: {
-        title: 'router-link',
+        title: '链接(带权限)',
         navbar: 'el-icon-document'
       }
     },
@@ -108,7 +117,7 @@ export default {
       name: 'doc.select',
       component: require('./select').default,
       meta: {
-        title: 'select',
+        title: '下拉选择',
         navbar: 'el-icon-document'
       }
     },
@@ -117,7 +126,7 @@ export default {
       name: 'doc.pageEdidtor',
       component: require('./page-editor').default,
       meta: {
-        title: 'page-editor',
+        title: '页面编辑器',
         navbar: 'el-icon-document'
       }
     },
@@ -126,7 +135,7 @@ export default {
       name: 'doc.listSelect',
       component: require('./list-select').default,
       meta: {
-        title: 'list-select',
+        title: '列表选择器',
         navbar: 'el-icon-document'
       }
     },
@@ -135,7 +144,7 @@ export default {
       name: 'doc.skuEditor',
       component: require('./sku-editor').default,
       meta: {
-        title: 'sku编辑',
+        title: 'sku编辑器',
         navbar: 'el-icon-document'
       }
     }
