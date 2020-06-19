@@ -273,7 +273,7 @@ function (_Vue) {
       })])]), h("div", {
         "class": "box-preview"
       }, [h("div", {
-        "class": "marvel-device iphone8 gold"
+        "class": "marvel-device iphone5s gold"
       }, [h("div", {
         "class": "top-bar"
       }), h("div", {
