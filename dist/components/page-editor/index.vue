@@ -335,7 +335,7 @@ function (_Vue) {
         "class": "home"
       }), h("div", {
         "class": "bottom-bar"
-      })])])]), h("el-button", {
+      })]), h("el-button", {
         "attrs": {
           "size": "medium",
           "type": "primary"
@@ -344,7 +344,7 @@ function (_Vue) {
         "on": {
           "click": this.handleSave
         }
-      }, [this.$t('保存')])]);
+      }, [this.$t('保存')])])])]);
     }
   }, {
     key: "renderComponents",
