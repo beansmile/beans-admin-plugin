@@ -245,7 +245,7 @@ function (_Vue) {
         "class": "page-content"
       }, [h("div", {
         "class": "box-components"
-      }, [h("h2", ["\u9009\u62E9\u6A21\u5757"]), h(draggable, {
+      }, [h("h2", [this.$t('选择模块')]), h(draggable, {
         "class": "content",
         "attrs": {
           "sort": false,
@@ -269,7 +269,7 @@ function (_Vue) {
               return _this3.handleAddByClick(item);
             }
           }
-        }, [item.title]);
+        }, [_this3.$t(item.title)]);
       })])]), h("div", {
         "class": "box-preview"
       }, [h("div", {
@@ -309,7 +309,7 @@ function (_Vue) {
           }
         }, [h("div", {
           "class": "box-control"
-        }, [h("i", [row.title]), index - 1 >= 0 && h("i", {
+        }, [h("i", [_this3.$t(row.title)]), index - 1 >= 0 && h("i", {
           "class": "el-icon-arrow-up",
           "on": {
             "click": function click(e) {
@@ -344,7 +344,7 @@ function (_Vue) {
         "on": {
           "click": this.handleSave
         }
-      }, ["\u4FDD\u5B58"])]);
+      }, [this.$t('保存')])]);
     }
   }, {
     key: "renderComponents",

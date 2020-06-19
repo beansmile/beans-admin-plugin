@@ -73,5 +73,16 @@ export default _objectSpread({}, enLocale, {
   已选择: 'Selected',
   已选择为空: 'Selected empty',
   列表: 'List',
-  没有可选择项: 'empty'
+  没有可选择项: 'empty',
+  选择模块: 'Select Component',
+  保存: 'Save',
+  图片: 'Image',
+  视频: 'Video',
+  轮播图: 'Swiper',
+  横向滚动: 'Scroll-X',
+  客服: 'Customer service',
+  商品列表: 'Product List',
+  占位块: 'Block',
+  文本: 'Text',
+  通知栏: 'Notice Bar'
 });
