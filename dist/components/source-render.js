@@ -62,7 +62,8 @@ export var renderCellByType = function renderCellByType(h) {
 
           return h("div", {
             "class": "multi-images"
-          }, [images.map(function (img) {
+          }, [images.map(function (img, index) {
+            var previewSrcList = images.slice(index, images.length).concat(images.slice(0, index));
             return h("el-image", {
               "class": "image",
               "style": _objectSpread({
@@ -73,7 +74,7 @@ export var renderCellByType = function renderCellByType(h) {
               "attrs": {
                 "src": img,
                 "fit": fit,
-                "preview-src-list": images
+                "preview-src-list": previewSrcList
               }
             });
           })]);
