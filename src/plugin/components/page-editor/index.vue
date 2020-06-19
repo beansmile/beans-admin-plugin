@@ -133,7 +133,7 @@
             </div>
 
             <div class="box-preview">
-              <div class="marvel-device iphone8 gold">
+              <div class="marvel-device iphone5s gold">
                 <div class="top-bar"></div>
                 <div class="sleep"></div>
                 <div class="volume"></div>
