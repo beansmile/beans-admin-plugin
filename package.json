@@ -5,6 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "node build.js",
+    "build-doc": "vue-cli-service build --dest doc",
     "lint": "vue-cli-service lint",
     "start": "vue-cli-service serve"
   },
