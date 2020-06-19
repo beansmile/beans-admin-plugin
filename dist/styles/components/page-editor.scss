@@ -1,3 +1,9 @@
+.control-box-drawer {
+  .el-drawer__body {
+    overflow-y: auto;
+  }
+}
+
 .c-control-box {
   padding: 20px;
 

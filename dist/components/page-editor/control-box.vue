@@ -1,6 +1,7 @@
 <template>
   <portal to="page-editor">
     <el-drawer
+      custom-class="control-box-drawer"
       :visible="visible"
       @close="$emit('close')"
       :title="title"
