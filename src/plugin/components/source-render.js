@@ -27,15 +27,19 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       return (
         <div class="multi-images">
           {
-            images.map(img =>
-              <el-image
-                class="image"
-                style={{ width, height, borderRadius, ...opts }}
-                src={img}
-                fit={fit}
-                preview-src-list={images}
-              />
-            )
+            images.map((img, index) => {
+              const previewSrcList = images.slice(index, images.length).concat(images.slice(0, index));
+
+              return (
+                <el-image
+                  class="image"
+                  style={{ width, height, borderRadius, ...opts }}
+                  src={img}
+                  fit={fit}
+                  preview-src-list={previewSrcList}
+                />
+              )
+            })
           }
         </div>
       );
