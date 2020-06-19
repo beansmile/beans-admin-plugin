@@ -2,7 +2,7 @@
   <div class="c-image-control-box">
     <ControlBox :title="title" :visible="visible" @close="$emit('close')">
       <slot />
-      <el-button class="btn-add" type="primary" @click="handleAdd">添加图片</el-button>
+      <el-button class="btn-add" type="primary" @click="handleAdd">{{ $t('pageEditor.添加图片') }}</el-button>
       <c-source-table :table="{ data: value }" :columns="columns" />
     </ControlBox>
   </div>
@@ -27,7 +27,7 @@
       return [
         {
           prop: 'src',
-          label: '图片',
+          label: this.$t('pageEditor.图片'),
           renderCell: (h, { row, $index }) => {
             return <c-upload-form-item
               value={row.src}
@@ -38,7 +38,7 @@
         },
         {
           prop: 'link',
-          label: '跳转链接',
+          label: this.$t('跳转链接'),
           renderCell: (h, { row, $index }) => {
             const selectProps = {
               value: row.link,
@@ -50,19 +50,19 @@
         },
         {
           prop: 'action',
-          label: '操作',
+          label: this.$t('操作'),
           extraAction: (h, { $index }) => {
             return [
               $index - 1 >= 0 && {
-                title: '上移',
+                title: this.$t('上移'),
                 handler: () => this.handleUp($index)
               },
               $index + 1 < this.value.length && {
-                title: '下移',
+                title: this.$t('下移'),
                 handler: () => this.handleDown($index)
               },
               {
-                title: '移除图片',
+                title: this.$t('移除图片'),
                 handler: () => this.handleDelete($index)
               }
             ]

@@ -125,7 +125,7 @@
                 {
                   this.renderComponents.map(item => (
                     <el-button size="medium" key={item.name} icon={item.icon} class="item" onClick={() => this.handleAddByClick(item)}>
-                      {this.$t(item.title)}
+                      {this.$t(`pageEditor.${item.title}`)}
                     </el-button>
                   ))
                 }
@@ -156,7 +156,7 @@
                           onClick={() => this.handleFocusComponent(row.key)}
                         >
                           <div class="box-control">
-                            <i>{this.$t(row.title)}</i>
+                            <i>{this.$t(`pageEditor.${row.title}`)}</i>
                             { index - 1 >= 0 && <i class="el-icon-arrow-up" onClick={e => this.handleUp(e, index)} /> }
                             { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
                             <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />

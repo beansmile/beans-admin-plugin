@@ -14,18 +14,18 @@
       />
     </template>
 
-    <ControlBox title="视频" :visible="showController" @close="$emit('close')">
+    <ControlBox :title="$t('pageEditor.视频')" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
-        <el-form-item label="视频高度">
+        <el-form-item :label="$t('pageEditor.视频高度')">
           <el-input-number v-model="value.config.height" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="视频左边间距">
+        <el-form-item :label="$t('pageEditor.视频左边间距')">
           <el-input-number v-model="value.config.paddingLeft" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="视频右边边间距">
+        <el-form-item :label="$t('pageEditor.视频右边边间距')">
           <el-input-number v-model="value.config.paddingRight" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="视频的表现形式">
+        <el-form-item :label="$t('pageEditor.视频的表现形式')">
           <el-select v-model="value.config.objectFit" @change="syncChange">
             <el-option
               v-for="option in objectFitOptions"
@@ -35,16 +35,16 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="是否显示播放控件">
+        <el-form-item :label="$t('pageEditor.是否显示播放控件')">
           <el-switch v-model="value.config.controls" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="是否自动播放">
+        <el-form-item :label="$t('pageEditor.是否自动播放')">
           <el-switch v-model="value.config.autoplay" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="是否循环播放">
+        <el-form-item :label="$t('pageEditor.是否循环播放')">
           <el-switch v-model="value.config.loop" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="是否静音播放">
+        <el-form-item :label="$t('pageEditor.是否静音播放')">
           <el-switch v-model="value.config.muted" @change="syncChange" />
         </el-form-item>
       </el-form>
@@ -88,20 +88,22 @@
     }) }) value;
     @Prop(Boolean) showController;
 
-    objectFitOptions = [
-      {
-        label: '包含',
-        value: 'contain'
-      },
-      {
-        label: '填充',
-        value: 'fill'
-      },
-      {
-        label: '覆盖',
-        value: 'cover'
-      }
-    ]
+    get objectFitOptions() {
+      return [
+        {
+          label: this.$t('pageEditor.包含'),
+          value: 'contain'
+        },
+        {
+          label: this.$t('pageEditor.填充'),
+          value: 'fill'
+        },
+        {
+          label: this.$t('pageEditor.覆盖'),
+          value: 'cover'
+        }
+      ]
+    }
 
     get videoStyle() {
       const { height, objectFit, paddingLeft, paddingRight } = this.value.config;

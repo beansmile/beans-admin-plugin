@@ -3,24 +3,24 @@
 
     <div class="text" v-for="(item, index) in value.data" :key="index" :style="textStyle">{{ item.text }}</div>
 
-    <ControlBox title="文本" :visible="showController" @close="$emit('close')">
+    <ControlBox :title="$t('pageEditor.文本')" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
-        <el-form-item label="文本" v-for="(item, index) in value.data" :key="index">
+        <el-form-item :label="$t('pageEditor.文本')" v-for="(item, index) in value.data" :key="index">
           <el-input type="textarea" :rows="5" autosize v-model="item.text" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="颜色">
+        <el-form-item :label="$t('pageEditor.颜色')">
           <el-color-picker show-alpha v-model="value.config.color" @change="syncChange"></el-color-picker>
         </el-form-item>
-        <el-form-item label="背景颜色">
+        <el-form-item :label="$t('pageEditor.背景颜色')">
           <el-color-picker show-alpha v-model="value.config.backgroundColor" @change="syncChange"></el-color-picker>
         </el-form-item>
-        <el-form-item label="文字大小">
+        <el-form-item :label="$t('pageEditor.文字大小')">
           <el-input-number v-model="value.config.fontSize" @change="syncChange"/>
         </el-form-item>
-        <el-form-item label="行高">
+        <el-form-item :label="$t('pageEditor.行高')">
           <el-input-number v-model="value.config.lineHeight" @change="syncChange"/>
         </el-form-item>
-        <el-form-item label="字重">
+        <el-form-item :label="$t('pageEditor.字重')">
           <el-select v-model="value.config.fontWeight" @change="syncChange">
             <el-option
               v-for="item in fontWeightOptions"
@@ -30,16 +30,16 @@
             />
           </el-select >
         </el-form-item>
-        <el-form-item label="上间距">
+        <el-form-item :label="$t('pageEditor.上间距')">
           <el-input-number v-model="value.config.paddingTop" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="下间距">
+        <el-form-item :label="$t('pageEditor.下间距')">
           <el-input-number v-model="value.config.paddingBottom" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="左间距">
+        <el-form-item :label="$t('pageEditor.左间距')">
           <el-input-number v-model="value.config.paddingLeft" @change="syncChange" />
         </el-form-item>
-        <el-form-item label="右间距">
+        <el-form-item :label="$t('pageEditor.右间距')">
           <el-input-number v-model="value.config.paddingRight" @change="syncChange" />
         </el-form-item>
       </el-form>
@@ -83,7 +83,7 @@
     get fontWeightOptions() {
       return [
         {
-          label: '默认',
+          label: this.$t('默认'),
           value: 'normal'
         },
         {
