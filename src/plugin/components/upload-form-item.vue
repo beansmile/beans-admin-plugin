@@ -8,11 +8,11 @@
     >
       <template v-for="(item, index) in filesResouces">
         <div class="item-resource item-image" v-if="type === 'image'" :key="index">
-          <i class="el-icon-close btn-close" @click.stop="handleDelete(index)"></i>
+          <el-button size="mini" circle class="btn-close" icon="el-icon-delete" @click.stop="handleDelete(index)"></el-button>
           <el-image :src="transformLink(item)" class="image" :preview-src-list="imagePreview ? filesResouces.map(transformLink) : []" fit="cover" />
         </div>
         <div class="item-resource item-video" v-else-if="type === 'video'" :key="index">
-          <i class="el-icon-close btn-close" @click="handleDelete(index)"></i>
+          <el-button size="mini" circle class="btn-close" icon="el-icon-delete" @click.stop="handleDelete(index)"></el-button>
           <video class="video" :src="transformLink(item)"/>
         </div>
         <div v-else :key="index" style="width: 100%">
