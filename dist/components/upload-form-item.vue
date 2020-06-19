@@ -30,13 +30,16 @@
       :cropper="cropper"
       @change="handleSubmit"
     >
-      <el-button
-        type="primary"
-        :disabled="isMultiple && filesResouces.length >= limit"
-      >
-        {{ $t('上传') }}
-        <i class="el-icon-upload el-icon--right"></i>
-      </el-button>
+      <template v-slot:default="slotProps">
+        <el-button
+          type="primary"
+          :loading="slotProps.loading"
+          :disabled="slotProps.disabled"
+        >
+          {{ $t('上传') }}
+          <i class="el-icon-upload el-icon--right"></i>
+        </el-button>
+      </template>
     </c-upload-single>
 
     <el-button

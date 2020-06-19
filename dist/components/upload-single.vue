@@ -1,6 +1,6 @@
 <template>
-  <div class="c-upload-single" v-loading="!showCropper && loading">
-    <slot />
+  <div class="c-upload-single">
+    <slot :disabled="disabled" :loading="!showCropper && loading" />
     <input
       :disabled="disabled"
       type="file"
