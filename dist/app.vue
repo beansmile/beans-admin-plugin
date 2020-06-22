@@ -94,29 +94,30 @@ function (_Vue) {
       var _handleExit = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee() {
-        var requestUrl;
+        var tokenKey, requestUrl;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                localStorage.removeItem('access_token');
+                tokenKey = _get(this, '$appConfig.login.token_storage_key') || 'access_token';
+                localStorage.removeItem(tokenKey);
                 requestUrl = _get(this.$appConfig, 'logout.request_url');
 
                 if (!requestUrl) {
-                  _context.next = 5;
+                  _context.next = 6;
                   break;
                 }
 
-                _context.next = 5;
+                _context.next = 6;
                 return this.$fly.delete(requestUrl);
 
-              case 5:
+              case 6:
                 this.$message.success(this.$t('成功退出登录'));
                 this.$router.replace({
                   name: 'login'
                 });
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
