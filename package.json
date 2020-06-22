@@ -54,7 +54,7 @@
     "url": "https://github.com/beansmile/beans-admin-plugin/issues"
   },
   "homepage": "https://github.com/beansmile/beans-admin-plugin#readme",
-  "main": "dist/beansAdminPlugin.umd.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beansmile/beans-admin-plugin.git"
