@@ -25,7 +25,8 @@
     mounted() {
       const defaultConfig = {
         aspectRatio: this.width / this.height,
-        responsive: true
+        responsive: true,
+        autoCropArea: 1
       }
       this.cropper = new Cropper(this.$refs.img, Object.assign(defaultConfig, this.$attrs))
     }

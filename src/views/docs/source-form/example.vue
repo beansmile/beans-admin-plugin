@@ -41,6 +41,19 @@
             renderNode: h => <input onInput={this.handleCustomFormInputChange} />
           }
         }
+      },
+      {
+        prop: 'field4',
+        label: '字段4',
+        form: {
+          component: 'upload',
+          props: {
+            cropper: {
+              width: 100,
+              height: 100
+            }
+          }
+        }
       }
     ]
 
