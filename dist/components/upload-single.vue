@@ -34,10 +34,10 @@ import _defineProperty from "@babel/runtime-corejs2/helpers/esm/defineProperty";
 import "core-js/modules/web.dom.iterable";
 import "core-js/modules/es6.string.iterator";
 import _slicedToArray from "@babel/runtime-corejs2/helpers/esm/slicedToArray";
-import "regenerator-runtime/runtime";
-import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import "core-js/modules/es6.string.starts-with";
 import "core-js/modules/es6.function.name";
+import "regenerator-runtime/runtime";
+import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
@@ -113,63 +113,125 @@ function (_Vue) {
     }
   }, {
     key: "handleFileChange",
-    value: function handleFileChange(e) {
-      var file = e.target.files[0]; // 相同文件change事件不会触发
+    value: function () {
+      var _handleFileChange = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(e) {
+        var file, _ref, width, height, avaliableOffset, offset;
 
-      e.target.value = '';
-      this.fileName = file.name;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                file = e.target.files[0]; // 相同文件change事件不会触发
 
-      if (file.size > this.size * 1024 * 1024) {
-        this.$message.error("\u6587\u4EF6\u6700\u5927 ".concat(this.size, "M"));
-        return;
+                e.target.value = '';
+                this.fileName = file.name;
+
+                if (!(file.size > this.size * 1024 * 1024)) {
+                  _context.next = 6;
+                  break;
+                }
+
+                this.$message.error("\u6587\u4EF6\u6700\u5927 ".concat(this.size, "M"));
+                return _context.abrupt("return");
+
+              case 6:
+                if (!(file.type.startsWith('image') && this.cropper && this.cropper.width && this.cropper.height)) {
+                  _context.next = 21;
+                  break;
+                }
+
+                this.loading = true;
+                _context.next = 10;
+                return this.getImageInfo(file);
+
+              case 10:
+                _ref = _context.sent;
+                width = _ref.width;
+                height = _ref.height;
+                this.loading = false;
+
+                if (!(width && height)) {
+                  _context.next = 21;
+                  break;
+                }
+
+                // 可接受的误差
+                avaliableOffset = 2;
+                offset = Math.floor(Math.abs(this.cropper.width / this.cropper.height - width / height) * 100); // 误差比较大弹出裁剪框，否则直接上传
+
+                if (!(offset > avaliableOffset)) {
+                  _context.next = 21;
+                  break;
+                }
+
+                this.img = URL.createObjectURL(file);
+                this.showCropper = true;
+                return _context.abrupt("return");
+
+              case 21:
+                this.handleUpload(file);
+
+              case 22:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function handleFileChange(_x) {
+        return _handleFileChange.apply(this, arguments);
       }
 
-      if (file.type.startsWith('image') && this.cropper && this.cropper.width) {
-        this.img = URL.createObjectURL(file);
-        this.showCropper = true;
-      } else {
-        this.handleUpload(file);
-      }
-    }
+      return handleFileChange;
+    }()
   }, {
     key: "getImageInfo",
     value: function () {
       var _getImageInfo2 = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee(file) {
-        return regeneratorRuntime.wrap(function _callee$(_context) {
+      regeneratorRuntime.mark(function _callee2(file) {
+        var res;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 if (!file.type.startsWith('image')) {
-                  _context.next = 10;
+                  _context2.next = 13;
                   break;
                 }
 
-                _context.prev = 1;
-                return _context.abrupt("return", _getImageInfo(URL.createObjectURL(file)));
+                _context2.prev = 1;
+                _context2.next = 4;
+                return _getImageInfo(URL.createObjectURL(file));
 
-              case 5:
-                _context.prev = 5;
-                _context.t0 = _context["catch"](1);
-                return _context.abrupt("return", {});
+              case 4:
+                res = _context2.sent;
+                return _context2.abrupt("return", res);
 
               case 8:
-                _context.next = 11;
-                break;
-
-              case 10:
-                return _context.abrupt("return", {});
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                return _context2.abrupt("return", {});
 
               case 11:
+                _context2.next = 14;
+                break;
+
+              case 13:
+                return _context2.abrupt("return", {});
+
+              case 14:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[1, 5]]);
+        }, _callee2, null, [[1, 8]]);
       }));
 
-      function getImageInfo(_x) {
+      function getImageInfo(_x2) {
         return _getImageInfo2.apply(this, arguments);
       }
 
@@ -180,12 +242,12 @@ function (_Vue) {
     value: function () {
       var _handleUpload = _asyncToGenerator(
       /*#__PURE__*/
-      regeneratorRuntime.mark(function _callee2(blob) {
-        var file, _ref, _ref2, fileUrl, imageInfo;
+      regeneratorRuntime.mark(function _callee3(blob) {
+        var file, _ref2, _ref3, fileUrl, imageInfo;
 
-        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        return regeneratorRuntime.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 this.loading = true;
                 file = blob.slice();
@@ -194,15 +256,15 @@ function (_Vue) {
                   file.name = this.fileName;
                 }
 
-                _context2.prev = 3;
-                _context2.next = 6;
+                _context3.prev = 3;
+                _context3.next = 6;
                 return Promise.all([upload(file, false, this.$attrs), this.getImageInfo(file)]);
 
               case 6:
-                _ref = _context2.sent;
-                _ref2 = _slicedToArray(_ref, 2);
-                fileUrl = _ref2[0];
-                imageInfo = _ref2[1];
+                _ref2 = _context3.sent;
+                _ref3 = _slicedToArray(_ref2, 2);
+                fileUrl = _ref3[0];
+                imageInfo = _ref3[1];
                 this.$emit('change', [_objectSpread({
                   src: fileUrl
                 }, imageInfo)]);
@@ -210,19 +272,19 @@ function (_Vue) {
                 this.showCropper = false;
 
               case 13:
-                _context2.prev = 13;
+                _context3.prev = 13;
                 this.loading = false;
-                return _context2.finish(13);
+                return _context3.finish(13);
 
               case 16:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, this, [[3,, 13, 16]]);
+        }, _callee3, this, [[3,, 13, 16]]);
       }));
 
-      function handleUpload(_x2) {
+      function handleUpload(_x3) {
         return _handleUpload.apply(this, arguments);
       }
 
