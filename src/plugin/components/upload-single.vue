@@ -50,7 +50,7 @@
       this.$nextTick(() => this.renderCropper = true);
     }
 
-    handleFileChange(e) {
+    async handleFileChange(e) {
       const file = e.target.files[0];
       // 相同文件change事件不会触发
       e.target.value = '';
@@ -59,18 +59,32 @@
         this.$message.error(`文件最大 ${this.size}M`);
         return;
       }
-      if (file.type.startsWith('image') && this.cropper && this.cropper.width) {
-        this.img = URL.createObjectURL(file);
-        this.showCropper = true;
-      } else {
-        this.handleUpload(file);
+      if (file.type.startsWith('image') && this.cropper && this.cropper.width && this.cropper.height) {
+
+        this.loading = true;
+        const { width, height } = await this.getImageInfo(file);
+        this.loading = false;
+
+        if (width && height) {
+          // 可接受的误差
+          const avaliableOffset = 2;
+          const offset = Math.floor(Math.abs(this.cropper.width / this.cropper.height - width / height) * 100);
+          // 误差比较大弹出裁剪框，否则直接上传
+          if (offset > avaliableOffset) {
+            this.img = URL.createObjectURL(file);
+            this.showCropper = true;
+            return;
+          }
+        }
       }
+      this.handleUpload(file);
     }
 
     async getImageInfo(file) {
       if (file.type.startsWith('image')) {
         try {
-          return getImageInfo(URL.createObjectURL(file));
+          const res = await getImageInfo(URL.createObjectURL(file));
+          return res;
         } catch (e) {
           return {}
         }
