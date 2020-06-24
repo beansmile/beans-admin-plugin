@@ -8,10 +8,18 @@ import { i18n } from '../../i18n'
 import { loadingService } from '../../services'
 import decoder from '../decoder'
 
-export function onSend(request) {
+export async function onSend(request) {
   showNProgress(request)
   const { token_storage_key, token_header_key } = Vue.appConfig.login;
-  request.headers[token_header_key] = localStorage.getItem(token_storage_key);
+
+  const token = localStorage.getItem(token_storage_key);
+  if (token) {
+    request.headers[token_header_key] = localStorage.getItem(token_storage_key);
+  }
+
+  const { beforeRequest = _.noop } = Vue.appConfig.request || {};
+  await beforeRequest(request)
+
   if (request.method === 'GET' && request.body) {
     const body = _.omitBy(request.body, (v, k) => k.startsWith('_'))
     request.params = qs.stringify(body, { arrayFormat: 'brackets' })

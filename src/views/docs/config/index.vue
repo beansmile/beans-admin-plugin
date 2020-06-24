@@ -94,6 +94,12 @@
             type: 'Boolean',
             defaultValue: 'true'
           },
+          {
+            prop: 'beforeRequest',
+            desc: '发请求前拦截',
+            type: 'Function: request',
+            defaultValue: '() => {}'
+          }
         ]
       },
       {
