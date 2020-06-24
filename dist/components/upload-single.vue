@@ -98,6 +98,7 @@ function (_Vue) {
     _this.showCropper = false;
     _this.img = '';
     _this.fileName = '';
+    _this.fileType = '';
     return _this;
   }
 
@@ -127,33 +128,34 @@ function (_Vue) {
 
                 e.target.value = '';
                 this.fileName = file.name;
+                this.fileType = file.type;
 
                 if (!(file.size > this.size * 1024 * 1024)) {
-                  _context.next = 6;
+                  _context.next = 7;
                   break;
                 }
 
                 this.$message.error("\u6587\u4EF6\u6700\u5927 ".concat(this.size, "M"));
                 return _context.abrupt("return");
 
-              case 6:
+              case 7:
                 if (!(file.type.startsWith('image') && this.cropper && this.cropper.width && this.cropper.height)) {
-                  _context.next = 21;
+                  _context.next = 22;
                   break;
                 }
 
                 this.loading = true;
-                _context.next = 10;
+                _context.next = 11;
                 return this.getImageInfo(file);
 
-              case 10:
+              case 11:
                 _ref = _context.sent;
                 width = _ref.width;
                 height = _ref.height;
                 this.loading = false;
 
                 if (!(width && height)) {
-                  _context.next = 21;
+                  _context.next = 22;
                   break;
                 }
 
@@ -162,7 +164,7 @@ function (_Vue) {
                 offset = Math.floor(Math.abs(this.cropper.width / this.cropper.height - width / height) * 100); // 误差比较大弹出裁剪框，否则直接上传
 
                 if (!(offset > avaliableOffset)) {
-                  _context.next = 21;
+                  _context.next = 22;
                   break;
                 }
 
@@ -170,10 +172,10 @@ function (_Vue) {
                 this.showCropper = true;
                 return _context.abrupt("return");
 
-              case 21:
+              case 22:
                 this.handleUpload(file);
 
-              case 22:
+              case 23:
               case "end":
                 return _context.stop();
             }
@@ -256,11 +258,15 @@ function (_Vue) {
                   file.name = this.fileName;
                 }
 
-                _context3.prev = 3;
-                _context3.next = 6;
+                if (!file.type) {
+                  file.type = this.fileType;
+                }
+
+                _context3.prev = 4;
+                _context3.next = 7;
                 return Promise.all([upload(file, false, this.$attrs), this.getImageInfo(file)]);
 
-              case 6:
+              case 7:
                 _ref2 = _context3.sent;
                 _ref3 = _slicedToArray(_ref2, 2);
                 fileUrl = _ref3[0];
@@ -271,17 +277,17 @@ function (_Vue) {
                 this.$emit('success', fileUrl);
                 this.showCropper = false;
 
-              case 13:
-                _context3.prev = 13;
+              case 14:
+                _context3.prev = 14;
                 this.loading = false;
-                return _context3.finish(13);
+                return _context3.finish(14);
 
-              case 16:
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, this, [[3,, 13, 16]]);
+        }, _callee3, this, [[4,, 14, 17]]);
       }));
 
       function handleUpload(_x3) {

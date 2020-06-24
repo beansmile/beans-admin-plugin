@@ -22,7 +22,7 @@
             </el-button>
             <h2 class="global-title">{{ $get($route, 'meta.title') }}</h2>
           </div>
-          <div>
+          <div class="box-right">
             <slot name="toolbar-right" />
             <el-button type="text" @click="handleExit">{{ $t('退出登录') }}</el-button>
           </div>
