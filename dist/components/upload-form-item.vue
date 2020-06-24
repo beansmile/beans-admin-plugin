@@ -26,7 +26,7 @@
     <c-upload-single
       v-if="uploadInSingleMode"
       v-bind="$attrs"
-      :disabled="isMultiple && filesResouces.length >= limit"
+      :disabled="disabled || (isMultiple && filesResouces.length >= limit)"
       :cropper="cropper"
       @change="handleSubmit"
     >
@@ -46,7 +46,7 @@
       v-else
       type="primary"
       @click="handleShow"
-      :disabled="isMultiple && filesResouces.length >= limit"
+      :disabled="disabled || (isMultiple && filesResouces.length >= limit)"
     >
       {{ $t('上传') }}
       <i class="el-icon-upload el-icon--right"></i>
@@ -84,7 +84,7 @@ import "core-js/modules/es6.number.constructor";
 import _isArray from "lodash/isArray";
 import _flatten from "lodash/flatten";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _temp;
 
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import { arrayMove } from "../utils";
@@ -93,23 +93,23 @@ var UploadFormItem = (_dec = Component({
   components: {
     draggable: draggable
   }
-}), _dec2 = Prop({
+}), _dec2 = Prop(Boolean), _dec3 = Prop({
   type: Number,
   default: 1
-}), _dec3 = Prop({
+}), _dec4 = Prop({
   type: String,
   default: 'image'
-}), _dec4 = Prop({
+}), _dec5 = Prop({
   type: Boolean,
   default: true
-}), _dec5 = Prop({
+}), _dec6 = Prop({
   type: Function,
   default: function _default(src) {
     return src;
   }
-}), _dec6 = Prop({
+}), _dec7 = Prop({
   type: Object
-}), _dec7 = Model('change', {
+}), _dec8 = Model('change', {
   type: [Array, String]
 }), _dec(_class = (_class2 = (_temp =
 /*#__PURE__*/
@@ -129,17 +129,19 @@ function (_Vue) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(UploadFormItem)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    _initializerDefineProperty(_this, "limit", _descriptor, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "disabled", _descriptor, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "type", _descriptor2, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "limit", _descriptor2, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "imagePreview", _descriptor3, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "type", _descriptor3, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "transformLink", _descriptor4, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "imagePreview", _descriptor4, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "cropper", _descriptor5, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "transformLink", _descriptor5, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "value", _descriptor6, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "cropper", _descriptor6, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "value", _descriptor7, _assertThisInitialized(_this));
 
     _this.visible = false;
     _this.show = true;
@@ -230,32 +232,37 @@ function (_Vue) {
   }]);
 
   return UploadFormItem;
-}(Vue), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "limit", [_dec2], {
+}(Vue), _temp), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "disabled", [_dec2], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec3], {
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "limit", [_dec3], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "imagePreview", [_dec4], {
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "type", [_dec4], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "transformLink", [_dec5], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "imagePreview", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "cropper", [_dec6], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "transformLink", [_dec6], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec7], {
+}), _descriptor6 = _applyDecoratedDescriptor(_class2.prototype, "cropper", [_dec7], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor7 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec8], {
   configurable: true,
   enumerable: true,
   writable: true,
