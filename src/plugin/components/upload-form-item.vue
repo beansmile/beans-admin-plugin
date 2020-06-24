@@ -26,7 +26,7 @@
     <c-upload-single
       v-if="uploadInSingleMode"
       v-bind="$attrs"
-      :disabled="isMultiple && filesResouces.length >= limit"
+      :disabled="disabled || (isMultiple && filesResouces.length >= limit)"
       :cropper="cropper"
       @change="handleSubmit"
     >
@@ -46,7 +46,7 @@
       v-else
       type="primary"
       @click="handleShow"
-      :disabled="isMultiple && filesResouces.length >= limit"
+      :disabled="disabled || (isMultiple && filesResouces.length >= limit)"
     >
       {{ $t('上传') }}
       <i class="el-icon-upload el-icon--right"></i>
@@ -83,6 +83,7 @@
     }
   })
   export default class UploadFormItem extends Vue {
+    @Prop(Boolean) disabled;
     @Prop({ type: Number, default: 1 }) limit;
     @Prop({ type: String, default: 'image' }) type;
     @Prop({ type: Boolean, default: true }) imagePreview;
