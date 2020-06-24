@@ -44,6 +44,7 @@
     showCropper = false;
     img = '';
     fileName = '';
+    fileType = '';
 
     handleDialogClosed() {
       this.renderCropper = false;
@@ -55,6 +56,7 @@
       // 相同文件change事件不会触发
       e.target.value = '';
       this.fileName = file.name;
+      this.fileType = file.type;
       if (file.size > this.size * 1024 * 1024) {
         this.$message.error(`文件最大 ${this.size}M`);
         return;
@@ -98,6 +100,9 @@
       let file = blob.slice();
       if (!file.name) {
         file.name = this.fileName;
+      }
+      if (!file.type) {
+        file.type = this.fileType;
       }
       try {
         const [fileUrl, imageInfo] = await Promise.all([
