@@ -178,7 +178,8 @@ var config = {
   request: {
     baseURL: '/admin_api/v1',
     timeout: 30000,
-    withCredentials: true
+    withCredentials: true,
+    beforeRequest: function beforeRequest() {}
   },
   upload: {
     useHttps: true,

@@ -1,14 +1,17 @@
+import "core-js/modules/es6.string.starts-with";
+import "regenerator-runtime/runtime";
 import "core-js/modules/es7.array.includes";
 import "core-js/modules/es6.string.includes";
 import _MessageBox from "element-ui/lib/message-box";
 import _Message from "element-ui/lib/message";
 import "core-js/modules/es6.function.name";
 import "core-js/modules/es6.regexp.replace";
-import "core-js/modules/es6.string.starts-with";
+import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import _get from "lodash/get";
 import _snakeCase from "lodash/snakeCase";
 import _forEach from "lodash/forEach";
 import _omitBy from "lodash/omitBy";
+import _noop from "lodash/noop";
 import Vue from 'vue';
 import qs from 'qs';
 import NProgress from 'nprogress';
@@ -16,26 +19,55 @@ import 'nprogress/nprogress.css';
 import { i18n } from "../../i18n";
 import { loadingService } from "../../services";
 import decoder from "../decoder";
-export function onSend(request) {
-  showNProgress(request);
-  var _Vue$appConfig$login = Vue.appConfig.login,
-      token_storage_key = _Vue$appConfig$login.token_storage_key,
-      token_header_key = _Vue$appConfig$login.token_header_key;
-  request.headers[token_header_key] = localStorage.getItem(token_storage_key);
-
-  if (request.method === 'GET' && request.body) {
-    var body = _omitBy(request.body, function (v, k) {
-      return k.startsWith('_');
-    });
-
-    request.params = qs.stringify(body, {
-      arrayFormat: 'brackets'
-    });
-    delete request.body;
-  }
-
-  return request;
+export function onSend(_x) {
+  return _onSend.apply(this, arguments);
 }
+
+function _onSend() {
+  _onSend = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee(request) {
+    var _Vue$appConfig$login, token_storage_key, token_header_key, token, _ref, _ref$beforeRequest, beforeRequest, body;
+
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            showNProgress(request);
+            _Vue$appConfig$login = Vue.appConfig.login, token_storage_key = _Vue$appConfig$login.token_storage_key, token_header_key = _Vue$appConfig$login.token_header_key;
+            token = localStorage.getItem(token_storage_key);
+
+            if (token) {
+              request.headers[token_header_key] = localStorage.getItem(token_storage_key);
+            }
+
+            _ref = Vue.appConfig.request || {}, _ref$beforeRequest = _ref.beforeRequest, beforeRequest = _ref$beforeRequest === void 0 ? _noop : _ref$beforeRequest;
+            _context.next = 7;
+            return beforeRequest(request);
+
+          case 7:
+            if (request.method === 'GET' && request.body) {
+              body = _omitBy(request.body, function (v, k) {
+                return k.startsWith('_');
+              });
+              request.params = qs.stringify(body, {
+                arrayFormat: 'brackets'
+              });
+              delete request.body;
+            }
+
+            return _context.abrupt("return", request);
+
+          case 9:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+  return _onSend.apply(this, arguments);
+}
+
 export function onSucceed(res) {
   hideNProgress(res.request);
   res['isResponse'] = true;
