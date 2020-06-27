@@ -95,7 +95,7 @@
 
     async handleUpload(blob) {
       this.loading = true;
-      let file = blob.slice();
+      let file = blob;
       if (!file.name) {
         file.name = this.fileName;
       }
