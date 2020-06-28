@@ -250,7 +250,7 @@ function (_Vue) {
             switch (_context3.prev = _context3.next) {
               case 0:
                 this.loading = true;
-                file = blob.slice();
+                file = blob;
 
                 if (!file.name) {
                   file.name = this.fileName;
