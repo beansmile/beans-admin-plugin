@@ -32,6 +32,15 @@ export default {
       }
     },
     {
+      path: '/source-form-v2',
+      name: 'doc.source-form-v2',
+      component: require('./source-form-v2').default,
+      meta: {
+        title: '表单v2',
+        navbar: 'el-icon-document'
+      }
+    },
+    {
       path: '/source-form',
       name: 'doc.sourceForm',
       component: require('./source-form').default,
