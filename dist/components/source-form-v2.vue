@@ -6,6 +6,8 @@
     v-bind="$attrs"
     class="c-source-form-v2"
     ref="source-form-v2"
+    v-loading="loading"
+    @submit.native.prevent="handleSubmit"
   >
     <slot name="form-header"></slot>
     <div class="form-content">
@@ -76,6 +78,7 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 import { Vue, Component, Model, Prop } from 'vue-property-decorator';
+import { loadingService } from "../services";
 var SourceFormV2 = (_dec = Model('change', {
   type: Object
 }), _dec2 = Prop(Array), Component(_class = (_class2 = (_temp =
@@ -195,6 +198,11 @@ function (_Vue) {
 
       return handleSubmit;
     }()
+  }, {
+    key: "loading",
+    get: function get() {
+      return loadingService.state.count > 0;
+    }
   }, {
     key: "formColumnGroups",
     get: function get() {

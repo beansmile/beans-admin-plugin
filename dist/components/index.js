@@ -32,3 +32,4 @@ Vue.component('c-sku-editor', require("./sku-editor").default);
 Vue.component('c-image-cropper', require("./image-cropper").default);
 Vue.component('c-upload-single', require("./upload-single").default);
 Vue.component('c-source-form-v2', require("./source-form-v2").default);
+Vue.component('c-source-form-dialog', require("./source-form-dialog").default);
