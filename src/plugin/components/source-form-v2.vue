@@ -6,6 +6,8 @@
     v-bind="$attrs"
     class="c-source-form-v2"
     ref="source-form-v2"
+    v-loading="loading"
+    @submit.native.prevent="handleSubmit"
   >
     <slot name="form-header"></slot>
     <div class="form-content">
@@ -52,11 +54,16 @@
 <script>
   import { Vue, Component, Model, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
+  import { loadingService } from '../services';
 
   @Component
   export default class SourceFormV2 extends Vue {
     @Model('change', { type: Object }) form;
     @Prop(Array) columns;
+
+    get loading() {
+      return loadingService.state.count > 0;
+    }
 
     get formColumnGroups() {
       const isGroupMode = !!_.get(this.columns, '0.columns');

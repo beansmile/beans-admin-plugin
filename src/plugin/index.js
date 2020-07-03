@@ -205,4 +205,5 @@ export default function install(Vue, options = {}) {
 export * from './utils';
 export * from './services';
 export { createSourceFormDialog } from './components/source-form';
+export { createSourceFormDialogV2 } from './components/source-form-dialog';
 export { default as AppLayout } from './app';
