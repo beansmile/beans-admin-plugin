@@ -32,3 +32,13 @@
     }
   }
 }
+
+.source-form-dialog-v2 {
+  min-width: unset;
+  width: 100%;
+
+  .form-group {
+    padding: 15px 0;
+    border: none;
+  }
+}
