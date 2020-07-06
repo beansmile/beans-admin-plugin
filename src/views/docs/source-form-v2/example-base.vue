@@ -17,10 +17,40 @@
       field: '',
       nest: {
         field1: ''
-      }
+      },
+      'nest-form': []
     }
 
     columns = [
+      {
+        label: '嵌套表单',
+        prop: 'nest-form',
+        component: 'c-nest-form-v2',
+        props: {
+          columns: [
+            {
+              prop: 'a',
+              label: 'a',
+              component: 'el-input',
+              required: true
+            },
+            {
+              prop: 'b',
+              label: 'b',
+              component: 'el-input',
+              itemProps: {
+                rules: [
+                  {
+                    required: true,
+                    message: '必填',
+                    trigger: 'change'
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
       {
         label: '字段1',
         prop: 'field',

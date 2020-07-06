@@ -33,8 +33,8 @@
 
 <script>
   import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-  import SourceForm from './source-form-v2';
-  import { i18n } from '../i18n';
+  import SourceForm from './index';
+  import { i18n } from '../../i18n';
 
   @Component({
     components: {

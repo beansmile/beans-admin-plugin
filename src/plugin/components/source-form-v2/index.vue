@@ -28,6 +28,7 @@
               :value="getFormItemValue(formItem.prop)"
               @input="setFormItemValue(formItem.prop, $event)"
               @change="setFormItemValue(formItem.prop, $event)"
+              @refsChange="handleRefsChange(formItem, $event)"
               v-on="formItem.events"
             >
               <template v-for="(slotValue, slotName) in formItem.slots" v-slot:[slotName]>
@@ -54,7 +55,7 @@
 <script>
   import { Vue, Component, Model, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
-  import { loadingService } from '../services';
+  import { loadingService } from '../../services';
 
   @Component
   export default class SourceFormV2 extends Vue {
@@ -133,8 +134,39 @@
       return <span>{node}</span>;
     }
 
+    validate() {
+      if (this.$refs['source-form-v2']) {
+        return this.$refs['source-form-v2'].validate();
+      }
+    }
+
+    handleRefsChange(formItem, $event) {
+      _.set(this, `formRefs.${formItem.prop}`, $event);
+    }
+
     async handleSubmit() {
-      await this.$refs['source-form-v2'].validate();
+      const validateChild = async () => {
+        if (!this.formRefs) {
+          return;
+        }
+        const promises = [];
+        for (const attr in this.formRefs) {
+          promises.push(
+            Promise.all(
+              this.formRefs[attr].map(formRef => {
+                if (formRef && formRef.validate) {
+                  return formRef.validate();
+                }
+              })
+            )
+          );
+        }
+        return Promise.all(promises);
+      }
+      await Promise.all([
+        this.validate(),
+        validateChild()
+      ]);
       this.$emit('submit', this.getPureForm());
     }
   }
