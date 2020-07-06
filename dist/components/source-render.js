@@ -372,11 +372,29 @@ export var sourceColumnRender = function sourceColumnRender(h) {
         }), _isFunction(renderCell) && renderCell(createElement, scope)]);
       }
 
+      if (_isObject(renderCell)) {
+        if (renderCell.template) {
+          // TODO 饶了一个圈
+          return h("v-node", {
+            "attrs": {
+              "render-node": function renderNode() {
+                return new Vue(renderCell).$mount()._vnode;
+              }
+            }
+          });
+        }
+
+        return renderCellByType(createElement)({
+          column: column,
+          scope: scope
+        });
+      }
+
       if (_isFunction(renderCell)) {
         return renderCell(createElement, scope);
       }
 
-      if (_isString(renderCell) || _isObject(renderCell)) {
+      if (_isString(renderCell)) {
         return renderCellByType(createElement)({
           column: column,
           scope: scope
