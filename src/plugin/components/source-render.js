@@ -187,10 +187,17 @@ export const sourceColumnRender = (h, params = {}) => ({ columns, column, scope 
         </div>
       );
     }
+    if (_.isObject(renderCell)) {
+      if (renderCell.template) {
+        // TODO 饶了一个圈
+        return <v-node render-node={() => new Vue(renderCell).$mount()._vnode} />
+      }
+      return renderCellByType(createElement)({ column, scope });
+    }
     if (_.isFunction(renderCell)) {
       return renderCell(createElement, scope);
     }
-    if (_.isString(renderCell) || _.isObject(renderCell)) {
+    if (_.isString(renderCell)) {
       return renderCellByType(createElement)({ column, scope });
     }
 
