@@ -2,8 +2,15 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  width: 60%;
-  min-width: 800px;
+  width: 90%;
+
+  @media (min-width: 1200px) {
+    width: 80%;
+  }
+
+  @media (min-width: 1400px) {
+    width: 60%;
+  }
 
   .el-select, .input {
     width: 100%;
@@ -14,7 +21,7 @@
   }
 
   .form-group {
-    padding: 15px 15px 30px;
+    padding: 20px 15px;
     border: 1px solid $light-gray;
     background: #fff;
     margin-bottom: 20px;
@@ -40,5 +47,25 @@
   .form-group {
     padding: 15px 0;
     border: none;
+  }
+}
+
+.nest-form-v2 {
+  .c-source-form-v2 {
+    width: 100%;
+
+    .el-form-item {
+      margin-bottom: 22px;
+    }
+  }
+
+  .nest-form-group {
+    position: relative;
+
+    .btn-delete {
+      position: absolute;
+      right: 5px;
+      top: 5px
+    }
   }
 }
