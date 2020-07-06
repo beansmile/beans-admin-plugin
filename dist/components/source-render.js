@@ -11,6 +11,7 @@ import "core-js/modules/es6.number.constructor";
 import _mergeJSXProps from "@vue/babel-helper-vue-jsx-merge-props";
 import _defineProperty from "@babel/runtime-corejs2/helpers/esm/defineProperty";
 import _objectWithoutProperties from "@babel/runtime-corejs2/helpers/esm/objectWithoutProperties";
+import _isPlainObject from "lodash/isPlainObject";
 import _isArray from "lodash/isArray";
 import _flatten from "lodash/flatten";
 import _isFunction from "lodash/isFunction";
@@ -372,7 +373,18 @@ export var sourceColumnRender = function sourceColumnRender(h) {
         }), _isFunction(renderCell) && renderCell(createElement, scope)]);
       }
 
-      if (_isObject(renderCell)) {
+      if (_isFunction(renderCell)) {
+        return renderCell(createElement, scope);
+      }
+
+      if (_isString(renderCell)) {
+        return renderCellByType(createElement)({
+          column: column,
+          scope: scope
+        });
+      }
+
+      if (_isPlainObject(renderCell)) {
         if (renderCell.template) {
           // TODO 饶了一个圈
           return h("v-node", {
@@ -384,17 +396,6 @@ export var sourceColumnRender = function sourceColumnRender(h) {
           });
         }
 
-        return renderCellByType(createElement)({
-          column: column,
-          scope: scope
-        });
-      }
-
-      if (_isFunction(renderCell)) {
-        return renderCell(createElement, scope);
-      }
-
-      if (_isString(renderCell)) {
         return renderCellByType(createElement)({
           column: column,
           scope: scope
