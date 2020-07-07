@@ -8,6 +8,7 @@ setup_git() {
 commit_build_changed() {
   git checkout master
   git add dist/*
+  git add docs/*
   git commit -m "Travis build: $TRAVIS_BUILD_NUMBER" -m "[skip ci]"
 }
 
