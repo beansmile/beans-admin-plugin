@@ -1,0 +1,19 @@
+.bean-nav-menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid $border-light;
+
+  .el-menu {
+    flex: 1;
+    border-right: none;
+
+    &:not(.el-menu--collapse) {
+      width: 240px;
+    }
+  }
+
+  .btn-collapse {
+    font-size: 24px;
+  }
+}

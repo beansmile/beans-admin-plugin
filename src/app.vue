@@ -1,16 +1,25 @@
 <template>
-  <AppLayout>
-    <template v-slot:toolbar-right>
-      <span style="margin-right: 15px">beans-admin-plugin</span>
-    </template>
-  </AppLayout>
+  <div id="app">
+    <bean-nav-layout :menus="menus" />
+  </div>
 </template>
 
 <script>
   import { Vue, Component } from 'vue-property-decorator';
-  import { AppLayout } from './plugin';
 
-  @Component({ components: { AppLayout } })
+  @Component
   export default class App extends Vue {
+    menus = [
+      {
+        title: '页面layout',
+        route: { name: 'doc.nav-layout' },
+        icon: 'el-icon-document'
+      },
+      {
+        title: '导航栏',
+        route: { name: 'doc.nav-menu' },
+        icon: 'el-icon-s-operation'
+      }
+    ]
   }
 </script>
