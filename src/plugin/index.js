@@ -46,6 +46,7 @@ import {
 import PortalVue from 'portal-vue'
 import ElementLocale from 'element-ui/lib/locale'
 import './components';
+import './components-v2';
 import { i18n } from './i18n';
 import * as Utils from './utils';
 import { permissionService } from './services';

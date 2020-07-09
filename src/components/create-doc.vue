@@ -1,6 +1,8 @@
 <template>
   <div class="page">
-    <h2 class="title">{{ title }}</h2>
+    <portal to="nav-layout-title">
+      {{ title }}
+    </portal>
     <slot />
 
     <div v-for="item in renderAttributes" :key="item.title">
@@ -16,6 +18,19 @@
       :table="{ data: events }"
       :columns="eventsColumn"
     />
+
+    <h3><a target="_blank" href="https://cn.vuejs.org/v2/guide/components-slots.html">Slots</a></h3>
+    <c-source-table
+      :table="{ data: slots }"
+      :columns="slotsColumn"
+    />
+
+    <h3><a target="_blank" href="https://github.com/LinusBorg/portal-vue">Portals</a></h3>
+    <c-source-table
+      :table="{ data: portals }"
+      :columns="portalsColumn"
+    />
+
     <h3>Examples</h3>
     <div class="example" v-for="(item, index) in examples" :key="index">
       <h3>{{ item.title }}</h3>
@@ -24,6 +39,7 @@
         <v-node v-else :render-node="compile(item.code)" />
       </div>
       <c-clipboard class="example-clipboard">
+        <!-- TODO 代码高亮 -->
         <pre class="code">{{ item.code }}</pre>
       </c-clipboard>
     </div>
@@ -42,6 +58,8 @@
     @Prop(Array) attributes;
     @Prop(Array) events;
     @Prop(Array) examples;
+    @Prop(Array) slots;
+    @Prop(Array) portals;
 
     attributesColumn = [
       {
@@ -87,6 +105,28 @@
       }
     ]
 
+    slotsColumn = [
+      {
+        prop: 'name',
+        label: '插槽名称'
+      },
+      {
+        prop: 'desc',
+        label: '说明'
+      }
+    ]
+
+    portalsColumn = [
+      {
+        prop: 'name',
+        label: 'portal名称'
+      },
+      {
+        prop: 'desc',
+        label: '说明'
+      }
+    ]
+
     get renderAttributes() {
       if (_.get(this.attributes[0], 'attributes')) {
         return this.attributes
@@ -100,7 +140,7 @@
     }
 
     compile(code) {
-      return Vue.compile(code).render
+      return Vue.compile(code).render;
     }
   }
 </script>

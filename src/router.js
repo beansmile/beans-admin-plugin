@@ -10,10 +10,12 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/install'
-    },
-    require('@/views/orders/route').default,
-    require('@/views/docs/route').default
+      redirect: '/nav-menu',
+      component: {
+        template: '<router-view></router-view>'
+      },
+      children: require('@/views/docs-v2/route').default
+    }
   ],
   parseQuery (query) {
     return decodeQuery(query);
