@@ -94,6 +94,51 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       }
       return renderLink(value);
     }
+    case 'storageAttachment': {
+      // 50px的话，视频太小了，所以改用100px
+      const { width = '100px', height = '100px', borderRadius = 0, ...opts } = options;
+      const attachments = _.flatten([value]).filter(Boolean);
+      const fit = opts.fit || opts.objectFit || 'cover';
+
+      if (!attachments.length) {
+        return '/';
+      }
+
+      return (
+        <div class="multi-attachments">
+          {
+            attachments.map((attachment, index) => {
+              if (!attachment.content_type) return;
+              if (attachment.content_type.match(/image/)) {
+                const previewSrcList = attachments.slice(index, attachments.length).concat(attachments.slice(0, index)).
+                  filter((attachment) => { return attachment.content_type.match(/image/) }).
+                  map((attachment) => { return attachment.url })
+
+                return (
+                  <div>
+                    <el-image
+                      class="image"
+                      style={{ width, height, borderRadius, ...opts }}
+                      src={attachment.url}
+                      fit={fit}
+                      preview-src-list={previewSrcList}
+                    />
+                  </div>
+                )
+              } else if (attachment.content_type.match(/video/)) {
+                return <div><video controls style={{ height, ...opts }} src={attachment.url}></video></div>
+              } else {
+                return (
+                  <div><a href={attachment.url} style="display: block;" download>
+                    <el-button type="primary">{attachment.filename}</el-button>
+                  </a></div>
+                )
+              }
+            })
+          }
+        </div>
+      );
+    }
     case 'html': {
       if (!value) {
         return '/'
