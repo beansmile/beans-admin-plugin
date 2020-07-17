@@ -19,7 +19,7 @@ export default _objectSpread({}, enLocale, {
   未命名: 'untitle',
   您没有权限: 'Access Denied',
   查询: 'Search',
-  清除: 'Remove',
+  清除: 'Reset',
   请输入关键字: 'Keyword',
   搜索: 'Search',
   选择日期时间: 'Select Time',
