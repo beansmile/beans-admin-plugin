@@ -6,6 +6,7 @@ import _MessageBox from "element-ui/lib/message-box";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import _mergeJSXProps2 from "@vue/babel-helper-vue-jsx-merge-props";
+import "core-js/modules/es6.regexp.match";
 import "core-js/modules/es6.function.name";
 import "core-js/modules/es6.number.constructor";
 import _mergeJSXProps from "@vue/babel-helper-vue-jsx-merge-props";
@@ -185,6 +186,75 @@ export var renderCellByType = function renderCellByType(h) {
           }
 
           return renderLink(value);
+        }
+
+      case 'storageAttachment':
+        {
+          // 50px的话，视频太小了，所以改用100px
+          var _options$width2 = options.width,
+              _width = _options$width2 === void 0 ? '100px' : _options$width2,
+              _options$height2 = options.height,
+              _height = _options$height2 === void 0 ? '100px' : _options$height2,
+              _options$borderRadius2 = options.borderRadius,
+              _borderRadius = _options$borderRadius2 === void 0 ? 0 : _options$borderRadius2,
+              _opts2 = _objectWithoutProperties(options, ["width", "height", "borderRadius"]);
+
+          var attachments = _flatten([value]).filter(Boolean);
+
+          var _fit = _opts2.fit || _opts2.objectFit || 'cover';
+
+          if (!attachments.length) {
+            return '/';
+          }
+
+          return h("div", {
+            "class": "multi-attachments"
+          }, [attachments.map(function (attachment, index) {
+            if (!attachment.content_type) return;
+
+            if (attachment.content_type.match(/image/)) {
+              var previewSrcList = attachments.slice(index, attachments.length).concat(attachments.slice(0, index)).filter(function (attachment) {
+                return attachment.content_type.match(/image/);
+              }).map(function (attachment) {
+                return attachment.url;
+              });
+              return h("div", [h("el-image", {
+                "class": "image",
+                "style": _objectSpread({
+                  width: _width,
+                  height: _height,
+                  borderRadius: _borderRadius
+                }, _opts2),
+                "attrs": {
+                  "src": attachment.url,
+                  "fit": _fit,
+                  "preview-src-list": previewSrcList
+                }
+              })]);
+            } else if (attachment.content_type.match(/video/)) {
+              return h("div", [h("video", {
+                "attrs": {
+                  "controls": true,
+                  "src": attachment.url
+                },
+                "style": _objectSpread({
+                  height: _height
+                }, _opts2)
+              })]);
+            } else {
+              return h("div", [h("a", {
+                "attrs": {
+                  "href": attachment.url,
+                  "download": true
+                },
+                "style": "display: block;"
+              }, [h("el-button", {
+                "attrs": {
+                  "type": "primary"
+                }
+              }, [attachment.filename])])]);
+            }
+          })]);
         }
 
       case 'html':
