@@ -276,7 +276,7 @@ function (_Vue) {
         "props": componentProps
       }, {
         "attrs": {
-          "value": this.getPropValue(prop)
+          "value": +this.getPropValue(prop)
         },
         "on": {
           "change": this.handleInputNumberChange(prop)
