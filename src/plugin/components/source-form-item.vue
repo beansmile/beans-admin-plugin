@@ -45,8 +45,8 @@ export default class SourceFormItem extends Vue {
     }
   }
 
-  handleInputNumberChange(prop) {
-    return val => this.handleValueChange(prop)(val || 0);
+  handleInputNumberChange(prop, min) {
+    return val => this.handleValueChange(prop)(val || min);
   }
 
   renderRadioGroup({ prop, props }) {
@@ -99,7 +99,9 @@ export default class SourceFormItem extends Vue {
 
   renderInputNumber({ prop, props }) {
     const componentProps = { max: 2147483647, min: 0, ...props }
-    return <el-input-number props={componentProps} value={+this.getPropValue(prop)} onChange={this.handleInputNumberChange(prop)} />
+    const propValue = this.getPropValue(prop);
+    const value = propValue ? +propValue : propValue;
+    return <el-input-number props={componentProps} value={value} onChange={this.handleInputNumberChange(prop, componentProps.min)} />
   }
 
   renderSelect({ prop, props }) {
