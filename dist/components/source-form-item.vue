@@ -137,11 +137,11 @@ function (_Vue) {
     }
   }, {
     key: "handleInputNumberChange",
-    value: function handleInputNumberChange(prop) {
+    value: function handleInputNumberChange(prop, min) {
       var _this3 = this;
 
       return function (val) {
-        return _this3.handleValueChange(prop)(val || 0);
+        return _this3.handleValueChange(prop)(val || min);
       };
     }
   }, {
@@ -272,14 +272,16 @@ function (_Vue) {
         min: 0
       }, props);
 
+      var propValue = this.getPropValue(prop);
+      var value = propValue ? +propValue : propValue;
       return h("el-input-number", _mergeJSXProps7([{}, {
         "props": componentProps
       }, {
         "attrs": {
-          "value": +this.getPropValue(prop)
+          "value": value
         },
         "on": {
-          "change": this.handleInputNumberChange(prop)
+          "change": this.handleInputNumberChange(prop, componentProps.min)
         }
       }]));
     }
