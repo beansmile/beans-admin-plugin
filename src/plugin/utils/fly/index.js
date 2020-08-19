@@ -4,6 +4,7 @@ import { onSend, onSucceed, onError } from './helper'
 const fly = new Fly
 
 fly.config.return_res = false
+fly.config.headers['Accept'] = 'application/json, text/plain, */*'
 
 fly.interceptors.request.use(onSend)
 
