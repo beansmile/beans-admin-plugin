@@ -28,13 +28,13 @@ import _assertThisInitialized from "@babel/runtime-corejs2/helpers/esm/assertThi
 import _inherits from "@babel/runtime-corejs2/helpers/esm/inherits";
 import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyDecoratedDescriptor";
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
-import _cloneDeep from "lodash/cloneDeep";
+import _debounce from "lodash/debounce";
 import _isFunction from "lodash/isFunction";
 import _flatten from "lodash/flatten";
 
-var _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp;
+var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp;
 
-import { Vue, Component, Prop, Model } from 'vue-property-decorator';
+import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator';
 var DynamicNestForm = (_dec = Model('change', {
   type: Array,
   default: function _default() {
@@ -48,7 +48,7 @@ var DynamicNestForm = (_dec = Model('change', {
 }), _dec3 = Prop({
   type: String,
   default: 'id'
-}), Component(_class = (_class2 = (_temp =
+}), _dec4 = Watch('value'), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(DynamicNestForm, _Vue);
@@ -72,41 +72,46 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "addDestroyFlagFieldName", _descriptor3, _assertThisInitialized(_this));
 
+    _this.form = {};
+    _this.syncChange = _debounce(function (component) {
+      component.$emit('change', component.form);
+    }, 100);
     return _this;
   }
 
   _createClass(DynamicNestForm, [{
+    key: "onValueChange",
+    value: function onValueChange(val) {
+      this.form = val || [];
+    }
+  }, {
     key: "handleResourceChange",
     value: function handleResourceChange($event, index) {
-      var newResources = _cloneDeep(this.value);
-
-      newResources.splice(index, 1, $event);
-      this.$emit('change', newResources);
+      this.$set(this.form, index, $event);
+      this.syncChange(this);
     }
   }, {
     key: "hasManyAdd",
     value: function hasManyAdd() {
-      this.$emit('change', this.value.concat({}));
+      this.form.push({});
+      this.syncChange(this);
     }
   }, {
     key: "hasManyRemove",
     value: function hasManyRemove($event, index) {
-      var newResources = _cloneDeep(this.value);
-
-      var current = newResources[index];
+      var current = this.form[index];
 
       if (current[this.addDestroyFlagFieldName]) {
         current._destroy = true;
-        newResources.splice(index, 1, current);
+        this.form.splice(index, 1, current);
       } else {
-        newResources.splice(index, 1);
+        this.form.splice(index, 1);
       }
 
-      this.$emit('change', newResources);
+      this.syncChange(this);
     }
   }, {
     key: "resources",
-    // 删除后添加_destory的数据标识
     get: function get() {
       return this.value ? _flatten([this.value]) : [];
     }
@@ -139,5 +144,5 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-})), _class2)) || _class);
+}), _applyDecoratedDescriptor(_class2.prototype, "onValueChange", [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, "onValueChange"), _class2.prototype)), _class2)) || _class);
 export { DynamicNestForm as default };</script>
