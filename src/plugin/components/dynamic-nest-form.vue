@@ -20,7 +20,7 @@
 </template>
 
 <script>
-  import { Vue, Component, Prop, Model } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator';
   import _ from 'lodash';
 
   @Component
@@ -28,6 +28,8 @@
     @Model('change', { type: Array, default: () => [] }) value;
     @Prop({ type: [Array, Function], default: () => [] }) columns;
     @Prop({ type: String, default: 'id' }) addDestroyFlagFieldName; // 删除后添加_destory的数据标识
+
+    form = {}
 
     get resources() {
       return this.value ? _.flatten([this.value]) : [];
@@ -41,26 +43,34 @@
       }
     }
 
+    @Watch('value')
+    onValueChange(val) {
+      this.form = val || [];
+    }
+
+    syncChange = _.debounce((component) => {
+      component.$emit('change', component.form);
+    }, 100);
+
     handleResourceChange($event, index) {
-      const newResources = _.cloneDeep(this.value)
-      newResources.splice(index, 1, $event)
-      this.$emit('change', newResources)
+      this.$set(this.form, index, $event);
+      this.syncChange(this);
     }
 
     hasManyAdd() {
-      this.$emit('change', this.value.concat({}))
+      this.form.push({});
+      this.syncChange(this);
     }
 
     hasManyRemove($event, index) {
-      const newResources = _.cloneDeep(this.value)
-      const current = newResources[index];
+      const current = this.form[index];
       if (current[this.addDestroyFlagFieldName]) {
         current._destroy = true
-        newResources.splice(index, 1, current)
+        this.form.splice(index, 1, current)
       } else {
-        newResources.splice(index, 1)
+        this.form.splice(index, 1)
       }
-      this.$emit('change', newResources)
+      this.syncChange(this);
     }
   }
 </script>
