@@ -1,7 +1,9 @@
 <template>
   <div class="c-dynamic-nest-form">
     <div class="inputs" v-for="(resource, index) in resources" :key="index" v-show="!resource._destroy">
-      <i class="el-icon-delete" @click="hasManyRemove($event, index)"></i>
+
+      <el-button size="mini" circle class="btn-remove" icon="el-icon-delete" @click="hasManyRemove($event, index)"></el-button>
+
       <c-source-form-item
         v-for="column in computedColumns"
         :key="column.prop"
