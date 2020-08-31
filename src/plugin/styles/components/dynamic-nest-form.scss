@@ -5,7 +5,7 @@
     margin-bottom: 10px;
     position: relative;
 
-    .el-icon-delete {
+    & > .btn-remove {
       position: absolute;
       right: 0px;
       top: 0px;
