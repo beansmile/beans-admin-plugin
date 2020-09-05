@@ -29,7 +29,7 @@
     @Prop({ type: [Array, Function], default: () => [] }) columns;
     @Prop({ type: String, default: 'id' }) addDestroyFlagFieldName; // 删除后添加_destory的数据标识
 
-    form = {}
+    form = []
 
     get resources() {
       return this.value ? _.flatten([this.value]) : [];
