@@ -72,7 +72,7 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "addDestroyFlagFieldName", _descriptor3, _assertThisInitialized(_this));
 
-    _this.form = {};
+    _this.form = [];
     _this.syncChange = _debounce(function (component) {
       component.$emit('change', component.form);
     }, 100);
