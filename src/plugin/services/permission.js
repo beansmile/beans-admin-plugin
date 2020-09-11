@@ -53,6 +53,10 @@ class PermissionService {
   }
 
   hasPermission(permissionFlag) {
+    const { hasPermission } = Vue.appConfig.permission;
+    if (_.isFunction(hasPermission)) {
+      return hasPermission(permissionFlag, this.permissionMap);
+    }
     if (!permissionFlag || !this.usePermission) return true;
     const needPermissions = _.flatten([permissionFlag]);
     return needPermissions
