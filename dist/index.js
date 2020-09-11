@@ -201,7 +201,8 @@ var config = {
   },
   permission: {
     request_url: '',
-    getPermissionMap: null
+    getPermissionMap: null,
+    hasPermission: null
   },
   password: {
     onSendVerificationCode: null,

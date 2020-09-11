@@ -125,6 +125,12 @@ function () {
     value: function hasPermission(permissionFlag) {
       var _this = this;
 
+      var hasPermission = Vue.appConfig.permission.hasPermission;
+
+      if (_isFunction(hasPermission)) {
+        return hasPermission(permissionFlag, this.permissionMap);
+      }
+
       if (!permissionFlag || !this.usePermission) return true;
 
       var needPermissions = _flatten([permissionFlag]);
