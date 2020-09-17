@@ -50,6 +50,7 @@
     flex-direction: column;
     flex-shrink: 0;
     border-right: 1px solid $light-gray;
+    position: relative;
 
     .brand {
       margin: 34px 20px 20px;
@@ -68,6 +69,63 @@
       border-right: 0;
       flex: 1;
       overflow-y: auto;
+    }
+
+    .render-nav-btn {
+      position: absolute;
+      bottom: 40px;
+      width: 220px;
+      height: 40px;
+      background: white;
+    }
+
+    .handle-collapse-btn {
+      position: absolute;
+      bottom: 0;
+      font-size: 20px;
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  & > .c-collapse-nav {
+    width: 65px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid $light-gray;
+    position: relative;
+
+    .brand-collapse {
+      margin: 0 10px;
+      height: 65px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .logo {
+        width: 100%;
+      }
+    }
+
+    .c-nav-menu {
+      border-right: 0;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .render-nav-btn-collapse {
+      visibility: hidden;
+    }
+
+    .handle-collapse-btn-collapse {
+      position: absolute;
+      bottom: 0;
+      font-size: 20px;
+      width: 100%;
+      margin: 0;
     }
   }
 }
