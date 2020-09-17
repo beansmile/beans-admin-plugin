@@ -72,7 +72,7 @@ function (_Vue) {
     }
   }, {
     key: "renderMenuItem",
-    value: function renderMenuItem(route) {
+    value: function renderMenuItem(route, isChildren) {
       var h = this.$createElement;
       return route && this.filter(route) && h("c-permission", {
         "attrs": {
@@ -84,6 +84,14 @@ function (_Vue) {
           "index": route.name,
           "data-index": route.name
         }
+      }, [h("el-tooltip", {
+        "attrs": {
+          "disabled": !this.menu.collapse || isChildren,
+          "content": this.getTitle(route),
+          "effect": "light",
+          "placement": "right"
+        },
+        "class": "item"
       }, [h("c-router-link", {
         "attrs": {
           "to": {
@@ -93,7 +101,7 @@ function (_Vue) {
         }
       }, [h("i", {
         "class": this.getIcon(route)
-      }), this.getTitle(route)])])]);
+      }), h("span", [this.getTitle(route)])])])])]);
     }
   }, {
     key: "renderSubMenu",
@@ -110,12 +118,14 @@ function (_Vue) {
         }
       }, [h("template", {
         "slot": "title"
-      }, [h("div", [h("i", {
+      }, [h("i", {
         "class": this.getIcon(route)
-      }), this.getTitle(route)])]), children.map(function (child) {
-        return _this2.renderMenuItem(child);
+      }), h("span", {
+        "slot": "title"
+      }, [this.getTitle(route)])]), children.map(function (child) {
+        return _this2.renderMenuItem(child, true);
       })]) : children.map(function (child) {
-        return _this2.renderMenuItem(child);
+        return _this2.renderMenuItem(child, false);
       });
     }
   }, {
@@ -137,7 +147,7 @@ function (_Vue) {
           "select": this.handleSelect
         }
       }]), [this.routes.map(function (route, index) {
-        return route && route.children ? _this3.renderSubMenu(route, index) : _this3.renderMenuItem(route, index);
+        return route && route.children ? _this3.renderSubMenu(route, index) : _this3.renderMenuItem(route, false);
       })]);
     }
   }, {
