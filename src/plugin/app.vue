@@ -1,15 +1,18 @@
 <template>
   <div id="app" class="layout-app" v-if="$route.name" :data-page="$route.name">
     <template v-if="showLayout">
-      <div class="c-admin-nav" :style="`background-color: ${menu['background-color']}`">
-        <div class="brand">
+      <div :class="elementClass('nav')" :style="`background-color: ${menu['background-color']}`">
+        <div :class="elementClass('brand')">
           <img :src="$appConfig.logo" class="logo"/>
         </div>
         <c-nav-menu
           :menu="menu"
           :filter="filterRoute"
           :routes="$router.options.routes"
+          :key="menuRenderKey"
         />
+        <el-button :class="elementClass('renderNavBtn')" @click="reRenderMenu">收起二级目录</el-button>
+        <el-button :class="elementClass('handleCollapseNavBtn')"  @click="toggleIsCollapse"></el-button>
       </div>
       <div class="admin-content">
         <header>
@@ -45,8 +48,10 @@
 
     menu = {
       mode: 'vertical',
+      collapse: false,
       'background-color': '#fff'
-    }
+    };
+    menuRenderKey = 1;
 
     get showBackButton() {
       if (this.$route.name) {
@@ -86,6 +91,29 @@
       if (requestUrl) await this.$fly.delete(requestUrl);
       this.$message.success(this.$t('成功退出登录'));
       this.$router.replace({ name: 'login' });
+    }
+
+    elementClass(name) {
+      return (this.menu.collapse ? {
+        nav: 'c-collapse-nav',
+        brand: 'brand-collapse',
+        renderNavBtn: 'render-nav-btn-collapse',
+        handleCollapseNavBtn: 'handle-collapse-btn-collapse el-icon-s-unfold'
+      } : {
+        nav: 'c-admin-nav',
+        brand: 'brand',
+        renderNavBtn: 'render-nav-btn',
+        handleCollapseNavBtn: 'handle-collapse-btn el-icon-s-fold'
+      })[name];
+    }
+
+    toggleIsCollapse() {
+      this.$set(this.menu, 'collapse', !this.menu.collapse);
+    }
+
+    reRenderMenu() {
+      // key值更改后menu组件会重新渲染
+      ++ this.menuRenderKey;
     }
   }
 </script>
