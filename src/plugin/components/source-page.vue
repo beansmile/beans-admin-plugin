@@ -13,9 +13,12 @@ export default class SourcePage extends Vue {
   @Prop(String) createButtonText;
   @Prop(Object) createPageLocation; // 创建页面链接
   @Prop({ type: String, default: '' }) exportExcelURL;
+  // importExcelOptions 参数包括：text: 按钮文本、tooltipText: 提示链接文本、handleFileChange: 上传操作、downloadLink: 提示链接操作
+  @Prop({ type: Object, default: () => {} }) importExcelOptions;
   @Prop({ type: Array, default: () => [] }) batchActions; // 批处理
 
   exporting = false;
+  importing = false;
   tableHeight = 0;
   selectedRows = [];
 
@@ -43,8 +46,32 @@ export default class SourcePage extends Vue {
     return !!this.exportExcelURL;
   }
 
+  get importExcelButtonText() {
+    return _.get(this, 'importExcelOptions.text');
+  }
+
+  get excelTemplateDownloadLink() {
+    return this.importExcelOptions.downloadLink;
+  }
+
   getTableComponent() {
     return this.$refs.sourceTable.getTableComponent();
+  }
+
+  renderImportButton() {
+    return (
+      <div class="import-block">
+        <el-tooltip disabled={!this.excelTemplateDownloadLink} placement="top" effect="light">
+          <a slot="content" href={this.importExcelOptions.downloadLink} style="text-decoration: underline;">
+            {this.importExcelOptions.tooltipText || '下载模板'}
+          </a>
+          <div class="import-btn">
+            <el-button type="primary" loading={this.importing}>{this.importExcelButtonText}</el-button>
+            <input type="file" accept=".xlsx" disabled={this.importing} onChange={this.importExcelOptions.handleFileChange} />
+          </div>
+        </el-tooltip>
+      </div>
+    );
   }
 
   renderSelectionButtons() {
@@ -70,6 +97,7 @@ export default class SourcePage extends Vue {
       <div class="source-page-btn-group">
         {this.showCreateButton && <c-router-link keepNode={false} to={createPageLocation}><el-button class="btn-create" type="primary">{this.createButtonText}</el-button></c-router-link>}
         {this.showExportButton && <el-button disabled={this.exporting} onClick={this.export} loading={this.exporting} type="primary">{this.$t('导出数据')}</el-button>}
+        {this.importExcelButtonText && this.renderImportButton()}
         {this.renderSelectionButtons()}
         {
           $actionSlot && (
