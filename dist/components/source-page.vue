@@ -20,7 +20,7 @@ import _set from "lodash/set";
 import _debounce from "lodash/debounce";
 import _get from "lodash/get";
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _temp;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -56,6 +56,9 @@ var SourcePage = (_dec = Prop({
   type: String,
   default: ''
 }), _dec9 = Prop({
+  type: Object,
+  default: function _default() {}
+}), _dec10 = Prop({
   type: Array,
   default: function _default() {
     return [];
@@ -94,9 +97,12 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "exportExcelURL", _descriptor8, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "batchActions", _descriptor9, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "importExcelOptions", _descriptor9, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "batchActions", _descriptor10, _assertThisInitialized(_this));
 
     _this.exporting = false;
+    _this.importing = false;
     _this.tableHeight = 0;
     _this.selectedRows = [];
     _this.debouncedCalcTableHeight = _debounce(_this.calcTableHeight, 500);
@@ -155,6 +161,42 @@ function (_Vue) {
     key: "getTableComponent",
     value: function getTableComponent() {
       return this.$refs.sourceTable.getTableComponent();
+    }
+  }, {
+    key: "renderImportButton",
+    value: function renderImportButton() {
+      var h = this.$createElement;
+      return h("div", {
+        "class": "import-block"
+      }, [h("el-tooltip", {
+        "attrs": {
+          "disabled": !this.excelTemplateDownloadLink,
+          "placement": "top",
+          "effect": "light"
+        }
+      }, [h("a", {
+        "slot": "content",
+        "attrs": {
+          "href": this.importExcelOptions.downloadLink
+        },
+        "style": "text-decoration: underline;"
+      }, [this.importExcelOptions.tooltipText || '下载模板']), h("div", {
+        "class": "import-btn"
+      }, [h("el-button", {
+        "attrs": {
+          "type": "primary",
+          "loading": this.importing
+        }
+      }, [this.importExcelButtonText]), h("input", {
+        "attrs": {
+          "type": "file",
+          "accept": ".xlsx",
+          "disabled": this.importing
+        },
+        "on": {
+          "change": this.importExcelOptions.handleFileChange
+        }
+      })])])]);
     }
   }, {
     key: "renderSelectionButtons",
@@ -216,7 +258,7 @@ function (_Vue) {
         "on": {
           "click": this.export
         }
-      }, [this.$t('导出数据')]), this.renderSelectionButtons(), $actionSlot && h("div", {
+      }, [this.$t('导出数据')]), this.importExcelButtonText && this.renderImportButton(), this.renderSelectionButtons(), $actionSlot && h("div", {
         "class": "action"
       }, [$actionSlot])]);
     }
@@ -356,6 +398,16 @@ function (_Vue) {
       return !!this.exportExcelURL;
     }
   }, {
+    key: "importExcelButtonText",
+    get: function get() {
+      return _get(this, 'importExcelOptions.text');
+    }
+  }, {
+    key: "excelTemplateDownloadLink",
+    get: function get() {
+      return this.importExcelOptions.downloadLink;
+    }
+  }, {
     key: "tableKey",
     get: function get() {
       var key = _get(this, '$route.name');
@@ -469,7 +521,12 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "batchActions", [_dec9], {
+}), _descriptor9 = _applyDecoratedDescriptor(_class2.prototype, "importExcelOptions", [_dec9], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor10 = _applyDecoratedDescriptor(_class2.prototype, "batchActions", [_dec10], {
   configurable: true,
   enumerable: true,
   writable: true,
