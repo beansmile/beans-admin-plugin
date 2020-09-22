@@ -69,12 +69,13 @@
       border-right: 0;
       flex: 1;
       overflow-y: auto;
+      margin-bottom: 80px;
     }
 
     .render-nav-btn {
       position: absolute;
       bottom: 40px;
-      width: 220px;
+      width: 100%;
       height: 40px;
       background: white;
     }
