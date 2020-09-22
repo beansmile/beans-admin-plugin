@@ -147,6 +147,10 @@ export default class SourceFormItem extends Vue {
     return <c-upload-form-item attrs={props} props={props} value={this.getPropValue(prop)} onChange={this.handleValueChange(prop)} />
   }
 
+  renderPermissionsForm({ prop, props }) {
+    return <c-permissions-form attrs={props} props={props} rawData={this.getPropValue(prop)} />
+  }
+
   renderEditor({ prop, props }) {
     return <c-editor props={props} value={this.getPropValue(prop)} onChange={this.handleValueChange(prop)} />
   }
@@ -228,6 +232,7 @@ export default class SourceFormItem extends Vue {
       timePicker: this.renderTimePicker,
       colorPicker: this.renderColorPicker,
       upload: this.renderUpload,
+      permissions: this.renderPermissionsForm,
       editor: this.renderEditor,
       nestForm: this.renderNestForm,
       staticNestForm: this.renderStaticNestForm,
