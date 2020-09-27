@@ -5,8 +5,8 @@
 </template>
 
 <script>
-  import { Component, Vue, Model, Prop, Watch } from 'vue-property-decorator'
-  import { randomString, upload, autoLoading } from '../../utils'
+  import { Component, Vue, Model, Prop } from 'vue-property-decorator'
+  import { randomString, uploadFile, autoLoading } from '../../utils'
   import setConfig from './config'
   import 'ckeditor/ckeditor'
 
@@ -22,7 +22,7 @@
     @Prop({ type: Function, default: new Function }) onLoad
 
     created() {
-      const { editorConfig } = Vue.prototype.$appConfig.ckeditor
+      const { editorConfig } = this.$vadminConfig.ckeditor
       if (!editorConfig.used) {
         editorConfig(CKEDITOR.config)
         editorConfig.used = true
@@ -30,13 +30,19 @@
     }
 
     mounted() {
-      const { contentsCss, fileUploadRequest = this.fileUploadRequest, fileUploadResponse = this.fileUploadResponse } = Vue.prototype.$appConfig.ckeditor
+      const { contentsCss, fileUploadRequest = this.fileUploadRequest, fileUploadResponse = this.fileUploadResponse } = this.$vadminConfig.ckeditor
       const config = Object.assign({ customConfig: '' }, this.config)
-      document.getElementById(this.instanceId).value = this.value
       this.editor = CKEDITOR.replace(this.instanceId, config)
       contentsCss.forEach(link => this.editor.addContentsCss(link))
       this.editor.on('loaded', e => {
         this.onLoad(e)
+
+        setTimeout(() => {
+          this.watcher = this.$watch('value', (val) => {
+            if (this.editor.getData() !== val) this.editor.setData(val)
+          }, { immediate: true });
+        }, 500);
+
         this.editor.on('change', e => {
           this.$emit('change', e.editor.getData())
         })
@@ -45,18 +51,17 @@
       })
     }
 
-    @Watch('value')
-    watchValue() {
-      if (this.editor.getData() !== this.value) this.editor.setData(this.value)
+    beforeDestroy() {
+      this.watcher && this.watcher();
     }
 
     async fileUploadRequest(evt) {
-      const { fakeUploadUrl = location.origin } = Vue.prototype.$appConfig.ckeditor
+      const { fakeUploadUrl = location.origin } = this.$vadminConfig.ckeditor
       // Prevented the default behavior.
       evt.stop()
       const { fileLoader } = evt.data
       const { xhr } = fileLoader
-      xhr.$uploadResult = await autoLoading(upload(fileLoader.file))
+      xhr.$uploadResult = await autoLoading(uploadFile(fileLoader.file))
       xhr.open('get', fakeUploadUrl, true)
       xhr.send()
     }
@@ -68,7 +73,7 @@
       // Get XHR and response.
       const { data } = evt
       const { xhr } = data.fileLoader
-      data.url = xhr.$uploadResult
+      data.url = xhr.$uploadResult.url
     }
   }
 </script>

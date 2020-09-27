@@ -1,24 +1,18 @@
 import Vue from 'vue'
 import _ from 'lodash'
-import { MessageBox, Message } from 'element-ui'
 import qs from 'qs'
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { i18n } from '../../i18n'
 import { loadingService } from '../../services'
 import decoder from '../decoder'
 
 export async function onSend(request) {
-  showNProgress(request)
-  const { token_storage_key, token_header_key } = Vue.appConfig.login;
+  showNProgress(request);
 
-  const token = localStorage.getItem(token_storage_key);
-  if (token) {
-    request.headers[token_header_key] = localStorage.getItem(token_storage_key);
+  const appConfig = Vue.vadminConfig.request || {};
+  if (_.isFunction(appConfig.onSend)) {
+    await appConfig.onSend(request);
   }
-
-  const { beforeRequest = _.noop } = Vue.appConfig.request || {};
-  await beforeRequest(request)
 
   if (request.method === 'GET' && request.body) {
     const body = _.omitBy(request.body, (v, k) => k.startsWith('_'))
@@ -56,29 +50,13 @@ export function onSucceed(res) {
 }
 
 export function onError(err) {
-  hideNProgress(err.request)
-  const { error_message, message, messages, error, code } = _.get(err, 'response.data', {})
-  err.message = error_message || message || messages || error || err.message
-  err.api_code = code
-
-  const app = Vue.appRouter.app
-  switch (err.status) {
-    case 401: {
-      localStorage.removeItem('access_token')
-      if (app.$route.name !== 'login') {
-        app.$router.replace({ name: 'login' })
-        Message.info(i18n.t('请登录'))
-      }
-      break;
-    }
-    case 403:
-      app.$router.replace({ name: '403' })
-      break;
-    default: {
-      MessageBox.alert(err.message, { title: i18n.t('错误') })
-    }
+  hideNProgress(err.request);
+  const appConfig = Vue.vadminConfig.request || {};
+  if (_.isFunction(appConfig.onError)) {
+    appConfig.onError(err);
+    return;
   }
-  return err
+  return err;
 }
 
 function useNProgress(request) {

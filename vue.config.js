@@ -1,4 +1,10 @@
+const path = require('path');
+
 module.exports = {
+  configureWebpack: require('./webpack.config'),
+  publicPath: '/',
   runtimeCompiler: true,
-  publicPath: '/beans-admin-plugin'
+  devServer: {
+    port: process.env.PORT
+  }
 }

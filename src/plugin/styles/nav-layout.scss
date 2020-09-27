@@ -1,0 +1,92 @@
+.vadmin-nav-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  > .box-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    border-right: 1px solid $border-light;
+
+    .box-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      text-align: center;
+
+      > a {
+        display: block;
+      }
+
+      .logo {
+        width: 140px;
+        margin: 20px 0;
+      }
+    }
+
+    .box-menu {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    &.collapsed {
+      .box-logo {
+        .logo {
+          width: 40px;
+        }
+      }
+    }
+  }
+
+  > .vadmin-nav-menu {
+    flex-shrink: 0;
+  }
+
+  > .layout-content {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    > .page-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      height: 55px;
+      border-bottom: 1px solid $border-light;
+      padding: 0 20px;
+
+      .btn-back,
+      .page-title {
+        font-size: 16px;
+      }
+
+      .btn-back {
+        &:after {
+          display: inline-block;
+          content: '';
+          width: 1px;
+          height: 14px;
+          margin: 0 15px;
+          background: #dcdfe6;
+          vertical-align: -1px;
+        }
+      }
+
+      .content {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+
+    > .page-content {
+      flex: 1;
+      overflow: auto;
+    }
+  }
+}

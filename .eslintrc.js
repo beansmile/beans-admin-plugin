@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   extends: [
-    'beansmile/vue-rule',
+    'beansmile/vue',
     'plugin:vue/essential',
   ],
   rules: {

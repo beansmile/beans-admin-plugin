@@ -5,29 +5,38 @@
     :page-sizes="pagesizes"
     @current-change="onPageChange"
     @size-change="onSizeChange"
-    v-bind="pagination"
-    class="c-pagination"
+    v-bind="{ pageSize, total, currentPage, ...$attrs }"
   />
 </template>
 
 <script>
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 
 @Component
-export default class Pagination extends Vue {
-  @Prop({ type: Object, default: () => ({}) }) pagination;
+export default class AdminPagination extends Vue {
+  @Prop({ type: Number }) pageSize;
+  @Prop({ type: Number }) total;
+  @Prop({ type: Number }) currentPage;
 
   pagesizes = [10, 25, 35, 50, 100]
   layout = 'total, prev, pager, next, sizes, jumper'
 
+  @Emit('submit')
   onPageChange(currentPage) {
-    this.$router.push({ query: { ...this.$route.query, page: currentPage } });
+    return {
+      page: currentPage,
+      size: this.pageSize
+    };
   }
 
+  @Emit('submit')
   onSizeChange(size) {
-    const totalPage = Math.ceil(this.pagination.total / size);
-    const page = this.pagination['current-page'];
-    this.$router.replace({ query: { ...this.$route.query, per_page: size, page: Math.min(page, totalPage) } });
+    const totalPage = Math.ceil(this.total / size);
+    const page = this.currentPage;
+    return {
+      page: Math.min(page, totalPage),
+      size
+    }
   }
 }
 </script>

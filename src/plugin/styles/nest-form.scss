@@ -1,0 +1,22 @@
+.admin-nest-form {
+  .nest-form-group {
+    position: relative;
+    border: 1px solid $border-light;
+    padding: 50px 15px 0;
+    margin-bottom: 15px;
+
+    .el-form-item  {
+      margin-bottom: 22px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .btn-delete {
+      position: absolute;
+      right: 15px;
+      top: 10px
+    }
+  }
+}

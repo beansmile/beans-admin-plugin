@@ -1,35 +1,86 @@
-import Vue from 'vue';
+import { RouteButton, ConfirmButton } from './column-render';
+import Link from './link';
 
-Vue.component('c-echarts', () => import('./custom-chart'));
-Vue.component('c-editor', () => import('./ck-editor'));
-
-Vue.component('c-source-detail', require('./source-detail').default);
-Vue.component('c-source-filter', require('./source-filter').default);
-Vue.component('c-source-form-item', require('./source-form-item').default);
-Vue.component('c-source-form', require('./source-form').default);
-Vue.component('c-source-page', require('./source-page').default);
-Vue.component('c-source-table', require('./source-table').default);
-Vue.component('c-upload', require('./upload').default);
-Vue.component('c-upload-form-item', require('./upload-form-item').default);
-Vue.component('c-nav-menu', require('./nav-menu').default);
-Vue.component('c-preview-image', require('./preview-image').default);
-Vue.component('v-node', require('./v-node').default);
-Vue.component('c-dropdown-button', require('./dropdown-button').default);
-Vue.component('c-link-button', require('./link-button').default);
-Vue.component('c-pagination', require('./pagination').default);
-Vue.component('c-select', require('./select').default);
-Vue.component('c-nest-form', require('./dynamic-nest-form').default);
-Vue.component('c-static-nest-form', require('./static-nest-form').default);
-Vue.component('c-router-link', require('./router-link').default);
-Vue.component('c-permission', require('./permission').default);
-Vue.component('c-clipboard', require('./clipboard').default);
-Vue.component('c-page-editor', require('./page-editor').default);
-Vue.component('c-transfer', require('./transfer').default);
-Vue.component('c-list-select', require('./list-select').default);
-Vue.component('c-sku-editor', require('./sku-editor').default);
-Vue.component('c-image-cropper', require('./image-cropper').default);
-Vue.component('c-upload-single', require('./upload-single').default);
-
-Vue.component('c-source-form-v2', require('./source-form-v2/index').default);
-Vue.component('c-nest-form-v2', require('./source-form-v2/nest-form').default);
-Vue.component('c-source-form-dialog', require('./source-form-v2/form-dialog').default);
+export function install(Vue, config = {}) {
+  const { componentPrefix } = config;
+  [
+    {
+      name: 'form',
+      component: require('./form/index').default
+    },
+    {
+      name: 'nest-form',
+      component: require('./form/nest').default
+    },
+    {
+      name: 'dialog-form',
+      component: require('./form/dialog').default
+    },
+    {
+      name: 'upload-form',
+      component: require('./form/upload').default
+    },
+    {
+      name: 'select',
+      component: require('./form/select').default
+    },
+    {
+      name: 'filter',
+      component: require('./form/filter').default
+    },
+    {
+      name: 'upload',
+      component: require('./upload/index').default
+    },
+    {
+      name: 'table',
+      component: require('./table').default
+    },
+    {
+      name: 'pagination',
+      component: require('./pagination').default
+    },
+    {
+      name: 'source-page-table',
+      component: require('./source-page/table').default
+    },
+    {
+      name: 'source-page-form',
+      component: require('./source-page/form').default
+    },
+    {
+      name: 'source-page-show',
+      component: require('./source-page/show').default
+    },
+    {
+      name: 'source-page',
+      component: require('./source-page/index').default
+    },
+    {
+      name: 'nav-menu',
+      component: require('./nav-menu').default
+    },
+    {
+      name: 'nav-layout',
+      component: require('./nav-layout').default
+    },
+    {
+      name: 'route-button',
+      component: RouteButton
+    },
+    {
+      name: 'confirm-button',
+      component: ConfirmButton
+    },
+    {
+      name: 'ck-editor',
+      component: require('./ck-editor').default
+    },
+    {
+      name: 'link',
+      component: Link
+    }
+  ].forEach(item => {
+    Vue.component(`${componentPrefix}-${item.name}`, item.component);
+  });
+}

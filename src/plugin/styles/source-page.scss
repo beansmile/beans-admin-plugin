@@ -1,0 +1,83 @@
+.admin-source-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  & > .page-content {
+    box-sizing: border-box;
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    background: #fff;
+  }
+
+  & > .page-footer {
+    flex-shrink: 0;
+    padding: 15px 20px;
+    border-top: 1px solid $border-light;
+  }
+
+  .box-action-render {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: -10px;
+
+    & > .action {
+      margin-right: 15px;
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .multi-attachments {
+    display: flex;
+    flex-wrap: wrap;
+
+    .el-image {
+      margin-right: 10px;
+    }
+  }
+}
+
+.source-page-form {
+  & > .page-content {
+    & > .el-form {
+      width: 60%;
+      min-width: 800px;
+    }
+  }
+}
+
+.source-page-show {
+  & > .page-content {
+    .el-form-item {
+      border-bottom: 1px solid $border-light;
+    }
+  }
+}
+
+.source-page-table {
+  & > .page-content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .box-actions {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+    }
+  }
+
+  .box-table {
+    flex: 1;
+  }
+
+  .box-action-render {
+    justify-content: center;
+  }
+}

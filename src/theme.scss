@@ -1,6 +1,8 @@
-$primary: #399e63;
-$font-size-base: 12px;
 @import './plugin/styles/theme.scss';
+
+html, body {
+  height: 100%;
+}
 
 /*
 Write your variables here. All available variables can be
@@ -8,7 +10,7 @@ found in element-ui/packages/theme-chalk/src/common/var.scss.
 For example, to overwrite the theme color:
 */
 $--color-primary: $primary;
-$--font-size-base: $font-size-base;
+$--font-size-base: 12px;
 $--button-padding-vertical: 9px;
 /// padding||Spacing|3
 $--button-padding-horizontal: 15px;
@@ -19,4 +21,3 @@ $--input-height: 35px;
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
-

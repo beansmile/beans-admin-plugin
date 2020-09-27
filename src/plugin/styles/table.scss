@@ -1,0 +1,40 @@
+.el-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+
+  .el-table__header-wrapper,
+  .el-table__fixed-header-wrapper {
+    flex-shrink: 0;
+
+    .caret-wrapper {
+      width: 15px;
+      height: 25px;
+
+      .ascending {
+        margin-top: -5px;
+      }
+
+      .descending {
+        margin-bottom: -5px;
+      }
+    }
+  }
+
+  th + th {
+    border-left: 1px solid $border-light;
+  }
+
+  th, td {
+    padding: 8px 0;
+    font-size: 12px;
+  }
+
+  tr th {
+    color: #fff;
+    background-color: rgba($primary, 0.9);
+    padding: 4px 0;
+  }
+}

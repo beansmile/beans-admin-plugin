@@ -1,0 +1,135 @@
+<template>
+  <bean-source-page
+    :type="type"
+    :columns="columns"
+    :form-columns="formColumns"
+    :filter-columns="filterColumns"
+    :actions="actions"
+    :form="form"
+    title="{[ resourceName ]}"
+    resource="{[ resourceName ]}"
+  />
+</template>
+
+<script>
+import { Vue, Component, Prop } from 'vue-property-decorator';
+
+@Component
+export default class {[ className ]} extends Vue {
+  @Prop(String) type;
+
+  // form 新建表单初始化数据（default数据）
+  form = {}
+
+  /**
+   * @param {Function} h - createElement
+   * @param {Object} params
+   * @param {String} params.type - 页面类型 enum: ['index', 'show', 'edit', 'new']
+   * @param {String} params.resource -页面RESTful api资源名
+   */
+  filterColumns() {
+    return [];
+  }
+
+  /**
+   * @param {Function} h - createElement
+   * @param {Object} params
+   * @param {String} params.type - 页面类型 enum: ['index', 'show', 'edit', 'new']
+   * @param {String} params.resource -页面RESTful api资源名
+   */
+  columns() {
+    return [
+      {
+        prop: 'id',
+        label: '编号'
+      }
+    ];
+  }
+
+  /**
+   * @param {Function} h - createElement
+   * @param {Object} params
+   * @param {String} params.type - 页面类型 enum: ['index', 'show', 'edit', 'new']
+   * @param {String} params.resource -页面RESTful api资源名
+   * @param {Object} params.data - 当前表单数据
+   * @param {Function} params.change - 调用此方法同步表单数据 change({ field: 'new value' })
+   */
+  formColumns() {
+    return [
+      {
+        prop: 'id',
+        label: '编号',
+        renderCell: {
+          component: 'input',
+          required: true
+        }
+      }
+    ];
+  }
+
+   /**
+   * @param {Object} scope -页面/表格 scope 数据
+   * @param {Object} scope.row - 详情页/表格行 数据
+   * @param {Object} sourcePageScope
+   * @param {Function} sourcePageScope.remove - sourcePage删除方法
+   */
+  actions({ row }, { remove }) {
+    return [
+      {
+        component: 'routeButton',
+        props: {
+          label: '编辑',
+          to: { name: '{[ resourceName ]}.edit', params: { id: row.id } }
+        }
+      },
+      {
+        component: 'confirmButton',
+        props: {
+          label: '删除',
+          type: 'danger',
+          can: { subject: '{[ modelName ]}', action: 'destroy', value: row }
+        },
+        on: {
+          confirm: () => remove(row.id)
+        }
+      }
+    ].filter(Boolean);
+  }
+}
+
+
+export const route = [
+  {
+    path: '/{[ resourceName ]}',
+    name: '{[ resourceName ]}.index',
+    component: {[ className ]},
+    props: {
+      type: 'index',
+    }
+  },
+  {
+    path: '/{[ resourceName ]}/new',
+    name: '{[ resourceName ]}.new',
+    component: {[ className ]},
+    props: {
+      type: 'new',
+    }
+  },
+  {
+    path: '/{[ resourceName ]}/:id',
+    name: '{[ resourceName ]}.show',
+    component: {[ className ]},
+    props: {
+      type: 'show',
+    }
+  },
+  {
+    path: '/{[ resourceName ]}/:id/edit',
+    name: '{[ resourceName ]}.edit',
+    component: {[ className ]},
+    props: {
+      type: 'edit'
+    }
+  }
+]
+</script>
