@@ -46,7 +46,8 @@ export default class SourceFormItem extends Vue {
   }
 
   handleInputNumberChange(prop, min) {
-    return val => this.handleValueChange(prop)(val || min);
+    const value = (val === null || val === undefined) ? min : val;
+    return val => this.handleValueChange(prop)(value);
   }
 
   renderRadioGroup({ prop, props }) {
