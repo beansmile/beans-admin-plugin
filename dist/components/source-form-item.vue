@@ -35,6 +35,7 @@ import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyD
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
 import _omit from "lodash/omit";
 import _clone from "lodash/clone";
+import _isNil from "lodash/isNil";
 import _isFunction from "lodash/isFunction";
 import _set from "lodash/set";
 import _mergeWith from "lodash/mergeWith";
@@ -141,7 +142,8 @@ function (_Vue) {
       var _this3 = this;
 
       return function (val) {
-        return _this3.handleValueChange(prop)(val || min);
+        var value = _isNil(val) || val === '' ? min : val;
+        return _this3.handleValueChange(prop)(value);
       };
     }
   }, {
