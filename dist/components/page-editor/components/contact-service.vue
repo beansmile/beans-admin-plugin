@@ -8,7 +8,7 @@
 
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item :label="$t('pageEditor.需要复制的客服名字')">
-          <el-input v-model="value.config.text" @change="syncChange" :placeholder="$t('pageEditor.默认直接联系小程序客服')"/>
+          <c-uncontrolled-input v-model="value.config.text" @change="syncChange" :placeholder="$t('pageEditor.默认直接联系小程序客服')"/>
         </el-form-item>
       </el-form>
 
