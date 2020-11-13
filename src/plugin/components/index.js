@@ -29,6 +29,7 @@ Vue.component('c-list-select', require('./list-select').default);
 Vue.component('c-sku-editor', require('./sku-editor').default);
 Vue.component('c-image-cropper', require('./image-cropper').default);
 Vue.component('c-upload-single', require('./upload-single').default);
+Vue.component('c-uncontrolled-input', require('./uncontrolled-input').default);
 
 Vue.component('c-source-form-v2', require('./source-form-v2/index').default);
 Vue.component('c-nest-form-v2', require('./source-form-v2/nest-form').default);

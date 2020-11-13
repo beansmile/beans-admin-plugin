@@ -6,7 +6,7 @@
     <ControlBox :title="$t('pageEditor.文本')" :visible="showController" @close="$emit('close')">
       <el-form @submit.native.prevent label-position="left" label-width="auto">
         <el-form-item :label="$t('pageEditor.文本')" v-for="(item, index) in value.data" :key="index">
-          <el-input type="textarea" :rows="5" autosize v-model="item.text" @change="syncChange" />
+          <c-uncontrolled-input type="textarea" :rows="5" autosize v-model="item.text" @change="syncChange" />
         </el-form-item>
         <el-form-item :label="$t('pageEditor.颜色')">
           <el-color-picker show-alpha v-model="value.config.color" @change="syncChange"></el-color-picker>
