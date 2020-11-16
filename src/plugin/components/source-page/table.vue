@@ -91,6 +91,10 @@ export default class AdminSourcePageTable extends Vue {
     this.handleFilter({ order: { [prop]: { ascending: 'asc', descending: 'desc' }[order] } });
   }
 
+  handleAutoFilter() {
+    this.handleFilter(this.filterForm);
+  }
+
   handleFilter(params) {
     this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 } });
   }
@@ -100,7 +104,7 @@ export default class AdminSourcePageTable extends Vue {
   }
 
   handlePagination({ page, size }) {
-    this.$router.replace({ query: { ...this.$route.query, page, perPage: size } });
+    this.$router.replace({ query: { ...this.$route.query, page, per_page: size } });
   }
 }
 </script>

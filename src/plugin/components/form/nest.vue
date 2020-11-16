@@ -1,28 +1,30 @@
 <template>
   <div class="admin-nest-form">
-    <div class="nest-form-group" v-for="(group, index) in formGroup" :key="index">
-      <AdminForm
-        v-bind="$attrs"
-        :value="group"
-        :columns="columns"
-        @change="handleGroupChange(index, $event)"
-        :ref="FORM_REF_NAME"
-      >
-        <template v-slot:header>
-          <el-button class="btn-delete" type="danger" size="small" icon="el-icon-delete" @click="handleDelete(index)" circle></el-button>
-        </template>
-        <template v-slot:action>
-          <span />
-        </template>
-      </AdminForm>
-    </div>
-    <el-button class="btn-add" type="primary" size="small" @click="handleAdd" icon="el-icon-plus">{{ addButtonText }}</el-button>
+    <template v-for="(group, index) in value">
+      <div class="nest-form-group" :key="index" v-if="!group._destroy">
+        <AdminForm
+          v-bind="$attrs"
+          :value="group"
+          :columns="getColumn(group)"
+          @change="handleGroupChange(index, $event)"
+        >
+          <template v-slot:header>
+            <el-button class="btn-delete" type="danger" size="small" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
+          </template>
+          <template v-slot:action>
+            <span />
+          </template>
+        </AdminForm>
+      </div>
+    </template>
+    <el-button class="btn-add" type="primary" size="small" @click="handleAdd" icon="el-icon-plus" v-if="!limitOne">{{ addButtonTextI18n }}</el-button>
   </div>
 </template>
 
 <script>
   import { Vue, Component, Model, Prop } from 'vue-property-decorator';
   import AdminForm from './index';
+  import _ from 'lodash';
 
   @Component({
     components: {
@@ -31,22 +33,21 @@
   })
   export default class NestForm extends Vue {
     @Model('change', { type: Array, default: () => [] }) value;
-    @Prop({ type: Array, default: () => [] }) columns;
+    @Prop({ type: [Array, Function], default: () => [] }) columns;
     @Prop({ type: [String, Number], default: 'id' }) destroyTrackBy; // 根据判断数据中有没有trackBy字段，删除后添加_destroy标识
-    @Prop({ type: String, default: '添加' }) addButtonText;
+    @Prop({ type: String }) addButtonText;
+    @Prop({ type: Boolean }) limitOne; // 为true时不显示添加、删除按钮
+    @Prop({ type: Object, default: () => ({}) }) defaultValue;
 
-    FORM_REF_NAME = 'form_ref';
-
-    get formGroup() {
-      return this.value.filter(item => !item._destroy);
+    get addButtonTextI18n() {
+      return this.addButtonText || this.$t('bean.actionAdd');
     }
 
-    mounted() {
-      this.syncSourceFormRefs();
-    }
-
-    syncSourceFormRefs() {
-      this.$emit('refsChange', this.$refs[this.FORM_REF_NAME])
+    getColumn(value) {
+      if (_.isFunction(this.columns)) {
+        return this.columns(value);
+      }
+      return this.columns;
     }
 
     getPureValue() {
@@ -60,9 +61,7 @@
     }
 
     async handleAdd() {
-      this.$emit('change', this.value.concat({}));
-      await this.$nextTick();
-      this.syncSourceFormRefs();
+      this.$emit('change', this.value.concat(this.defaultValue));
     }
 
     async handleDelete(index) {
@@ -73,8 +72,6 @@
         value.splice(index, 1);
       }
       this.$emit('change', value);
-      await this.$nextTick();
-      this.syncSourceFormRefs();
     }
   }
 </script>

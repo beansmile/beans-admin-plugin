@@ -1,0 +1,105 @@
+.admin-page-editor-control-box-drawer {
+  .el-drawer__body {
+    overflow-y: auto;
+  }
+}
+
+.admin-control-box {
+  padding: 20px;
+
+  .btn-add {
+    margin-bottom: 20px;
+  }
+}
+
+.admin-page-editor {
+  .page-content {
+    display: flex;
+  }
+
+  .box-components {
+    width: 300px;
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: -20px;
+      overflow: hidden;
+
+      .el-button {
+        width: 130px;
+        height: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        font-size: 16px;
+
+        i {
+          font-size: 20px;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+
+  .box-preview {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .btn-save {
+      margin-top: 20px;
+    }
+
+    .device {
+      transform: unset;
+    }
+
+    .device-content {
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    .sortable-ghost,
+    .sortable-chosen,
+    .sortable-drag {
+      border: 2px dashed $primary !important;
+    }
+
+    .item-component {
+      position: relative;
+      min-height: 80px;
+      border: 2px dashed $border-light;
+
+      &.active {
+        border-width: 2px;
+        border-color: $primary;
+      }
+
+      .box-control {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 5px;
+        background: rgba(0, 0, 0, .3);
+        color: #fff;
+        z-index: 9;
+
+        i {
+          cursor: pointer;
+          margin-right: 5px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}

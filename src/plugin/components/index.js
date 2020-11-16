@@ -79,6 +79,30 @@ export function install(Vue, config = {}) {
     {
       name: 'link',
       component: Link
+    },
+    {
+      name: 'permissions',
+      component: require('./permissions').default
+    },
+    {
+      name: 'page-editor',
+      component: require('./page-editor').default
+    },
+    {
+      name: 'list-select',
+      component: require('./list-select').default
+    },
+    {
+      name: 'link-select',
+      component: require('./link-select').default
+    },
+    {
+      name: 'export-button',
+      component: require('./export-button').default
+    },
+    {
+      name: 'lang-switcher',
+      component: require('./lang-switcher').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);

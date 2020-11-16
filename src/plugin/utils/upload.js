@@ -33,9 +33,9 @@ class FileChecksum {
     this.md5Buffer.append(event.target.result)
 
     if (!this.readNextChunk()) {
-      // 后端处理过了hex.parse 和base64
-      const binaryDigest = this.md5Buffer.end()
-      this.callback(null, binaryDigest)
+      const binaryDigest = this.md5Buffer.end(true)
+      const base64digest = btoa(binaryDigest)
+      this.callback(null, base64digest)
     }
   }
 
@@ -68,26 +68,27 @@ function createChecksum(file) {
   });
 }
 
-export async function uploadFile(file) {
+export async function uploadFile(file, tags) {
   const body = {
-    filename: randomFileName(file.name || ''),
-    contentType: file.type || 'application/octet-stream',
-    byteSize: file.size,
-    hexDigest: await createChecksum(file)
+    filename: file.name || randomFileName(''),
+    content_type: file.type || 'application/octet-stream',
+    byte_size: file.size,
+    checksum: await createChecksum(file),
+    tags
   }
   const uploadConfig = Vue.vadminConfig.upload || {};
   const { directUploadURL, customUpload } = uploadConfig;
 
   if (customUpload) {
-    return customUpload(body);
+    return customUpload(file, body);
   }
 
   const result = await request.post(directUploadURL, body);
-  await request.put(result.directUpload.url, file.slice(), { headers: result.directUpload.headers });
+  await request.put(result.direct_upload.url, file.slice(), { headers: result.direct_upload.headers });
 
   return {
     ...result,
-    url: result.url
+    url: result.direct_upload.url
   };
 }
 
@@ -102,7 +103,7 @@ export function isImageFile(file) {
 export function getImageInfo(file) {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve(img);
+    img.onload = () => resolve({ width: img.width, height: img.height });
     img.onerror = reject;
     img.src = URL.createObjectURL(file);
   })

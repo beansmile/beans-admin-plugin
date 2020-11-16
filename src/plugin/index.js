@@ -1,15 +1,12 @@
 import config from './config';
 import _ from 'lodash';
 import PortalVue from 'portal-vue';
-import { abilitiesPlugin } from '@casl/vue';
 import installElement from './element';
 import { request, fly, autoLoading } from './utils';
-import { abilityService } from './services';
 
 export default function install(Vue, options = {}) {
   installElement(Vue);
   Vue.use(PortalVue);
-  Vue.use(abilitiesPlugin, abilityService.ability);
 
   const pluginConfig = _.merge({}, config, options);
   Vue.vadminConfig = Vue[pluginConfig.globalConfigKey] = Vue.prototype.$vadminConfig = Vue.prototype[`$${pluginConfig.globalConfigKey}`] = pluginConfig;
@@ -31,3 +28,4 @@ export default function install(Vue, options = {}) {
 
 export * from './services';
 export * from './utils';
+export { default as locale } from './locale';

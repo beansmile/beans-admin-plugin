@@ -1,14 +1,38 @@
 <template>
   <div class="admin-form-upload">
-    <Upload
+    <template v-if="useResourceUploader">
+      <ResourceUploader
+        :disabled="disabled || uploadLimit < 1"
+        :limit="uploadLimit"
+        :cropper="cropper"
+        :accept="accept"
+        :size="size"
+        :type="type"
+        v-bind="$attrs"
+        @success="handleSuccess"
+        v-model="disalogVisible"
+      />
+
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        :disabled="disabled || uploadLimit < 1"
+        @click="disalogVisible = true"
+      >{{ uploadButtonTextI18n }}</el-button>
+    </template>
+
+    <Uploader
+      v-else
       :disabled="disabled || uploadLimit < 1"
       :limit="uploadLimit"
       :cropper="cropper"
       :accept="accept"
       :size="size"
       v-bind="$attrs"
+      :uploadButtonTextI18n="uploadButtonTextI18n"
       @success="handleSuccess"
     />
+
     <draggable
       :value="fileResources"
       class="resource-content"
@@ -16,21 +40,13 @@
       v-if="fileResources.length"
     >
       <template v-for="(item, index) in fileResources">
-        <div class="item-resource item-image" v-if="(item.contentType || '').match(/image/)" :key="index">
-          <el-button v-if="!disabled" size="mini" circle class="btn-close" icon="el-icon-delete" @click.stop="handleDelete(index)"></el-button>
-          <el-image :src="item.url" class="image" :preview-src-list="fileResources.map(fr => fr.url)" fit="contain" />
-        </div>
-        <div class="item-resource item-video" v-else-if="(item.contentType || '').match(/video/)" :key="index">
+        <div class="item-resource" :key="index">
           <el-button v-if="!disabled && item.url" size="mini" circle class="btn-close" icon="el-icon-delete" @click.stop="handleDelete(index)"></el-button>
-          <video class="video" :src="item.url"/>
-        </div>
-        <div v-else :key="index" style="width: 100%">
-          <a :href="item.url" class="download-url" download>{{ item.filename }}</a>
-          <el-button v-if="!disabled && item.url" size="mini" circle class="btn-close" style="margin-left: 10px;" icon="el-icon-delete" @click.stop="handleDelete(index)"></el-button>
+          <ResourceRender :value="item" :type="type" />
         </div>
       </template>
     </draggable>
-    <div v-if="fileResources.length > 1" class="drag-tip">可拖拽排序</div>
+    <div v-if="fileResources.length > 1" class="drag-tip">{{ $t('bean.dragSort') }}</div>
   </div>
 </template>
 
@@ -38,15 +54,19 @@
 import { Vue, Component, Model, Prop, Emit, Watch } from 'vue-property-decorator';
 import _ from 'lodash';
 import draggable from 'vuedraggable';
-import Upload from '../upload';
 import { arrayMove } from '../../utils';
+import ResourceUploader from '../upload/resource-uploader';
+import ResourceRender from '../resource-render';
+import Uploader from '../upload/index';
 
 const FILE_MAP_SESSION_KEY_NAME = 'upload_file_map';
 
 @Component({
   components: {
-    Upload,
-    draggable
+    Uploader,
+    ResourceUploader,
+    draggable,
+    ResourceRender
   }
 })
 export default class AdminFormUpload extends Vue {
@@ -56,7 +76,11 @@ export default class AdminFormUpload extends Vue {
   @Prop({ type: Object }) cropper;
   @Prop({ type: String, default: 'image/*' }) accept;
   @Prop({ type: Number, default: 3 }) size; // 单位M
-  @Prop({ type: String, default: 'signedId' }) trackedBy;
+  @Prop({ type: String, default: 'signed_id' }) trackedBy;
+  @Prop({ type: String }) uploadButtonText;
+  @Prop({ type: String, default: 'image' }) type; // 资源类型
+
+  disalogVisible = false;
 
   transformValue = _.once(({ value, trackedBy, callback }) => {
     if (_.isArray(value)) {
@@ -76,6 +100,15 @@ export default class AdminFormUpload extends Vue {
     }
   });
 
+  get useResourceUploader() {
+    const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
+    return !!requestURL;
+  }
+
+  get uploadButtonTextI18n() {
+    return this.uploadButtonText || this.$t('bean.actionUpload');
+  }
+
   get uploadLimit() {
     if (this.limit > 1) {
       return this.limit - (this.value || []).length;
@@ -86,6 +119,12 @@ export default class AdminFormUpload extends Vue {
   get fileResources() {
     const value = this.value ? _.flatten([this.value]) : [];
     return value.map(item => {
+      if (/^http/.test(item)) {
+        return {
+          url: item,
+          content_type: this.accept.includes('image') ? 'image' : (this.accept.includes('video') ? 'video' : '')
+        }
+      }
       if (_.isString(item) || _.isNumber(item)) {
         return JSON.parse(sessionStorage.getItem(`${FILE_MAP_SESSION_KEY_NAME}_${item}`));
       }

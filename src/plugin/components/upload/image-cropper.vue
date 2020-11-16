@@ -3,7 +3,7 @@
     :visible="value"
     fullscreen
     append-to-body
-    title="图片裁剪"
+    :title="$t('bean.imageResizer')"
     custom-class="admin-image-cropper-dialog"
     @close="$emit('change', false)"
   >
@@ -13,8 +13,8 @@
       </div>
     </div>
     <template #footer>
-      <el-button @click="handleReset" size="medium">重置</el-button>
-      <el-button type="primary" @click="handleSave" size="medium">确定</el-button>
+      <el-button @click="handleReset" size="medium">{{ $t('bean.actionReset') }}</el-button>
+      <el-button type="primary" @click="handleSave" size="medium">{{ $t('bean.actionConfirm') }}</el-button>
     </template>
   </el-dialog>
 </template>

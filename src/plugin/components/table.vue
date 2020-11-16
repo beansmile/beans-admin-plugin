@@ -1,7 +1,6 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
-import ColumnRender from './column-render';
 
 @Component
 export default class AdminTable extends Vue {
@@ -11,6 +10,8 @@ export default class AdminTable extends Vue {
   @Prop({ type: Object, default: () => ({}) }) actionColumnProps;
 
   get actionColumn() {
+    const ColumnRender = require('./column-render').default;
+
     if (!this.actions) {
       return null;
     }
@@ -19,7 +20,7 @@ export default class AdminTable extends Vue {
     }
     return {
       prop: '_action',
-      label: '操作',
+      label: this.$t('bean.actionOperation'),
       fixed: 'right',
       'min-width': 200,
       ...this.actionColumnProps,
@@ -60,6 +61,7 @@ export default class AdminTable extends Vue {
   }
 
   renderCell(column) {
+    const ColumnRender = require('./column-render').default;
     return scope => {
       return <ColumnRender
         key={column.prop}

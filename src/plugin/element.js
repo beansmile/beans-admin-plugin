@@ -39,6 +39,7 @@ import {
   Tabs,
   TabPane,
   Row,
+  Tree,
 } from 'element-ui';
 
 export const Element = {
@@ -79,6 +80,7 @@ export const Element = {
   Tabs,
   TabPane,
   Row,
+  Tree
 };
 
 export default function (Vue) {

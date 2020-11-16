@@ -14,8 +14,8 @@ export default class Select extends Vue {
   @Prop(String) placeholder;
   @Prop(Boolean) disabled;
   @Prop(Boolean) clearable;
-  @Prop(Boolean) filterable;
   @Prop(Boolean) allowCreate;
+  @Prop(Boolean) defaultFirstOption;
 
   @Model('change', { type: [String, Number, Object, Array, Boolean], default: '' }) value;
 
@@ -55,6 +55,7 @@ export default class Select extends Vue {
         }
       }
     }
+    this.$emit('change', this.value);
   }
 
   get computedOptions() {

@@ -1,10 +1,6 @@
 <script>
-//TODO v-model 饶了太多层了，input事件同步数据有性能问题
 import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
-import ColumnRender from '../column-render';
-
-const FORM_REF_NAME = 'form_ref';
 
 @Component
 export default class AdminForm extends Vue {
@@ -17,13 +13,15 @@ export default class AdminForm extends Vue {
   }
 
   renderFormComponent(column) {
+    const ColumnRender = require('../column-render').default;
+
     return <ColumnRender
       value={this.getFormItemValue(column)}
+      scope={{ row: this.value }}
       on={{
         change: val => this.handleFormItemChange(column, val),
         input: val => this.handleFormItemChange(column, val)
       }}
-      onRefsChange={e => e && _.set(this, `formRefs.${column.prop}`, e)}
       column={column}
       renderCell={column.renderCell}
     />
@@ -35,7 +33,7 @@ export default class AdminForm extends Vue {
       label: column.label
     }
     if (_.isPlainObject(column.renderCell)) {
-      // column里面可能有些key 是引用类型（rules...）  改到其中的某一项会死循环渲染
+      // column里面可能有些key 是引用类型（rules...）改到其中的某一项会死循环渲染
       Object.assign(props, _.cloneDeep(_.pick(column.renderCell, ['label-width', 'required', 'rules', 'error', 'show-message', 'inline-message', 'size', 'hint'])));
     }
     props.rules = props.rules || [];
@@ -43,7 +41,7 @@ export default class AdminForm extends Vue {
       delete props.required;
       props.rules.unshift({
         required: true,
-        message: `${props.label}必填`,
+        message: this.$t('bean.fieldRequired', { field: props.label }),
         trigger: 'blur'
       });
     }
@@ -70,23 +68,27 @@ export default class AdminForm extends Vue {
     return form;
   }
 
+  getFormInstance() {
+    const formComponents = [];
+    function getFormCom(instance) {
+      if (_.get(instance, '$children.length', 0) > 0) {
+        instance.$children.forEach(child => {
+          if (_.isFunction(child.validate) && _.isFunction(child.resetFields) && _.get(child, '$el.nodeName', '').toLowerCase() === 'form') {
+            formComponents.push(child);
+          }
+          getFormCom(child);
+        });
+      }
+    }
+    getFormCom(this);
+    return formComponents;
+  }
+
   async handleValidateForm() {
-    const validateForm = async (instance) => {
-      if (instance.$refs && instance.$refs[FORM_REF_NAME]) {
-        await instance.$refs[FORM_REF_NAME].validate();
-      }
-    }
-    const validateChild = () => {
-      const formComponents = _.flattenDeep(_.map(this.formRefs, val => val)).filter(Boolean);
-      if (!formComponents.length) {
-        return;
-      }
-      return Promise.all(formComponents.map(validateForm));
-    }
-    await Promise.all([
-      validateForm(this),
-      validateChild()
-    ]);
+    const formComponents = this.getFormInstance();
+    return Promise.all(
+      formComponents.map(item => item.validate())
+    );
   }
 
   @Emit('submit')
@@ -100,9 +102,10 @@ export default class AdminForm extends Vue {
 
   @Emit('change')
   async handleReset() {
-    if (this.$refs[FORM_REF_NAME]) {
-      await this.$refs[FORM_REF_NAME].resetFields();
-    }
+    const formComponents = this.getFormInstance();
+    await Promise.all(
+      formComponents.map(item => item.resetFields())
+    )
     return this.getPureForm();
   }
 
@@ -140,7 +143,6 @@ export default class AdminForm extends Vue {
       <el-form
         class="admin-form"
         label-position="left"
-        ref={FORM_REF_NAME}
         props={{ ...this.$attrs, model: this.value }}
         nativeOnSubmit={this.handleSubmit}
       >

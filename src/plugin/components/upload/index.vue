@@ -8,7 +8,7 @@
       :accept="accept"
       @change="handleFileChange"
     />
-    <el-button type="primary" icon="el-icon-upload" @click="handleUploadBtnClick" :disabled="disabled" :loading="loading">上传</el-button>
+    <el-button type="primary" icon="el-icon-upload" @click="handleUploadBtnClick" :disabled="disabled" :loading="loading">{{ uploadButtonTextI18n }}</el-button>
     <MultipleUpload
       v-if="renderMultipleUploadDialog && limit > 1"
       v-model="showMultipleUploadDialog"
@@ -31,7 +31,7 @@
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import MultipleUpload from './multiple-upload';
 import ImageCropper from './image-cropper';
-import { uploadFile, isImageFile, imageFileNeedCrop, checkFileSize } from '../../utils';
+import { uploadFile, isImageFile, imageFileNeedCrop, checkFileSize, getImageInfo } from '../../utils';
 
 @Component({
   components: {
@@ -45,6 +45,7 @@ export default class AdminUpload extends Vue {
   @Prop({ type: Object }) cropper;
   @Prop({ type: String, default: 'image/*' }) accept;
   @Prop({ type: Number, default: 3 }) size; // 单位M
+  @Prop({ type: String }) uploadButtonText;
 
   FILE_INPUT_REF_NAME = 'fileInput';
 
@@ -53,6 +54,10 @@ export default class AdminUpload extends Vue {
   showCroppper = false;
   cropperImageURL = '';
   loading = false;
+
+  get uploadButtonTextI18n() {
+    return this.uploadButtonText || this.$t('bean.actionUpload');
+  }
 
   get fileInputIsMultiple() {
     if (this.cropper) {
@@ -76,11 +81,17 @@ export default class AdminUpload extends Vue {
   }
 
   @Emit('success')
-  async handleUpload(blob) {
+  async handleUpload(blob, tags) {
     this.loading = true;
     try {
-      const res = await uploadFile(blob);
-      return res;
+      const [uploadRes, imageInfo] = await Promise.all([
+        uploadFile(blob, tags),
+        isImageFile(blob) ? getImageInfo(blob) : {}
+      ]);
+      return {
+        ...imageInfo,
+        ...uploadRes,
+      };
     } finally {
       this.loading = false;
     }
@@ -100,7 +111,7 @@ export default class AdminUpload extends Vue {
     }
     const sizeValid = await checkFileSize(file, this.size);
     if (!sizeValid) {
-      this.$message.error(`文件大小最大: ${this.size}m`);
+      this.$message.error(this.$t('bean.maximumFileSize', { size: `${this.size}M` }));
       return;
     }
     this.handleUpload(file);

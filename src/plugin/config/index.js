@@ -6,10 +6,15 @@ export default {
     contentsCss: [],
   },
   upload: {
-    directUploadURL: '/blobs/direct_upload'
+    directUploadURL: '/blobs/direct_upload',
+    resourceBlobURL: '',
+    resourceBlobTagURL: ''
   },
   request: {
     baseURL: '/admin_api/v1',
     timeout: 30000
   },
+  i18n: {
+    localeStorageKey: 'locale'
+  }
 };

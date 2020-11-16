@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :visible="value"
-    title="上传"
+    :title="$t('bean.actionUpload')"
     append-to-body
     @close="$emit('change', false)"
     @closed="$emit('closed')"
@@ -17,10 +17,22 @@
         @change="handleFileChange"
       />
       <el-row class="btn-group">
-        <el-button type="primary" icon="el-icon-plus" :disabled="tableData.length >= limit" @click="handleUploadBtnClick">选择文件</el-button>
-        <el-button type="warning" @click="handleUploadAll" :disabled="!needUploadData.length">全部上传</el-button>
-        <el-button type="danger" @click="handleDeleteAll" :disabled="!tableData.length">全部移除</el-button>
+        <el-button type="primary" icon="el-icon-plus" :disabled="tableData.length >= limit" @click="handleUploadBtnClick">{{ $t('bean.actionChooseFile') }}</el-button>
+        <el-button type="warning" @click="handleUploadAll" :disabled="!needUploadData.length">{{ $t('bean.actionUploadAll') }}</el-button>
+        <el-button type="danger" @click="handleDeleteAll" :disabled="!tableData.length">{{ $t('bean.actionRemoveAll') }}</el-button>
       </el-row>
+
+      <FormSelect
+        v-if="resourceTagURL"
+        class="tags-selector"
+        clearable
+        multiple
+        :xRemoteSearch="fetchTags"
+        default-first-option
+        :placeholder="$t('bean.chooseBlobTagTip')"
+        allowCreate
+        v-model="tags"
+      />
 
       <el-alert show-icon type="warning" :title="uploadHint" :closable="false"></el-alert>
 
@@ -33,8 +45,8 @@
       </div>
     </div>
     <template #footer>
-      <el-button type="primary" @click="handleSubmit">确定</el-button>
-      <el-button @click="handleCloseDialog">关闭</el-button>
+      <el-button type="primary" @click="handleSubmit">{{ $t('bean.actionConfirm') }}</el-button>
+      <el-button @click="handleCloseDialog">{{ $t('bean.actionCancel') }}</el-button>
     </template>
   </el-dialog>
 </template>
@@ -42,11 +54,14 @@
 <script>
 import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import AdminTable from '../table';
+import FormSelect from '../form/select';
 import { checkFileSize, uploadFile } from '../../utils';
+import _ from 'lodash';
 
 @Component({
   components: {
-    AdminTable
+    AdminTable,
+    FormSelect
   }
 })
 export default class MultipleUploadDialog extends Vue {
@@ -60,37 +75,44 @@ export default class MultipleUploadDialog extends Vue {
   FILE_INPUT_REF_NAME = 'fileInput';
 
   tableData = [];
+  tags = [];
   loading = false;
 
-  columns = [
-    {
-      prop: 'file.name',
-      label: '文件名'
-    },
-    {
-      prop: 'file.size',
-      label: '文件大小',
-      renderCell(h, { props: { value } }) {
-        return <span>{(value / 1024 / 1024).toFixed(3) + 'M'}</span>;
+  get columns() {
+    return [
+      {
+        prop: 'file.name',
+        label: this.$t('bean.fileName')
+      },
+      {
+        prop: 'file.size',
+        label: this.$t('bean.fileSize'),
+        renderCell(h, { props: { value } }) {
+          return <span>{(value / 1024 / 1024).toFixed(3) + 'M'}</span>;
+        }
+      },
+      {
+        prop: 'file.type',
+        label: this.$t('bean.fileType'),
+      },
+      {
+        prop: 'result.url',
+        label: this.$t('bean.uploadSuccess'),
+        renderCell: 'bool'
       }
-    },
-    {
-      prop: 'file.type',
-      label: '文件类型'
-    },
-    {
-      prop: 'result.url',
-      label: '上传完成',
-      renderCell: 'bool'
-    }
-  ];
+    ];
+  }
 
   get uploadHint() {
-    return this.hint || `文件格式：${this.accept}，文件最大大小为${this.size}M，最多上传${this.limit}个文件`
+    return this.hint || `${this.$t('bean.fileFormat')}：${this.accept}，${this.$t('bean.maximumFileSize', { size: this.size })}M，${this.$t('bean.maximumUploadFileCount', { count: this.limit })}`
   }
 
   get needUploadData() {
     return this.tableData.filter(item => !item.result);
+  }
+
+  get resourceTagURL() {
+    return _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
   }
 
   actions({ $index }) {
@@ -99,18 +121,22 @@ export default class MultipleUploadDialog extends Vue {
     ]
   }
 
+  async fetchTags(name_cont) {
+    const { data } = await this.$request.get(this.resourceTagURL, { params: { name_cont } })
+    return _.map(data, ({ name }) => ({ value: name, label: name }))
+  }
+
   handleFileChange(e) {
     const files = [...e.target.files];
     // 相同文件change事件不会触发
     e.target.value = '';
     if (files.length + this.tableData.length > this.limit) {
-      this.$message.error(`最多可上传${this.limit}个文件`);
+      this.$message.error(this.$t('bean.maximumUploadFileCount', { count: this.limit }));
       return;
     }
     const validFiles = files.filter(file => checkFileSize(file, this.size));
     if (validFiles.length !== files.length) {
-      this.$message.info('已过滤不符合要求的文件');
-      return;
+      this.$message.info(this.$t('bean.filteredUploadFileTip'));
     }
     this.tableData.push(...validFiles.map(file => ({ file })));
   }
@@ -120,7 +146,7 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   async handleUpload(row, index) {
-    const result = await uploadFile(row.file);
+    const result = await uploadFile(row.file, this.tags);
     this.$set(this.tableData[index], 'result', result);
     return result;
   }
@@ -156,3 +182,9 @@ export default class MultipleUploadDialog extends Vue {
 
 }
 </script>
+
+<style scoped>
+  .tags-selector {
+    margin-top: 20px;
+  }
+</style>

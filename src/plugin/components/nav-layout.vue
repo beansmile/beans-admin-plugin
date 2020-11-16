@@ -19,7 +19,7 @@
           type="text"
           icon="el-icon-back"
           @click="$emit('back')"
-        >返回</el-button>
+        >{{ $t('bean.actionNavBack') }}</el-button>
 
         <div class="page-title">
           <slot name="header-title" />
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="page-content">
-        <router-view :key="$route.fullPath" />
+        <router-view :key="routerViewKey" />
       </div>
     </div>
   </div>
@@ -39,6 +39,7 @@
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import NavMenu from './nav-menu';
+  import qs from 'qs';
 
   @Component({
     components: {
@@ -50,5 +51,10 @@
     @Prop({ type: Boolean }) showBack;
     @Prop({ type: String }) logoUrl;
     collapsed = false;
+
+    get routerViewKey() {
+      const { path, query } = this.$route;
+      return `${path}?${qs.stringify(query)}`;
+    }
   }
 </script>

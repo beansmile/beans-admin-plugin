@@ -2,13 +2,18 @@
 import Moment from './moment';
 import _ from 'lodash';
 import NestForm from './form/nest';
+import StaticNestForm from './form/static-nest';
 import FormSelect from './form/select';
 import Upload from './form/upload';
 import { Element } from '../element';
 import Table from './table';
 import CKEditor from './ck-editor';
 import Link from './link';
+import ListSelect from './list-select';
+import LinkSelect from './link-select';
+import PageEditor from './page-editor';
 import { abilityService } from '../services';
+import UncontrolledInput from './form/uncontrolled-input';
 
 const RenderDate = {
   functional: true,
@@ -29,8 +34,16 @@ const DateTime = {
 const TextArea = {
   functional: true,
   render(h, context) {
-    const data = _.merge({}, context.data, { props: { type: 'textarea' } });
+    const data = _.merge({ attrs: { rows: 10 } }, context.data, { props: { type: 'textarea' } });
     return h('el-input', data, context.children);
+  }
+}
+
+const UncontrolledTextArea = {
+  functional: true,
+  render(h, context) {
+    const data = _.merge({ attrs: { rows: 10, type: 'textarea' } }, context.data);
+    return h(UncontrolledInput, data, context.children);
   }
 }
 
@@ -53,8 +66,8 @@ export const BoolTag = {
   functional: true,
   render(h, context) {
     const map = {
-      true: { type: 'success', name: '是' },
-      false: { type: 'danger', name: '否' }
+      true: { type: 'success', name: context.parent.$t('bean.yes') },
+      false: { type: 'danger', name: context.parent.$t('bean.no') }
     }
     const bool = Boolean(context.props.value);
     return <el-tag type={map[bool].type}>{map[bool].name}</el-tag>
@@ -88,10 +101,10 @@ export const StorageAttachment = {
     return (<div class="multi-attachments" onClick={e => e.stopPropagation()}>
       {
         attachments.map((attachment, index) => {
-          if (!attachment.contentType) return;
-          if (attachment.contentType.match(/image/)) {
+          if (!attachment.content_type) return;
+          if (attachment.content_type.match(/image/)) {
             const previewSrcList = attachments.slice(index, attachments.length).concat(attachments.slice(0, index)).
-              filter((attachment) => { return attachment.contentType.match(/image/) }).
+              filter((attachment) => { return attachment.content_type.match(/image/) }).
               map((attachment) => { return attachment.url })
 
             return (
@@ -105,7 +118,7 @@ export const StorageAttachment = {
                 />
               </div>
             )
-          } else if (attachment.contentType.match(/video/)) {
+          } else if (attachment.content_type.match(/video/)) {
             return <div><video controls style={{ height }} src={attachment.url}></video></div>
           } else {
             return (
@@ -123,7 +136,7 @@ export const StorageAttachment = {
 export const RouteButton = {
   functional: true,
   render(h, context) {
-    const buttonName = context.children || context.props.label || context.props.title || '链接';
+    const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.link');
     return (
       <Link {...context}>
         <el-button type="primary" size="mini" props={context.props}>{buttonName}</el-button>
@@ -135,20 +148,21 @@ export const RouteButton = {
 export const ConfirmButton = {
   functional: true,
   render(h, context) {
-    const buttonName = context.children || context.props.label || context.props.title || '删除';
+    const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.actionDelete');
     const can = context.props.can;
+    const buttonType = context.props.type || 'danger'
     if (!abilityService.can(can)) {
       return null;
     }
     return (
       // elementui 这里的事件名是onConfirm, onCancel...
       <el-popconfirm
-        title={`确定${buttonName}？`}
+        title={`${context.parent.$t('bean.actionConfirm')} ${buttonName}？`}
         on={context.listeners}
         onOnConfirm={context.listeners.confirm || _.noop}
         onOnCancel={context.listeners.cancel || _.noop}
         scopedSlots={{
-          reference: () => <el-button type="danger" size="mini">{buttonName}</el-button>
+          reference: () => <el-button type={buttonType} size="mini">{buttonName}</el-button>
         }}
         props={context.props}
       >
@@ -157,6 +171,36 @@ export const ConfirmButton = {
   }
 }
 
+export const DialogFormButton = {
+  functional: true,
+  render(h, context) {
+    const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.link');
+    const can = context.props.can;
+    if (!abilityService.can(can)) {
+      return null;
+    }
+    return (
+      <bean-dialog-form
+        title={buttonName}
+        columns={context.props.columns}
+        value={context.props.value}
+        submitHandler={context.props.submitHandler}
+        on={context.listeners}
+        props={context.props}
+      >
+        <el-button type="primary" size="mini">{buttonName}</el-button>
+      </bean-dialog-form>
+    )
+  }
+}
+
+export const Mail = {
+  functional: true,
+  render(h, context) {
+    const value = context.props.value;
+    return <a href={`mailto:${value}`}>{value}</a>
+  }
+}
 
 const COMPONENT_PRE_INSTALLED = {
   ..._.mapKeys(Element, (value, key) => key.charAt(0).toLowerCase() + key.slice(1)),
@@ -168,6 +212,8 @@ const COMPONENT_PRE_INSTALLED = {
   routeButton: RouteButton,
   confirmButton: ConfirmButton,
   nestForm: NestForm,
+  staticNestForm: StaticNestForm,
+  dialogFormButton: DialogFormButton,
   select: FormSelect,
   table: Table,
   bool: BoolTag,
@@ -176,6 +222,12 @@ const COMPONENT_PRE_INSTALLED = {
   storageAttachment: StorageAttachment,
   editor: CKEditor,
   radioGroup: RadioGroup,
+  listSelect: ListSelect,
+  linkSelect: LinkSelect,
+  pageEditor: PageEditor,
+  mail: Mail,
+  uncontrolledInput: UncontrolledInput,
+  uncontrolledTextarea: UncontrolledTextArea
 }
 
 function getRenderContext({ context, config = {} }) {

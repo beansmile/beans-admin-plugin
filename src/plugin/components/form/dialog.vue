@@ -14,12 +14,12 @@
         v-bind="$attrs"
         class="admin-form-dialog"
         @submit="handleSubmit"
-        @change="$emit('change', $event)"
+        @change="handleChange"
       >
         <template v-slot:action="scope">
           <div class="box-actions">
-            <el-button type="primary" @click="scope.submit" :loading="loading">确定</el-button>
-            <el-button @click="handleCloseDialog">取消</el-button>
+            <el-button type="primary" @click="scope.submit" :loading="loading">{{ $t('bean.actionConfirm') }}</el-button>
+            <el-button @click="handleCloseDialog">{{ $t('bean.actionCancel') }}</el-button>
           </div>
         </template>
       </AdminForm>
@@ -39,8 +39,8 @@ import AdminForm from './index';
 export default class FormDialog extends Vue {
   @Model('change', { type: Object, default: () => ({}) }) value;
   @Prop(Array) columns;
-  @Prop({ type: String, default: '弹窗' }) title;
-  @Prop(Function) onSubmit;
+  @Prop({ type: String, default: '' }) title;
+  @Prop(Function) submitHandler;
 
   loading = false;
   visible = false;
@@ -54,15 +54,20 @@ export default class FormDialog extends Vue {
   }
 
   async handleSubmit() {
-    if (this.onSubmit) {
+    if (this.submitHandler) {
       this.loading = true;
       try {
-        await this.onSubmit(JSON.parse(JSON.stringify(this.value)));
+        await this.submitHandler(JSON.parse(JSON.stringify(this.value)));
       } finally {
         this.loading = false;
       }
     }
     this.visible = false;
+  }
+
+  handleChange(data) {
+    this.value = data;
+    this.$emit('change', data);
   }
 }
 </script>

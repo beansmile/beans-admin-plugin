@@ -9,13 +9,22 @@
       :actions="sourcePageAction"
       :pagination-props="state.pagination"
       :table-events="tablePageEvents"
+      :table-props="tableProps"
       :action-column-props="actionColumnProps"
+      ref="tablePage"
     >
       <template #after-filter>
         <div class="box-actions">
           <AdminLink :to="{ name: `${resource}.new` }" v-if="actionButtons.includes('new')">
-            <el-button type="primary">新建</el-button>
+            <el-button type="primary">{{ $t('bean.actionNew') }}</el-button>
           </AdminLink>
+          <ExportButton
+            :button-text="$t('bean.actionExport')"
+            v-bind="exportButtonProps"
+            v-if="exportProps"
+            :before-export="handleBeforeExport"
+          />
+          <slot name="action" />
         </div>
       </template>
     </TablePage>
@@ -23,6 +32,7 @@
       v-else-if="type === 'show'"
       :value="state.data"
       :columns="sourcePageColumns"
+      :tabs="tabs"
       :actions="sourcePageAction"
     />
     <FormPage
@@ -43,25 +53,31 @@ import FormPage from './form';
 import _ from 'lodash';
 import { request } from '../../utils';
 import AdminLink from '../link';
+import ExportButton from '../export-button';
 
 @Component({
   components: {
     TablePage,
     ShowPage,
     FormPage,
-    AdminLink
+    AdminLink,
+    ExportButton
   }
 })
 export default class AdminSourcePage extends Vue {
   @Prop(String) type; // index new edit show
   @Prop(String) title;
+  @Prop({ type: String, default: '' }) namespace;
   @Prop(String) resource;
   @Prop([Array, Function]) columns;
+  @Prop(Array) tabs;
   @Prop([Array, Function]) formColumns;
   @Prop([Array, Function]) filterColumns;
   @Prop({ type: Array, default: () => ['new', 'show'] }) actionButtons;
+  @Prop(Object) exportProps;
   @Prop([Array, Function]) actions;
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
+  @Prop({ type: Object, default: () => ({}) }) tableProps;
   @Prop(Function) beforeSubmit;
   @Prop(Function) onFormSubmit;
   @Prop(Function) onFetchData;
@@ -70,6 +86,15 @@ export default class AdminSourcePage extends Vue {
 
   formLoading = false;
   state = {}
+
+  get exportButtonProps() {
+    return {
+      url: `${this.namespace}${this.resource}/export`,
+      params: { ...this.$route.query, page: undefined },
+      fileName: `${this.pageTitle}.xlsx`,
+      ...this.exportProps
+    }
+  }
 
   get tablePageEvents() {
     const defaultEvents = {};
@@ -83,9 +108,15 @@ export default class AdminSourcePage extends Vue {
   }
 
   get sourcePageColumns() {
-    return this.getColumns(this.columns).concat(
-      this.getColumns(_.get(this, '$vadminConfig.sourcePage.columns', []))
-    );
+    const columns = this.getColumns(this.columns);
+    const defaultColumns = this
+      .getColumns(_.get(this, '$vadminConfig.sourcePage.columns', []))
+      .filter(defaultColumn => !columns.find(userColumn => userColumn.prop === defaultColumn.prop));
+    return columns.concat(defaultColumns)
+      .map(item => ({
+        ...item,
+        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
+      }));
   }
 
   get sourcePageFormColumns() {
@@ -93,9 +124,15 @@ export default class AdminSourcePage extends Vue {
       data: this.state.data || {},
       change: this.syncForm
     }
-    return this.getColumns(this.formColumns, exportParams).concat(
-      this.getColumns(_.get(this, '$vadminConfig.sourcePage.formColumns', []), exportParams)
-    );
+    const columns = this.getColumns(this.formColumns, exportParams);
+    const defaultColumns = this
+      .getColumns(_.get(this, '$vadminConfig.sourcePage.formColumns', []), exportParams)
+        .filter(defaultColumn => !columns.find(userColumn => userColumn.prop === defaultColumn.prop));
+    return columns.concat(defaultColumns)
+      .map(item => ({
+        ...item,
+        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
+      }));
   }
 
   get sourcePageFilterColumns() {
@@ -119,13 +156,13 @@ export default class AdminSourcePage extends Vue {
 
   get pageTitle() {
     if (this.type === 'new') {
-      return '新建' + this.title;
+      return `${this.$t('bean.actionNew')}-${this.title}`;
     }
     if (this.type === 'edit') {
-      return '编辑' + this.title;
+      return `${this.$t('bean.actionEdit')}-${this.title}`;
     }
     if (this.type === 'show') {
-      return this.title + '详情';
+      return `${this.title}-${this.$t('bean.actionDetail')}`
     }
     return this.title;
   }
@@ -142,14 +179,14 @@ export default class AdminSourcePage extends Vue {
     }
 
     if (this.type === 'index') {
-      const { data, pagination } = await request.get(`/${this.resource}`, { params: { ...this.$route.query } });
+      const { data, pagination } = await request.get(`/${this.namespace}${this.resource}`, { params: { ...this.$route.query } });
       this.$set(this.state, 'data', data);
       this.$set(this.state, 'pagination', pagination);
       return;
     }
 
     if (this.type === 'edit' || this.type === 'show') {
-      const data = await request.get(`/${this.resource}/${this.$route.params.id}`);
+      const data = await request.get(`/${this.namespace}${this.resource}/${this.$route.params.id}`);
       this.originData = _.cloneDeep(data);
       this.$set(this.state, 'data', data);
     }
@@ -180,8 +217,8 @@ export default class AdminSourcePage extends Vue {
   }
 
   async handleDelete(id) {
-    await request.delete(`/${this.resource}/${id}`);
-    this.$message.success('删除成功');
+    await request.delete(`/${this.namespace}${this.resource}/${id}`);
+    this.$message.success(this.$t('bean.deleteSuccess'));
     if (this.type === 'show') {
       this.$router.go(-1);
       return;
@@ -192,7 +229,7 @@ export default class AdminSourcePage extends Vue {
   async handleSubmit(data) {
     try {
       this.formLoading = true;
-      const hookParams = { data, originData: this.originData, state: this.state, type: this.type, resource: this.resource };
+      const hookParams = { data, originData: this.originData, state: this.state, type: this.type, resource: this.resource, namespace: this.namespace };
       if (_.isFunction(this.onFormSubmit)) {
         await this.onFormSubmit(hookParams);
       } else {
@@ -201,14 +238,27 @@ export default class AdminSourcePage extends Vue {
           body = await this.beforeSubmit(hookParams);
         }
         const action = this.type === 'new' ? 'post' : 'put';
-        const path = this.type === 'new' ? `/${this.resource}` : `/${this.resource}/${body.id}`;
+        const path = this.type === 'new' ? `/${this.namespace}${this.resource}` : `/${this.namespace}${this.resource}/${body.id}`;
         const { id } = await request[action](path, body);
-        const message = this.type === 'new' ? '创建成功' : '更新成功';
+        const message = this.type === 'new' ? this.$t('bean.createSuccess') : this.$t('bean.updateSuccess');
         this.$message.success(message);
         this.$router.push({ name: `${this.resource}.show`, params: { id } });
       }
     } finally {
       this.formLoading = false;
+    }
+  }
+
+  async handleBeforeExport(body) {
+    this.$refs.tablePage.handleAutoFilter();
+    await this.$nextTick();
+    return {
+      ...body,
+      params: {
+        ...body.params,
+        ...this.$route.query,
+        page: undefined
+      }
     }
   }
 }

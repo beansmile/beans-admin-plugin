@@ -1,32 +1,36 @@
-import { Ability } from '@casl/ability';
 import _ from 'lodash';
 
-function createSubject(name, value = {}) {
-  return new class {
-    constructor() {
-      Object.assign(this, value);
-      this.constructor.modelName = name;
-    }
-  }
-}
-
 class AbilityService {
-  $rules = [];
-  ability = new Ability([]);
+  $rules = null;
 
   set rules(rules) {
     this.$rules = rules;
-    this.ability.update(rules);
   }
 
+  check(rule) {
+    const [subject, action] = rule.split('.');
+    return _.get(this.$rules, subject, []).includes(action);
+  }
+
+  // admin_users.index
+  routeNameCan(routeName = '') {
+    const [subject, action] = routeName.split('.');
+    const actionMap = {
+      'index': 'read',
+      'show': 'read',
+      'new': 'create',
+      'edit': 'update'
+    }
+    const abilityAction = actionMap[action] || 'read';
+    return this.can(`${subject}.${abilityAction}`);
+  }
+
+  // admin_users.read || [admin_users.read]
   can(rules) {
-    if (!rules) {
+    if (!this.$rules) {
       return true;
     }
-    return _.flatten([rules])
-      .every(
-        ({ action, subject, field, value }) => this.ability.can(action, _.isEmpty(value) ? subject : createSubject(subject, value), field)
-      );
+    return _.flatten([rules]).every(rule => this.check(rule));
   }
 }
 

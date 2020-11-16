@@ -38,6 +38,7 @@
     .item-resource {
       position: relative;
       margin-right: 15px;
+      border: 1px solid $border-light;
 
       &:last-child {
         margin-right: 0;
@@ -50,30 +51,10 @@
         z-index: 1;
       }
     }
-
-    .image {
-      width: 100px;
-      height: 100px;
-      border: 1px solid $border-light;
-
-      img {
-        // object-fit有性能问题
-        // https://coderwall.com/p/j5udlw/improve-scroll-performance-of-chrome-when-using-background-size-cover
-        transform: translate3d(0, 0, 0);
-      }
-    }
-
-    .video {
-      width: 200px;
-    }
   }
 
   .drag-tip {
     font-size: 12px;
     color: #606266;
-  }
-
-  .download-url {
-    color: $primary;
   }
 }

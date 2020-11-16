@@ -9,8 +9,8 @@
   >
     <template v-slot:action>
       <el-form-item>
-        <el-button type="primary" native-type="submit">筛选</el-button>
-        <el-button @click="$emit('reset')">重置</el-button>
+        <el-button type="primary" native-type="submit">{{ $t('bean.actionFilter') }}</el-button>
+        <el-button @click="$emit('reset')">{{ $t('bean.actionReset') }}</el-button>
       </el-form-item>
     </template>
   </AdminForm>

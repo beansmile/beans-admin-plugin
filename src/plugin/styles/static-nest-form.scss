@@ -1,0 +1,13 @@
+.admin-static-nest-form {
+  .static-nest-form-group {
+    position: relative;
+    border: 1px solid $border-light;
+    padding: 15px 15px 0;
+    margin-bottom: 15px;
+
+    .el-form-item  {
+      margin-bottom: 22px;
+      display: flex;
+    }
+  }
+}

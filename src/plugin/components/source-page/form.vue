@@ -14,7 +14,7 @@
       </AdminForm>
     </div>
     <div class="page-footer">
-      <el-button type="primary" @click="handleSubmit" :loading="loading">提交</el-button>
+      <el-button type="primary" @click="handleSubmit" :loading="loading">{{ $t('bean.actionSubmit') }}</el-button>
     </div>
   </div>
 </template>
