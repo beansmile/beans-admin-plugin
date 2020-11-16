@@ -7,6 +7,7 @@
     :actions="actions"
     :form="form"
     title="{[ resourceName ]}"
+    namespace="bean/"
     resource="{[ resourceName ]}"
   />
 </template>
@@ -41,7 +42,8 @@ export default class {[ className ]} extends Vue {
     return [
       {
         prop: 'id',
-        label: '编号'
+        label: '编号',
+        width: 80,
       }
     ];
   }
@@ -72,6 +74,7 @@ export default class {[ className ]} extends Vue {
    * @param {Object} scope.row - 详情页/表格行 数据
    * @param {Object} sourcePageScope
    * @param {Function} sourcePageScope.remove - sourcePage删除方法
+   * @param {Function} sourcePageScope.reload - sourcePage重新请求页面数据
    */
   actions({ row }, { remove }) {
     return [
@@ -87,7 +90,7 @@ export default class {[ className ]} extends Vue {
         props: {
           label: '删除',
           type: 'danger',
-          can: { subject: '{[ modelName ]}', action: 'destroy', value: row }
+          can: '{[ resourceName ]}.destroy'
         },
         on: {
           confirm: () => remove(row.id)
