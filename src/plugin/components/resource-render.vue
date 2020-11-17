@@ -3,21 +3,21 @@
   <el-image
     @click.stop
     v-else-if="resourceType.includes('image')"
-    class="image"
+    class="resource-item image"
     :src="value.url"
-    v-bind="{ fit: 'contain', previewSrcList: [value.url], ...imageProps }"
+    v-bind="{ fit: 'contain', previewSrcList: [value.url], ...imageProps, ...$attrs }"
   />
   <video
     @click.stop
     v-else-if="resourceType.includes('video')"
-    class="video"
+    class="resource-item video"
     :src="value.url"
     v-bind="{ controls: true, ...videoProps }"
   />
   <a
     @click.stop
     v-else
-    class="attachment"
+    class="resource-item attachment"
     :href="value.url || value"
     style="display: block;"
     download

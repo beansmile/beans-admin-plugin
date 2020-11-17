@@ -92,45 +92,30 @@ const RadioGroup = {
 export const StorageAttachment = {
   functional: true,
   render(h, context) {
-    const { value, width = '100px', height = '100px', borderRadius = 0, ...opts } = context.props;
+    const { value, style, width, height, borderRadius = 0, ...opts } = context.props;
     const attachments = _.flatten([value]).filter(Boolean);
     const fit = opts.fit || opts.objectFit || 'contain';
-
-    if (!attachments.length) {
-      return '/';
-    }
-    return (<div class="multi-attachments" onClick={e => e.stopPropagation()}>
-      {
-        attachments.map((attachment, index) => {
-          if (!attachment.content_type) return;
-          if (attachment.content_type.match(/image/)) {
+    const componentStyle = { ...style, width, height, borderRadius };
+    return (
+      <div class="multi-attachments" onClick={e => e.stopPropagation()}>
+        {
+          attachments.map((attachment, index) => {
+            if (!attachment.content_type) return;
             const previewSrcList = attachments.slice(index, attachments.length).concat(attachments.slice(0, index)).
-              filter((attachment) => { return attachment.content_type.match(/image/) }).
-              map((attachment) => { return attachment.url })
-
-            return (
-              <div>
-                <el-image
-                  class="image"
-                  style={{ width, height, borderRadius }}
-                  src={attachment.url}
-                  fit={fit}
-                  preview-src-list={previewSrcList}
-                />
-              </div>
-            )
-          } else if (attachment.content_type.match(/video/)) {
-            return <div><video controls style={{ height }} src={attachment.url}></video></div>
-          } else {
-            return (
-              <div><a href={attachment.url} style="display: block;" download>
-                <el-button type="primary">{attachment.filename}</el-button>
-              </a></div>
-            )
-          }
-        })
-      }
-    </div>)
+                filter((attachment) => { return attachment.content_type.match(/image/) }).
+                map((attachment) => { return attachment.url });
+            const imageProps = { previewSrcList, fit, ...opts.imageProps };
+            return <ResourceRender
+              imageProps={imageProps}
+              videoProps={opts.videoProps}
+              style={componentStyle}
+              value={attachment}
+              key={index}
+            />;
+          })
+        }
+      </div>
+    );
   }
 }
 
