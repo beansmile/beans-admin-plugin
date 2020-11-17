@@ -3,11 +3,13 @@
     :visible="value"
     :title="$t('bean.actionUpload')"
     append-to-body
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    :show-close="false"
     @close="$emit('change', false)"
     @closed="$emit('closed')"
-    v-loading="loading"
   >
-    <div class="admin-multiple-upload">
+    <div class="admin-multiple-upload" v-loading="loading">
       <input
         type="file"
         multiple
@@ -16,8 +18,20 @@
         :accept="accept"
         @change="handleFileChange"
       />
+
+      <input
+        type="file"
+        multiple
+        webkitdirectory
+        directory
+        class="input-file"
+        :ref="DIRECTORY_INPUT_REF_NAME"
+        @change="handleDirectoryChange"
+      >
+
       <el-row class="btn-group">
         <el-button type="primary" icon="el-icon-plus" :disabled="tableData.length >= limit" @click="handleUploadBtnClick">{{ $t('bean.actionChooseFile') }}</el-button>
+        <el-button v-if="directory" type="primary" icon="el-icon-plus" :disabled="tableData.length >= limit" @click="handleUploadDirectoryBtnClick">{{ $t('bean.actionChooseDirectory') }}</el-button>
         <el-button type="warning" @click="handleUploadAll" :disabled="!needUploadData.length">{{ $t('bean.actionUploadAll') }}</el-button>
         <el-button type="danger" @click="handleDeleteAll" :disabled="!tableData.length">{{ $t('bean.actionRemoveAll') }}</el-button>
       </el-row>
@@ -45,8 +59,8 @@
       </div>
     </div>
     <template #footer>
-      <el-button type="primary" @click="handleSubmit">{{ $t('bean.actionConfirm') }}</el-button>
-      <el-button @click="handleCloseDialog">{{ $t('bean.actionCancel') }}</el-button>
+      <el-button @click="handleCloseDialog" :disabled="loading" size="medium">{{ $t('bean.actionClose') }}</el-button>
+      <el-button type="primary" @click="handleSubmit" :disabled="loading" size="medium">{{ $t('bean.actionConfirm') }}</el-button>
     </template>
   </el-dialog>
 </template>
@@ -71,8 +85,10 @@ export default class MultipleUploadDialog extends Vue {
   @Prop({ type: String, default: 'image/*' }) accept;
   @Prop({ type: Number, default: 3 }) size; // 单位M
   @Prop(String) hint; // 提示
+  @Prop(Boolean) directory;
 
   FILE_INPUT_REF_NAME = 'fileInput';
+  DIRECTORY_INPUT_REF_NAME = 'fileDirectory';
 
   tableData = [];
   tags = [];
@@ -130,6 +146,23 @@ export default class MultipleUploadDialog extends Vue {
     const files = [...e.target.files];
     // 相同文件change事件不会触发
     e.target.value = '';
+    this.putValidFilesToTable(files);
+  }
+
+  handleDirectoryChange(e) {
+    const files = [...e.target.files]
+      .filter(item => !item.name.startsWith('.'))
+      .filter(item => {
+        if (this.accept === '*') {
+          return true;
+        }
+        return !!item.type.match(this.accept);
+      });
+    e.target.value = '';
+    this.putValidFilesToTable(files);
+  }
+
+  putValidFilesToTable(files) {
     if (files.length + this.tableData.length > this.limit) {
       this.$message.error(this.$t('bean.maximumUploadFileCount', { count: this.limit }));
       return;
@@ -143,6 +176,10 @@ export default class MultipleUploadDialog extends Vue {
 
   handleUploadBtnClick() {
     this.$refs[this.FILE_INPUT_REF_NAME].click();
+  }
+
+  handleUploadDirectoryBtnClick() {
+    this.$refs[this.DIRECTORY_INPUT_REF_NAME].click();
   }
 
   async handleUpload(row, index) {

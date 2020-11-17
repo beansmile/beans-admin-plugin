@@ -19,6 +19,7 @@ export default {
     actionNavBack: '返回',
     actionOperation: '操作',
     actionChooseFile: '选择文件',
+    actionChooseDirectory: '选择文件夹',
     actionUploadAll: '全部上传',
     actionRemoveAll: '全部移除',
     deleteSuccess: '删除成功',

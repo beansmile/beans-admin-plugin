@@ -103,6 +103,10 @@ export function install(Vue, config = {}) {
     {
       name: 'lang-switcher',
       component: require('./lang-switcher').default
+    },
+    {
+      name: 'resource-render',
+      component: require('./resource-render').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);

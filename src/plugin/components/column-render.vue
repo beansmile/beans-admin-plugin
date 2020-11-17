@@ -12,6 +12,7 @@ import Link from './link';
 import ListSelect from './list-select';
 import LinkSelect from './link-select';
 import PageEditor from './page-editor';
+import ResourceRender from './resource-render';
 import { abilityService } from '../services';
 import UncontrolledInput from './form/uncontrolled-input';
 
@@ -227,7 +228,8 @@ const COMPONENT_PRE_INSTALLED = {
   pageEditor: PageEditor,
   mail: Mail,
   uncontrolledInput: UncontrolledInput,
-  uncontrolledTextarea: UncontrolledTextArea
+  uncontrolledTextarea: UncontrolledTextArea,
+  resourceRender: ResourceRender
 }
 
 function getRenderContext({ context, config = {} }) {

@@ -1,26 +1,48 @@
+<template>
+  <span v-if="!value">/</span>
+  <el-image
+    @click.stop
+    v-else-if="resourceType.includes('image')"
+    class="image"
+    :src="value.url"
+    v-bind="{ fit: 'contain', previewSrcList: [value.url], ...imageProps }"
+  />
+  <video
+    @click.stop
+    v-else-if="resourceType.includes('video')"
+    class="video"
+    :src="value.url"
+    v-bind="{ controls: true, ...videoProps }"
+  />
+  <a
+    @click.stop
+    v-else
+    class="attachment"
+    :href="value.url || value"
+    style="display: block;"
+    download
+    target="_blank"
+  >
+    {{ value.filename || value.url || value }}
+  </a>
+</template>
+
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
+  import _ from 'lodash';
 
   @Component
   export default class AdminResourceRender extends Vue {
     @Prop([Object, String]) value;
     @Prop(String) type;
+    @Prop(Object) imageProps;
+    @Prop(Object) videoProps;
 
-    render() {
-      if (!this.value) {
-        return null;
+    get resourceType() {
+      if (this.type) {
+        return this.type;
       }
-      if (this.type === 'image' || /image/.test(this.value.content_type)) {
-        return <el-image class="image" src={this.value.url} fit="contain" />
-      }
-      if (this.type === 'video' || /video/.test(this.value.content_type)) {
-        return <video class="video" src={this.value.url} />
-      }
-      return (
-        <a class="attachment" href={this.value.url} style="display: block;" download target="_blank">
-          {this.value.filename || this.value.url}
-        </a>
-      )
+      return _.get(this.value, 'content_type') || '';
     }
   }
 </script>

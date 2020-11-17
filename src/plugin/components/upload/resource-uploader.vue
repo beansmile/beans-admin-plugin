@@ -58,7 +58,7 @@
               >
                 <i class="el-icon-circle-close" slot="reference" @click.stop></i>
               </el-popconfirm>
-              <ResourceRender :value="item" />
+              <ResourceRender :value="item" :image-props="{ previewSrcList: [] }" />
             </div>
             <p>{{ item.filename }}</p>
           </div>

@@ -19,6 +19,7 @@ export default {
     actionNavBack: 'Back',
     actionOperation: 'Operation',
     actionChooseFile: 'Choose File',
+    actionChooseDirectory: 'Choose Folder',
     actionUploadAll: 'Upload All',
     actionRemoveAll: 'Remove All',
     deleteSuccess: 'Deletion succeeded',
