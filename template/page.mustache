@@ -5,6 +5,7 @@
     :form-columns="formColumns"
     :filter-columns="filterColumns"
     :actions="actions"
+    :batch-actions="batchActions"
     :form="form"
     title="{[ resourceName ]}"
     namespace="bean/"
@@ -98,6 +99,21 @@ export default class {[ className ]} extends Vue {
       }
     ].filter(Boolean);
   }
+
+  /**
+   * @param {Object} scope -表格 scope 数据
+   * @param {Object} scope.selection - 表格已选择行数据
+   * @param {Object} sourcePageScope
+   * @param {Function} sourcePageScope.remove - sourcePage删除方法
+   * @param {Function} sourcePageScope.reload - sourcePage重新请求页面数据
+   */
+  batchActions() {
+  // batchActions({ selection }, { remove, reload }) {
+    return [
+      // () => <el-button onClick={() => console.log(selection)}>批处理({ selection.length })</el-button>
+    ];
+  }
+
 }
 
 

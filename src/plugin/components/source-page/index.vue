@@ -4,7 +4,7 @@
     <TablePage
       v-if="type === 'index'"
       :value="state.data"
-      :table-columns="sourcePageColumns"
+      :table-columns="sourcePageIndexColumns"
       :filter-columns="sourcePageFilterColumns"
       :actions="sourcePageAction"
       :pagination-props="state.pagination"
@@ -18,6 +18,11 @@
           <AdminLink :to="{ name: `${resource}.new` }" v-if="actionButtons.includes('new')">
             <el-button type="primary">{{ $t('bean.actionNew') }}</el-button>
           </AdminLink>
+          <ColumnRender
+            v-for="(batchAction, index) in sourcePageBatchAction"
+            :key="index"
+            :renderCell="batchAction"
+          />
           <ExportButton
             :button-text="$t('bean.actionExport')"
             v-bind="exportButtonProps"
@@ -54,6 +59,7 @@ import _ from 'lodash';
 import { request } from '../../utils';
 import AdminLink from '../link';
 import ExportButton from '../export-button';
+import ColumnRender from '../column-render';
 
 @Component({
   components: {
@@ -61,7 +67,8 @@ import ExportButton from '../export-button';
     ShowPage,
     FormPage,
     AdminLink,
-    ExportButton
+    ExportButton,
+    ColumnRender
   }
 })
 export default class AdminSourcePage extends Vue {
@@ -76,6 +83,7 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: Array, default: () => ['new', 'show'] }) actionButtons;
   @Prop(Object) exportProps;
   @Prop([Array, Function]) actions;
+  @Prop([Array, Function]) batchActions;
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
   @Prop({ type: Object, default: () => ({}) }) tableProps;
   @Prop(Function) beforeSubmit;
@@ -101,10 +109,19 @@ export default class AdminSourcePage extends Vue {
     if (this.actionButtons.includes('show')) {
       defaultEvents['row-click'] =  ({ id }) => this.$router.push({ name: `${this.resource}.show`, params: { id } });
     }
+    if (this.sourcePageBatchAction.length) {
+      defaultEvents['selection-change'] = selection => this.$set(this.state, 'selection', selection);
+    }
     return {
       ...defaultEvents,
       ...this.tableEvents
     }
+  }
+
+  get sourcePageIndexColumns() {
+    return (
+      this.sourcePageBatchAction.length ? [{ label: '', type: 'selection', width: 55 }] : []
+    ).concat(this.sourcePageColumns);
   }
 
   get sourcePageColumns() {
@@ -150,6 +167,19 @@ export default class AdminSourcePage extends Vue {
           reload: this.fetchData,
         });
       }
+    }
+    return [];
+  }
+
+  get sourcePageBatchAction() {
+    if (_.isArray(this.batchActions)) {
+      return this.batchActions;
+    }
+    if (_.isFunction(this.batchActions)) {
+      return this.batchActions({ selection: this.state.selection || [] }, {
+        remove: this.handleDelete,
+        reload: this.fetchData,
+      });
     }
     return [];
   }
