@@ -12,8 +12,6 @@
     "generate": "node ./scripts/generate-resource.js"
   },
   "dependencies": {
-    "@casl/ability": "^4.1.6",
-    "@casl/vue": "^1.1.1",
     "ckeditor": "https://github.com/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7",
     "cropperjs": "^1.5.7",
     "element-ui": "^2.13.2",

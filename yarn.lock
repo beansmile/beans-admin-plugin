@@ -684,18 +684,6 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@casl/ability@^4.1.6":
-  version "4.1.6"
-  resolved "https://registry.npmjs.org/@casl/ability/-/ability-4.1.6.tgz#89f263903adfc9316cedff329ad615564662448a"
-  integrity sha512-ZI30fRacHKCCrWJn1pmxx/+IKUkoycVNz+Mge9EeIH+esDT7nydgWbitVPnlBAbxQXz5eybPAvfPSg3WOa2izw==
-  dependencies:
-    sift "^13.0.0"
-
-"@casl/vue@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/@casl/vue/-/vue-1.1.1.tgz#e3aa3125b17ec83cabfdd8d3b5029cc57981d54e"
-  integrity sha512-lJnPGJ2sdid22IGNPegWsMH0136WSMKZqqZb2YjLWL/vsRvw+wuLZE+yaR7enEfETmH5KZE55WAfXpyZgy99hQ==
-
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@intervolga/optimize-cssnano-plugin/-/optimize-cssnano-plugin-1.0.6.tgz#be7c7846128b88f6a9b1d1261a0ad06eb5c0fdf8"
@@ -8156,11 +8144,6 @@ shell-quote@^1.6.1:
     array-map "~0.0.0"
     array-reduce "~0.0.0"
     jsonify "~0.0.0"
-
-sift@^13.0.0:
-  version "13.3.1"
-  resolved "https://registry.npmjs.org/sift/-/sift-13.3.1.tgz#ca091e594724ec153e5dae15390f5ef144f06bc3"
-  integrity sha512-cM9m8LY5Jm8K2E3+dNw4g9/nXeiCSCkzjavgo6iOrfTNVjm26jDKov+HhWpizb56MOuyZlpNrO2YwovANi9svQ==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
