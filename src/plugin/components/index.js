@@ -107,6 +107,10 @@ export function install(Vue, config = {}) {
     {
       name: 'resource-render',
       component: require('./resource-render').default
+    },
+    {
+      name: 'page-generator',
+      component: require('./page-generator').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
