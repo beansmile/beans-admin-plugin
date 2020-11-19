@@ -16,5 +16,8 @@ module.exports = {
     ecmaFeatures: {
       legacyDecorators: true
     },
+  },
+  globals: {
+    qq: true
   }
 }
