@@ -1,37 +1,40 @@
 <template>
   <div classs="page-editor-swiper">
-    <div class="preview" :style="style">
-      <div class="box-indiator" v-if="value.indicatorDots">
-        <div
-          class="item"
-          :class="{ active: index === active }"
-          v-for="(item, index) in value.items"
-          :key="index"
-          :style="{ backgroundColor: index === active ? value.indicatorColor : value.indicatorActiveColor }"
-        >
-        </div>
-      </div>
-
-      <el-carousel
-        trigger="click"
-        :autoplay="value.autoplay"
-        :interval="value.interval * 1000"
-        arrow="never"
-        indicator-position="none"
-        @change="handleSwiperChange"
-      >
-        <el-carousel-item v-for="(item, index) in value.items" :key="index">
-          <div class="item" style="width: 100%; height: 100%;">
-            <img :src="item.image" class="item-image" />
-            <div class="box-text" :style="textContainerStyle" v-if="item.text">
-              <span :style="textStyle">{{ item.text }}</span>
-            </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="style">
+        <div class="box-indiator" v-if="value.indicatorDots">
+          <div
+            class="item"
+            :class="{ active: index === active }"
+            v-for="(item, index) in value.items"
+            :key="index"
+            :style="{ backgroundColor: index === active ? value.indicatorColor : value.indicatorActiveColor }"
+          >
           </div>
-        </el-carousel-item>
-      </el-carousel>
-    </div>
+        </div>
+
+        <el-carousel
+          trigger="click"
+          :autoplay="value.autoplay"
+          :interval="value.interval * 1000"
+          arrow="never"
+          indicator-position="none"
+          @change="handleSwiperChange"
+        >
+          <el-carousel-item v-for="(item, index) in value.items" :key="index">
+            <div class="item" style="width: 100%; height: 100%;">
+              <img :src="item.image" class="item-image" />
+              <div class="box-text" :style="textContainerStyle" v-if="item.text">
+                <span :style="textStyle">{{ item.text }}</span>
+              </div>
+            </div>
+          </el-carousel-item>
+        </el-carousel>
+      </div>
+    </Animation>
 
     <Controller
+      animation
       :visible="showController"
       :value="value"
       :pages="pages"
@@ -46,8 +49,9 @@
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
   import { getStyle } from '../utils';
-  import EventForm from '../event';
+  import EventForm from '../controller/event';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     indicatorDots: true,
@@ -83,7 +87,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorSwiper extends Vue {

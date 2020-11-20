@@ -1,10 +1,13 @@
 <template>
   <div class="page-editor-rich-text">
-    <div class="preview">
-      <div class="html-content" v-html="value.richText" :style="style"></div>
-    </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview">
+        <div class="html-content" v-html="value.richText" :style="style"></div>
+      </div>
+    </Animation>
     <Controller
       event
+      animation
       :popup-components="popupComponents"
       :visible="showController"
       :value="value"
@@ -21,6 +24,7 @@
   import { getStyle } from '../utils';
   import _ from 'lodash';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     richText: '<p>富文本</p>'
@@ -28,7 +32,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorRichText extends Vue {

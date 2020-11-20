@@ -1,13 +1,16 @@
 <template>
   <div class="page-editor-navbar">
-    <div class="preview">
-      <div class="item" :class="{ active: item.selected }" :style="[style, item.selected && selectedStyle]" v-for="(item, index) in value.items" :key="index">
-        <span>{{ item.text }}</span>
-        <span class="line" v-if="value.type === '2' && item.selected" :style="selectedLineStyle"></span>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview">
+        <div class="item" :class="{ active: item.selected }" :style="[style, item.selected && selectedStyle]" v-for="(item, index) in value.items" :key="index">
+          <span>{{ item.text }}</span>
+          <span class="line" v-if="value.type === '2' && item.selected" :style="selectedLineStyle"></span>
+        </div>
       </div>
-    </div>
+    </Animation>
 
     <Controller
+      animation
       :visible="showController"
       :value="value"
       :pages="pages"
@@ -24,7 +27,8 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
-  import EventForm from '../event';
+  import EventForm from '../controller/event';
+  import Animation from '../animation';
 
   const defaultValue = {
     type: '1',
@@ -54,7 +58,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorNavBar extends Vue {

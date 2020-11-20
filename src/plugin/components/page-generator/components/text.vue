@@ -1,8 +1,11 @@
 <template>
   <div class="page-editor-text">
-    <div class="preview" :style="style">{{ value.text }}</div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="style">{{ value.text }}</div>
+    </Animation>
     <Controller
       event
+      animation
       :popup-components="popupComponents"
       :visible="showController"
       :value="value"
@@ -19,6 +22,7 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     text: '文本',
@@ -32,7 +36,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorText extends Vue {

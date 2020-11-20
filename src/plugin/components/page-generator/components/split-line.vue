@@ -1,11 +1,14 @@
 <template>
   <div class="page-editor-split-line">
-    <div class="preview" :style="containerStyle">
-      <div class="border" :style="style"></div>
-    </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="containerStyle">
+        <div class="border" :style="style"></div>
+      </div>
+    </Animation>
 
     <Controller
       event
+      animation
       :popup-components="popupComponents"
       :visible="showController"
       :value="value"
@@ -22,6 +25,7 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     style: {
@@ -41,7 +45,8 @@
 
   @Component({
     components: {
-     Controller
+     Controller,
+     Animation
     }
   })
   export default class PageEditorSplitLine extends Vue {

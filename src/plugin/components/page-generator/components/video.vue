@@ -1,19 +1,22 @@
 <template>
   <div class="page-editor-video">
-    <div class="preview">
-      <video
-        class="video"
-        :style="style"
-        :src="value.video"
-        :controls="value.controls"
-        :muted="value.muted"
-        :autoplay="value.autoplay"
-        :loop="value.loop"
-        :poster="value.poster"
-      />
-    </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview">
+        <video
+          class="video"
+          :style="style"
+          :src="value.video"
+          :controls="value.controls"
+          :muted="value.muted"
+          :autoplay="value.autoplay"
+          :loop="value.loop"
+          :poster="value.poster"
+        />
+      </div>
+    </Animation>
 
     <Controller
+      animation
       :popup-components="popupComponents"
       :visible="showController"
       :value="value"
@@ -30,6 +33,7 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     controls: true,
@@ -41,7 +45,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class  extends Vue {

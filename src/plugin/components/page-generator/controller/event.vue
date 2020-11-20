@@ -15,9 +15,9 @@
 
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
-  import AdminForm from 'beans-admin-plugin/components/form';
+  import AdminForm from '../../form';
   import _ from 'lodash';
-  import { getQQMapPlaceSuggestions } from './utils';
+  import { getQQMapPlaceSuggestions } from '../utils';
 
   @Component({
     components: {
@@ -218,7 +218,3 @@
 
   }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

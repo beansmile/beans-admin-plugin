@@ -1,11 +1,14 @@
 <template>
   <div class="page-editor-multiple-image">
-    <div class="preview" :style="style">
-      <div class="item" v-for="(item, index) in value.items" :key="index" :style="imageStyle">
-        <img :src="item.image" />
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="style">
+        <div class="item" v-for="(item, index) in value.items" :key="index" :style="imageStyle">
+          <img :src="item.image" />
+        </div>
       </div>
-    </div>
+    </Animation>
     <Controller
+      animation
       :visible="showController"
       :value="value"
       :pages="pages"
@@ -21,7 +24,8 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
-  import EventForm from '../event';
+  import EventForm from '../controller/event';
+  import Animation from '../animation';
 
   const defaultValue = {
     items: [
@@ -45,7 +49,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorMultipleImage extends Vue {

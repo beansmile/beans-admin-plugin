@@ -1,11 +1,14 @@
 <template>
   <div class="page-editor-image">
-    <div class="preview" :style="containerStyle">
-      <img :src="value.image" :style="style" />
-    </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="containerStyle">
+        <img :src="value.image" :style="style" />
+      </div>
+    </Animation>
 
     <Controller
       event
+      animation
       is-image
       :popup-components="popupComponents"
       :visible="showController"
@@ -24,6 +27,7 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     image: 'https://via.placeholder.com/200x200/ccc',
@@ -39,7 +43,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorImage extends Vue {
