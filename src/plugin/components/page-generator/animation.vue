@@ -1,5 +1,5 @@
 <template>
-  <div :class="[`animation-${type}`]">
+  <div class="animatino-wrapper" :class="[`animation-${type}`]">
     <slot />
   </div>
 </template>

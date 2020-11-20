@@ -145,6 +145,10 @@
     box-sizing: border-box;
     width: 100%;
 
+    /deep/ .animatino-wrapper {
+      animation: none !important;
+    }
+
     /deep/ &.component-button-item {
       width: 100%;
       background: rgba($primary, .2);
