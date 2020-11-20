@@ -38,6 +38,13 @@
           />
           <slot name="event" />
         </el-tab-pane>
+        <el-tab-pane label="动画设置" name="animation" v-if="animation">
+          <AnimationForm
+            :value="value.animation"
+            v-bind="$attrs"
+            @change="$emit('change', { ...value, animation: $event })"
+          />
+        </el-tab-pane>
       </el-tabs>
       <portal-target name="page-editor-popup-controller" />
     </div>
@@ -46,19 +53,22 @@
 
 <script>
   import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-  import AdminForm from '../form';
+  import AdminForm from '../../form';
   import EventForm from './event';
+  import AnimationForm from './animation';
 
   @Component({
     components: {
       AdminForm,
-      EventForm
+      EventForm,
+      AnimationForm
     }
   })
   export default class PageEditorController extends Vue {
     @Prop({ type: Object, default: () => ({}) }) value;
     @Prop(Boolean) visible;
     @Prop(Boolean) event;
+    @Prop(Boolean) animation;
     @Prop({ type: Array, default: () => ([]) }) pages;
     @Prop({ type: Array, default: () => [] }) columns;
     @Prop({ type: Array, default: () => [] }) styleColumns;
@@ -77,7 +87,11 @@
           this.tab = 'style';
           return;
         }
-        this.tab = 'event';
+        if (this.event) {
+          this.tab = 'event';
+          return;
+        }
+        this.tab = 'animation'
       }
     }
   }

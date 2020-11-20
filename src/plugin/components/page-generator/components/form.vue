@@ -1,26 +1,29 @@
 <template>
   <div class="page-editor-form">
-    <div class="preview" :style="getStyle('container')">
-      <div class="item">
-        <!-- <label>姓名</label> -->
-        <input type="text" placeholder="请输入姓名" :style="getStyle('input')">
-      </div>
-      <div class="item">
-        <!-- <label>联系电话</label> -->
-        <input type="text" placeholder="请输入联系电话" :style="getStyle('input')">
-      </div>
-      <div class="item">
-        <!-- <label>邮箱地址</label> -->
-        <input type="text" placeholder="请输入邮箱地址" :style="getStyle('input')">
-      </div>
-      <div class="item">
-        <!-- <label>内容</label> -->
-        <textarea type="text" placeholder="请输入内容" :style="getStyle('input')"></textarea>
-      </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="getStyle('container')">
+        <div class="item">
+          <!-- <label>姓名</label> -->
+          <input type="text" placeholder="请输入姓名" :style="getStyle('input')">
+        </div>
+        <div class="item">
+          <!-- <label>联系电话</label> -->
+          <input type="text" placeholder="请输入联系电话" :style="getStyle('input')">
+        </div>
+        <div class="item">
+          <!-- <label>邮箱地址</label> -->
+          <input type="text" placeholder="请输入邮箱地址" :style="getStyle('input')">
+        </div>
+        <div class="item">
+          <!-- <label>内容</label> -->
+          <textarea type="text" placeholder="请输入内容" :style="getStyle('input')"></textarea>
+        </div>
 
-      <button :style="getStyle('button')">提交</button>
-    </div>
+        <button :style="getStyle('button')">提交</button>
+      </div>
+    </Animation>
     <Controller
+      animation
       :visible="showController"
       :value="value"
       :pages="pages"
@@ -36,6 +39,7 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     style: {
@@ -63,7 +67,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorForm extends Vue {

@@ -1,10 +1,13 @@
 <template>
   <div class="page-editor-map">
-    <div class="preview" :style="style">
-      <div class="map" ref="map"></div>
-    </div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="style">
+        <div class="map" ref="map"></div>
+      </div>
+    </Animation>
 
     <Controller
+      animation
       :visible="showController"
       :value="value"
       :pages="pages"
@@ -21,6 +24,7 @@
   import _ from 'lodash';
   import { getStyle, jsonpRequest, getQQMapPlaceSuggestions } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     style: {
@@ -34,7 +38,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorMap extends Vue {

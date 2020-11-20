@@ -1,15 +1,18 @@
 <template>
   <div class="page-editor-scroll-x">
-    <div class="preview" :style="getStyle('container')">
-      <div class="item" v-for="(item, index) in value.items" :key="index" :style="itemStyle">
-        <img :src="item.image" :style="getStyle('image')" />
-        <div v-if="item.title.show" :style="getStyle('title')">{{ item.title.text }}</div>
-        <div v-if="item.subtitle.show" :style="getStyle('subtitle')">{{ item.subtitle.text }}</div>
-        <div v-if="item.desc.show" :style="getStyle('desc')">{{ item.desc.text }}</div>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="getStyle('container')">
+        <div class="item" v-for="(item, index) in value.items" :key="index" :style="itemStyle">
+          <img :src="item.image" :style="getStyle('image')" />
+          <div v-if="item.title.show" :style="getStyle('title')">{{ item.title.text }}</div>
+          <div v-if="item.subtitle.show" :style="getStyle('subtitle')">{{ item.subtitle.text }}</div>
+          <div v-if="item.desc.show" :style="getStyle('desc')">{{ item.desc.text }}</div>
+        </div>
       </div>
-    </div>
+    </Animation>
 
     <Controller
+      animation
       :visible="showController"
       :value="value"
       :pages="pages"
@@ -25,7 +28,8 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
-  import EventForm from '../event';
+  import EventForm from '../controller/event';
+  import Animation from '../animation';
 
   const defaultValue = {
     style: {
@@ -89,7 +93,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorScrollX extends Vue {

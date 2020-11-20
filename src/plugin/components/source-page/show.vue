@@ -1,7 +1,7 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
-import { abilityService } from 'beans-admin-plugin';
+import { abilityService } from '../../services';
 
 @Component
 export default class AdminSourcePageShow extends Vue {

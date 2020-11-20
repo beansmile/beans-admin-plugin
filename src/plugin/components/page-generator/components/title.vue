@@ -1,15 +1,18 @@
 <template>
   <div class="page-editor-title">
-    <div class="preview" :style="style">
-      <div class="title" :class="[`type-${value.type.name}`]">
-        <span class="split-before" :style="typeStyle"></span>
-        <span class="text">{{ value.text }}</span>
-        <span class="split-after" :style="typeStyle"></span>
+    <Animation :type="$get(value, 'animation.type', '')">
+      <div class="preview" :style="style">
+        <div class="title" :class="[`type-${value.type.name}`]">
+          <span class="split-before" :style="typeStyle"></span>
+          <span class="text">{{ value.text }}</span>
+          <span class="split-after" :style="typeStyle"></span>
+        </div>
       </div>
-    </div>
+    </Animation>
 
     <Controller
       event
+      animation
       :popup-components="popupComponents"
       :visible="showController"
       :value="value"
@@ -26,6 +29,7 @@
   import _ from 'lodash';
   import { getStyle } from '../utils';
   import Controller from '../controller';
+  import Animation from '../animation';
 
   const defaultValue = {
     text: '标题',
@@ -44,7 +48,8 @@
 
   @Component({
     components: {
-      Controller
+      Controller,
+      Animation
     }
   })
   export default class PageEditorTitle extends Vue {
