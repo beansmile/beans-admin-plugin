@@ -18,8 +18,13 @@
 
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
+  import draggable from 'vuedraggable';
 
-  @Component
+  @Component({
+    components: {
+      draggable
+    }
+  })
   export default class ComponentList extends Vue {
     @Prop({ type: Array, default: () => [] }) components;
   }
