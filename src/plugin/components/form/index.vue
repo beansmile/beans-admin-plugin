@@ -1,6 +1,7 @@
 <script>
 import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
+import ColumnRenderHelper from './column-render-helper';
 
 @Component
 export default class AdminForm extends Vue {
@@ -13,14 +14,11 @@ export default class AdminForm extends Vue {
   }
 
   renderFormComponent(column) {
-    const ColumnRender = require('../column-render').default;
-
-    return <ColumnRender
+    return <ColumnRenderHelper
       value={this.getFormItemValue(column)}
       scope={{ row: this.value }}
       on={{
         change: val => this.handleFormItemChange(column, val),
-        input: val => this.handleFormItemChange(column, val)
       }}
       column={column}
       renderCell={column.renderCell}
