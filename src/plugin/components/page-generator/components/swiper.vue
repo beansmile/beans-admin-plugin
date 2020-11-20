@@ -21,8 +21,8 @@
         @change="handleSwiperChange"
       >
         <el-carousel-item v-for="(item, index) in value.items" :key="index">
-          <div class="item">
-            <img :src="item.image" className="item-image" style="width: 100%; height: 100%; object-fit: cover" />
+          <div class="item" style="width: 100%; height: 100%;">
+            <img :src="item.image" class="item-image" />
             <div class="box-text" :style="textContainerStyle" v-if="item.text">
               <span :style="textStyle">{{ item.text }}</span>
             </div>
@@ -55,7 +55,7 @@
     indicatorActiveColor: '#000',
     interval: 3,
     duration: 0.5,
-    autoplay: false,
+    autoplay: true,
     circular: true,
     items: [
       {
@@ -327,8 +327,19 @@
       }
 
       .item {
+        width: 100%;
         height: 100%;
         position: relative;
+
+        .item-image {
+          width: 100%;
+          height: auto;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          z-index: 1;
+        }
 
         .box-text {
           box-sizing: border-box;
@@ -336,6 +347,7 @@
           bottom: 0;
           left: 0;
           width: 100%;
+          z-index: 2;
 
           span {
             display: block;

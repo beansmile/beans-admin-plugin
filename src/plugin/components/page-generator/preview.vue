@@ -107,7 +107,6 @@
           value={this.page.components}
           group="component"
           onChange={this.handleChange}
-          ref="draggableContent"
           draggable=".item-component"
         >
           {
