@@ -13,13 +13,12 @@
   import { Vue, Component } from 'vue-property-decorator';
   import _ from 'lodash';
 
-  const LOCALE_NAME_MAP = {
-    zh: '简体中文',
-    en: 'English',
-  }
-
   @Component
   export default class LangSwitcher extends Vue {
+    get LOCALE_NAME_MAP() {
+      return _.get(this.$vadminConfig, 'i18n.locales', {});
+    }
+
     get locale() {
       return _.get(this, '$i18n.locale');
     }
@@ -27,7 +26,7 @@
     get options() {
       return _.get(this, '$i18n.availableLocales', []).map(item => ({
         value: item,
-        label: LOCALE_NAME_MAP[item]
+        label: this.LOCALE_NAME_MAP[item]
       }));
     }
 
