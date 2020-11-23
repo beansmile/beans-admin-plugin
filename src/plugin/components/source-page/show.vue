@@ -51,12 +51,42 @@ export default class AdminSourcePageShow extends Vue {
     }
   }
 
+  renderCellDispatcher(column) {
+    const { multiLocale } = _.get(this.$vadminConfig, 'sourcePage.show', {});
+    const renderColumn = multiLocale ? {
+      ...column,
+      locales: column.locale === false ? undefined : _.map(_.get(this.$vadminConfig, 'i18n.locales', {}), (localeLabel, localeName) => {
+        return _.merge({}, {
+          prop: localeName,
+          label: localeLabel
+        }, _.get(column, `locale.${localeName}`));
+      })
+    } : column;
+
+    const locales = _.get(renderColumn, 'locales') || [];
+    if (locales.length) {
+      return (
+        <div>
+          <el-form-item class="form-item-lang" label={renderColumn.label}>
+            {
+              locales.map(locale => {
+                const localeColumn = _.merge({ labelWidth: '80px' }, renderColumn, locale, { prop: `${renderColumn.prop}_${locale.prop}` });
+                return this.renderCell(localeColumn);
+              })
+            }
+          </el-form-item>
+        </div>
+      )
+    }
+    return this.renderCell(renderColumn);
+  }
+
   renderCell(column) {
     const ColumnRender = require('../column-render').default;
     const value = _.get(this.value, column.prop);
     const renderCell = column.renderCell || (() => <div>{value}</div>);
     return (
-      <el-form-item class={column.prop} label={column.label} key={column.prop}>
+      <el-form-item class={column.prop} label-width={column.labelWidth || '150px'} label={column.label} key={column.prop}>
         {
           _.isNil(value) ? <span>/</span> : (
             <ColumnRender
@@ -92,7 +122,7 @@ export default class AdminSourcePageShow extends Vue {
   renderColumnsContent(columns) {
     return (
       <el-form class="el-form-show" label-width="150px" label-position="left" props={this.$attrs}>
-        {columns.map(this.renderCell)}
+        {columns.map(this.renderCellDispatcher)}
       </el-form>
     )
   }

@@ -73,8 +73,16 @@
       }
     }
 
-    .el-form-show .el-form-item {
-      border-bottom: 1px solid $border-light;
+    .el-form-show {
+      .el-form-item {
+        border-bottom: 1px solid $border-light;
+      }
+
+      .form-item-lang {
+        .el-form-item:last-child {
+          border-bottom: none;
+        }
+      }
     }
   }
 }

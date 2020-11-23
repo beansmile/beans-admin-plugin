@@ -15,6 +15,20 @@ export default {
     timeout: 30000
   },
   i18n: {
-    localeStorageKey: 'locale'
+    localeStorageKey: 'locale',
+    locales: {
+      zh: '简体中文',
+      en: 'English'
+    }
+  },
+  sourcePage: {
+    form: {
+      multiLocale: false,
+      defaultLocaleRequired: false,
+      allLocaleRequired: false
+    },
+    show: {
+      multiLocale: false
+    }
   }
 };

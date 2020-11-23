@@ -25,6 +25,25 @@ export default class AdminForm extends Vue {
     />
   }
 
+  renderFormItemDispatcher(column) {
+    const locales = _.get(column, 'locales') || [];
+    if (locales.length) {
+      return (
+        <div>
+          <el-form-item label={column.label}>
+            {
+              locales.map(locale => {
+                const localeColumn = _.merge({}, column, locale, { prop: `${column.prop}_${locale.prop}` });
+                return this.renderFormItem(localeColumn);
+              })
+            }
+          </el-form-item>
+        </div>
+      );
+    }
+    return this.renderFormItem(column);
+  }
+
   renderFormItem(column) {
     const props = {
       prop: column.prop,
@@ -145,7 +164,7 @@ export default class AdminForm extends Vue {
         nativeOnSubmit={this.handleSubmit}
       >
         {this.renderHeader()}
-        {this.formColumns.map(this.renderFormItem)}
+        {this.formColumns.map(this.renderFormItemDispatcher)}
         {this.renderAction()}
       </el-form>
     );
