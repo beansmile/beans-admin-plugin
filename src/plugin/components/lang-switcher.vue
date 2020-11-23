@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
 
   const LOCALE_NAME_MAP = {
@@ -20,14 +20,25 @@
 
   @Component
   export default class LangSwitcher extends Vue {
+    @Prop({ type: Object, default: () => {} }) localeNameMap;
+
     get locale() {
       return _.get(this, '$i18n.locale');
     }
 
+    get getLocaleNameMap() {
+      if (Object.keys(this.localeNameMap).length > 0) {
+        return this.localeNameMap;
+      } else {
+        return LOCALE_NAME_MAP;
+      }
+    }
+
     get options() {
+      console.log(this.localeNameMap, this.getLocaleNameMap)
       return _.get(this, '$i18n.availableLocales', []).map(item => ({
         value: item,
-        label: LOCALE_NAME_MAP[item]
+        label: this.getLocaleNameMap[item]
       }));
     }
 
