@@ -39,6 +39,16 @@ export default class AdminSourcePageShow extends Vue {
     return false;
   }
 
+  get locales() {
+    const locales = _.get(this.$vadminConfig, 'i18n.locales', {});
+    const locale = _.get(this.$i18n, 'locale');
+    const localesArr = _.map(locales, (localeLabel, lacaleValue) => ({ label: localeLabel, locale: lacaleValue }));
+    const currentIndex = localesArr.findIndex(item => item.locale === locale);
+    // 当前语言排在第一个
+    localesArr.unshift(localesArr.splice(currentIndex, 1)[0]);
+    return localesArr;
+  }
+
   mounted() {
     this.activeTab = this.$route.hash.slice(1) || '0';
   }
@@ -52,31 +62,21 @@ export default class AdminSourcePageShow extends Vue {
   }
 
   renderCellDispatcher(column) {
-    const renderColumn = column.locale ? {
-      ...column,
-      locales: _.map(_.get(this.$vadminConfig, 'i18n.locales', {}), (localeLabel, localeName) => {
-        return _.merge({}, {
-          prop: localeName,
-          label: localeLabel
-        }, _.get(column, `locale.${localeName}`));
-      })
-    } : column;
-    const locales = _.get(renderColumn, 'locales') || [];
-    if (locales.length) {
-      return (
-        <div>
-          <el-form-item class="form-item-lang" label={renderColumn.label}>
+    if (column.locale) {
+      if (this.locales.length) {
+        return (
+          <el-form-item class="form-item-lang" label={column.label}>
             {
-              locales.map(locale => {
-                const localeColumn = _.merge({ labelWidth: '80px' }, renderColumn, locale, { prop: `${renderColumn.prop}_${locale.prop}` });
+              this.locales.map(item => {
+                const localeColumn = _.merge({ labelWidth: '80px' }, column, { prop: `${column.prop}_${item.locale}`, label: item.label }, _.get(column.locale, item.locale, {}));
                 return this.renderCell(localeColumn);
               })
             }
           </el-form-item>
-        </div>
-      )
+        )
+      }
     }
-    return this.renderCell(renderColumn);
+    return this.renderCell(column);
   }
 
   renderCell(column) {

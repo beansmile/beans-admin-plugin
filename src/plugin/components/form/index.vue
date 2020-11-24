@@ -1,6 +1,7 @@
 <script>
 import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
+import Collapse from '../collapse';
 
 @Component
 export default class AdminForm extends Vue {
@@ -10,6 +11,16 @@ export default class AdminForm extends Vue {
 
   get formColumns() {
     return this.columns.filter(item => item.renderCell);
+  }
+
+  get locales() {
+    const locales = _.get(this.$vadminConfig, 'i18n.locales', {});
+    const locale = _.get(this.$i18n, 'locale');
+    const localesArr = _.map(locales, (localeLabel, lacaleValue) => ({ label: localeLabel, locale: lacaleValue }));
+    const currentIndex = localesArr.findIndex(item => item.locale === locale);
+    // 当前语言排在第一个
+    localesArr.unshift(localesArr.splice(currentIndex, 1)[0]);
+    return localesArr;
   }
 
   renderFormComponent(column) {
@@ -25,15 +36,41 @@ export default class AdminForm extends Vue {
     />
   }
 
+  renderFormItemDispatcher(column) {
+    if (column.locale) {
+      const locale = _.get(this.$i18n, 'locale');
+      const render = item => {
+        const required = (_.has(column, 'required') ? column.required : _.get(column, 'renderCell.required', false)) && (locale === item.locale);
+        const localeColumn = _.merge({ 'label-width': '70px' }, { prop: `${column.prop}_${item.locale}`, label: item.label, renderCell: { required: false } }, { ..._.omit(column, ['prop', 'label']) },  _.get(column.locale, item.locale, { renderCell: { required } }));
+        return this.renderFormItem(localeColumn);
+      }
+      if (this.locales.length) {
+        return (
+          <el-form-item label={column.label}>
+            <Collapse>
+              {render(this.locales[0])}
+              <div slot="collapsed">
+                {this.locales.slice(1).map(render)}
+              </div>
+            </Collapse>
+          </el-form-item>
+        );
+      }
+    }
+    return this.renderFormItem(column);
+  }
+
   renderFormItem(column) {
     const props = {
       prop: column.prop,
       label: column.label
-    }
-    if (_.isPlainObject(column.renderCell)) {
-      // column里面可能有些key 是引用类型（rules...）改到其中的某一项会死循环渲染
-      Object.assign(props, _.cloneDeep(_.pick(column.renderCell, ['label-width', 'required', 'rules', 'error', 'show-message', 'inline-message', 'size', 'hint'])));
-    }
+    };
+    const formItemProps = ['required', 'label-width', 'rules', 'error', 'show-message', 'inline-message', 'size', 'hint'];
+    // 外层的prop优先级更高
+    Object.assign(props,
+      _.cloneDeep(_.pick(column.renderCell, formItemProps)),
+      _.cloneDeep(_.pick(column, formItemProps))
+    );
     props.rules = props.rules || [];
     if (props.required) {
       delete props.required;
@@ -66,20 +103,24 @@ export default class AdminForm extends Vue {
     return form;
   }
 
-  getFormInstance() {
-    const formComponents = [];
-    function getFormCom(instance) {
+  findInstance(condition) {
+    const instances = [];
+    function getInstance(instance) {
       if (_.get(instance, '$children.length', 0) > 0) {
         instance.$children.forEach(child => {
-          if (_.isFunction(child.validate) && _.isFunction(child.resetFields) && _.get(child, '$el.nodeName', '').toLowerCase() === 'form') {
-            formComponents.push(child);
+          if (condition(child)) {
+            instances.push(child);
           }
-          getFormCom(child);
+          getInstance(child);
         });
       }
     }
-    getFormCom(this);
-    return formComponents;
+    getInstance(this);
+    return instances;
+  }
+
+  getFormInstance() {
+    return this.findInstance(child => _.isFunction(child.validate) && _.isFunction(child.resetFields) && _.get(child, '$el.nodeName', '').toLowerCase() === 'form');
   }
 
   async handleValidateForm() {
@@ -94,7 +135,14 @@ export default class AdminForm extends Vue {
     if (e) {
       e.preventDefault();
     }
-    await this.handleValidateForm();
+    try {
+      await this.handleValidateForm();
+    } catch (e) {
+      // 打开所有折叠
+      const collapseComponents = this.findInstance(child => _.has(child, 'collapsed'));
+      collapseComponents.forEach(item => item.collapsed = false);
+      throw e;
+    }
     return this.getPureForm();
   }
 
@@ -145,7 +193,7 @@ export default class AdminForm extends Vue {
         nativeOnSubmit={this.handleSubmit}
       >
         {this.renderHeader()}
-        {this.formColumns.map(this.renderFormItem)}
+        {this.formColumns.map(this.renderFormItemDispatcher)}
         {this.renderAction()}
       </el-form>
     );

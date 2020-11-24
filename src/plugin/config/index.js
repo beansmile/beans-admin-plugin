@@ -21,9 +21,5 @@ export default {
       en: 'English'
     }
   },
-  sourcePage: {
-    form: {
-      showLocaleTip: false
-    }
-  }
+  sourcePage: {}
 };
