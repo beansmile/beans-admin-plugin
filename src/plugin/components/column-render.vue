@@ -136,8 +136,8 @@ export const LocaleRouteButton = {
         <el-dropdown-menu slot="dropdown">
           {
             _.map(locales, (localeName, localeValue) => (
-              <el-dropdown-item>
-                <Link to={_.merge({}, to, { query: { locale: localeValue } })} style="color: inherit">{localeName}</Link>
+              <el-dropdown-item style="padding: 0;">
+                <Link to={_.merge({}, to, { query: { locale: localeValue } })} style="padding: 0 15px; color: inherit; width: 100%; height: 100%;">{localeName}</Link>
               </el-dropdown-item>
             ))
           }
