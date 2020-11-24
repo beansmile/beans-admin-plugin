@@ -48,6 +48,7 @@ export default {
     selected: '已选择：',
     blankSelected: '已选择为空',
     noOptions: '没有可选择项',
-    enterKeywordFiltering: '输入关键字过滤'
+    enterKeywordFiltering: '输入关键字过滤',
+    localeFormTip: '正在编辑 <span>"{locale}"</span> 表单'
   }
 }

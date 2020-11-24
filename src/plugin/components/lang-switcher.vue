@@ -24,9 +24,9 @@
     }
 
     get options() {
-      return _.get(this, '$i18n.availableLocales', []).map(item => ({
-        value: item,
-        label: this.LOCALE_NAME_MAP[item]
+      return _.map(this.LOCALE_NAME_MAP, (label, value) => ({
+        value,
+        label
       }));
     }
 

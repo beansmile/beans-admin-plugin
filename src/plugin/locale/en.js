@@ -48,6 +48,7 @@ export default {
     selected: 'selected: ',
     blankSelected: 'Blank Selected',
     noOptions: 'There are no options',
-    enterKeywordFiltering: 'Enter keyword filtering'
+    enterKeywordFiltering: 'Enter keyword filtering',
+    localeFormTip: 'Editing the <span>\'{locale}\'</span> form'
   }
 }

@@ -45,6 +45,15 @@
 
 .source-page-form {
   & > .page-content {
+    & > .locale-tip {
+      font-size: 16px;
+      margin-bottom: 30px;
+
+      span {
+        color: $primary;
+      }
+    }
+
     & > .el-form {
       width: 60%;
       min-width: 800px;
@@ -73,8 +82,16 @@
       }
     }
 
-    .el-form-show .el-form-item {
-      border-bottom: 1px solid $border-light;
+    .el-form-show {
+      .el-form-item {
+        border-bottom: 1px solid $border-light;
+      }
+
+      .form-item-lang {
+        .el-form-item:last-child {
+          border-bottom: none;
+        }
+      }
     }
   }
 }

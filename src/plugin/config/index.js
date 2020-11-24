@@ -17,8 +17,16 @@ export default {
   i18n: {
     localeStorageKey: 'locale',
     locales: {
-      zh: '简体中文',
+      zh_cn: '简体中文',
       en: 'English'
+    }
+  },
+  sourcePage: {
+    show: {
+      multiLocale: false
+    },
+    form: {
+      showLocaleTip: false
     }
   }
 };
