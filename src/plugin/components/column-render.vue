@@ -16,6 +16,7 @@ import PageGenerator from './page-generator';
 import ResourceRender from './resource-render';
 import { abilityService } from '../services';
 import UncontrolledInput from './form/uncontrolled-input';
+import SkuEditor from './sku-editor';
 
 const RenderDate = {
   functional: true,
@@ -243,7 +244,8 @@ const COMPONENT_PRE_INSTALLED = {
   uncontrolledInput: UncontrolledInput,
   uncontrolledTextarea: UncontrolledTextArea,
   resourceRender: ResourceRender,
-  localeRouteButton: LocaleRouteButton
+  localeRouteButton: LocaleRouteButton,
+  skuEditor: SkuEditor
 }
 
 function getRenderContext({ context, config = {} }) {

@@ -111,6 +111,10 @@ export function install(Vue, config = {}) {
     {
       name: 'page-generator',
       component: require('./page-generator').default
+    },
+    {
+      name: 'sku-editor',
+      component: require('./sku-editor').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
