@@ -22,9 +22,6 @@ export default {
     }
   },
   sourcePage: {
-    show: {
-      multiLocale: false
-    },
     form: {
       showLocaleTip: false
     }

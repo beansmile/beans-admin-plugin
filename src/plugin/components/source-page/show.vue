@@ -52,10 +52,9 @@ export default class AdminSourcePageShow extends Vue {
   }
 
   renderCellDispatcher(column) {
-    const { multiLocale } = _.get(this.$vadminConfig, 'sourcePage.show', {});
-    const renderColumn = multiLocale ? {
+    const renderColumn = column.locale ? {
       ...column,
-      locales: column.locale === false ? undefined : _.map(_.get(this.$vadminConfig, 'i18n.locales', {}), (localeLabel, localeName) => {
+      locales: _.map(_.get(this.$vadminConfig, 'i18n.locales', {}), (localeLabel, localeName) => {
         return _.merge({}, {
           prop: localeName,
           label: localeLabel
