@@ -101,6 +101,10 @@ export function install(Vue, config = {}) {
       component: require('./export-button').default
     },
     {
+      name: 'import-button',
+      component: require('./import-button').default
+    },
+    {
       name: 'lang-switcher',
       component: require('./lang-switcher').default
     },

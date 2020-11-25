@@ -48,6 +48,9 @@ export default {
     selected: 'selected: ',
     blankSelected: 'Blank Selected',
     noOptions: 'There are no options',
-    enterKeywordFiltering: 'Enter keyword filtering'
+    enterKeywordFiltering: 'Enter keyword filtering',
+    error_massage: 'error_massage',
+    importSuccess: 'Import success',
+    importFail: 'Import fail. Please check the "error_massage.xlsx" file for details',
   }
 }
