@@ -17,6 +17,8 @@ import ResourceRender from './resource-render';
 import { abilityService } from '../services';
 import UncontrolledInput from './form/uncontrolled-input';
 import SkuEditor from './sku-editor';
+import DialogForm from './form/dialog';
+import ImportButton from './import-button';
 
 const RenderDate = {
   functional: true,
@@ -194,7 +196,7 @@ export const DialogFormButton = {
       return null;
     }
     return (
-      <bean-dialog-form
+      <DialogForm
         title={buttonName}
         columns={context.props.columns}
         value={context.props.value}
@@ -203,7 +205,7 @@ export const DialogFormButton = {
         props={context.props}
       >
         <el-button type="primary" size="mini">{buttonName}</el-button>
-      </bean-dialog-form>
+      </DialogForm>
     )
   }
 }
@@ -213,6 +215,17 @@ export const Mail = {
   render(h, context) {
     const value = context.props.value;
     return <a href={`mailto:${value}`}>{value}</a>
+  }
+}
+
+export const RenderImportButton = {
+  functional: true,
+  render(h, context) {
+    const can = context.props.can;
+    if (!abilityService.can(can)) {
+      return null;
+    }
+    return <ImportButton props={context.props}></ImportButton>
   }
 }
 
@@ -245,7 +258,8 @@ const COMPONENT_PRE_INSTALLED = {
   uncontrolledTextarea: UncontrolledTextArea,
   resourceRender: ResourceRender,
   localeRouteButton: LocaleRouteButton,
-  skuEditor: SkuEditor
+  skuEditor: SkuEditor,
+  importButton: RenderImportButton
 }
 
 function getRenderContext({ context, config = {} }) {

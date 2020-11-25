@@ -2,6 +2,7 @@ export default {
   bean: {
     actionNew: '新建',
     actionExport: '导出',
+    actionImport: '导入',
     actionEdit: '编辑',
     actionDetail: '详情',
     actionSubmit: '提交',
@@ -48,6 +49,9 @@ export default {
     selected: '已选择：',
     blankSelected: '已选择为空',
     noOptions: '没有可选择项',
-    enterKeywordFiltering: '输入关键字过滤'
+    enterKeywordFiltering: '输入关键字过滤',
+    error_massage: '错误信息',
+    importSuccess: '导入成功',
+    importFail: '导入失败，请查看"错误信息.xlsx"文件了解详情',
   }
 }

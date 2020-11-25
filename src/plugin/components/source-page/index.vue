@@ -29,6 +29,10 @@
             v-if="exportProps"
             :before-export="handleBeforeExport"
           />
+          <ImportButton
+            v-bind="importProps"
+            v-if="importProps"
+          />
           <slot name="action" />
         </div>
       </template>
@@ -59,6 +63,7 @@ import _ from 'lodash';
 import { request } from '../../utils';
 import AdminLink from '../link';
 import ExportButton from '../export-button';
+import ImportButton from '../import-button';
 import ColumnRender from '../column-render';
 
 @Component({
@@ -68,6 +73,7 @@ import ColumnRender from '../column-render';
     FormPage,
     AdminLink,
     ExportButton,
+    ImportButton,
     ColumnRender
   }
 })
@@ -82,6 +88,7 @@ export default class AdminSourcePage extends Vue {
   @Prop([Array, Function]) filterColumns;
   @Prop({ type: Array, default: () => ['new', 'show'] }) actionButtons;
   @Prop(Object) exportProps;
+  @Prop(Object) importProps;
   @Prop([Array, Function]) actions;
   @Prop([Array, Function]) batchActions;
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
