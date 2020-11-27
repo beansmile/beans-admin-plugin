@@ -26,7 +26,7 @@
   })
   export default class PageEditorEvent extends Vue {
     @Prop({ type: Object, default: () => ({}) }) value;
-    @Prop({ type: Array, default: () => [] }) pages;
+    @Prop({ type: [Array, Function], default: () => [] }) pages;
     @Prop({ type: Array, default: () => [] }) popupComponents;
     @Prop(Boolean) isImage;
     @Prop(Boolean) isPopup;
@@ -62,7 +62,7 @@
           prop: 'link',
           label: '选择页面',
           if: navType === 'mp_link',
-          renderCell: {
+          renderCell: _.isArray(this.pages) ? {
             component: 'select',
             props: {
               options: this.pages.map(item => ({
@@ -70,7 +70,7 @@
                 value: item.id
               }))
             }
-          }
+          } : this.pages
         },
         {
           prop: 'web_link',

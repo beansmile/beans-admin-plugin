@@ -15,6 +15,7 @@
     </div>
     <div class="page-footer">
       <el-button type="primary" @click="handleSubmit" :loading="loading">{{ $t('bean.actionSubmit') }}</el-button>
+      <slot name="action" :value="value" />
     </div>
   </div>
 </template>

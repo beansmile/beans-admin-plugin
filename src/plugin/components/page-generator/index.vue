@@ -43,7 +43,11 @@
     }
   })
   export default class PageGenerator extends Vue {
-    @Model('change', { type: Object, default: () => ({}) }) value;
+    @Model('change', { type: Object, default: () => ({
+      components: [],
+      config: {},
+      style: {}
+    }) }) value;
     @Prop({ type: Array, default: () => [] }) useComponents;
     @Prop({ type: Array, default: () => [] }) pages;
 
@@ -102,6 +106,7 @@
     addComponent(componentItem, index = this.components.length) {
       const page = _.cloneDeep(this.value);
       const newComponent = { ...componentItem, key: uuid() };
+      page.components = page.components || [];
       page.components.splice(index, 0, newComponent);
       this.$emit('change', page);
       this.toggleActiveComponentKey(newComponent.key);
