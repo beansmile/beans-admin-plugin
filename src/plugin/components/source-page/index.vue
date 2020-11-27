@@ -50,7 +50,11 @@
       :loading="formLoading"
       v-model="state.data"
       @submit="handleSubmit"
-    />
+    >
+      <template v-slot:action="{ value }">
+        <slot name="form-action" :value="value" />
+      </template>
+    </FormPage>
   </div>
 </template>
 
@@ -210,7 +214,7 @@ export default class AdminSourcePage extends Vue {
 
   async fetchData() {
     if (_.isFunction(this.onFetchData)) {
-      const state = await this.onFetchData({ resource: this.resource, type: this.type });
+      const state = await this.onFetchData({ resource: this.resource, type: this.type, namespace: this.namespace });
       this.state = state;
       return;
     }
