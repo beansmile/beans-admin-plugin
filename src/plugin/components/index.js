@@ -1,5 +1,6 @@
 import { RouteButton, ConfirmButton } from './column-render';
 import Link from './link';
+import PageGenerator from './page-generator'
 
 export function install(Vue, config = {}) {
   const { componentPrefix } = config;
@@ -85,10 +86,6 @@ export function install(Vue, config = {}) {
       component: require('./permissions').default
     },
     {
-      name: 'page-editor',
-      component: require('./page-editor').default
-    },
-    {
       name: 'list-select',
       component: require('./list-select').default
     },
@@ -114,7 +111,11 @@ export function install(Vue, config = {}) {
     },
     {
       name: 'page-generator',
-      component: require('./page-generator').default
+      component: PageGenerator
+    },
+    {
+      name: 'page-editor',
+      component: PageGenerator
     },
     {
       name: 'sku-editor',

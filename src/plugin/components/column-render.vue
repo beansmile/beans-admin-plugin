@@ -251,7 +251,7 @@ const COMPONENT_PRE_INSTALLED = {
   radioGroup: RadioGroup,
   listSelect: ListSelect,
   linkSelect: LinkSelect,
-  pageEditor: PageEditor,
+  pageEditor: PageGenerator,
   pageGenerator: PageGenerator,
   mail: Mail,
   uncontrolledInput: UncontrolledInput,
