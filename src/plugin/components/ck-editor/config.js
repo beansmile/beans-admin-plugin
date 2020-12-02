@@ -1,4 +1,4 @@
-window.CKEDITOR_BASEPATH = location.origin + process.env.BASE_URL + 'ckeditor/'
+window.CKEDITOR_BASEPATH = process.env.BASE_URL + 'ckeditor/'
 
 export default function (config) {
   config.height = 300
