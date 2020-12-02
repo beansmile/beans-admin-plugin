@@ -75,7 +75,9 @@
     }
 
     renderComponent(row) {
-      const component = _.get(this.allComponents.find(item => item.name === row.name), 'component');
+      const item = this.allComponents.find(item => item.name === row.name);
+      const component = _.get(item, 'component');
+      const props = _.get(item, 'props');
       if (!component) {
         return null;
       }
@@ -84,6 +86,7 @@
         pages={this.pages}
         popupComponents={this.popupComponents}
         show-controller={this.componentIsActive(row.key)}
+        props={props}
         onChange={e => this.handleComponentDataChange(row, e)}
       />
     }
