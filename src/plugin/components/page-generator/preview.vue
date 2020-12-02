@@ -103,7 +103,7 @@
       return (
         <draggable
           style="height: 100%;"
-          class="device-content"
+          class="page-editor-preview device-content"
           value={this.page.components}
           group="component"
           onChange={this.handleChange}
@@ -133,103 +133,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-
-  /deep/ img,
-  /deep/ video {
-    vertical-align: top;
-  }
-
-  .sortable-ghost {
-    box-sizing: border-box;
-    width: 100%;
-
-    /deep/ .animatino-wrapper {
-      animation: none !important;
-    }
-
-    /deep/ &.component-button-item {
-      width: 100%;
-      background: rgba($primary, .2);
-      font-size: 16px;
-      border-radius: 0;
-      border-color: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      /deep/ i {
-        font-size: 30px;
-        margin-right: 10px;
-      }
-    }
-  }
-
-  .item-component,
-  /deep/ .item-global-component {
-    position: relative;
-    width: 100%;
-
-    &.active {
-      &:after {
-        content: '';
-        box-sizing: border-box;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 8;
-        border: 3px dashed $primary;
-      }
-    }
-
-    .box-control {
-      box-sizing: border-box;
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 0 5px;
-      background: rgba(0, 0, 0, .2);
-      color: #fff;
-      z-index: 9;
-      line-height: 1.4;
-
-      i {
-        cursor: pointer;
-        margin-right: 5px;
-        font-style: normal;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-  }
-
-  .box-popup {
-    border-top: 1px solid $border-light;
-    padding: 20px;
-    max-height: 300px;
-    overflow: auto;
-
-    .popup-item {
-      padding: 5px 10px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border: 1px solid $border-light;
-      margin-bottom: 10px;
-      font-size: 16px;
-      cursor: pointer;
-
-      &.active {
-        border-width: 2px;
-        border-style: dashed;
-        border-color: $primary;
-      }
-    }
-  }
-</style>

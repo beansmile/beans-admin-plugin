@@ -1,0 +1,90 @@
+.admin-resource-uploader {
+  .box-header {
+    .el-form {
+      margin-top: 20px;
+
+      .el-form-item {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .box-list {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-right: -10px;
+    padding-top: 20px;
+
+    .item {
+      width: 100px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+
+      .item-content {
+        box-sizing: border-box;
+        position: relative;
+        border: 1px solid $border-light;
+        cursor: pointer;
+
+        &:hover {
+          .mask,
+          .btn-delete {
+            opacity: 1;
+          }
+        }
+
+        &.active {
+          .mask {
+            opacity: 1;
+          }
+
+          .el-icon-check {
+            display: block;
+          }
+        }
+      }
+
+      .el-icon-check {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+        color: $primary;
+        z-index: 3;
+      }
+
+      .mask,
+      .btn-delete {
+        opacity: 0;
+        transition: opacity .3s;
+      }
+
+      .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .3);
+        z-index: 1;
+      }
+
+      .btn-delete {
+        font-size: 16px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        z-index: 2;
+      }
+    }
+  }
+
+  .box-pagination {
+    margin-top: 20px;
+  }
+}
