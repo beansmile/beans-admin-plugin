@@ -11,7 +11,6 @@ import CKEditor from './ck-editor';
 import Link from './link';
 import ListSelect from './list-select';
 import LinkSelect from './link-select';
-import PageEditor from './page-editor';
 import PageGenerator from './page-generator';
 import ResourceRender from './resource-render';
 import { abilityService } from '../services';
