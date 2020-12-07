@@ -18,7 +18,6 @@
   export default class Link extends Vue {
     @Prop([String, Array]) can;
     @Prop([Object, String]) to;
-    @Prop(Object) value;
     @Prop(Boolean) keepNode; // 没权限时是否也渲染slot
 
     get hasPermission() {
