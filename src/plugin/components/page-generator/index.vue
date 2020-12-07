@@ -1,5 +1,5 @@
 <template>
-  <div class="page-generator">
+  <div class="admin-page-generator">
     <div class="box-components-list">
       <ComponentList
         :components="allComponents"
@@ -120,52 +120,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .page-generator {
-    width: 100%;
-    height: 100%;
-    display: flex;
-
-    .box-type {
-      font-size: 16px;
-      padding: 15px;
-    }
-
-    .box-components-list,
-    .box-controller,
-    .box-screen {
-      background: #fff;
-      box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-    }
-
-    .box-components-list {
-      flex-shrink: 0;
-      width: 280px;
-      padding: 15px;
-    }
-
-    .box-screen {
-      flex-shrink: 0;
-      width: 375px;
-      margin: 0 40px;
-      align-self: flex-start;
-    }
-
-    .box-controller {
-      flex: 1;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-
-      .box-type {
-        flex-shrink: 0;
-      }
-
-      .portal-page-editor-controller {
-        flex: 1;
-        overflow: hidden;
-      }
-    }
-  }
-</style>

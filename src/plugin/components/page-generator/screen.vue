@@ -1,5 +1,5 @@
 <template>
-  <div class="page-editor-screen">
+  <div class="admin-page-editor-screen">
     <div class="preview">
       <div class="title" :style="titleStyle">
         <span>{{ $get(page, 'config.title') }}</span>
@@ -183,44 +183,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .page-editor-screen,
-  .preview {
-    @media screen and (max-height: 850px) {
-      height: 600px;
-    }
-    height: 767px;
-    background: #fff;
-  }
-
-  .preview {
-    position: relative;
-
-    .title {
-      width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: 18px;
-      font-weight: bold;
-      height: 54px;
-      line-height: 54px;
-      text-align: center;
-      overflow: hidden;
-
-      span {
-        display: inline-block;
-        width: 40%;
-        text-align: center;
-        overflow: hidden;
-      }
-    }
-
-    .content {
-      box-sizing: border-box;
-      padding-top: 54px;
-      height: 100%;
-    }
-  }
-</style>
