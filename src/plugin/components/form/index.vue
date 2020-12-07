@@ -41,13 +41,13 @@ export default class AdminForm extends Vue {
       const locale = _.get(this.$i18n, 'locale');
       const render = item => {
         const required = (_.has(column, 'required') ? column.required : _.get(column, 'renderCell.required', false)) && (locale === item.locale);
-        const localeColumn = _.merge({ 'label-width': '70px' }, { prop: `${column.prop}_${item.locale}`, label: item.label, _label: column.label, renderCell: { required: false } }, { ..._.omit(column, ['prop', 'label']) },  _.get(column.locale, item.locale, { renderCell: { required } }));
+        const localeColumn = _.merge({}, { prop: `${column.prop}_${item.locale}`, label: item.label, _label: column.label, renderCell: { required: false } }, { ..._.omit(column, ['prop', 'label']) },  _.get(column.locale, item.locale, { renderCell: { required } }));
         return this.renderFormItem(localeColumn);
       }
       if (this.locales.length) {
         return (
           <el-form-item label={column.label}>
-            <Collapse>
+            <Collapse class="form-item-locale">
               {render(this.locales[0])}
               <div slot="collapsed">
                 {this.locales.slice(1).map(render)}
