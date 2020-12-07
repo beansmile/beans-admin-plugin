@@ -58,6 +58,18 @@
       width: 60%;
       min-width: 800px;
     }
+
+    .form-item-locale {
+      .el-form-item {
+        display: flex;
+        flex-direction: column;
+
+        & > .el-form-item__label-wrap,
+        & > .el-form-item__content {
+          margin-left: 0 !important;
+        }
+      }
+    }
   }
 }
 
