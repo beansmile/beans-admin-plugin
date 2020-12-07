@@ -21,6 +21,7 @@
 
 <script>
   import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator';
+  import _ from 'lodash';
   import Cropper from 'cropperjs';
   import 'cropperjs/dist/cropper.css';
 
@@ -39,7 +40,8 @@
       const defaultConfig = {
         aspectRatio: this.width / this.height,
         responsive: true,
-        autoCropArea: 1
+        autoCropArea: 1,
+        ..._.get(this, '$vadminConfig.cropper', {})
       }
       this.cropper = new Cropper(this.$refs.img, Object.assign(defaultConfig, this.$attrs));
     }
