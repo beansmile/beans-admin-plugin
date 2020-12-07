@@ -106,7 +106,7 @@
       return (
         <draggable
           style="height: 100%;"
-          class="page-editor-preview device-content"
+          class="admin-page-editor-preview device-content"
           value={this.page.components}
           group="component"
           onChange={this.handleChange}

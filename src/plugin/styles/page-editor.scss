@@ -1,4 +1,51 @@
-.page-editor-preview {
+.admin-page-generator {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .box-type {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .box-components-list,
+  .box-controller,
+  .box-screen {
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  }
+
+  .box-components-list {
+    flex-shrink: 0;
+    width: 280px;
+    padding: 15px;
+  }
+
+  .box-screen {
+    flex-shrink: 0;
+    width: 375px;
+    margin: 0 40px;
+    align-self: flex-start;
+  }
+
+  .box-controller {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+
+    .box-type {
+      flex-shrink: 0;
+    }
+
+    .portal-page-editor-controller {
+      flex: 1;
+      overflow: hidden;
+    }
+  }
+}
+
+.admin-page-editor-preview {
   /deep/ img,
   /deep/ video {
     vertical-align: top;
@@ -70,6 +117,31 @@
       }
     }
   }
+}
+
+.admin-page-editor-controller {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .el-tabs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .el-tabs__header {
+      flex-shrink: 0;
+      padding: 0 15px;
+    }
+
+    .el-tabs__content {
+      box-sizing: border-box;
+      flex: 1;
+      padding: 15px;
+      overflow: auto;
+    }
+  }
 
   .box-popup {
     border-top: 1px solid $border-light;
@@ -93,6 +165,47 @@
         border-style: dashed;
         border-color: $primary;
       }
+    }
+  }
+}
+
+.admin-page-editor-screen,
+.admin-page-editor-screen > .preview {
+  @media screen and (max-height: 850px) {
+    height: 600px;
+  }
+  height: 767px;
+  background: #fff;
+}
+
+.admin-page-editor-screen {
+  & > .preview {
+    position: relative;
+
+    .title {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 18px;
+      font-weight: bold;
+      height: 54px;
+      line-height: 54px;
+      text-align: center;
+      overflow: hidden;
+
+      span {
+        display: inline-block;
+        width: 40%;
+        text-align: center;
+        overflow: hidden;
+      }
+    }
+
+    .content {
+      box-sizing: border-box;
+      padding-top: 54px;
+      height: 100%;
     }
   }
 }

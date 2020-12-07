@@ -1,6 +1,6 @@
 <template>
   <portal to="page-editor-controller" v-if="visible">
-    <div class="page-editor-controller">
+    <div class="admin-page-editor-controller">
       <el-tabs v-model="tab">
         <el-tab-pane label="基本设置" name="base" v-if="columns.length">
           <AdminForm
@@ -96,30 +96,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .page-editor-controller {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .el-tabs {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    /deep/ .el-tabs__header {
-      flex-shrink: 0;
-      padding: 0 15px;
-    }
-
-    /deep/ .el-tabs__content {
-      box-sizing: border-box;
-      flex: 1;
-      padding: 15px;
-      overflow: auto;
-    }
-  }
-</style>
