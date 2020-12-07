@@ -10,6 +10,7 @@ export default {
     resourceBlobURL: '',
     resourceBlobTagURL: ''
   },
+  cropper: {},
   request: {
     baseURL: '/admin_api/v1',
     timeout: 30000
