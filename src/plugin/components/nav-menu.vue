@@ -2,13 +2,25 @@
   import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
   import _ from 'lodash';
 
+  const ROUTE_ACTIVE_CLASS = 'route-active';
+
   @Component
   export default class BeanNavMenu extends Vue {
     @Model('change', { type: Boolean }) value;
     @Prop({ type: Array, default: () => [] }) menus;
     @Prop({ type: Boolean }) disableCollapse;
-    @Prop({ type: Function, default: _.noop }) itemIsActive;
+
     defaultActive = '';
+
+    mounted() {
+      this.handleCalcActive();
+      this.$watch('menus.length', () => this.handleCalcActive());
+    }
+
+    handleCalcActive() {
+      const index = _.get(this.$el.querySelector(`.${ROUTE_ACTIVE_CLASS}`), 'dataset.index');
+      this.defaultActive = index;
+    }
 
     @Emit('change')
     handleToggleCollapsed() {
@@ -40,12 +52,6 @@
           </el-submenu>
         );
       }
-      // 计算defaultActive
-      if (this.itemIsActive(item)) {
-        if (this.defaultActive !== String(index)) {
-          this.defaultActive = String(index);
-        }
-      }
 
       return (
         <el-menu-item
@@ -58,6 +64,12 @@
             <span>{item.title}</span>
           </template>
           {this.renderIcon(item.icon)}
+          <router-link
+            style="display: none;"
+            active-class={ROUTE_ACTIVE_CLASS}
+            to={item.route}
+            data-index={String(index)}
+          />
         </el-menu-item>
       );
     }
