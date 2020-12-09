@@ -6,7 +6,7 @@
       </a>
       <div class="import-btn">
         <el-button type="primary" :loading="importing">{{ buttonText }}</el-button>
-        <input type="file" accept=".xlsx" :disabled="importing" @change="handleFileChange" />
+        <input type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
       </div>
     </el-tooltip>
   </div>
@@ -23,6 +23,7 @@
     @Prop(String) tooltipText;
     @Prop(Function) fileChangeHandler;
     @Prop(String) url; // 导入接口路径
+    @Prop({ type: String, default: '.xlsx' }) fileAccept;
 
     importing = false;
 
