@@ -31,14 +31,11 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: -10px;
+    margin-right: -15px;
 
-    & > .action {
+    .el-button, .button, button {
       margin-right: 15px;
       margin-bottom: 10px;
-
-      &:last-child {
-        margin-right: 0;
-      }
     }
   }
 }
