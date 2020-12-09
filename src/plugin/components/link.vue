@@ -1,14 +1,3 @@
-<template>
-  <router-link :to="to" v-bind="$attrs" v-if="hasPermission">
-    <slot />
-  </router-link>
-  <span v-else>
-    <span v-bind="$attrs" v-if="keepNode">
-      <slot />
-    </span>
-  </span>
-</template>
-
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
@@ -32,5 +21,16 @@
       }
       return abilityService.routeNameCan(route.name);
     }
+
+    render() {
+      if (this.hasPermission) {
+        return <router-link to={this.to} props={this.$attrs} attrs={this.$attrs}>{this.$slots.default}</router-link>
+      }
+      if (this.keepNode) {
+        return <span props={this.$attrs} attrs={this.$attrs}>{this.$slots.default}</span>
+      }
+      return null;
+    }
+
   }
 </script>

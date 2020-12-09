@@ -40,6 +40,9 @@ import {
   TabPane,
   Row,
   Tree,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu
 } from 'element-ui';
 
 export const Element = {
@@ -80,7 +83,10 @@ export const Element = {
   Tabs,
   TabPane,
   Row,
-  Tree
+  Tree,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu
 };
 
 export default function (Vue) {
