@@ -122,32 +122,6 @@ export const StorageAttachment = {
   }
 }
 
-export const LocaleRouteButton = {
-  functional: true,
-  render(h, context) {
-    const locales = _.get(context.parent, '$vadminConfig.i18n.locales') || [];
-    const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.link');
-    const to = context.props.to;
-    return (
-      <el-dropdown>
-        <el-button type="primary" size="mini">
-          {buttonName}<i class="el-icon-arrow-down el-icon--right"></i>
-        </el-button>
-
-        <el-dropdown-menu slot="dropdown">
-          {
-            _.map(locales, (localeName, localeValue) => (
-              <el-dropdown-item style="padding: 0;">
-                <Link to={_.merge({}, to, { query: { locale: localeValue } })} style="padding: 0 15px; color: inherit; width: 100%; height: 100%;">{localeName}</Link>
-              </el-dropdown-item>
-            ))
-          }
-        </el-dropdown-menu>
-      </el-dropdown>
-    );
-  }
-}
-
 export const RouteButton = {
   functional: true,
   render(h, context) {
@@ -256,7 +230,6 @@ const COMPONENT_PRE_INSTALLED = {
   uncontrolledInput: UncontrolledInput,
   uncontrolledTextarea: UncontrolledTextArea,
   resourceRender: ResourceRender,
-  localeRouteButton: LocaleRouteButton,
   skuEditor: SkuEditor,
   importButton: RenderImportButton
 }
