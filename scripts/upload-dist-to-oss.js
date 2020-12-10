@@ -4,16 +4,10 @@ const fs = require('fs-extra');
 const glob = require('glob');
 const async = require('async');
 const _ = require('lodash');
-const dotenv = require('dotenv');
-const defaultConfig = dotenv.config(path.resolve('.env')).parsed;
-const envConfig = dotenv.config({ path: path.resolve(`.env.${process.env.NODE_ENV}`) }).parsed;
 const moment = require('moment');
 const crypto = require('crypto');
 
-const config = {
-  ...defaultConfig,
-  ...envConfig
-}
+const config = require('minimist')(process.argv.slice(2));
 
 const client = new OSS({
   accessKeyId: config.OSS_ACCESS_KEY_ID,
