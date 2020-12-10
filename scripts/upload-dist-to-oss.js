@@ -31,9 +31,10 @@ const getFiles = (pattern) => {
 const clearOldVersionFiles = async () => {
   const { objects } = await client.list({
     prefix: config.OSS_ASSETS_NAMESPACE,
+    'max-keys': 1000
   });
   const objectsGroupedByName = _.groupBy(objects, item => {
-    const nameArr = path.basename(item.name).split('.');
+    const nameArr = item.name.split('.');
     return [nameArr[0], nameArr[nameArr.length - 1]].join('.');
   });
   // 保留3个版本
