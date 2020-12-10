@@ -5,9 +5,10 @@ const glob = require('glob');
 const async = require('async');
 const _ = require('lodash');
 const dotenv = require('dotenv');
-const defaultConfig = dotenv.config().parsed;
-const envConfig = dotenv.config({ path: `.env.${process.env.NODE_ENV}` }).parsed;
+const defaultConfig = dotenv.config(path.resolve('.env')).parsed;
+const envConfig = dotenv.config({ path: path.resolve(`.env.${process.env.NODE_ENV}`) }).parsed;
 const moment = require('moment');
+const crypto = require('crypto');
 
 const config = {
   ...defaultConfig,
@@ -19,7 +20,7 @@ const client = new OSS({
   accessKeySecret: config.OSS_ACCESS_KEY_SECRET,
   bucket: config.OSS_BUCKET,
   endpoint: config.OSS_ENDPOINT,
-  timeout: '300s'
+  timeout: '600s'
 });
 
 const getFiles = (pattern) => {
@@ -54,21 +55,43 @@ const clearOldVersionFiles = async () => {
   }
 }
 
+const generateChecksum = async (filePath) => {
+  const data = await fs.readFile(filePath);
+  return crypto.createHash('md5').update(data).digest('hex');
+}
+
+const uploadFile = async (fileName, filePath) => {
+  const checksum = await generateChecksum(filePath);
+  const upload = async () => {
+    console.log(`正在上传文件: ${filePath}`);
+    await client.put(fileName, filePath, { meta: { checksum } });
+  };
+  return client.head(fileName)
+    .then(({ meta }) => {
+      if (meta['checksum'] !== checksum) {
+        return upload();
+      }
+    })
+    .catch(e => {
+      if (e.status === 404) {
+        return upload();
+      }
+      throw e;
+    });
+}
+
 const run = async () => {
-  const filesArr = await Promise.all([
-    getFiles(`${path.resolve('dist')}/*.!(html)`),
-    getFiles(`${path.resolve('dist')}/!(ckeditor)/*`)
-  ]);
-  const files = _.flattenDeep(filesArr);
+  const allFiles = await getFiles(`${path.resolve('dist')}/**/*.!(html)`);
+  const files = allFiles.filter(item => fs.lstatSync(item).isFile());
+
   const fileList = files.map(item => ({
     filePath: item,
     fileName: path.join(config.OSS_ASSETS_NAMESPACE, path.relative(path.resolve('dist'), item))
   }));
+
   console.log('上传到OSS...');
-  // 部署机器带宽太低，并发1
-  await async.eachLimit(fileList, 1, async (item) => {
-    console.log(`正在上传${item.fileName}...`);
-    await client.put(item.fileName, item.filePath);
+  await async.eachLimit(fileList, 10, async (item) => {
+    await uploadFile(item.fileName, item.filePath);
   });
   console.log('上传到OSS完成');
   console.log('清理dist目录...');
