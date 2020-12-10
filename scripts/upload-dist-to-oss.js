@@ -68,7 +68,7 @@ const uploadFile = async (fileName, filePath) => {
   };
   return client.head(fileName)
     .then(({ meta }) => {
-      if (meta['checksum'] !== checksum) {
+      if (_.get(meta, 'checksum') !== checksum) {
         return upload();
       }
     })
