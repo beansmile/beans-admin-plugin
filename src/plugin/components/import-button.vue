@@ -1,7 +1,7 @@
 <template>
   <div class="admin-import-block">
     <el-tooltip :disabled="!excelTemplateDownloadLink" placement="top" effect="light">
-      <a slot="content" :href="excelTemplateDownloadLink" style="text-decoration: underline;">
+      <a slot="content" :href="encodeURI(excelTemplateDownloadLink)" style="text-decoration: underline;">
         {{ tooltipText || '下载模板' }}
       </a>
       <div class="import-btn">
