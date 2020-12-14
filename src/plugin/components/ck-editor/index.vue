@@ -1,5 +1,5 @@
 <template>
-  <div class="ckeditor-view">
+  <div class="ckeditor-view" style="display:inline-block;">
     <textarea :id="instanceId"></textarea>
   </div>
 </template>
