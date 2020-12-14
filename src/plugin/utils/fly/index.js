@@ -5,6 +5,7 @@ const fly = new Fly
 
 fly.config.return_res = false
 fly.config.headers['Accept'] = 'application/json, text/plain, */*'
+fly.config.headers['Content-Type'] = 'application/json'
 
 fly.interceptors.request.use(onSend)
 
