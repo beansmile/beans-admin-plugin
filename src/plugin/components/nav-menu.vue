@@ -14,7 +14,16 @@
 
     mounted() {
       this.handleCalcActive();
-      this.$watch('menus.length', () => this.handleCalcActive());
+      this.menuWatcher = this.$watch('menus.length', () => this.handleCalcActive());
+      this.routeWatcher = this.$watch('$route.path', async () => {
+        await this.$nextTick();
+        this.handleCalcActive();
+      });
+    }
+
+    beforeDestroy() {
+      this.menuWatcher && this.menuWatcher();
+      this.routeWatcher && this.routeWatcher();
     }
 
     handleCalcActive() {
