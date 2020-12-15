@@ -82,7 +82,7 @@ export default class AdminFormUpload extends Vue {
 
   disalogVisible = false;
 
-  transformValue = _.once(({ value, trackedBy, callback }) => {
+  transformValue = ({ value, trackedBy, callback }) => {
     if (_.isArray(value)) {
       if (_.isPlainObject(value[0])) {
         value.forEach(item => {
@@ -98,7 +98,7 @@ export default class AdminFormUpload extends Vue {
         callback(key);
       }
     }
-  });
+  };
 
   get useResourceUploader() {
     const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
