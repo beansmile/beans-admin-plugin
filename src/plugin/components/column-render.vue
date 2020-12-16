@@ -133,12 +133,12 @@ const RadioGroup = {
 export const StorageAttachment = {
   functional: true,
   render(h, context) {
-    const { value, style, width, height, borderRadius = 0, ...opts } = context.props;
+    const { value, style, width, height, borderRadius = 0, className = '', ...opts } = context.props;
     const attachments = _.flatten([value]).filter(Boolean);
     const fit = opts.fit || opts.objectFit || 'contain';
     const componentStyle = { ...style, width, height, borderRadius };
     return (
-      <div class="multi-attachments" onClick={e => e.stopPropagation()}>
+      <div class={`multi-attachments ${className}`} onClick={e => e.stopPropagation()}>
         {
           attachments.map((attachment, index) => {
             if (!attachment.content_type) return;

@@ -21,8 +21,16 @@
     display: flex;
     flex-wrap: wrap;
 
-    .resource-item:not(:last-child) {
+    .admin-resource-render:not(:last-child) {
       margin-right: 10px;
+    }
+
+    &.column {
+      flex-direction: column;
+
+      .admin-resource-render:not(:last-child) {
+        margin-bottom: 10px;
+      }
     }
   }
 
