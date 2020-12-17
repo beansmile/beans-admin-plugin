@@ -3,12 +3,14 @@
   import _ from 'lodash';
 
   const ROUTE_ACTIVE_CLASS = 'route-active';
+  const ROUTE_EXACT_ACTIVE_CLASS = 'route-exact-active';
 
   @Component
   export default class BeanNavMenu extends Vue {
     @Model('change', { type: Boolean }) value;
     @Prop({ type: Array, default: () => [] }) menus;
     @Prop({ type: Boolean }) disableCollapse;
+    @Prop({ type: String, default: 'vertical' }) mode;
 
     defaultActive = '';
 
@@ -27,8 +29,9 @@
     }
 
     handleCalcActive() {
+      const exactActiveIndex = _.get(this.$el.querySelector(`.${ROUTE_EXACT_ACTIVE_CLASS}`), 'dataset.index');
       const index = _.get(this.$el.querySelector(`.${ROUTE_ACTIVE_CLASS}`), 'dataset.index');
-      this.defaultActive = index;
+      this.defaultActive = exactActiveIndex || index;
     }
 
     @Emit('change')
@@ -76,6 +79,7 @@
           <router-link
             style="display: none;"
             active-class={ROUTE_ACTIVE_CLASS}
+            exact-active-class={ROUTE_EXACT_ACTIVE_CLASS}
             to={item.route}
             data-index={String(index)}
           />
@@ -85,12 +89,13 @@
 
     render() {
       return (
-        <div class="vadmin-nav-menu">
+        <div class="vadmin-nav-menu" data-mode={this.mode}>
           <el-menu
             router
             class="el-menu"
             collapse={this.value}
             default-active={this.defaultActive}
+            mode={this.mode}
           >
             { this.menus.map(this.renderItem)}
           </el-menu>

@@ -120,6 +120,10 @@ export function install(Vue, config = {}) {
     {
       name: 'sku-editor',
       component: require('./sku-editor').default
+    },
+    {
+      name: 'route-tab',
+      component: require('./route-tab').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
