@@ -83,7 +83,7 @@ import ColumnRender from '../column-render';
 })
 export default class AdminSourcePage extends Vue {
   @Prop(String) type; // index new edit show
-  @Prop(String) title;
+  @Prop([String, Object]) title;
   @Prop({ type: String, default: '' }) namespace;
   @Prop(String) resource;
   @Prop([Array, Function]) columns;
@@ -196,16 +196,20 @@ export default class AdminSourcePage extends Vue {
   }
 
   get pageTitle() {
+    if (_.isPlainObject(this.title)) {
+      return this.title[this.type];
+    }
+    const title = String(this.title);
     if (this.type === 'new') {
-      return `${this.$t('bean.actionNew')}-${this.title}`;
+      return `${this.$t('bean.actionNew')} - ${title}`;
     }
     if (this.type === 'edit') {
-      return `${this.$t('bean.actionEdit')}-${this.title}`;
+      return `${this.$t('bean.actionEdit')} - ${title}`;
     }
     if (this.type === 'show') {
-      return `${this.title}-${this.$t('bean.actionDetail')}`
+      return `${title} - ${this.$t('bean.actionDetail')}`
     }
-    return this.title;
+    return title;
   }
 
   mounted() {
