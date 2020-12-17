@@ -96,15 +96,15 @@ export default class AdminSourcePageTable extends Vue {
   }
 
   handleFilter(params) {
-    this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 } });
+    this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 }, hash: this.$route.hash });
   }
 
   handleReset() {
-    this.$router.replace({ query: {} });
+    this.$router.replace({ query: {}, hash: this.$route.hash });
   }
 
   handlePagination({ page, size }) {
-    this.$router.replace({ query: { ...this.$route.query, page, per_page: size } });
+    this.$router.replace({ query: { ...this.$route.query, page, per_page: size }, hash: this.$route.hash });
   }
 }
 </script>
