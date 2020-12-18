@@ -28,6 +28,15 @@
         border: 1px solid $border-light;
         cursor: pointer;
 
+        .resource-item {
+          width: 100%;
+
+          &.video {
+            height: 70px;
+            vertical-align: middle;
+          }
+        }
+
         &:hover {
           .mask,
           .btn-delete {

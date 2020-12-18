@@ -1,6 +1,7 @@
 .admin-resource-render {
   .image,
-  .video {
+  .video,
+  .audio {
     vertical-align: top;
     max-width: 100%;
     max-height: 100%;
@@ -13,10 +14,25 @@
 
   .video {
     width: 200px;
-    height: 150px;
+    height: auto;
+  }
+
+  .audio {
+    width: 400px;
+    height: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
   }
 
   .attachment {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 15px;
     color: $primary;
+    text-align: center;
+
+    i {
+      font-size: 30px;
+    }
   }
 }
