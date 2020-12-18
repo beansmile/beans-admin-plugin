@@ -151,6 +151,8 @@ export const ConfirmButton = {
         on={context.listeners}
         onOnConfirm={context.listeners.confirm || _.noop}
         onOnCancel={context.listeners.cancel || _.noop}
+        confirm-button-text={context.parent.$t('bean.actionConfirm')}
+        cancel-button-text={context.parent.$t('bean.actionCancel')}
         scopedSlots={{
           reference: () => <el-button type={buttonType} size="mini">{buttonName}</el-button>
         }}
