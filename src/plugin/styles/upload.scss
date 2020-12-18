@@ -40,6 +40,12 @@
       margin-right: 15px;
       border: 1px solid $border-light;
 
+      .resource-item {
+        &.audio, &.attachment {
+          padding: 35px;
+        }
+      }
+
       &:last-child {
         margin-right: 0;
       }

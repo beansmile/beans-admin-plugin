@@ -58,7 +58,12 @@
               >
                 <i class="el-icon-circle-close" slot="reference" @click.stop></i>
               </el-popconfirm>
-              <ResourceRender :value="item" :image-props="{ previewSrcList: [] }" />
+              <ResourceRender
+                :video-props="{ controls: false }"
+                :value="item"
+                :image-props="{ previewSrcList: [] }"
+                :show-filename="false"
+              />
             </div>
             <p>{{ item.filename }}</p>
           </div>

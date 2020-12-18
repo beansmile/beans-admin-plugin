@@ -1,31 +1,36 @@
 <template>
-  <div class="admin-resource-render">
+  <div class="admin-resource-render" @click.stop>
     <span v-if="!value">/</span>
     <el-image
-      @click.stop
       v-else-if="resourceType.includes('image')"
       class="resource-item image"
       :src="value.url"
       v-bind="{ fit: 'contain', previewSrcList: [value.url], ...imageProps, ...$attrs }"
     />
     <video
-      @click.stop
       v-else-if="resourceType.includes('video')"
       class="resource-item video"
       :src="value.url"
       v-bind="{ controls: true, ...videoProps }"
     />
-    <a
-      @click.stop
-      v-else
-      class="resource-item attachment"
-      :href="value.url || value"
-      style="display: block;"
-      download
-      target="_blank"
-    >
-      {{ value.filename || value.url || value }}
-    </a>
+    <audio
+      v-else-if="resourceType.includes('audio')"
+      class="resource-item audio"
+      :src="value.url"
+      v-bind="{ controls: true, ...audioProps }"
+    />
+    <div v-else class="resource-item attachment">
+      <i class="el-icon-document"></i>
+      <a
+        v-if="showFilename"
+        :href="value.url || value"
+        style="display: block;"
+        download
+        target="_blank"
+      >
+        {{ value.filename || value.url || value }}
+      </a>
+    </div>
   </div>
 </template>
 
@@ -39,6 +44,8 @@
     @Prop(String) type;
     @Prop(Object) imageProps;
     @Prop(Object) videoProps;
+    @Prop(Object) audioProps;
+    @Prop({ type: Boolean, default: true }) showFilename;
 
     get resourceType() {
       if (this.type) {
