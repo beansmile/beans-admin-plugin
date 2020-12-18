@@ -18,44 +18,7 @@ import UncontrolledInput from './form/uncontrolled-input';
 import SkuEditor from './sku-editor';
 import DialogForm from './form/dialog';
 import ImportButton from './import-button';
-
-function getRenderContext({ context, config = {} }) {
-  const data = _.pick(config, ['class', 'style', 'attrs', 'domProps', 'nativeOn', 'directives', 'scopedSlots', 'slot', 'key', 'ref', 'refInFor']);
-  const props = { ...context.data.attrs, ...config.props };
-  const defaultEvents = _.map(context.data.on, (eventHandler, eventName) => ({ eventName, eventHandler }));
-  const events = _.map(config.on, (eventHandler, eventName) => ({ eventName, eventHandler }));
-  const on = _.mapValues(_.groupBy(defaultEvents.concat(events), 'eventName'), v => v.map(item => item.eventHandler));
-  return { on, props, ...data };
-}
-
-function componentRender(h, {
-  component,
-  context,
-  config = {}
-}) {
-  return h(component, getRenderContext({ context, config }), context.children);
-}
-
-const ColumnRender = {
-  functional: true,
-  render(h, context) {
-    const { renderCell } = context.props;
-    if (_.get(renderCell, 'component')) {
-      if (_.isFunction(renderCell.component)) {
-        return renderCell.component(h, getRenderContext({ context, config: renderCell }));
-      }
-      const component = COMPONENT_PRE_INSTALLED[renderCell.component] || renderCell.component;
-      return componentRender(h, { component, context, config: renderCell });
-    }
-    if (_.isFunction(renderCell)) {
-      return renderCell(h, getRenderContext({ context }));
-    }
-    if (COMPONENT_PRE_INSTALLED[renderCell]) {
-      return componentRender(h, { component: COMPONENT_PRE_INSTALLED[renderCell], context });
-    }
-    return componentRender(h, { component: renderCell, context });
-  }
-}
+import DropdownButton from './dropdown-button';
 
 const RenderDate = {
   functional: true,
@@ -172,37 +135,6 @@ export const RouteButton = {
   }
 }
 
-export const DropdownButton = {
-  functional: true,
-  render(h, context) {
-    const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.actionOperation');
-    const { buttons, trigger = 'hover' } = context.props;
-    const buttonsHasPermission = buttons
-      .filter(item => {
-        if (item) {
-          if (item.can) {
-            return abilityService.can(item.can);
-          }
-          return true;
-        }
-        return false;
-      });
-
-    return (
-      <el-dropdown trigger={trigger}>
-        <el-button size="mini" type="primary">{buttonName}<i class="el-icon-arrow-down el-icon--right" /></el-button>
-        <el-dropdown-menu slot="dropdown" class="admin-dropdown-button-menu">
-          { buttonsHasPermission.map((item, index) =>
-            <el-dropdown-item key={index}>
-              <ColumnRender renderCell={item} />
-            </el-dropdown-item>
-          )}
-        </el-dropdown-menu>
-      </el-dropdown>
-    );
-  }
-}
-
 export const ConfirmButton = {
   functional: true,
   render(h, context) {
@@ -302,6 +234,44 @@ const COMPONENT_PRE_INSTALLED = {
   skuEditor: SkuEditor,
   importButton: RenderImportButton,
   dropdownButton: DropdownButton
+}
+
+function getRenderContext({ context, config = {} }) {
+  const data = _.pick(config, ['class', 'style', 'attrs', 'domProps', 'nativeOn', 'directives', 'scopedSlots', 'slot', 'key', 'ref', 'refInFor']);
+  const props = { ...context.data.attrs, ...config.props };
+  const defaultEvents = _.map(context.data.on, (eventHandler, eventName) => ({ eventName, eventHandler }));
+  const events = _.map(config.on, (eventHandler, eventName) => ({ eventName, eventHandler }));
+  const on = _.mapValues(_.groupBy(defaultEvents.concat(events), 'eventName'), v => v.map(item => item.eventHandler));
+  return { on, props, ...data };
+}
+
+function componentRender(h, {
+  component,
+  context,
+  config = {}
+}) {
+  return h(component, getRenderContext({ context, config }), context.children);
+}
+
+const ColumnRender = {
+  functional: true,
+  render(h, context) {
+    const { renderCell } = context.props;
+    if (_.get(renderCell, 'component')) {
+      if (_.isFunction(renderCell.component)) {
+        return renderCell.component(h, getRenderContext({ context, config: renderCell }));
+      }
+      const component = COMPONENT_PRE_INSTALLED[renderCell.component] || renderCell.component;
+      return componentRender(h, { component, context, config: renderCell });
+    }
+    if (_.isFunction(renderCell)) {
+      return renderCell(h, getRenderContext({ context }));
+    }
+    if (COMPONENT_PRE_INSTALLED[renderCell]) {
+      return componentRender(h, { component: COMPONENT_PRE_INSTALLED[renderCell], context });
+    }
+    return componentRender(h, { component: renderCell, context });
+  }
 }
 
 export default ColumnRender;
