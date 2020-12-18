@@ -1,5 +1,6 @@
 <template>
   <el-dialog
+    width="70%"
     :visible="value"
     :title="$t('bean.actionUpload')"
     append-to-body
@@ -55,6 +56,7 @@
           :value="tableData"
           :columns="columns"
           :actions="actions"
+          :action-column-props="{ width: 200 }"
         />
       </div>
     </div>
@@ -71,6 +73,7 @@ import AdminTable from '../table';
 import FormSelect from '../form/select';
 import { checkFileSize, uploadFile } from '../../utils';
 import _ from 'lodash';
+import ImageCropperAction from './image-cropper-action';
 
 @Component({
   components: {
@@ -98,10 +101,18 @@ export default class MultipleUploadDialog extends Vue {
     return [
       {
         prop: 'file.name',
-        label: this.$t('bean.fileName')
+        label: this.$t('bean.fileName'),
+        renderCell(h, { props: { value, scope: { row } } }) {
+          return (
+            <a href={window.URL.createObjectURL(row.file)} target="_blank">
+              <span>{value}{ row.cropped ? <el-tag style="margin-left: 10px" type="danger">已裁剪</el-tag> : '' }</span>
+            </a>
+          )
+        }
       },
       {
         prop: 'file.size',
+        width: 120,
         label: this.$t('bean.fileSize'),
         renderCell(h, { props: { value } }) {
           return <span>{(value / 1024 / 1024).toFixed(3) + 'M'}</span>;
@@ -109,18 +120,28 @@ export default class MultipleUploadDialog extends Vue {
       },
       {
         prop: 'file.type',
+        width: 120,
         label: this.$t('bean.fileType'),
       },
       {
         prop: 'result.url',
+        width: 120,
         label: this.$t('bean.uploadSuccess'),
         renderCell: 'bool'
       }
     ];
   }
 
+  get cropperHint() {
+    if (this.cropper) {
+      return `图片裁剪：${this.cropper.width}x${this.cropper.height}`;
+    }
+    return '';
+  }
+
   get uploadHint() {
-    return this.hint || `${this.$t('bean.fileFormat')}：${this.accept}，${this.$t('bean.maximumFileSize', { size: this.size })}M，${this.$t('bean.maximumUploadFileCount', { count: this.limit })}`
+    return this.hint ||
+      `${this.$t('bean.fileFormat')}：${this.accept}，${this.$t('bean.maximumFileSize', { size: this.size })}M，${this.$t('bean.maximumUploadFileCount', { count: this.limit })}，${this.cropperHint}`
   }
 
   get needUploadData() {
@@ -131,10 +152,26 @@ export default class MultipleUploadDialog extends Vue {
     return _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
   }
 
-  actions({ $index }) {
+  get showCropperButton() {
+    return _.get(this.cropper, 'width') && this.accept.includes('image');
+  }
+
+  handleCropSuccess(file, $index) {
+    const name = _.get(this.tableData[$index], 'file.name');
+    if (name) {
+      file.name = name;
+    }
+    this.$set(this.tableData, $index, {
+      file,
+      cropped: true
+    });
+  }
+
+  actions({ $index, row }) {
     return [
+      h => <ImageCropperAction h={h} file={row.file} disabled={row.cropped} cropper={this.cropper} onSuccess={(e) => this.handleCropSuccess(e, $index)} />,
       (h) => <el-button h={h} type="danger" onClick={() => this.tableData.splice($index, 1)}>移除</el-button>
-    ]
+    ].filter(Boolean);
   }
 
   async fetchTags(name_cont) {
@@ -219,9 +256,3 @@ export default class MultipleUploadDialog extends Vue {
 
 }
 </script>
-
-<style scoped>
-  .tags-selector {
-    margin-top: 20px;
-  }
-</style>

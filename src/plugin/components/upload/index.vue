@@ -22,7 +22,7 @@
       v-if="cropperImageURL"
       :loading="loading"
       :img="cropperImageURL"
-      @success="handleUpload"
+      @success="handleUploadCroppedImage"
     />
   </div>
 </template>
@@ -60,9 +60,6 @@ export default class AdminUpload extends Vue {
   }
 
   get fileInputIsMultiple() {
-    if (this.cropper) {
-      return false;
-    }
     return this.limit > 1;
   }
 
@@ -78,6 +75,13 @@ export default class AdminUpload extends Vue {
     this.renderMultipleUploadDialog = false;
     await this.$nextTick();
     this.renderMultipleUploadDialog = true;
+  }
+
+  handleUploadCroppedImage(blob) {
+    if (this.filename) {
+      blob.name = this.filename;
+    }
+    return this.handleUpload(blob);
   }
 
   @Emit('success')
@@ -99,6 +103,7 @@ export default class AdminUpload extends Vue {
 
   async handleFileChange(e) {
     const file = e.target.files[0];
+    this.filename = file.name;
     // 相同文件change事件不会触发
     e.target.value = '';
     if (isImageFile(file) && this.cropper) {

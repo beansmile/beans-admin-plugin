@@ -12,7 +12,7 @@
         <div class="box-header">
           <Uploader
             v-bind="this.$attrs"
-            :limit="10"
+            :limit="50"
             @success="handleUploadSuccess"
           />
           <el-form inline @submit.prevent.native="handleFilter">
