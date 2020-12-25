@@ -50,7 +50,9 @@
             const requestConfig = {
               headers: { 'Content-Type': 'multipart/form-data' },
               responseType: 'blob',
-              return_res: true
+              return_res: true,
+              // 1小时超时
+              timeout: 1 * 60 * 60 * 1000
             }
             await this.$request.post(this.url, form, requestConfig).then(
               (result) => {
