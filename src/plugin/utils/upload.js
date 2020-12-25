@@ -84,7 +84,8 @@ export async function uploadFile(file, tags) {
   }
 
   const result = await request.post(directUploadURL, body);
-  await request.put(result.direct_upload.url, file.slice(), { headers: result.direct_upload.headers });
+  // 1小时超时
+  await request.put(result.direct_upload.url, file.slice(), { headers: result.direct_upload.headers, timeout: 1 * 60 * 60 * 1000 });
 
   return {
     ...result,
