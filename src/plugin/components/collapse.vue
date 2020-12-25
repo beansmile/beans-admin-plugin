@@ -6,17 +6,19 @@
       </div>
       <el-button :icon="`el-icon-arrow-${collapsed ? 'down' : 'up'}`" circle @click="collapsed = !collapsed"></el-button>
     </div>
-    <div class="box-collapsed" v-show="!collapsed">
+    <div class="box-collapsed" :class="[collapsedContentClass]" v-show="!collapsed">
       <slot name="collapsed" />
     </div>
   </div>
 </template>
 
 <script>
-  import { Vue, Component } from 'vue-property-decorator';
+  import { Vue, Component, Prop } from 'vue-property-decorator';
 
   @Component
   export default class Collapse extends Vue {
+    @Prop(String) collapsedContentClass;
+
     collapsed = true;
   }
 </script>
