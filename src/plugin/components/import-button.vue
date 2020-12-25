@@ -15,6 +15,7 @@
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
+  import { Message } from 'element-ui';
 
   @Component
   export default class ExportButton extends Vue {
@@ -24,6 +25,7 @@
     @Prop(Function) fileChangeHandler;
     @Prop(String) url; // 导入接口路径
     @Prop({ type: String, default: '.xlsx' }) fileAccept;
+    @Prop(String) loadingToast;
 
     importing = false;
 
@@ -34,6 +36,14 @@
         this.xlsxFile = e.target.files[0];
         if (this.xlsxFile) {
           this.importing = true;
+          let toastInstance = null;
+          if (this.loadingToast) {
+            toastInstance = Message.info({
+              message: this.loadingToast,
+              duration: 0,
+              showClose: true
+            });
+          }
           try {
             let form = new FormData();
             form.append('file_message', this.xlsxFile);
@@ -62,6 +72,9 @@
             );
           } finally {
             this.importing = false;
+            if (toastInstance) {
+              toastInstance.close();
+            }
           }
         }
       }
