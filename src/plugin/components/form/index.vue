@@ -3,6 +3,8 @@ import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
 import Collapse from '../collapse';
 
+const COLLAPSED_CONTENT_CLASS = 'collapsed-content-class'
+
 @Component
 export default class AdminForm extends Vue {
   @Model('change', { type: Object, default: () => ({}) }) value;
@@ -47,7 +49,7 @@ export default class AdminForm extends Vue {
       if (this.locales.length) {
         return (
           <el-form-item label={column.label}>
-            <Collapse class="form-item-locale">
+            <Collapse class="form-item-locale" collapsedContentClass={COLLAPSED_CONTENT_CLASS}>
               {render(this.locales[0])}
               <div slot="collapsed">
                 {this.locales.slice(1).map(render)}
@@ -123,10 +125,21 @@ export default class AdminForm extends Vue {
     return this.findInstance(child => _.isFunction(child.validate) && _.isFunction(child.resetFields) && _.get(child, '$el.nodeName', '').toLowerCase() === 'form');
   }
 
+  formValidate(formInstance) {
+    return new Promise((resolve, reject) => {
+      formInstance.validate((isValid, errorObject) => {
+        if (isValid) {
+          return resolve(isValid);
+        }
+        return reject(errorObject);
+      });
+    });
+  }
+
   async handleValidateForm() {
     const formComponents = this.getFormInstance();
     return Promise.all(
-      formComponents.map(item => item.validate())
+      formComponents.map(this.formValidate)
     );
   }
 
@@ -138,9 +151,17 @@ export default class AdminForm extends Vue {
     try {
       await this.handleValidateForm();
     } catch (e) {
-      // 打开所有折叠
-      const collapseComponents = this.findInstance(child => _.has(child, 'collapsed'));
-      collapseComponents.forEach(item => item.collapsed = false);
+      this.$nextTick()
+        .finally(() => {
+          const collapseComponents = this.findInstance(child => _.has(child, 'collapsed'));
+          collapseComponents.forEach(item => {
+            const errorItem = item.$el.querySelector(`.${COLLAPSED_CONTENT_CLASS} .is-error`);
+            // 有错误就打开折叠
+            if (errorItem) {
+              item.collapsed = false;
+            }
+          });
+        });
       throw e;
     }
     return this.getPureForm();
