@@ -126,14 +126,16 @@ export default class AdminForm extends Vue {
   }
 
   formValidate(formInstance) {
-    return new Promise((resolve, reject) => {
-      formInstance.validate((isValid, errorObject) => {
-        if (isValid) {
-          return resolve(isValid);
-        }
-        return reject(errorObject);
-      });
-    });
+    // 如果formInstance.validate(callback)，如果formInstance没有model，callback不会触发...
+    // return new Promise((resolve, reject) => {
+    //   formInstance.validate((isValid, errorObject) => {
+    //     if (isValid) {
+    //       return resolve(isValid);
+    //     }
+    //     return reject(errorObject);
+    //   });
+    // });
+    return formInstance.validate();
   }
 
   async handleValidateForm() {
