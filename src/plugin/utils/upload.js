@@ -89,7 +89,8 @@ export async function uploadFile(file, tags) {
 
   return {
     ...result,
-    url: result.direct_upload.url
+    url: result.direct_upload.url,
+    blob_url: result.direct_upload.blob_url
   };
 }
 
