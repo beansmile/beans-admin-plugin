@@ -22,8 +22,14 @@ export async function onSend(request) {
   return request
 }
 
-export function onSucceed(res) {
+export async function onSucceed(res) {
   hideNProgress(res.request)
+
+  const appConfig = Vue.vadminConfig.request || {};
+  if (_.isFunction(appConfig.onResponse)) {
+    await appConfig.onResponse(res);
+  }
+
   res['isResponse'] = true
   res.meta = {}
   _.forEach(res.headers, (v, k) => {
