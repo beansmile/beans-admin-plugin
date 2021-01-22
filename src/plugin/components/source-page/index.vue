@@ -168,7 +168,11 @@ export default class AdminSourcePage extends Vue {
   }
 
   get exportActionParams() {
-    return _.pick(this, ['handleDelete', 'fetchData', 'resource', 'type', 'namespace'])
+    return {
+      remove: this.handleDelete,
+      reload: this.fetchData,
+      ..._.pick(this, ['resource', 'type', 'namespace'])
+    }
   }
 
   get sourcePageAction() {
