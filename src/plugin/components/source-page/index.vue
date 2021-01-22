@@ -98,6 +98,7 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
   @Prop({ type: Object, default: () => ({}) }) tableProps;
   @Prop(Function) beforeSubmit;
+  @Prop(Function) afterSubmit;
   @Prop(Function) onFormSubmit;
   @Prop(Function) onFetchData;
   @Prop({ type: Object, default: () => ({}) }) form;
@@ -289,7 +290,11 @@ export default class AdminSourcePage extends Vue {
         const { id } = await request[action](path, body);
         const message = this.type === 'new' ? this.$t('bean.createSuccess') : this.$t('bean.updateSuccess');
         this.$message.success(message);
-        this.$router.push({ name: `${this.resource}.show`, params: { id } });
+        if (_.isFunction(this.afterSubmit)) {
+          this.afterSubmit(hookParams)
+        } else {
+          this.$router.push({ name: `${this.resource}.show`, params: { id } });
+        }
       }
     } finally {
       this.formLoading = false;
