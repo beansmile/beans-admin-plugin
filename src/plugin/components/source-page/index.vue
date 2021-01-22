@@ -167,16 +167,17 @@ export default class AdminSourcePage extends Vue {
     return this.getColumns(this.filterColumns);
   }
 
+  get exportActionParams() {
+    return _.pick(this, ['handleDelete', 'fetchData', 'resource', 'type', 'namespace'])
+  }
+
   get sourcePageAction() {
     if (_.isArray(this.actions)) {
       return this.actions;
     }
     if (_.isFunction(this.actions)) {
       return (...args) => {
-        return this.actions(...args, {
-          remove: this.handleDelete,
-          reload: this.fetchData,
-        });
+        return this.actions(...args, this.exportActionParams);
       }
     }
     return [];
@@ -187,10 +188,7 @@ export default class AdminSourcePage extends Vue {
       return this.batchActions;
     }
     if (_.isFunction(this.batchActions)) {
-      return this.batchActions({ selection: this.state.selection || [] }, {
-        remove: this.handleDelete,
-        reload: this.fetchData,
-      });
+      return this.batchActions({ selection: this.state.selection || [] }, this.exportActionParams);
     }
     return [];
   }
