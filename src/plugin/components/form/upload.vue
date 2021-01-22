@@ -102,7 +102,8 @@ export default class AdminFormUpload extends Vue {
 
   get useResourceUploader() {
     const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
-    return !!requestURL;
+    const onFetchResourceBlob = _.get(this, '$vadminConfig.upload.onFetchResourceBlobURL');
+    return !!(requestURL || onFetchResourceBlob);
   }
 
   get uploadButtonTextI18n() {
