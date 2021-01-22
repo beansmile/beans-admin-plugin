@@ -149,7 +149,8 @@
       this.loading = true;
       try {
         const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
-        const { data, pagination } = await this.$request.get(requestURL, { params: { content_type_cont: this.type, per_page: 10, page: this.pagination['current-page'], ...this.params } });
+        const fetchResource = _.get(this, '$vadminConfig.upload.onFetchResourceBlob') || (() => this.$request.get(requestURL, { params: { content_type_cont: this.type, per_page: 10, page: this.pagination['current-page'], ...this.params } }));
+        const { data, pagination } = await fetchResource();
         this.data = data;
         this.pagination = pagination;
       } finally {
@@ -166,7 +167,8 @@
       this.tagLoading = true;
       try {
         const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
-        const { data } = await this.$request.get(requestURL, { params: { name_cont: name } });
+        const fetchResource = _.get(this, '$vadminConfig.upload.onFetchResourceBlobTag') || (() => this.$request.get(requestURL, { params: { name_cont: name } }));
+        const data = await fetchResource()
         this.tags = data.map(item => ({
           label: item.name,
           value: item.name
