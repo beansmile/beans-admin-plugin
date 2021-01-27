@@ -1,28 +1,59 @@
 import _ from 'lodash';
 
 class AbilityService {
-  $rules = null;
+  $rules = null; // 转换后的 rules
+  _rules = null; // 原 rules
 
-  set rules(rules) {
-    this.$rules = rules;
+  /**
+   * @param  {Object} rules { resource: ['create', 'read', 'update', 'delete'] }
+   *
+   * // 转换后的 $rules 格式
+   * {
+   *   resource.create: true
+   *   resource.read: true
+   *   resource.update: true
+   *   resource.delete: true
+   * }
+   *
+   */
+  set rules(value) {
+    this._rules = value;
+
+    function transformRules(rules) {
+      const newRules = {}
+      _.map(rules, (item, key) => {
+        if (typeof item === 'string') {
+          newRules[item] = true
+        } else if (typeof item === 'object') {
+          // Array || Object
+          newRules[key] = transformRules(item)
+        }
+      })
+      return newRules
+    }
+
+    this.$rules = transformRules(value)
+  }
+
+  get rules() {
+    return this._rules;
   }
 
   check(rule) {
-    const [subject, action] = rule.split('.');
-    return _.get(this.$rules, subject, []).includes(action);
+    return _.get(this.$rules, rule, false)
   }
 
   // admin_users.index
   routeNameCan(routeName = '') {
-    const [subject, action] = routeName.split('.');
+    const routeNameArray = routeName.split('.');
     const actionMap = {
       'index': 'read',
       'show': 'read',
       'new': 'create',
       'edit': 'update'
     }
-    const abilityAction = actionMap[action] || 'read';
-    return this.can(`${subject}.${abilityAction}`);
+    const abilityAction = actionMap[routeNameArray.pop()] || 'read';
+    return routeNameArray.splice(-1, 1, abilityAction).join('.')
   }
 
   // admin_users.read || [admin_users.read]
