@@ -1,34 +1,34 @@
 <template>
   <div class="admin-resource-render" @click.stop>
-    <span v-if="!value">/</span>
+    <span v-if="!resourceUrl">/</span>
     <el-image
       v-else-if="resourceType.includes('image')"
       class="resource-item image"
-      :src="value.url"
-      v-bind="{ fit: 'contain', previewSrcList: [value.url], ...imageProps, ...$attrs }"
+      :src="resourceUrl"
+      v-bind="{ fit: 'contain', previewSrcList: [resourceUrl], ...imageProps, ...$attrs }"
     />
     <video
       v-else-if="resourceType.includes('video')"
       class="resource-item video"
-      :src="value.url"
+      :src="resourceUrl"
       v-bind="{ controls: true, ...videoProps }"
     />
     <audio
       v-else-if="resourceType.includes('audio')"
       class="resource-item audio"
-      :src="value.url"
+      :src="resourceUrl"
       v-bind="{ controls: true, ...audioProps }"
     />
     <div v-else class="resource-item attachment">
       <i class="el-icon-document"></i>
       <a
         v-if="showFilename"
-        :href="value.url || value"
+        :href="resourceUrl"
         style="display: block;"
         download
         target="_blank"
       >
-        {{ value.filename || value.url || value }}
+        {{ resourceFilename }}
       </a>
     </div>
   </div>
@@ -42,16 +42,24 @@
   export default class AdminResourceRender extends Vue {
     @Prop([Object, String]) value;
     @Prop(String) type;
+    @Prop(String) filename;
+    @Prop(String) url;
     @Prop(Object) imageProps;
     @Prop(Object) videoProps;
     @Prop(Object) audioProps;
     @Prop({ type: Boolean, default: true }) showFilename;
 
     get resourceType() {
-      if (this.type) {
-        return this.type;
-      }
-      return _.get(this.value, 'content_type') || '';
+      return this.type || _.get(this.value, 'content_type') || '';
+    }
+
+    get resourceUrl() {
+      return this.url || _.get(this.value, 'url', this.value)
+    }
+
+    get resourceFilename() {
+      const { filename, url = this.url } = _.pick(this.value, ['filename', 'url'])
+      return this.filename || filename || url || this.value;
     }
   }
 </script>
