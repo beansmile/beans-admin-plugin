@@ -34,6 +34,7 @@ export default {
     filteredUploadFileTip: 'Filtered files that do not meet the requirements',
     chooseBlobTagTip: 'Select or create the tag. Tag to apply to all images to be uploaded',
     fileFormat: 'File format',
+    folder: 'Folder',
     fileName: 'Filename',
     fileSize: 'File size',
     fileType: 'File type',
