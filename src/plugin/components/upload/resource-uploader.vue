@@ -3,6 +3,7 @@
     <el-dialog
       :title="`(${$t('bean.selectCountItem', { count: limit })})`"
       :visible="value"
+      width="900px"
       modal-append-to-body
       @open="handleOpen"
       @close="handleClose"
@@ -16,6 +17,9 @@
             @success="handleUploadSuccess"
           />
           <el-form inline @submit.prevent.native="handleFilter">
+            <el-form-item :label="$t('bean.folder')" v-if="useResourceFolders">
+              <SelectFolder @change="params.dir_id = $event[$event.length - 1]"/>
+            </el-form-item>
             <el-form-item :label="$t('bean.fileName')">
               <el-input v-model="params.filename_cont" />
             </el-form-item>
@@ -90,6 +94,7 @@
   import ResourceRender from '../resource-render';
   import Uploader from './index';
   import _ from 'lodash';
+  import SelectFolder from '../select-folder'
 
   const TYPES = {
     image: '图片',
@@ -105,6 +110,7 @@
   @Component({
     components: {
       Uploader,
+      SelectFolder,
       ResourceRender
     }
   })
@@ -126,6 +132,11 @@
 
     get selectedIds() {
       return this.selected.map(item => item.id);
+    }
+
+    get useResourceFolders() {
+      const fetchFolders = _.get(this, '$vadminConfig.upload.onFetchFolders');
+      return !!fetchFolders;
     }
 
     handleClose() {

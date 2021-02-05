@@ -35,6 +35,7 @@ export default {
     filteredUploadFileTip: '已过滤不符合要求的文件',
     chooseBlobTagTip: '选择标签 标签将作用于即将上传的所有图片',
     fileFormat: '文件格式',
+    folder: '文件夹',
     fileName: '文件名',
     fileSize: '文件大小',
     fileType: '文件类型',

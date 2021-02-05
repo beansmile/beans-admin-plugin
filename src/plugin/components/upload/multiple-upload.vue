@@ -11,6 +11,7 @@
     @closed="$emit('closed')"
   >
     <div class="admin-multiple-upload" v-loading="loading">
+      <Folders v-if="useResourceFolders" @change="dirPath = $event"/>
       <input
         type="file"
         multiple
@@ -74,9 +75,11 @@ import FormSelect from '../form/select';
 import { checkFileSize, uploadFile } from '../../utils';
 import _ from 'lodash';
 import ImageCropperAction from './image-cropper-action';
+import Folders from './folders'
 
 @Component({
   components: {
+    Folders,
     AdminTable,
     FormSelect
   }
@@ -96,6 +99,7 @@ export default class MultipleUploadDialog extends Vue {
   tableData = [];
   tags = [];
   loading = false;
+  dirPath= ''
 
   get columns() {
     return [
@@ -154,6 +158,11 @@ export default class MultipleUploadDialog extends Vue {
 
   get showCropperButton() {
     return _.get(this.cropper, 'width') && this.accept.includes('image');
+  }
+
+  get useResourceFolders() {
+    const fetchFolders = _.get(this, '$vadminConfig.upload.onFetchFolders');
+    return !!fetchFolders;
   }
 
   handleCropSuccess(file, $index) {
@@ -220,7 +229,7 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   async handleUpload(row, index) {
-    const result = await uploadFile(row.file, this.tags);
+    const result = await uploadFile(row.file, this.tags, this.dirPath);
     this.$set(this.tableData[index], 'result', result);
     return result;
   }
