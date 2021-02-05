@@ -12,7 +12,7 @@ class FoldersStore extends SimpleStore {
   }
 
   async fetchData(parentId, node) {
-    const fetchFolders = _.get(Vue.prototype, '$vadminConfig.upload.onFetchFolders');
+    const fetchFolders = _.get(Vue.prototype, '$vadminConfig.folder.onFetchFolders');
     // data 需要是 <el-cascader> 组件 options 字段对应格式
     // https://element.eleme.cn/#/zh-CN/component/cascader#cascader-attributes
     const data = await (fetchFolders ? fetchFolders(parentId, node) : this.fetch());
@@ -47,7 +47,7 @@ class FoldersStore extends SimpleStore {
   }
 
   async createFolder({ parentId, folderName, path }) {
-    const createFolder = _.get(Vue.prototype, '$vadminConfig.upload.onCreateFolder');
+    const createFolder = _.get(Vue.prototype, '$vadminConfig.folder.onCreateFolder');
     if (createFolder) {
       await createFolder({ parentId, folderName })
     } else {

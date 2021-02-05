@@ -135,8 +135,7 @@
     }
 
     get useResourceFolders() {
-      const fetchFolders = _.get(this, '$vadminConfig.upload.onFetchFolders');
-      return !!fetchFolders;
+      return _.get(this, '$vadminConfig.folder.useFolder');
     }
 
     handleClose() {
