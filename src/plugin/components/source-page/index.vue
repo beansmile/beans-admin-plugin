@@ -64,7 +64,7 @@ import TablePage from './table';
 import ShowPage from './show';
 import FormPage from './form';
 import _ from 'lodash';
-import { request } from '../../utils';
+import { request, contactUrl } from '../../utils';
 import AdminLink from '../link';
 import ExportButton from '../export-button';
 import ImportButton from '../import-button';
@@ -286,14 +286,15 @@ export default class AdminSourcePage extends Vue {
           body = await this.beforeSubmit(hookParams);
         }
         const action = this.type === 'new' ? 'post' : 'put';
-        const path = this.type === 'new' ? `/${this.namespace}${this.resource}` : `/${this.namespace}${this.resource}/${body.id}`;
-        const { id } = await request[action](path, body);
+        const pathArray = [this.namespace, this.resource];
+        this.type !== 'new' && pathArray.push(body.id)
+        const data = await request[action]('/' + contactUrl(pathArray), body);
         const message = this.type === 'new' ? this.$t('bean.createSuccess') : this.$t('bean.updateSuccess');
         this.$message.success(message);
         if (_.isFunction(this.afterSubmit)) {
-          this.afterSubmit(hookParams)
+          this.afterSubmit(hookParams, data)
         } else {
-          this.$router.push({ name: `${this.resource}.show`, params: { id } });
+          this.$router.push({ name: `${this.resource}.show`, params: { id: data.id } });
         }
       }
     } finally {
