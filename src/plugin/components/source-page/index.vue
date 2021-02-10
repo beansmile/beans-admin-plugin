@@ -288,11 +288,11 @@ export default class AdminSourcePage extends Vue {
         const action = this.type === 'new' ? 'post' : 'put';
         const pathArray = [this.namespace, this.resource];
         this.type !== 'new' && pathArray.push(body.id)
-        const data = await request[action]('/' + contactUrl(pathArray), body);
+        const newData = await request[action]('/' + contactUrl(pathArray), body);
         const message = this.type === 'new' ? this.$t('bean.createSuccess') : this.$t('bean.updateSuccess');
         this.$message.success(message);
         if (_.isFunction(this.afterSubmit)) {
-          this.afterSubmit(hookParams, data)
+          this.afterSubmit(hookParams, newData)
         } else {
           this.$router.push({ name: `${this.resource}.show`, params: { id: data.id } });
         }
