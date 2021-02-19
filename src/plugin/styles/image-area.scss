@@ -1,0 +1,208 @@
+$indicator-size: 6px;
+
+.admin-image-area {
+  box-sizing: border-box;
+  padding: 15px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .component-body {
+    box-sizing: border-box;
+    padding: 15px;
+    flex: 1;
+    overflow: hidden;
+    border-top: 1px solid $border-light;
+    border-bottom: 1px solid $border-light;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .component-header,
+  .component-footer {
+    height: 50px;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .component-header {
+    justify-content: center;
+
+    .title {
+      font-size: 18px;
+      margin: 0;
+    }
+  }
+
+  .component-footer {
+    justify-content: flex-end;
+  }
+
+  .panel {
+    background: #fff;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+  }
+
+  .panel-canvas {
+    position: relative;
+    width: 375px;
+    max-height: 100%;
+    overflow: hidden;
+
+    .preview-img {
+      width: 100%;
+      height: auto;
+      vertical-align: top;
+    }
+
+    .main {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+  }
+
+  .panel-control {
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    flex: 1;
+    max-width: 450px;
+    margin-left: 20px;
+    padding: 15px;
+  }
+
+  .action-map-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+    overflow: hidden;
+  }
+
+  .admin-action-area {
+    box-sizing: border-box;
+    position: absolute;
+    border: 2px dashed rgba(0, 0, 0, .3);
+    cursor: move;
+
+    &.active {
+      border-color: $primary;
+    }
+  }
+
+  .indicator-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .15);
+
+    &:hover {
+      .btn-edit {
+        opacity: 1;
+      }
+    }
+
+    .indicator {
+      position: absolute;
+      width: $indicator-size;
+      height: $indicator-size;
+      background: rgba(0, 0, 0, .4);
+      z-index: 1;
+    }
+
+    .btn-edit {
+      position: absolute;
+      background: $primary;
+      padding: 3px 7px;
+      color: #fff;
+      top: 0;
+      right: 0;
+      transform: translate(100%, $indicator-size / 2);
+      cursor: pointer;
+      z-index: 2;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .indicator-top-left,
+    .indicator-top-center,
+    .indicator-top-right {
+      top: 0;
+      margin-top: -$indicator-size / 2;
+    }
+
+    .indicator-center-left,
+    .indicator-center-right {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .indicator-bottom-left,
+    .indicator-bottom-center,
+    .indicator-bottom-right {
+      bottom: 0;
+      margin-bottom: -$indicator-size / 2;
+    }
+
+    .indicator-top-left,
+    .indicator-center-left,
+    .indicator-bottom-left {
+      left: 0;
+      margin-left: -$indicator-size / 2;
+    }
+
+    .indicator-top-center,
+    .indicator-bottom-center {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .indicator-top-right,
+    .indicator-center-right,
+    .indicator-bottom-right {
+      right: 0;
+      margin-right: -$indicator-size / 2;
+    }
+
+    .indicator-top-center,
+    .indicator-bottom-center {
+      cursor: ns-resize;
+    }
+
+    .indicator-center-left,
+    .indicator-center-right {
+      cursor: ew-resize;
+    }
+
+    .indicator-top-left,
+    .indicator-bottom-right {
+      cursor: nwse-resize;
+    }
+
+    .indicator-top-right,
+    .indicator-bottom-left {
+      cursor: nesw-resize;
+    }
+
+  }
+}
+
+.dialog-image-area {
+  display: flex;
+  flex-direction: column;
+
+  .el-dialog__body {
+    flex: 1;
+    padding: 0;
+    overflow-y: hidden;
+  }
+}

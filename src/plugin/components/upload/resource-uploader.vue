@@ -1,92 +1,91 @@
 <template>
-  <div class="admin-resource-uploader">
-    <el-dialog
-      :title="`(${$t('bean.selectCountItem', { count: limit })})`"
-      :visible="value"
-      width="900px"
-      modal-append-to-body
-      @open="handleOpen"
-      @close="handleClose"
-      @closed="handleClosed"
-    >
-      <div v-loading="loading">
-        <div class="box-header">
-          <Uploader
-            v-bind="this.$attrs"
-            :limit="50"
-            @success="handleUploadSuccess"
-          />
-          <el-form inline @submit.prevent.native="handleFilter">
-            <el-form-item :label="$t('bean.folder')" v-if="useResourceFolders">
-              <SelectFolder @change="params.dir_id = $event[$event.length - 1]"/>
-            </el-form-item>
-            <el-form-item :label="$t('bean.fileName')">
-              <el-input v-model="params.filename_cont" />
-            </el-form-item>
+  <el-dialog
+    :title="`(${$t('bean.selectCountItem', { count: limit })})`"
+    :visible="value"
+    width="900px"
+    append-to-body
+    @open="handleOpen"
+    @close="handleClose"
+    @closed="handleClosed"
+    custom-class="admin-resource-uploader"
+  >
+    <div v-loading="loading">
+      <div class="box-header">
+        <Uploader
+          v-bind="this.$attrs"
+          :limit="50"
+          @success="handleUploadSuccess"
+        />
+        <el-form inline @submit.prevent.native="handleFilter">
+          <el-form-item :label="$t('bean.folder')" v-if="useResourceFolders">
+            <SelectFolder @change="params.dir_id = $event[$event.length - 1]"/>
+          </el-form-item>
+          <el-form-item :label="$t('bean.fileName')">
+            <el-input v-model="params.filename_cont" />
+          </el-form-item>
 
-            <el-form-item :label="$t('bean.tag')">
-              <el-select
-                v-model="params.tags_name_in"
-                multiple
-                filterable
-                remote
-                :remote-method="handleGetTags"
-              >
-                <el-option v-for="(item, index) in tags" :key="index" :label="item.label" :value="item.value"></el-option>
-              </el-select>
-            </el-form-item>
-
-            <el-form-item>
-              <el-button type="primary" @click="handleFilter">{{ $t('bean.actionFilter') }}</el-button>
-              <el-button @click="handleReset">{{ $t('bean.actionReset') }}</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-        <div class="box-list">
-          <div
-            class="item"
-            v-for="item in data"
-            :key="item.id"
-          >
-            <div
-              class="item-content"
-              @click="handleSelect(item)"
-              :class="{ active: selectedIds.includes(item.id) }"
+          <el-form-item :label="$t('bean.tag')">
+            <el-select
+              v-model="params.tags_name_in"
+              multiple
+              filterable
+              remote
+              :remote-method="handleGetTags"
             >
-              <div class="mask"></div>
-              <i class="el-icon-check"></i>
-              <el-popconfirm
-                :title="$t('bean.confirmDeleteTip')"
-                class="btn-delete"
-                @onConfirm="handleDelete(item.id)"
-              >
-                <i class="el-icon-circle-close" slot="reference" @click.stop></i>
-              </el-popconfirm>
-              <ResourceRender
-                :video-props="{ controls: false }"
-                :value="item"
-                :image-props="{ previewSrcList: [] }"
-                :show-filename="false"
-              />
-            </div>
-            <p>{{ item.filename }}</p>
+              <el-option v-for="(item, index) in tags" :key="index" :label="item.label" :value="item.value"></el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="handleFilter">{{ $t('bean.actionFilter') }}</el-button>
+            <el-button @click="handleReset">{{ $t('bean.actionReset') }}</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="box-list">
+        <div
+          class="item"
+          v-for="item in data"
+          :key="item.id"
+        >
+          <div
+            class="item-content"
+            @click="handleSelect(item)"
+            :class="{ active: selectedIds.includes(item.id) }"
+          >
+            <div class="mask"></div>
+            <i class="el-icon-check"></i>
+            <el-popconfirm
+              :title="$t('bean.confirmDeleteTip')"
+              class="btn-delete"
+              @onConfirm="handleDelete(item.id)"
+            >
+              <i class="el-icon-circle-close" slot="reference" @click.stop></i>
+            </el-popconfirm>
+            <ResourceRender
+              :video-props="{ controls: false }"
+              :value="item"
+              :image-props="{ previewSrcList: [] }"
+              :show-filename="false"
+            />
           </div>
-        </div>
-        <div class="box-pagination" v-if="data.length > 0">
-          <el-pagination
-            background
-            v-bind="pagination"
-            layout="prev, pager, next"
-            @current-change="handlePageChange"
-          />
+          <p>{{ item.filename }}</p>
         </div>
       </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="handleClose">{{ $t('bean.actionClose') }}</el-button>
-        <el-button type="primary" @click="handleConfirm" v-if="limit > 1" :disabled="selected.length <= 0">{{ $t('bean.actionConfirm') }}</el-button>
-      </span>
-    </el-dialog>
-  </div>
+      <div class="box-pagination" v-if="data.length > 0">
+        <el-pagination
+          background
+          v-bind="pagination"
+          layout="prev, pager, next"
+          @current-change="handlePageChange"
+        />
+      </div>
+    </div>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="handleClose">{{ $t('bean.actionClose') }}</el-button>
+      <el-button type="primary" @click="handleConfirm" v-if="limit > 1" :disabled="selected.length <= 0">{{ $t('bean.actionConfirm') }}</el-button>
+    </span>
+  </el-dialog>
 </template>
 
 <script>

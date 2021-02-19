@@ -23,7 +23,6 @@
 
   .box-screen {
     flex-shrink: 0;
-    width: 375px;
     margin: 0 40px;
     align-self: flex-start;
   }
@@ -46,6 +45,8 @@
 }
 
 .admin-page-editor-preview {
+  width: 375px;
+
   /deep/ img,
   /deep/ video {
     vertical-align: top;
@@ -99,7 +100,7 @@
       box-sizing: border-box;
       position: absolute;
       top: 0;
-      right: 0;
+      left: 0;
       padding: 0 5px;
       background: rgba(0, 0, 0, .2);
       color: #fff;
@@ -206,6 +207,23 @@
       box-sizing: border-box;
       padding-top: 54px;
       height: 100%;
+    }
+  }
+}
+
+.page-editor-image-area {
+  .preview {
+    position: relative;
+    .image {
+      width: 100%;
+      height: auto;
+    }
+
+    .item-area {
+      box-sizing: border-box;
+      position: absolute;
+      background: rgba(0, 0, 0, .15);
+      border: 1px dashed rgba(0, 0, 0, .3);
     }
   }
 }
