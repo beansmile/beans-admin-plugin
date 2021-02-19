@@ -26,6 +26,12 @@ export default [
     component: require('./image').default
   },
   {
+    title: '图片热区',
+    name: 'image-area',
+    icon: 'iconfont icon-tupian1',
+    component: require('./image-area').default
+  },
+  {
     title: '一行多图',
     name: 'multiple-image',
     icon: 'iconfont icon-tupian1',
