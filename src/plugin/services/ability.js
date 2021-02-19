@@ -53,7 +53,8 @@ class AbilityService {
       'edit': 'update'
     }
     const abilityAction = actionMap[routeNameArray.pop()] || 'read';
-    return routeNameArray.splice(-1, 1, abilityAction).join('.')
+    routeNameArray.push(abilityAction);
+    return this.can(routeNameArray.join('.'));
   }
 
   // admin_users.read || [admin_users.read]
