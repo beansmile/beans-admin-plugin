@@ -101,6 +101,8 @@ export default class AdminSourcePage extends Vue {
   @Prop(Function) afterSubmit;
   @Prop(Function) onFormSubmit;
   @Prop(Function) onFetchData;
+  @Prop(Function) onDelete;
+  @Prop(Function) afterDelete;
   @Prop({ type: Object, default: () => ({}) }) form;
   @Prop({ type: Object }) actionColumnProps;
 
@@ -265,13 +267,22 @@ export default class AdminSourcePage extends Vue {
   }
 
   async handleDelete(id) {
-    await request.delete(`/${this.namespace}${this.resource}/${id}`);
-    this.$message.success(this.$t('bean.deleteSuccess'));
-    if (this.type === 'show') {
-      this.$router.go(-1);
-      return;
+    const params = { id, type: this.type, resource: this.resource, namespace: this.namespace };
+    if (_.isFunction(this.onDelete)) {
+      await this.onDelete(params);
+    } else {
+      await request.delete(`/${contactUrl([this.namespace, this.resource, id])}`);
     }
-    await this.fetchData();
+    if (_.isFunction(this.afterDelete)) {
+      this.afterDelete(params);
+    } else {
+      this.$message.success(this.$t('bean.deleteSuccess'));
+      if (this.type === 'show') {
+        this.$router.go(-1);
+        return;
+      }
+      await this.fetchData();
+    }
   }
 
   async handleSubmit(data) {
