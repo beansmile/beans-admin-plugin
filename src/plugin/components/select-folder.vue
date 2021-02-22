@@ -30,7 +30,7 @@
         // 如果是一次性返回整个目录结构，在请求那里通过node判断是否请求即可
         const hasChildren = _.get(node, 'children.length') > 0
         const data = await foldersStore.tryFetchData(node)
-        resolve(hasChildren ? [] : data)
+        resolve((hasChildren || node.root) ? [] : data)
       }
     }
 
