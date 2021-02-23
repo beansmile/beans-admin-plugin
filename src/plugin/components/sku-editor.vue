@@ -312,7 +312,10 @@
     }
 
     async handleSubmit() {
-      await Promise.all(this.$refs.form.map(item => item.handleValidateForm()));
+      const formInstances = this.$refs.form;
+      if (formInstances && formInstances.length) {
+        await Promise.all(formInstances.map(item => item.handleValidateForm()));
+      }
       this.dialogVisible = false;
       this.$emit('change', JSON.parse(JSON.stringify(this.skus)));
     }
