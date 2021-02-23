@@ -124,7 +124,11 @@ export function install(Vue, config = {}) {
     {
       name: 'route-tab',
       component: require('./route-tab').default
-    }
+    },
+    {
+      name: 'select-folder',
+      component: require('./select-folder').default
+    },
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
   });
