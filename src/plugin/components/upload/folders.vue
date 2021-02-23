@@ -2,7 +2,7 @@
   <el-form inline>
     <el-form-item :label="$t('bean.folder')">
       <SelectFolder
-        @change="path = $event"
+        @change="handleFolderChange"
       />
     </el-form-item>
     <el-form-item>
@@ -47,6 +47,11 @@
       } finally {
         this.createLoading = false
       }
+    }
+
+    handleFolderChange(e) {
+      this.path = e
+      this.$emit('folder-change', e)
     }
   }
 </script>
