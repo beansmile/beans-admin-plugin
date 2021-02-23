@@ -60,7 +60,8 @@
           </el-form-item>
         </el-form>
 
-        <div class="table-container">
+        <!-- 关闭弹窗不触发顶部form validate -->
+        <div class="table-container" v-if="dialogVisible">
           <div class="table" v-if="skus.length">
             <div class="table-header">
               <div class="item" v-for="item in tableHeaders" :key="item">{{ item }}</div>
@@ -96,7 +97,6 @@
   import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator';
   import _ from 'lodash';
   import AdminTable from './table';
-  import ColumnRender from './column-render';
   import AdminForm from './form';
 
   @Component({
