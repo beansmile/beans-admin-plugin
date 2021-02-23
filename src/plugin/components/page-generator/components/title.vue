@@ -2,7 +2,7 @@
   <div class="page-editor-title">
     <Animation :type="$get(value, 'animation.type', '')">
       <div class="preview" :style="style">
-        <div class="title" :class="[`type-${value.type.name}`]">
+        <div class="title-component" :class="[`type-${value.type.name}`]">
           <span class="split-before" :style="typeStyle"></span>
           <span class="text">{{ value.text }}</span>
           <span class="split-after" :style="typeStyle"></span>
@@ -187,7 +187,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .title {
+  .title-component {
 
     .text {
       overflow: hidden;
