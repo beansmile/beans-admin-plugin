@@ -1,65 +1,94 @@
 <template>
-  <div class="admin-sku-editor">
-    <div style="margin-bottom: 20px" v-if="!propertyDisabled">
-      <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
-    </div>
-
-    <el-form label-position="right" label-width="auto">
-
-      <el-form-item label="选择使用规格">
-        <el-select
-          v-model="shownProperty"
-          multiple
-          filterable
-          default-first-option
-          @remove-tag="handleRemoveShownProperty"
-          :disabled="propertyDisabled"
-        >
-          <el-option v-for="item in localSkuProperties" :key="item.value" :label="item.text" :value="item.value" />
-        </el-select>
-      </el-form-item>
-
-      <el-form-item
-        v-for="property in localSkuPropertiesShown"
-        :key="property.text"
-      >
-        <template v-slot:label>
-          <div>
-            {{ property.text }}
-            <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
-          </div>
-        </template>
-        <el-select
-          v-model="propertySelected[property.value]"
-          multiple
-          filterable
-          default-first-option
-          @change="onPropertySelected"
-          :data-values="propertySelected[property.value]"
-          class="property-select"
-        >
-          <el-option
-            v-for="item in property.children"
-            :key="item.text"
-            :label="item.text"
-            :value="item.value"
-            :disabled="isPropertyValueDisabed(item.value)"
+  <div>
+    <el-button @click="handleOpenDialog" type="warning">{{ title }}</el-button>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      :title="title"
+      custom-class="dialog-sku-editor"
+      append-to-body
+      fullscreen
+      @opened="handleDialogOpened"
+    >
+      <div class="admin-sku-editor">
+        <div style="margin-bottom: 20px" v-if="!propertyDisabled">
+          <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
+        </div>
+        <el-form label-position="right" label-width="auto">
+          <el-form-item label="选择使用规格">
+            <el-select
+              v-model="shownProperty"
+              multiple
+              filterable
+              default-first-option
+              @remove-tag="handleRemoveShownProperty"
+              :disabled="propertyDisabled"
+            >
+              <el-option v-for="item in localSkuProperties" :key="item.value" :label="item.text" :value="item.value" />
+            </el-select>
+          </el-form-item>
+          <el-form-item
+            v-for="property in localSkuPropertiesShown"
+            :key="property.text"
           >
-            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
-            <span>{{ item.text }}</span>
-          </el-option>
-        </el-select>
-        <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
-      </el-form-item>
-    </el-form>
+            <template v-slot:label>
+              <div>
+                {{ property.text }}
+                <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
+              </div>
+            </template>
+            <el-select
+              v-model="propertySelected[property.value]"
+              multiple
+              filterable
+              default-first-option
+              @change="onPropertySelected"
+              :data-values="propertySelected[property.value]"
+              class="property-select"
+            >
+              <el-option
+                v-for="item in property.children"
+                :key="item.text"
+                :label="item.text"
+                :value="item.value"
+                :disabled="isPropertyValueDisabed(item.value)"
+              >
+                <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
+                <span>{{ item.text }}</span>
+              </el-option>
+            </el-select>
+            <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
+          </el-form-item>
+        </el-form>
 
-    <AdminTable
-      :columns="tableColumns"
-      :value="value"
-      border
-      :height="null"
-    />
+        <div class="table-container">
+          <div class="table" v-if="skus.length">
+            <div class="table-header">
+              <div class="item" v-for="item in tableHeaders" :key="item">{{ item }}</div>
+            </div>
+            <div class="table-body">
+              <template v-for="(row, index) in skus">
+                <AdminForm
+                  class="table-row"
+                  :key="index"
+                  :columns="formColumns"
+                  v-model="skus[index]"
+                  ref="form"
+                >
+                  <template v-slot:action>
+                    <span />
+                  </template>
+                </AdminForm>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -68,26 +97,49 @@
   import _ from 'lodash';
   import AdminTable from './table';
   import ColumnRender from './column-render';
+  import AdminForm from './form';
 
   @Component({
     components: {
-      AdminTable
+      AdminTable,
+      AdminForm
     }
   })
   export default class SkuEditor extends Vue {
+    @Prop({ type: String, default: '编辑SKU' }) title;
     @Prop(Boolean) propertyDisabled; // 禁止添加修改规格
     @Prop({ type: Array, default: () => [] }) skuProperties;
     @Prop({ type: Array, default: () => [] }) skuColumns;
     @Model('change', { type: Array, default: () => [] }) value;
 
+    skus = [];
+    dialogVisible = false;
     propertySelected = {};
     shownProperty = []; // 显示在外面的规格
+
+    get propertyColumn() {
+      return {
+        prop: 'properties',
+        label: '规格',
+        renderCell: (h, { props: { scope: { row } } }) => {
+          return <span>{row.properties.split(';').map(this.getPropertyText).join('、')}</span>;
+        }
+      }
+    }
+
+    get formColumns() {
+      return [this.propertyColumn].concat(this.skuColumns).map(item => ({ ...item, label: '' }));
+    }
+
+    get tableHeaders() {
+      return [this.propertyColumn].concat(this.skuColumns).map(item => item.label);
+    }
 
     // 判断属性能不能被删除
     // 已经保存到后端的sku属性(sku有id了)不能删除
     get propertyValuesDisabed() {
       return _.flattenDeep(
-        this.value
+        this.skus
           .filter(item => item.id)
           .map(item => item.properties)
           .map(item => item.split(';').map(deepItem => String(deepItem.split(':')[1])))
@@ -108,39 +160,6 @@
       return this.localSkuProperties.filter(item => this.shownProperty.includes(item.value));
     }
 
-    get tableColumns() {
-      const propertyColumn = {
-        prop: 'properties',
-        label: '规格',
-        renderCell: (h, { props: { scope: { row } } }) => {
-          return <span>{row.properties.split(';').map(this.getPropertyText).join('、')}</span>;
-        }
-      }
-      const columns = this.skuColumns.map(item => ({
-        ...item,
-        renderCell: (h, context) => {
-          return <ColumnRender
-            renderCell={item.renderCell}
-            value={context.props.value}
-            onChange={val => this.handleSkuChange(context.props.scope.$index, item.prop, val)}
-            onInput={val => this.handleSkuChange(context.props.scope.$index, item.prop, val)}
-          />
-        }
-      }))
-      return [propertyColumn].concat(columns);
-    }
-
-    mounted() {
-      this.propertySelected = this.initPropertySelected(this.value);
-      const shownProperty = [];
-      _.forEach(this.propertySelected, (val, key) => {
-        if (val.length) {
-          shownProperty.push(key);
-        }
-      });
-      this.shownProperty = shownProperty;
-    }
-
     isPropertyValueDisabed(value) {
       return this.propertyValuesDisabed.includes(String(value));
     }
@@ -151,7 +170,7 @@
     }
 
     handleSkuChange($index, prop, value) {
-      const skus = _.cloneDeep(this.value);
+      const skus = _.cloneDeep(this.skus);
       skus[$index][prop] = value;
       this.$emit('change', skus);
     }
@@ -235,7 +254,7 @@
 
       const skus = skuProperties.map(properties => {
         const propertiesSorted = this.getSortedProperties(properties);
-        const current = this.value.find(sku => this.getSortedProperties(sku.properties) === propertiesSorted);
+        const current = this.skus.find(sku => this.getSortedProperties(sku.properties) === propertiesSorted);
         return {
           properties: propertiesSorted,
           ...current
@@ -277,16 +296,33 @@
       });
     }
 
-    @Watch('value.length', { immediate: true })
-    async onValueChange(valueLen) {
-      if (valueLen) {
-        // FIXME 只能先这样确定dom已经渲染完了
-        await this.$nextTick();
-        this.handleCheckSelectTag();
-        setTimeout(() => this.handleCheckSelectTag(), 300);
-      }
+    async handleOpenDialog() {
+      this.dialogVisible = true;
+      this.propertySelected = this.initPropertySelected(this.skus);
+      const shownProperty = [];
+      _.forEach(this.propertySelected, (val, key) => {
+        if (val.length) {
+          shownProperty.push(key);
+        }
+      });
+      this.shownProperty = shownProperty;
+      await this.$nextTick();
+      this.handleCheckSelectTag();
+      setTimeout(() => this.handleCheckSelectTag(), 300);
     }
 
+    async handleSubmit() {
+      await Promise.all(this.$refs.form.map(item => item.handleValidateForm()));
+      this.dialogVisible = false;
+      this.$emit('change', JSON.parse(JSON.stringify(this.skus)));
+    }
+
+    @Watch('value', { immediate: true })
+    async onValueChange(value) {
+      if (value) {
+        this.skus = JSON.parse(JSON.stringify(value));
+      }
+    }
   }
 </script>
 
