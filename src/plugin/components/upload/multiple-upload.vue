@@ -11,7 +11,7 @@
     @closed="$emit('closed')"
   >
     <div class="admin-multiple-upload" v-loading="loading">
-      <Folders v-if="useResourceFolders" @change="dirPath = $event"/>
+      <Folders v-if="useResourceFolders" @folder-change="dirPath = $event"/>
       <input
         type="file"
         multiple
@@ -99,7 +99,7 @@ export default class MultipleUploadDialog extends Vue {
   tableData = [];
   tags = [];
   loading = false;
-  dirPath= ''
+  dirPath= []
 
   get columns() {
     return [
