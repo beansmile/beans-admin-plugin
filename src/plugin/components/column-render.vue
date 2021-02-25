@@ -124,6 +124,18 @@ export const StorageAttachment = {
   }
 }
 
+export const Button = {
+  functional: true,
+  render(h, context) {
+    const can = context.props.can;
+    if (!abilityService.can(can)) {
+      return null;
+    }
+    const buttonName = context.children || context.props.label || context.props.title;
+    return h('el-button', _.merge({}, { props: { size: 'mini' }, on: context.listeners }, context), buttonName);
+  }
+}
+
 export const RouteButton = {
   functional: true,
   render(h, context) {
@@ -238,6 +250,7 @@ const COMPONENT_PRE_INSTALLED = {
   importButton: RenderImportButton,
   dropdownButton: DropdownButton,
   selectFolder: SelectFolder,
+  button: Button
 }
 
 function getRenderContext({ context, config = {} }) {

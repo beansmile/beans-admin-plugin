@@ -62,7 +62,7 @@ class AbilityService {
     if (!this.$rules) {
       return true;
     }
-    return _.flatten([rules]).every(rule => this.check(rule));
+    return _.flatten([rules]).filter(Boolean).every(rule => this.check(rule));
   }
 }
 
