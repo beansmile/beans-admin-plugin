@@ -49,7 +49,7 @@ class FoldersStore extends SimpleStore {
   async createFolder({ parentId, folderName, path }) {
     const createFolder = _.get(Vue.prototype, '$vadminConfig.folder.onCreateFolder');
     if (createFolder) {
-      await createFolder({ parentId, folderName })
+      await createFolder({ parentId, folderName, path })
     } else {
       // TODO: 内置新建请求
     }
