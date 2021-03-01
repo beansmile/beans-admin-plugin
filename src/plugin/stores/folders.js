@@ -15,7 +15,7 @@ class FoldersStore extends SimpleStore {
     const fetchFolders = _.get(Vue.prototype, '$vadminConfig.folder.onFetchFolders');
     // data 需要是 <el-cascader> 组件 options 字段对应格式
     // https://element.eleme.cn/#/zh-CN/component/cascader#cascader-attributes
-    const data = await (fetchFolders ? fetchFolders(parentId, node) : this.fetch());
+    const data = await (fetchFolders ? fetchFolders(parentId, { ...node, dirPath: node.path }) : this.fetch());
     if (parentId) {
       Vue.set(this.chilren, parentId, data)
       const parent = this.findByPath(_.get(node, 'path'))
@@ -46,15 +46,15 @@ class FoldersStore extends SimpleStore {
     }
   }
 
-  async createFolder({ parentId, folderName, path }) {
+  async createFolder({ parentId, folderName, dirPath }) {
     const createFolder = _.get(Vue.prototype, '$vadminConfig.folder.onCreateFolder');
     if (createFolder) {
-      await createFolder({ parentId, folderName })
+      await createFolder({ parentId, folderName, dirPath })
     } else {
       // TODO: 内置新建请求
     }
     // 创建后，重新获取一下新的数据
-    await this.fetchData(parentId, { path })
+    await this.fetchData(parentId, { dirPath })
   }
 }
 

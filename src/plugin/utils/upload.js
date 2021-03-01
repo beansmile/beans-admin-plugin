@@ -68,7 +68,7 @@ function createChecksum(file) {
   });
 }
 
-export async function uploadFile(file, tags, dir_path) {
+export async function uploadFile(file, tags, dirPath) {
   const body = {
     filename: file.name || randomFileName(''),
     content_type: file.type || 'application/octet-stream',
@@ -80,7 +80,7 @@ export async function uploadFile(file, tags, dir_path) {
   const { directUploadURL, customUpload } = uploadConfig;
 
   if (customUpload) {
-    return customUpload(file, { ...body, dir_path });
+    return customUpload(file, { ...body, dirPath });
   }
 
   // TODO: 对接内部文件系统

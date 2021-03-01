@@ -33,16 +33,16 @@
   export default class Folders extends Vue {
     folderName = ''
     createLoading = false
-    path = []
+    dirPath = []
 
     get parentId() {
-      return this.path[this.path.length - 1]
+      return this.dirPath[this.dirPath.length - 1]
     }
 
     async onSubmit() {
       try {
         this.createLoading = true;
-        await foldersStore.createFolder(_.pick(this, ['parentId', 'folderName', 'path']))
+        await foldersStore.createFolder(_.pick(this, ['parentId', 'folderName', 'dirPath']))
         this.folderName = ''
       } finally {
         this.createLoading = false
@@ -50,7 +50,7 @@
     }
 
     handleFolderChange(e) {
-      this.path = e
+      this.dirPath = e
       this.$emit('folder-change', e)
     }
   }
