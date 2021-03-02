@@ -12,7 +12,7 @@
     <div v-loading="loading">
       <div class="box-header">
         <Uploader
-          v-bind="this.$attrs"
+          v-bind="$attrs"
           :limit="50"
           @success="handleUploadSuccess"
         />
