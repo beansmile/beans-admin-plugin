@@ -27,6 +27,7 @@
   const defaultValue = {
     text: '文本',
     style: {
+      whiteSpace: 'pre-line',
       fontSize: 16,
       textAlign: 'left',
       lineHeight: 16 * 1.5,
@@ -165,5 +166,4 @@
 </script>
 
 <style lang="scss" scoped>
-
 </style>
