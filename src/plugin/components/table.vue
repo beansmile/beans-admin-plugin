@@ -90,6 +90,7 @@ export default class AdminTable extends Vue {
   render() {
     return (
       <el-table
+        class="admin-table"
         data={this.value}
         height="100%"
         stripe
