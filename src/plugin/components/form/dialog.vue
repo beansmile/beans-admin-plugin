@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleShowDialog">
+  <div @click.stop="handleShowDialog">
     <slot />
     <el-dialog
       :visible="visible"

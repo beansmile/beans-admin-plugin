@@ -53,5 +53,11 @@
         margin-bottom: 10px;
       }
     }
+
+    .table-cell {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
   }
 }

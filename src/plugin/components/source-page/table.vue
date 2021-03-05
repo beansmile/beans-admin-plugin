@@ -22,6 +22,7 @@
           :actions="actions"
           :action-column-props="actionColumnProps"
           :default-sort="defaultSort"
+          :on-table-cell-form-submit="onTableCellFormSubmit"
           @sort-change="handleSortChange"
         />
       </div>
@@ -62,6 +63,7 @@ export default class AdminSourcePageTable extends Vue {
   @Prop({ type: Object, default: () => ({}) }) filterProps;
   @Prop({ type: Object, default: () => ({}) }) paginationProps;
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
+  @Prop({ type: Function, default: _.noop }) onTableCellFormSubmit;
 
   filterForm = {};
   defaultSort = {};

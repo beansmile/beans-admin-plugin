@@ -1,6 +1,7 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
+import DialogForm from './form/dialog';
 
 @Component
 export default class AdminTable extends Vue {
@@ -8,6 +9,7 @@ export default class AdminTable extends Vue {
   @Prop({ type: Array, default: () => [] }) value;
   @Prop({ type: [Function, Array] }) actions;
   @Prop({ type: Object, default: () => ({}) }) actionColumnProps;
+  @Prop({ type: Function, default: _.noop }) onTableCellFormSubmit;
 
   get actionColumn() {
     const ColumnRender = require('./column-render').default;
@@ -60,22 +62,65 @@ export default class AdminTable extends Vue {
     ));
   }
 
+  renderCellForm({ column, scope }) {
+    const formColumn = _.isFunction(column.form) ? column.form(scope) : column.form;
+    if (formColumn) {
+      const formColumns = [
+        {
+          prop: column.prop,
+          label: column.label,
+          ...formColumn
+        }
+      ];
+      const submitHandler = async (data) => {
+        if (_.isFunction(formColumn.submitHandler)) {
+          await formColumn.submitHandler({ data, scope })
+        } else {
+          await this.onTableCellFormSubmit({ data, scope });
+        }
+        Object.assign(scope.row, data);
+      }
+      return (
+        <DialogForm
+          columns={formColumns}
+          value={_.pick(scope.row, column.prop)}
+          title={column.label}
+          submitHandler={submitHandler}
+          label-position="top"
+        >
+          <el-button
+            icon="el-icon-edit"
+            size="mini"
+            style="margin-left: 5px; padding: 4px"
+            circle
+          />
+        </DialogForm>
+      )
+    }
+    return null;
+  }
+
   renderCell(column) {
     const ColumnRender = require('./column-render').default;
     return scope => {
-      return <ColumnRender
-        key={column.prop}
-        value={_.get(scope.row, column.prop)}
-        scope={scope}
-        column={column}
-        renderCell={column.renderCell}
-      />
+      return (
+        <div class="table-cell">
+          <ColumnRender
+            key={column.prop}
+            value={_.get(scope.row, column.prop)}
+            scope={scope}
+            column={column}
+            renderCell={column.renderCell || (() => <span>{_.get(scope, `row.${column.prop}`, '/')}</span>)}
+          />
+          {this.renderCellForm({ column, scope })}
+        </div>
+      )
     }
   }
 
   renderTableColumn(column) {
     const scopedSlots = {};
-    if (column.renderCell) {
+    if (column.prop) {
       scopedSlots.default = this.renderCell(column);
     }
     return (
