@@ -103,12 +103,13 @@
       }
     }
 
-    addComponent(componentItem, index = this.components.length) {
+    async addComponent(componentItem, index = this.components.length) {
       const page = _.cloneDeep(this.value);
       const newComponent = { ...componentItem, key: uuid() };
       page.components = page.components || [];
       page.components.splice(index, 0, newComponent);
       this.$emit('change', page);
+      await this.$nextTick();
       this.toggleActiveComponentKey(newComponent.key);
     }
 
