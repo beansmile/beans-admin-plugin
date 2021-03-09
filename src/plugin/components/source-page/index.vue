@@ -11,6 +11,7 @@
       :table-events="tablePageEvents"
       :table-props="tableProps"
       :action-column-props="actionColumnProps"
+      :on-table-cell-form-submit="handleTableCellFormSubmit"
       ref="tablePage"
     >
       <template #after-filter>
@@ -49,7 +50,7 @@
       :columns="sourcePageFormColumns"
       :loading="formLoading"
       v-model="state.data"
-      @submit="handleSubmit"
+      @submit="handleFormPageSubmit"
     >
       <template v-slot:action="{ value }">
         <slot name="form-action" :value="value" />
@@ -285,10 +286,19 @@ export default class AdminSourcePage extends Vue {
     }
   }
 
-  async handleSubmit(data) {
+  handleTableCellFormSubmit({ data, scope }) {
+    const originData = scope.row;
+    return this.handleSubmit({ data: { id: originData.id, ...data }, originData });
+  }
+
+  handleFormPageSubmit(data) {
+    return this.handleSubmit({ data });
+  }
+
+  async handleSubmit({ data, originData = this.originData, state = this.state } = {}) {
     try {
       this.formLoading = true;
-      const hookParams = { data, originData: this.originData, state: this.state, type: this.type, resource: this.resource, namespace: this.namespace };
+      const hookParams = { data, originData, state, type: this.type, resource: this.resource, namespace: this.namespace };
       if (_.isFunction(this.onFormSubmit)) {
         await this.onFormSubmit(hookParams);
       } else {
@@ -305,7 +315,9 @@ export default class AdminSourcePage extends Vue {
         if (_.isFunction(this.afterSubmit)) {
           this.afterSubmit(hookParams, newData)
         } else {
-          this.$router.push({ name: `${this.resource}.show`, params: { id: data.id } });
+          if (this.type !== 'index') {
+            this.$router.push({ name: `${this.resource}.show`, params: { id: data.id } });
+          }
         }
       }
     } finally {
