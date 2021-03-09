@@ -1,6 +1,6 @@
 <template>
   <draggable
-    class="components-content"
+    class="page-editor-components-content"
     :sort="false"
     :group="{ name: 'component', pull: 'clone', put: false }"
     :value="components"
@@ -29,34 +29,3 @@
     @Prop({ type: Array, default: () => [] }) components;
   }
 </script>
-
-<style lang="scss" scoped>
-  .components-content {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -20px;
-    overflow: hidden;
-
-    .component-button-item {
-      width: 44%;
-      height: 90px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-left: 0;
-      margin-bottom: 20px;
-      margin-right: 5%;
-      font-size: 16px;
-
-      /deep/ i {
-        font-size: 20px;
-        margin-bottom: 15px;
-      }
-
-      /deep/ i.iconfont.icon-daohangtiao {
-        font-size: 15px;
-      }
-    }
-  }
-</style>

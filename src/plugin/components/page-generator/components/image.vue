@@ -138,13 +138,3 @@
 
   }
 </script>
-
-<style lang="scss" scoped>
-  .preview {
-    img {
-      width: 100%;
-      height: auto;
-      max-width: 100% !important;
-    }
-  }
-</style>

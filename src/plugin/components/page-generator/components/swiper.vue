@@ -1,5 +1,5 @@
 <template>
-  <div classs="page-editor-swiper">
+  <div class="page-editor-swiper">
     <Animation :type="$get(value, 'animation.type', '')">
       <div class="preview" :style="style">
         <div class="box-indiator" v-if="value.indicatorDots">
@@ -292,73 +292,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .preview {
-    position: relative;
-
-    .box-indiator {
-      position: absolute;
-      left: 50%;
-      bottom: 10px;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: center;
-      z-index: 9;
-
-      .item {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, .3);
-        margin-right: 7px;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        &.active {
-          background: #000000;
-        }
-      }
-    }
-
-    .el-carousel {
-      height: 100%;
-
-      /deep/ .el-carousel__container {
-        height: 100%;
-        overflow: hidden;
-      }
-
-      .item {
-        width: 100%;
-        height: 100%;
-        position: relative;
-
-        .item-image {
-          width: 100%;
-          height: auto;
-          position: absolute;
-          top: 50%;
-          left: 0;
-          transform: translateY(-50%);
-          z-index: 1;
-        }
-
-        .box-text {
-          box-sizing: border-box;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          z-index: 2;
-
-          span {
-            display: block;
-          }
-        }
-      }
-    }
-  }
-</style>

@@ -127,9 +127,3 @@
     ]
   }
 </script>
-
-<style lang="scss" scoped>
-  .border {
-    border-width: 0;
-  }
-</style>
