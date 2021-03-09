@@ -2152,9 +2152,9 @@ circular-json@^0.3.1:
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
 
-"ckeditor@https://github.com/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7":
+"ckeditor@https://hub.fastgit.org/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7":
   version "0.0.0"
-  resolved "https://github.com/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7"
+  resolved "https://hub.fastgit.org/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -3319,9 +3319,9 @@ escodegen@1.x.x:
   optionalDependencies:
     source-map "~0.6.1"
 
-"eslint-config-beansmile@https://github.com/beansmile/eslint-config-beansmile.git":
+"eslint-config-beansmile@https://hub.fastgit.org/beansmile/eslint-config-beansmile.git":
   version "1.3.0"
-  resolved "https://github.com/beansmile/eslint-config-beansmile.git#684d48b0d9fb788d6d474e0bcd45df6295561966"
+  resolved "https://hub.fastgit.org/beansmile/eslint-config-beansmile.git#684d48b0d9fb788d6d474e0bcd45df6295561966"
   dependencies:
     babel-eslint "^10.0.1"
     eslint-plugin-import "^2.12.0"
