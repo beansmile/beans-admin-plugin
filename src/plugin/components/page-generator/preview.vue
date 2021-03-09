@@ -1,7 +1,6 @@
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
-  import draggable from 'vuedraggable';
 
   @Component
   export default class PageEditorPreview extends Vue {

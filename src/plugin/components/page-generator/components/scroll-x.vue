@@ -335,18 +335,3 @@
     ]
   }
 </script>
-
-<style lang="scss" scoped>
-  .preview {
-    display: flex;
-    overflow-x: auto;
-
-    .item {
-      margin-right: 10px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-</style>

@@ -161,23 +161,3 @@
 
   }
 </script>
-
-<style lang="scss" scoped>
-  .preview {
-    display: flex;
-
-    .item {
-      flex: 1;
-
-      &:last-child {
-        margin-right: 0 !important;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-  }
-</style>

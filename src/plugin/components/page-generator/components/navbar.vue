@@ -186,26 +186,3 @@
 
   }
 </script>
-
-<style lang="scss" scoped>
-  .preview {
-    display: flex;
-    overflow: auto;
-
-    .item {
-      position: relative;
-      min-width: 70px;
-      flex: 1;
-      text-align: center;
-
-      .line {
-        position: absolute;
-        bottom: 2px;
-        left: 50%;
-        width: 60%;
-        transform: translateX(-50%);
-        height: 2px;
-      }
-    }
-  }
-</style>

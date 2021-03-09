@@ -197,39 +197,3 @@
     }
   }
 </script>
-
-<style lang="scss" scoped>
-  .preview {
-    .item {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 15px;
-
-      label  {
-        font-size: 14px;
-        margin-bottom: 5px;
-      }
-
-      input {
-        box-sizing: border-box;
-        height: 40px;
-      }
-
-      input, textarea {
-        border: 1px solid;
-        outline: none;
-      }
-
-      textarea {
-        height: 150px;
-        resize: none;
-      }
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      padding: 5px 10px;
-    }
-  }
-</style>
