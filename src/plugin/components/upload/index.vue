@@ -89,7 +89,7 @@ export default class AdminUpload extends Vue {
     this.loading = true;
     try {
       const [uploadRes, imageInfo] = await Promise.all([
-        uploadFile(blob, tags),
+        uploadFile(blob, { ...this.$attrs, tags }),
         isImageFile(blob) ? getImageInfo(blob) : {}
       ]);
       return {

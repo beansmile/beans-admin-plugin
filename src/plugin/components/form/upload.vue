@@ -79,6 +79,7 @@ export default class AdminFormUpload extends Vue {
   @Prop({ type: String, default: 'signed_id' }) trackedBy;
   @Prop({ type: String }) uploadButtonText;
   @Prop({ type: String, default: 'image' }) type; // 资源类型
+  @Prop(Boolean) disableResourceUploader;
 
   disalogVisible = false;
 
@@ -101,6 +102,9 @@ export default class AdminFormUpload extends Vue {
   };
 
   get useResourceUploader() {
+    if (this.disableResourceUploader) {
+      return false;
+    }
     const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
     const onFetchResourceBlob = _.get(this, '$vadminConfig.upload.onFetchResourceBlob');
     return !!(requestURL || onFetchResourceBlob);
@@ -120,7 +124,7 @@ export default class AdminFormUpload extends Vue {
   get fileResources() {
     const value = this.value ? _.flatten([this.value]) : [];
     return value.map(item => {
-      if (/^http/.test(item)) {
+      if (/^(http|\/)/.test(item)) {
         return {
           url: item,
           content_type: this.accept.includes('image') ? 'image' : (this.accept.includes('video') ? 'video' : '')

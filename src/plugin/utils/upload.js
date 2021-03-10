@@ -68,7 +68,7 @@ function createChecksum(file) {
   });
 }
 
-export async function uploadFile(file, tags, dirPath) {
+export async function uploadFile(file, { tags, dirPath, ...props } = {}) {
   const body = {
     filename: file.name || randomFileName(''),
     content_type: file.type || 'application/octet-stream',
@@ -80,10 +80,9 @@ export async function uploadFile(file, tags, dirPath) {
   const { directUploadURL, customUpload } = uploadConfig;
 
   if (customUpload) {
-    return customUpload(file, { ...body, dirPath });
+    return customUpload(file, { ...body, dirPath, ...props });
   }
 
-  // TODO: 对接内部文件系统
   const result = await request.post(directUploadURL, body);
   // 1小时超时
   await request.put(result.direct_upload.url, file.slice(), { headers: result.direct_upload.headers, timeout: 1 * 60 * 60 * 1000 });
