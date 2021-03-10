@@ -228,7 +228,7 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   async handleUpload(row, index) {
-    const result = await uploadFile(row.file, this.tags, this.dirPath);
+    const result = await uploadFile(row.file, { ...this.$attrs, tags: this.tags, dirPath: this.dirPath });
     this.$set(this.tableData[index], 'result', result);
     return result;
   }
