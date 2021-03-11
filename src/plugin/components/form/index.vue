@@ -153,6 +153,7 @@ export default class AdminForm extends Vue {
     try {
       await this.handleValidateForm();
     } catch (e) {
+      this.$message.error(this.$t('bean.formValidateError'));
       this.$nextTick()
         .finally(() => {
           const collapseComponents = this.findInstance(child => _.has(child, 'collapsed'));
