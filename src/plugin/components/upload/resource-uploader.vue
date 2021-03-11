@@ -58,7 +58,7 @@
             <el-popconfirm
               :title="$t('bean.confirmDeleteTip')"
               class="btn-delete"
-              @onConfirm="handleDelete(item.id)"
+              @onConfirm="handleDelete(item)"
             >
               <i class="el-icon-circle-close" slot="reference" @click.stop></i>
             </el-popconfirm>
@@ -158,7 +158,7 @@
       this.loading = true;
       try {
         const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
-        const params = { content_type_cont: this.type, per_page: 10, page: this.pagination['current-page'], ...this.params }
+        const params = { content_type_cont: this.type, per_page: 14, page: this.pagination['current-page'], ...this.params }
         const fetchResource = _.get(this, '$vadminConfig.upload.onFetchResourceBlob') || (() => this.$request.get(requestURL, { params }));
         const { data, pagination } = await fetchResource(params);
         this.data = data;
@@ -210,8 +210,13 @@
       this.handleClose();
     }
 
-    async handleDelete(id) {
-      await this.$request.delete(`active_storage/blobs/${id}`);
+    async handleDelete(item) {
+      const uploadConfig = Vue.vadminConfig.upload || {};
+      if (uploadConfig.customDelete) {
+        await uploadConfig.customDelete(item)
+      } else {
+        await this.$request.delete(`active_storage/blobs/${item.id}`);
+      }
       this.fetchData();
     }
 
