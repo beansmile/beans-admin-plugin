@@ -54,5 +54,6 @@ export default {
     error_massage: '错误信息',
     importSuccess: '导入成功',
     importFail: '导入失败，请查看"错误信息.xlsx"文件了解详情',
+    formValidateError: '表单项填写有错误'
   }
 }

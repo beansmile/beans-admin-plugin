@@ -53,5 +53,6 @@ export default {
     error_massage: 'error_massage',
     importSuccess: 'Import success',
     importFail: 'Import fail. Please check the "error_massage.xlsx" file for details',
+    formValidateError: 'There is an error in validate the form item'
   }
 }
