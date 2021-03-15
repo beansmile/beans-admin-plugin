@@ -14,16 +14,18 @@
 
       <slot name="before-table" />
       <div class="box-table">
-        <Table
-          v-bind="tableProps"
-          v-on="tableEvents"
-          :columns="sourcePageTableColumns"
-          :value="value"
-          :actions="actions"
-          :action-column-props="actionColumnProps"
-          :default-sort="defaultSort"
-          @sort-change="handleSortChange"
-        />
+        <slot name="table" :value="value">
+          <Table
+            v-bind="tableProps"
+            v-on="tableEvents"
+            :columns="sourcePageTableColumns"
+            :value="value"
+            :actions="actions"
+            :action-column-props="actionColumnProps"
+            :default-sort="defaultSort"
+            @sort-change="handleSortChange"
+          />
+        </slot>
       </div>
       <slot name="after-table" />
     </div>

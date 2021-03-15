@@ -36,14 +36,18 @@
           <slot name="action" />
         </div>
       </template>
+      <template #table="scope">
+        <slot name="table" v-bind="scope" />
+      </template>
     </TablePage>
-    <ShowPage
-      v-else-if="type === 'show'"
-      :value="state.data"
-      :columns="sourcePageColumns"
-      :tabs="tabs"
-      :actions="sourcePageAction"
-    />
+    <slot name="show" v-else-if="type === 'show'" :value="state.data">
+      <ShowPage
+        :value="state.data"
+        :columns="sourcePageColumns"
+        :tabs="tabs"
+        :actions="sourcePageAction"
+      />
+    </slot>
     <FormPage
       v-else-if="type === 'edit' || type === 'new'"
       :columns="sourcePageFormColumns"
