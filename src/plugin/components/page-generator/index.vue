@@ -49,7 +49,7 @@
       style: {}
     }) }) value;
     @Prop({ type: Array, default: () => [] }) useComponents;
-    @Prop({ type: Array, default: () => [] }) pages;
+    @Prop({ type: [Array, Function], default: () => [] }) pages;
 
     activeComponentKey = '';
 

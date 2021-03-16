@@ -44,7 +44,7 @@
     }
   })
   export default class PageEditorScreen extends Vue {
-    @Prop(Array) pages;
+    @Prop({ type: [Array, Function], default: () => [] }) pages;
     @Prop(Object) page;
     @Prop(String) activeKey;
     @Prop(Array) components;

@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
   configureWebpack: require('./webpack.config'),
   publicPath: '/',

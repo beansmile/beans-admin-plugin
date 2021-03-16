@@ -49,7 +49,7 @@
   })
   export default class PageEditorImage extends Vue {
     @Prop({ type: Object, default: () => defaultValue }) value;
-    @Prop({ type: Array, default: () => ([]) }) pages;
+    @Prop({ type: [Array, Function], default: () => ([]) }) pages;
     @Prop(Boolean) showController;
     @Prop({ type: Array, default: () => ([]) }) popupComponents;
 
