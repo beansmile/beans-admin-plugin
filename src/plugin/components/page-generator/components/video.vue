@@ -49,7 +49,7 @@
       Animation
     }
   })
-  export default class  extends Vue {
+  export default class PageEditorVideo extends Vue {
     @Prop({ type: Object, default: () => defaultValue }) value;
     @Prop({ type: Array, default: () => ([]) }) pages;
     @Prop(Boolean) showController;
