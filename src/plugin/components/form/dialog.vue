@@ -8,13 +8,13 @@
       @close="handleCloseDialog"
     >
       <AdminForm
-        :value="value"
         :columns="columns"
         :disabled="loading"
         v-bind="$attrs"
         class="admin-form-dialog"
+        v-model="form"
+        v-on="$listeners"
         @submit="handleSubmit"
-        @change="handleChange"
       >
         <template v-slot:action="scope">
           <div class="box-actions">
@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import { Vue, Component, Model, Prop } from 'vue-property-decorator';
+import { Vue, Component, Model, Prop, Watch } from 'vue-property-decorator';
+import _ from 'lodash';
 import AdminForm from './index';
 
 @Component({
@@ -44,6 +45,7 @@ export default class FormDialog extends Vue {
 
   loading = false;
   visible = false;
+  form = {};
 
   handleShowDialog() {
     this.visible = true;
@@ -57,7 +59,7 @@ export default class FormDialog extends Vue {
     if (this.submitHandler) {
       this.loading = true;
       try {
-        await this.submitHandler(JSON.parse(JSON.stringify(this.value)));
+        await this.submitHandler(JSON.parse(JSON.stringify(this.form)));
       } finally {
         this.loading = false;
       }
@@ -65,9 +67,10 @@ export default class FormDialog extends Vue {
     this.visible = false;
   }
 
-  handleChange(data) {
-    this.value = data;
-    this.$emit('change', data);
+  @Watch('value')
+  onValueChange(val) {
+    this.form = _.cloneDeep(val);
   }
+
 }
 </script>

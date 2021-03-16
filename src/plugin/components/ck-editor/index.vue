@@ -75,7 +75,7 @@
       const { xhr } = data.fileLoader
       // Avoid image url expiration in private bucket, editor should using rails blob url
       if (!xhr.$uploadResult.blob_url) {
-        console.warn("Please return blob_url in direct_upload interface.")
+        console.warn('Please return blob_url in direct_upload interface.')
       }
 
       data.url = xhr.$uploadResult.blob_url || xhr.$uploadResult.url
