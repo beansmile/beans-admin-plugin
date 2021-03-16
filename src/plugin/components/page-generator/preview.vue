@@ -1,11 +1,12 @@
 <script>
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
+  import draggable from 'vuedraggable';
 
   @Component
   export default class PageEditorPreview extends Vue {
     @Prop(Boolean) showController;
-    @Prop(Array) pages;
+    @Prop({ type: [Array, Function], default: () => [] }) pages;
     @Prop(Object) page;
     @Prop(String) activeKey;
     @Prop(Array) allComponents;

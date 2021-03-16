@@ -69,7 +69,7 @@
     @Prop(Boolean) visible;
     @Prop(Boolean) event;
     @Prop(Boolean) animation;
-    @Prop({ type: Array, default: () => ([]) }) pages;
+    @Prop({ type: [Array, Function], default: () => [] }) pages;
     @Prop({ type: Array, default: () => [] }) columns;
     @Prop({ type: Array, default: () => [] }) styleColumns;
     @Prop({ type: Array, default: () => [] }) popupComponents;
