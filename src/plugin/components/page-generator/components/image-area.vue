@@ -31,8 +31,6 @@
       :visible="showController"
       :value="value"
       :pages="pages"
-      :columns="baseConfigColumns"
-      :styleColumns="styleConfigColumns"
       @change="$emit('change', $event)"
     />
   </div>
