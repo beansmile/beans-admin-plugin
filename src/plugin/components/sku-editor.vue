@@ -7,7 +7,6 @@
       custom-class="dialog-sku-editor"
       append-to-body
       fullscreen
-      @opened="handleDialogOpened"
     >
       <div class="admin-sku-editor">
         <div style="margin-bottom: 20px" v-if="!propertyDisabled">
