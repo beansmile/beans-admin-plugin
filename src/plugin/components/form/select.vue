@@ -32,7 +32,7 @@ export default class Select extends Vue {
       const remoteObj = {
         remote: true,
         filterable: true,
-        'remote-method': keyword => keyword && search(keyword)
+        'remote-method': keyword => search(keyword)
       }
       this.localProps = Object.assign({}, remoteObj);
     }
