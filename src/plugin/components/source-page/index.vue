@@ -171,7 +171,15 @@ export default class AdminSourcePage extends Vue {
   }
 
   get sourcePageFilterColumns() {
-    return this.getColumns(this.filterColumns);
+    const columns = this.getColumns(this.filterColumns);
+    const defaultColumns = this
+      .getColumns(_.get(this, '$vadminConfig.sourcePage.filterColumns', []))
+      .filter(defaultColumn => !columns.find(userColumn => userColumn.prop === defaultColumn.prop));
+    return columns.concat(defaultColumns)
+      .map(item => ({
+        ...item,
+        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
+      }));
   }
 
   get exportActionParams() {
@@ -251,12 +259,12 @@ export default class AdminSourcePage extends Vue {
     }
   }
 
-  getColumns(columns, exportParams) {
+  getColumns(columns, exportParams = {}) {
     if (_.isArray(columns)) {
       return columns;
     }
     if (_.isFunction(columns)) {
-      return columns(this.$createElement, { type: this.type, resource: this.resource, ...exportParams });
+      return columns.call(this, this.$createElement, { type: this.type, resource: this.resource, ...exportParams });
     }
     return [];
   }
