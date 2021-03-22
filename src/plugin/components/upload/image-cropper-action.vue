@@ -24,7 +24,7 @@
   })
   export default class AdminImageCropperAction extends Vue {
     @Prop(Object) cropper;
-    @Prop(Object) file;
+    @Prop([Object, File]) file;
     @Prop(Boolean) loading;
     @Prop(Boolean) disabled;
     show = false;
