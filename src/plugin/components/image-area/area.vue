@@ -24,7 +24,7 @@
   @Component
   export default class AdminActionArea extends Vue {
     @Model('change', { type: Object, default: () => {} }) value;
-    @Prop(DOMRect) containerRect;
+    @Prop([DOMRect, Object]) containerRect;
     @Prop(Boolean) active;
 
     get style() {
