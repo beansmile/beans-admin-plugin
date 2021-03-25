@@ -21,6 +21,7 @@
           :event-props="{ pages, popupComponents }"
           :value="value"
           @change="handleChange"
+          v-if="dialogVisible"
         />
       </el-dialog>
     </Animation>
