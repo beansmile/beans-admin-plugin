@@ -18,13 +18,13 @@
         />
         <el-form inline @submit.prevent.native="handleFilter">
           <el-form-item :label="$t('bean.folder')" v-if="useResourceFolders">
-            <SelectFolder @change="params.dir_id = $event[$event.length - 1]"/>
+            <SelectFolder :value="params.dirIds" @change="params.dirIds = $event"/>
           </el-form-item>
           <el-form-item :label="$t('bean.fileName')">
             <el-input v-model="params.filename_cont" />
           </el-form-item>
 
-          <el-form-item :label="$t('bean.tag')">
+          <el-form-item :label="$t('bean.tag')" v-if="useResourceBlobTag">
             <el-select
               v-model="params.tags_name_in"
               multiple
@@ -37,7 +37,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="handleFilter">{{ $t('bean.actionFilter') }}</el-button>
+            <el-button type="primary" native-type="submit">{{ $t('bean.actionFilter') }}</el-button>
             <el-button @click="handleReset">{{ $t('bean.actionReset') }}</el-button>
           </el-form-item>
         </el-form>
@@ -135,6 +135,12 @@
 
     get useResourceFolders() {
       return _.get(this, '$vadminConfig.folder.useFolder');
+    }
+
+    get useResourceBlobTag() {
+      const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
+      const requestFunction = _.get(this, '$vadminConfig.upload.onFetchResourceBlobTag');
+      return Boolean(requestURL || requestFunction);
     }
 
     handleClose() {
