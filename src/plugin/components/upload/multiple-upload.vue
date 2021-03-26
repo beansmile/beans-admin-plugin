@@ -11,7 +11,12 @@
     @closed="$emit('closed')"
   >
     <div class="admin-multiple-upload" v-loading="loading">
-      <Folders v-if="useResourceFolders" @folder-change="dirPath = $event"/>
+      <el-form inline v-if="useResourceFolders">
+        <el-form-item label="上传到文件夹">
+          <AttachDir v-model="dir_path" />
+        </el-form-item>
+      </el-form>
+
       <input
         type="file"
         multiple
@@ -75,13 +80,13 @@ import FormSelect from '../form/select';
 import { checkFileSize, uploadFile } from '../../utils';
 import _ from 'lodash';
 import ImageCropperAction from './image-cropper-action';
-import Folders from './folders'
+import AttachDir from '../attach-dir';
 
 @Component({
   components: {
-    Folders,
     AdminTable,
-    FormSelect
+    FormSelect,
+    AttachDir
   }
 })
 export default class MultipleUploadDialog extends Vue {
@@ -99,7 +104,7 @@ export default class MultipleUploadDialog extends Vue {
   tableData = [];
   tags = [];
   loading = false;
-  dirPath= []
+  dir_path = '';
 
   get columns() {
     return [
@@ -161,7 +166,7 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   get useResourceFolders() {
-    return _.get(this, '$vadminConfig.folder.useFolder');
+    return !!_.get(this, '$vadminConfig.upload.attachDirUrl');
   }
 
   handleCropSuccess(file, $index) {
@@ -228,7 +233,7 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   async handleUpload(row, index) {
-    const result = await uploadFile(row.file, { ...this.$attrs, tags: this.tags, dirPath: this.dirPath });
+    const result = await uploadFile(row.file, { ...this.$attrs, tags: this.tags, dir_path: this.dir_path });
     this.$set(this.tableData[index], 'result', result);
     return result;
   }
