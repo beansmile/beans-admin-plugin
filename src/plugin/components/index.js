@@ -129,6 +129,10 @@ export function install(Vue, config = {}) {
       name: 'select-folder',
       component: require('./select-folder').default
     },
+    {
+      name: 'attach-dir',
+      component: require('./attach-dir').default
+    }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
   });

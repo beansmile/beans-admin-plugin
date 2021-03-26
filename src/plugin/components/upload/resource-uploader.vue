@@ -18,7 +18,7 @@
         />
         <el-form inline @submit.prevent.native="handleFilter">
           <el-form-item :label="$t('bean.folder')" v-if="useResourceFolders">
-            <SelectFolder :value="params.dirIds" @change="params.dirIds = $event"/>
+            <AttachDir v-model="params.dir_path" />
           </el-form-item>
           <el-form-item :label="$t('bean.fileName')">
             <el-input v-model="params.filename_cont" />
@@ -93,7 +93,7 @@
   import ResourceRender from '../resource-render';
   import Uploader from './index';
   import _ from 'lodash';
-  import SelectFolder from '../select-folder'
+  import AttachDir from '../attach-dir';
 
   const TYPES = {
     image: '图片',
@@ -109,8 +109,8 @@
   @Component({
     components: {
       Uploader,
-      SelectFolder,
-      ResourceRender
+      ResourceRender,
+      AttachDir
     }
   })
   export default class AdminResourceUploader extends Vue {
@@ -134,7 +134,7 @@
     }
 
     get useResourceFolders() {
-      return _.get(this, '$vadminConfig.folder.useFolder');
+      return !!_.get(this, '$vadminConfig.upload.attachDirUrl');
     }
 
     get useResourceBlobTag() {
