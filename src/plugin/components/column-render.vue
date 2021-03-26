@@ -19,7 +19,6 @@ import SkuEditor from './sku-editor';
 import DialogForm from './form/dialog';
 import ImportButton from './import-button';
 import DropdownButton from './dropdown-button';
-import SelectFolder from './select-folder';
 
 const RenderDate = {
   functional: true,
@@ -249,7 +248,6 @@ const COMPONENT_PRE_INSTALLED = {
   skuEditor: SkuEditor,
   importButton: RenderImportButton,
   dropdownButton: DropdownButton,
-  selectFolder: SelectFolder,
   button: Button
 }
 

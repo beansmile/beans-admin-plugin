@@ -126,10 +126,6 @@ export function install(Vue, config = {}) {
       component: require('./route-tab').default
     },
     {
-      name: 'select-folder',
-      component: require('./select-folder').default
-    },
-    {
       name: 'attach-dir',
       component: require('./attach-dir').default
     }
