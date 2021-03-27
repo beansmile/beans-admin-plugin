@@ -43,11 +43,15 @@ import { Vue, Component, Model } from 'vue-property-decorator';
 import _ from 'lodash';
 import { abilityService } from '../services';
 
+const state = Vue.observable({ dirs: [] })
+
 @Component
 export default class AttachDir extends Vue {
   @Model('change', { type: String }) value;
 
-  dirs = [];
+  get dirs() {
+    return state.dirs;
+  }
 
   get ability() {
     const ability = _.get(this, '$vadminConfig.upload.attachDirAbility');
@@ -74,7 +78,7 @@ export default class AttachDir extends Vue {
 
   async fetchData() {
     const data = await this.$request.get(this.requestUrl, { params: { descs: 'id' } });
-    this.dirs = data;
+    state.dirs = data;
   }
 
   handleCommand(command, data, node) {
@@ -95,11 +99,11 @@ export default class AttachDir extends Vue {
         name: value
       });
       if (!data) {
-        this.dirs.unshift(child);
+        state.dirs.unshift(child);
       } else {
         const parent = node.path.reduce((accumulator, currentValue) => {
           return (accumulator.children || []).find(item => item.path === currentValue);
-        }, { children: this.dirs });
+        }, { children: state.dirs });
         if (parent.children && parent.children.length) {
           parent.children.unshift(child);
         } else {
@@ -115,7 +119,7 @@ export default class AttachDir extends Vue {
       await this.$request.put(`${this.requestUrl}/${data.id}`, { name: value });
       const nodeData = node.path.reduce((accumulator, currentValue) => {
         return (accumulator.children || []).find(item => item.path === currentValue);
-      }, { children: this.dirs });
+      }, { children: state.dirs });
       nodeData.name = value;
     }
   }
@@ -125,7 +129,7 @@ export default class AttachDir extends Vue {
     await this.$request.delete(`${this.requestUrl}/${data.id}`);
     const children = node.path.slice(0, -1).reduce((accumulator, currentValue) => {
       return _.get(accumulator.find(item => item.path === currentValue), 'children') || [];
-    }, this.dirs);
+    }, state.dirs);
     const index = children.findIndex(item => item.id === data.id);
     children.splice(index, 1);
   }
