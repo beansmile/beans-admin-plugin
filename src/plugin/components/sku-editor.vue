@@ -27,7 +27,7 @@
           </el-form-item>
           <el-form-item
             v-for="property in localSkuPropertiesShown"
-            :key="property.text"
+            :key="property.value"
           >
             <template v-slot:label>
               <div>
@@ -46,7 +46,7 @@
             >
               <el-option
                 v-for="item in property.children"
-                :key="item.text"
+                :key="item.value"
                 :label="item.text"
                 :value="item.value"
                 :disabled="isPropertyValueDisabed(item.value)"
