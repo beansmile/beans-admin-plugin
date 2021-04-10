@@ -34,11 +34,10 @@ const clearOldVersionFiles = async () => {
     'max-keys': 1000
   });
   const objectsGroupedByName = _.groupBy(objects, item => {
-    const nameArr = item.name.split('.');
-    if (nameArr.length >= 3) {
-      return [nameArr.slice(0, nameArr.length - 2).join('.'), nameArr[nameArr.length - 1]].join('.');
-    }
-    return item.name;
+    // app.4ae2275a.js => app.js
+    return item.name.split('.').filter(item => {
+      return !/^[0-9a-z]{8}$/.test(item);
+    }).join('.');
   });
   // 保留3个版本
   const saveVersion = 3;
