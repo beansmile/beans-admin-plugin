@@ -5,7 +5,7 @@
         <span>{{ $get(page, 'config.title') }}</span>
       </div>
       <div class="content">
-        <div :style="[{ height: '100%', boxSizing: 'border-box', overflowY: 'auto' }, style]">
+        <div class="preview-scroll-y" :style="[{ height: '100%', boxSizing: 'border-box', overflowY: 'auto' }, style]">
           <Preview
             :show-controller="!!activeKey"
             :pages="pages"
