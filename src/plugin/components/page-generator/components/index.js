@@ -88,7 +88,15 @@ export default [
   {
     title: '弹窗',
     name: 'popup',
+    global: true,
     icon: 'iconfont icon-danchuang',
     component: require('./popup').default
+  },
+  {
+    title: '侧边固定按钮',
+    name: 'fixed-button',
+    global: true,
+    icon: 'el-icon-paperclip',
+    component: require('./fixed-button').default
   }
 ];
