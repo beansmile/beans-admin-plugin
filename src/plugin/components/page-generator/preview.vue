@@ -11,8 +11,20 @@
     @Prop(String) activeKey;
     @Prop(Array) allComponents;
 
+    get globalComponents() {
+      const components =  _.get(this.page, 'components', []).filter(item => item.global);
+      return _.pick(
+        _.groupBy(components, item => item.name),
+        ['popup', 'fixed-button']
+      )
+    }
+
     get popupComponents() {
-      return _.get(this.page, 'components', []).filter(item => item.name === 'popup');
+      return this.globalComponents.popup || [];
+    }
+
+    get fixedButtonsComponents() {
+      return this.globalComponents['fixed-button'] || [];
     }
 
     handleFocusComponent(key) {
@@ -49,26 +61,32 @@
       }
     }
 
-    renderPopupComponents() {
-      if (this.popupComponents.length) {
+    renderGlobalComponents() {
+      const globalComponents = [this.popupComponents, this.fixedButtonsComponents].filter(item => item && item.length);
+
+      if (globalComponents.length) {
         return (
           <portal to="page-editor-popup-controller">
-            <div class="box-popup">
-              {
-                this.popupComponents.map(item => (
-                  <div
-                    class={`popup-item ${this.componentIsActive(item.key) && 'active'}`}
-                    key={item.key}
-                    onClick={() => this.handleFocusComponent(item.key)}
-                  >
-                    <span>{_.get(item.config, 'name')}</span>
-                    <div>
-                      <el-button circle icon="el-icon-delete" onClick={e => this.handleDelete(e, item)}></el-button>
-                    </div>
-                  </div>
-                ))
-              }
-            </div>
+            {
+              globalComponents.map((components, componentGroupIndex) => (
+                <div class="box-popup" key={componentGroupIndex}>
+                  {
+                    components.map((item, index) => (
+                      <div
+                        class={`popup-item ${this.componentIsActive(item.key) && 'active'}`}
+                        key={item.key}
+                        onClick={() => this.handleFocusComponent(item.key)}
+                      >
+                        <span>{_.get(item.config, 'name') || `${item.title}${index + 1}`}</span>
+                        <div>
+                          <el-button circle icon="el-icon-delete" onClick={e => this.handleDelete(e, item)}></el-button>
+                        </div>
+                      </div>
+                    ))
+                  }
+                </div>
+              ))
+            }
           </portal>
         )
       }
@@ -114,7 +132,7 @@
         >
           {
             _.get(this.page, 'components', []).map((row, index) => (
-              row.name === 'popup' ? this.renderComponent(row, index) : (
+              row.global ? this.renderComponent(row, index) : (
                 <div
                   key={row.key}
                   class={`item-component ${this.componentIsActive(row.key) && 'active'}`}
@@ -130,7 +148,7 @@
             ))
           }
           {this.renderSlots()}
-          {this.renderPopupComponents()}
+          {this.renderGlobalComponents()}
         </draggable>
       )
     }

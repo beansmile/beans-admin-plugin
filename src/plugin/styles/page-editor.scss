@@ -360,6 +360,14 @@
   }
 }
 
+.page-editor-fixed-button {
+  &.showController > .preview {
+    img {
+      border: 2px dashed $primary;
+    }
+  }
+}
+
 .page-editor-scroll-x {
   .preview {
     display: flex;
