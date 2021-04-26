@@ -179,6 +179,10 @@
                   label: '生成海报(触发页面设置生成海报)',
                   value: 'poster',
                 },
+                {
+                  label: '联系客服',
+                  value: 'contact'
+                },
                 !this.isPopup && {
                   label: '弹窗',
                   value: 'popup'
