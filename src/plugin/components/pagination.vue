@@ -1,11 +1,9 @@
 <template>
   <el-pagination
     background
-    :layout="layout"
-    :page-sizes="pagesizes"
     @current-change="onPageChange"
     @size-change="onSizeChange"
-    v-bind="{ pageSize, total, currentPage, ...$attrs }"
+    v-bind="{ 'page-sizes': pagesizes, layout, pageSize, total, currentPage, ...$attrs }"
   />
 </template>
 
