@@ -168,7 +168,7 @@ export default class AdminFormUpload extends Vue {
     if (_.isArray(this.value)) {
       return this.value.filter((v, i) => i !== index);
     }
-    return '';
+    return null;
   }
 
   handleDragChange({ oldIndex, newIndex }) {
