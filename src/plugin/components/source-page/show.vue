@@ -138,7 +138,7 @@ export default class AdminSourcePageShow extends Vue {
       <el-tabs value={activeTab} on={{ 'tab-click': ({ name }) => this.handleTabChange(name) }}>
         {
           tabs.map((tab, index) => (
-            <el-tab-pane label={tab.label} key={index} name={String(index)}>
+            <el-tab-pane lazy label={tab.label} key={index} name={String(index)}>
               { _.get(tab, 'columns.length') ? this.renderColumnsContent(tab.columns) : this.renderComponentContent(tab.renderCell) }
             </el-tab-pane>
           ))
