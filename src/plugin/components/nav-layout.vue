@@ -50,7 +50,13 @@
     @Prop({ type: Array, default: () => ([]) }) menus;
     @Prop({ type: Boolean }) showBack;
     @Prop({ type: String }) logoUrl;
+    @Prop({ type: Boolean }) initCollapsed;
+
     collapsed = false;
+
+    created() {
+      this.collapsed = this.initCollapsed;
+    }
 
     get routerViewKey() {
       const { path, query } = this.$route;
