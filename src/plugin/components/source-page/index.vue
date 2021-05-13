@@ -11,6 +11,7 @@
       :table-events="tablePageEvents"
       :table-props="tableProps"
       :action-column-props="actionColumnProps"
+      :collapse-filter="collapseFilter"
       ref="tablePage"
     >
       <template #after-filter>
@@ -109,6 +110,7 @@ export default class AdminSourcePage extends Vue {
   @Prop(Function) afterDelete;
   @Prop({ type: Object, default: () => ({}) }) form;
   @Prop({ type: Object }) actionColumnProps;
+  @Prop(Boolean) collapseFilter;
 
   formLoading = false;
   state = {}
