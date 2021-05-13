@@ -2,14 +2,18 @@
   <div class="admin-source-page source-page-table">
     <div class="page-content">
       <slot name="before-filter" />
-      <AdminFilter
-        v-if="filterColumns.length"
-        v-bind="filterProps"
-        v-model="filterForm"
-        :columns="filterColumns"
-        @filter="handleFilter"
-        @reset="handleReset"
-      />
+      <component :is="collapseFilter ? 'el-collapse' : 'div'" :style="{ marginBottom: collapseFilter ? '10px' : 0 }">
+        <compoennt :is="collapseFilter ? 'el-collapse-item' : 'div'" title="筛选栏">
+          <AdminFilter
+            v-if="filterColumns.length"
+            v-bind="filterProps"
+            v-model="filterForm"
+            :columns="filterColumns"
+            @filter="handleFilter"
+            @reset="handleReset"
+          />
+        </compoennt>
+      </component>
       <slot name="after-filter" />
 
       <slot name="before-table" />
@@ -64,6 +68,7 @@ export default class AdminSourcePageTable extends Vue {
   @Prop({ type: Object, default: () => ({}) }) filterProps;
   @Prop({ type: Object, default: () => ({}) }) paginationProps;
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
+  @Prop(Boolean) collapseFilter;
 
   filterForm = {};
   defaultSort = {};
