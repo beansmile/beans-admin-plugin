@@ -37,6 +37,8 @@
     name: '弹窗',
     image: 'https://via.placeholder.com/200x200/fff',
     autoOpen: false,
+    showTimes: 1,
+    closeBtnTriggerEvent: true,
     style: {
       backgroundColor: '#fff',
       height: 200,
@@ -69,6 +71,25 @@
         prop: 'autoOpen',
         label: '自动弹窗',
         renderCell: 'switch'
+      },
+      {
+        prop: 'showTimes',
+        label: '自动弹窗次数',
+        renderCell: {
+          component: 'inputNumber',
+          hint: '选择了"自动弹窗"，才会生效',
+          props: {
+            min: 1
+          }
+        }
+      },
+      {
+        prop: 'closeBtnTriggerEvent',
+        label: '关闭按钮触发事件',
+        renderCell: {
+          component: 'switch',
+          hint: '点底部"x"按钮时触发关闭弹窗的同时也触发"事件设置"'
+        }
       },
       {
         prop: 'image',
