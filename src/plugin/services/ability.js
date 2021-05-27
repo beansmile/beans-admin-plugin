@@ -45,16 +45,15 @@ class AbilityService {
 
   // admin_users.index
   routeNameCan(routeName = '') {
-    const routeNameArray = routeName.split('.');
+    const [resource, action] = routeName.split('.');
     const actionMap = {
       'index': 'read',
       'show': 'read',
       'new': 'create',
       'edit': 'update'
     }
-    const abilityAction = actionMap[routeNameArray.pop()] || 'read';
-    routeNameArray.push(abilityAction);
-    return this.can(routeNameArray.join('.'));
+    const abilityAction = actionMap[action] || 'read';
+    return this.can([resource.replace('/', '_'), abilityAction].join('.'));
   }
 
   // admin_users.read || [admin_users.read]
