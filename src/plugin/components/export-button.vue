@@ -14,6 +14,7 @@
     @Prop(Object) params;
     @Prop({ type: String, default: 'resource.xlsx' }) fileName;
     @Prop(Function) beforeExport;
+    @Prop(Function) requestDownload;
 
     loading = false;
 
@@ -45,7 +46,12 @@
       params,
       name = 'resource.xlsx'
     } = {}) {
-      const result = await fly.get(url, params, { responseType: 'blob', timeout: 5 * 60 * 1000 });
+      let result;
+      if (_.isFunction(this.requestDownload)) {
+        result = await this.requestDownload({ url, params });
+      } else {
+        result = await fly.get(url, params, { responseType: 'blob', timeout: 5 * 60 * 1000 });
+      }
       const a = document.createElement('a');
       document.body.appendChild(a);
       a.style = 'display: none';
