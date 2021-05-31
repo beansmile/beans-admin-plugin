@@ -49,6 +49,7 @@
   import { Vue, Component, Prop } from 'vue-property-decorator';
   import _ from 'lodash';
   import { getStyle } from '../utils';
+  import { arrayMove } from '../../../utils';
   import EventForm from '../controller/event';
   import Controller from '../controller';
   import Animation from '../animation';
@@ -182,30 +183,45 @@
           renderCell: {
             component: 'nestForm',
             props: {
-              columns: [
-                {
-                  prop: 'image',
-                  label: '图片',
-                  renderCell: {
-                    component: 'upload',
-                    props: {
-                      trackedBy: 'url'
+              columns: (item, index) => {
+                const items = _.get(this.value, 'items') || [];
+                return [
+                  items.length > 1 && {
+                    prop: '_position',
+                    label: '排序',
+                    renderCell: (h) => {
+                      return (
+                        <div>
+                          { !!items[index - 1] && <el-button size="mini" type="danger" onClick={() => this.handleSortItem(index, index - 1)}>前移</el-button> }
+                          { !!items[index + 1]  && <el-button size="mini" type="warning" onClick={() => this.handleSortItem(index, index + 1)}>后移</el-button> }
+                        </div>
+                      )
                     }
+                  },
+                  {
+                    prop: 'image',
+                    label: '图片',
+                    renderCell: {
+                      component: 'upload',
+                      props: {
+                        trackedBy: 'url'
+                      }
+                    }
+                  },
+                  {
+                    prop: 'text',
+                    label: '文本',
+                    renderCell: {
+                      component: 'uncontrolledInput'
+                    }
+                  },
+                  {
+                    prop: 'event',
+                    label: '',
+                    renderCell: (h, context) => <EventForm is-image pages={this.pages} popupComponents={this.popupComponents} {...context} />
                   }
-                },
-                {
-                  prop: 'text',
-                  label: '文本',
-                  renderCell: {
-                    component: 'uncontrolledInput'
-                  }
-                },
-                {
-                  prop: 'event',
-                  label: '',
-                  renderCell: (h, context) => <EventForm is-image pages={this.pages} popupComponents={this.popupComponents} {...context} />
-                }
-              ]
+                ].filter(Boolean);
+              }
             }
           }
         }
@@ -286,6 +302,14 @@
         }
       }
     ]
+
+    handleSortItem(fromIndex, toIndex) {
+      const { items = [] } = this.value;
+      this.$emit('change', {
+        ...this.value,
+        items: arrayMove(items, fromIndex, toIndex)
+      });
+    }
 
     handleSwiperChange(e) {
       this.active = e;
