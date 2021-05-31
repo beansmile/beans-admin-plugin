@@ -5,7 +5,7 @@
         <AdminForm
           v-bind="$attrs"
           :value="group"
-          :columns="getColumn(group)"
+          :columns="getColumn(group, index)"
           @change="handleGroupChange(index, $event)"
         >
           <template v-slot:header>
@@ -43,9 +43,9 @@
       return this.addButtonText || this.$t('bean.actionAdd');
     }
 
-    getColumn(value) {
+    getColumn(value, index) {
       if (_.isFunction(this.columns)) {
-        return this.columns(value);
+        return this.columns(value, index);
       }
       return this.columns;
     }
