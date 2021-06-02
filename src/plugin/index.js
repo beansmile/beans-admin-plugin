@@ -9,6 +9,9 @@ export default function install(Vue, options = {}) {
   Vue.use(PortalVue);
 
   const pluginConfig = _.merge({}, config, options);
+  // 筛选出来locales里面有值的
+  _.set(pluginConfig, 'i18n.locales', _.pickBy(_.get(pluginConfig, 'i18n.locales', {}), label => !!label));
+
   Vue.vadminConfig = Vue[pluginConfig.globalConfigKey] = Vue.prototype.$vadminConfig = Vue.prototype[`$${pluginConfig.globalConfigKey}`] = pluginConfig;
   require('./components').install(Vue, pluginConfig);
 
