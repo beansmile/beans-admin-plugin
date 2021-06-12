@@ -57,126 +57,130 @@
       return getStyle(_.get(this.page, 'config.style.title') || {});
     }
 
-    columns = [
-      {
-        prop: 'title',
-        label: '标题',
-        renderCell: 'uncontrolledInput'
-      },
-      {
-        prop: 'share.title',
-        label: '分享标题',
-        renderCell: 'uncontrolledInput'
-      },
-      {
-        prop: 'share.imageUrl',
-        label: '分享图片',
-        renderCell: {
-          component: 'upload',
-          props: {
-            trackedBy: 'url'
+    get columns() {
+      return [
+        {
+          prop: 'title',
+          label: this.$t('bean.pageGenerator.title'),
+          renderCell: 'uncontrolledInput'
+        },
+        {
+          prop: 'share.title',
+          label: this.$t('bean.pageGenerator.shareTitle'),
+          renderCell: 'uncontrolledInput'
+        },
+        {
+          prop: 'share.imageUrl',
+          label: this.$t('bean.pageGenerator.shareImage'),
+          renderCell: {
+            component: 'upload',
+            props: {
+              trackedBy: 'url'
+            }
           }
-        }
-      },
-      {
-        prop: 'poster.backgroundImage',
-        label: '海报图片',
-        renderCell: {
-          component: 'upload',
-          hint: '图片宽高 300*400',
-          props: {
-            trackedBy: 'url',
-            cropper: {
-              width: 300,
-              height: 400
+        },
+        {
+          prop: 'poster.backgroundImage',
+          label: this.$t('bean.pageGenerator.posterBackgroundImage'),
+          renderCell: {
+            component: 'upload',
+            hint: this.$t('bean.pageGenerator.imageSize', { size: '300 x 400' }),
+            props: {
+              trackedBy: 'url',
+              cropper: {
+                width: 300,
+                height: 400
+              }
+            }
+          }
+        },
+        {
+          prop: 'poster.backgroundColor',
+          label: this.$t('bean.pageGenerator.posterBackgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'poster.text',
+          label: this.$t('bean.pageGenerator.posterText'),
+          renderCell: {
+            component: 'uncontrolledInput'
+          }
+        },
+        {
+          prop: 'poster.textColor',
+          label: this.$t('bean.pageGenerator.posterTextColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
             }
           }
         }
-      },
-      {
-        prop: 'poster.backgroundColor',
-        label: '海报背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
-          }
-        }
-      },
-      {
-        prop: 'poster.text',
-        label: '海报文案',
-        renderCell: {
-          component: 'uncontrolledInput'
-        }
-      },
-      {
-        prop: 'poster.textColor',
-        label: '海报文案颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
-          }
-        }
-      }
-    ];
+      ];
+    }
 
-    styleColumns = [
-      {
-        prop: 'title.backgroundColor',
-        label: '标题背景色',
-         renderCell: {
-          component: 'colorPicker'
-        }
-      },
-      {
-        prop: 'title.color',
-        label: '标题颜色',
-         renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                label: '白色',
-                value: '#ffffff'
-              },
-              {
-                label: '黑色',
-                value: '#000000'
-              }
-            ]
+    get styleColumns() {
+      return [
+        {
+          prop: 'title.backgroundColor',
+          label: this.$t('bean.pageGenerator.titleBackgroundColor'),
+          renderCell: {
+            component: 'colorPicker'
           }
+        },
+        {
+          prop: 'title.color',
+          label: this.$t('bean.pageGenerator.titleColor'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  label: this.$t('bean.pageGenerator.white'),
+                  value: '#ffffff'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.black'),
+                  value: '#000000'
+                }
+              ]
+            }
+          }
+        },
+        {
+          prop: 'backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker'
+          }
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
         }
-      },
-      {
-        prop: 'backgroundColor',
-        label: '背景颜色',
-        renderCell: {
-          component: 'colorPicker'
-        }
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ];
+      ];
+    }
 
     handleConfigChange(data) {
       this.$emit('update-page', 'config', data);

@@ -1,7 +1,7 @@
 <template>
   <div class="admin-image-area">
     <div class="component-header">
-      <h3 class="title">图片热区</h3>
+      <h3 class="title">{{ $t('bean.pageGenerator.imageHotArea') }}</h3>
     </div>
     <div class="component-body">
       <div class="panel panel-canvas" :style="{ width: form.containerWidth + 'px' }" v-loading="loading" v-if="form.image">
@@ -33,7 +33,7 @@
           <el-collapse-item
             v-for="(item, index) in form.areas"
             :key="index"
-            :title="`热区-${index + 1}`"
+            :title="`${$t('bean.pageGenerator.hotArea')}-${index + 1}`"
             :name="index"
           >
             <Event
@@ -42,18 +42,18 @@
               @change="handleEventChange($event, index)"
             />
             <div>
-              <el-tag>层级: {{ item.zIndex }}</el-tag>
+              <el-tag>{{ $t('bean.pageGenerator.zIndex') }}: {{ item.zIndex }}</el-tag>
               <br>
-              <p>层级大的在上面</p>
+              <p>{{ $t('bean.pageGenerator.zIndexBigOneOnTop') }}</p>
             </div>
-            <el-button type="danger" @click="handleDelete(index)">删除</el-button>
+            <el-button type="danger" @click="handleDelete(index)">{{ $t('bean.actionDelete') }}</el-button>
           </el-collapse-item>
         </el-collapse>
 
       </div>
     </div>
    <div class="component-footer">
-     <el-button size="medium" type="primary" @click="handleSave">保存</el-button>
+     <el-button size="medium" type="primary" @click="handleSave">{{ $t('bean.pageGenerator.save') }}</el-button>
    </div>
   </div>
 </template>
@@ -89,18 +89,20 @@
     loading = false;
     containerRect = {};
 
-    formColumns = [
-      {
-        prop: 'image',
-        label: '选择图片',
-        renderCell: {
-          component: 'upload',
-          props: {
-            trackedBy: 'url'
+    get formColumns() {
+      return [
+        {
+          prop: 'image',
+          label: this.$t('bean.pageGenerator.selectImage'),
+          renderCell: {
+            component: 'upload',
+            props: {
+              trackedBy: 'url'
+            }
           }
         }
-      }
-    ];
+      ];
+    }
 
     async handleImageLoaded(e) {
       const { height } = e.target;

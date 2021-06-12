@@ -13,7 +13,6 @@
       :visible="showController"
       :value="value"
       :pages="pages"
-      :columns="baseConfigColumns"
       :styleColumns="styleConfigColumns"
       @change="$emit('change', $event)"
     />
@@ -63,67 +62,69 @@
       return getStyle(_.get(this, 'value.style.container') || {});
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'border.borderColor',
-        label: '线条颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'border.borderColor',
+          label: this.$t('bean.pageGenerator.lineColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'border.borderTopWidth',
-        label: '线条粗细',
-        renderCell: {
-          component: 'inputNumber',
-        }
-      },
-      {
-        prop: 'border.borderStyle',
-        label: '线条类型',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                value: 'solid',
-                label: '实线'
-              },
-              {
-                value: 'dashed',
-                label: '虚线'
-              },
-              {
-                value: 'dotted',
-                label: '点'
-              }
-            ]
+        },
+        {
+          prop: 'border.borderTopWidth',
+          label: this.$t('bean.pageGenerator.lineBorderWidth'),
+          renderCell: {
+            component: 'inputNumber',
           }
+        },
+        {
+          prop: 'border.borderStyle',
+          label: this.$t('bean.pageGenerator.lineType'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  value: 'solid',
+                  label: this.$t('bean.pageGenerator.solid'),
+                },
+                {
+                  value: 'dashed',
+                  label: this.$t('bean.pageGenerator.dashed'),
+                },
+                {
+                  value: 'dotted',
+                  label: this.$t('bean.pageGenerator.dotted'),
+                }
+              ]
+            }
+          }
+        },
+        {
+          prop: 'container.paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
         }
-      },
-      {
-        prop: 'container.paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ]
+      ]
+    }
   }
 </script>

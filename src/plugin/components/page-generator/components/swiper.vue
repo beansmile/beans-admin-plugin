@@ -120,14 +120,14 @@
       return [
         {
           prop: 'indicatorDots',
-          label: '显示面板指示点',
+          label: this.$t('bean.pageGenerator.indicatorDots'),
           renderCell: {
             component: 'switch'
           }
         },
         {
           prop: 'indicatorColor',
-          label: '指示点颜色',
+          label: this.$t('bean.pageGenerator.indicatorColor'),
           renderCell: {
             component: 'colorPicker',
             props: {
@@ -137,7 +137,7 @@
         },
         {
           prop: 'indicatorActiveColor',
-          label: '当前选中的指示点颜色',
+          label: this.$t('bean.pageGenerator.indicatorActiveColor'),
           renderCell: {
             component: 'colorPicker',
             props: {
@@ -147,21 +147,21 @@
         },
         {
           prop: 'autoplay',
-          label: '自动切换',
+          label: this.$t('bean.pageGenerator.swiperAutoplay'),
           renderCell: {
             component: 'switch'
           }
         },
         {
           prop: 'interval',
-          label: '自动切换时间间隔(秒)',
+          label: `${this.$t('bean.pageGenerator.swiperInterval')}(秒)`,
           renderCell: {
             component: 'inputNumber'
           }
         },
         {
           prop: 'duration',
-          label: '滑动动画时长(秒)',
+          label: `${this.$t('bean.pageGenerator.swiperDuration')}(秒)`,
           renderCell: {
             component: 'inputNumber',
             props: {
@@ -171,15 +171,15 @@
         },
         {
           prop: 'circular',
-          label: '是否采用衔接滑动',
+          label: this.$t('bean.pageGenerator.swiperCircular'),
           renderCell: {
             component: 'switch',
-            hint: '(无预览效果)'
+            hint: `(${this.$t('bean.pageGenerator.noPreviewResult')})`
           }
         },
         {
           prop: 'items',
-          label: '添加图片',
+          label: this.$t('bean.pageGenerator.addImage'),
           renderCell: {
             component: 'nestForm',
             props: {
@@ -188,19 +188,19 @@
                 return [
                   items.length > 1 && {
                     prop: '_position',
-                    label: '排序',
+                    label: this.$t('bean.pageGenerator.sort'),
                     renderCell: (h) => {
                       return (
                         <div>
-                          { !!items[index - 1] && <el-button size="mini" type="danger" onClick={() => this.handleSortItem(index, index - 1)}>前移</el-button> }
-                          { !!items[index + 1]  && <el-button size="mini" type="warning" onClick={() => this.handleSortItem(index, index + 1)}>后移</el-button> }
+                          { !!items[index - 1] && <el-button h={h} size="mini" type="danger" onClick={() => this.handleSortItem(index, index - 1)}>{ this.$t('bean.pageGenerator.moveForward') }</el-button> }
+                          { !!items[index + 1]  && <el-button size="mini" type="warning" onClick={() => this.handleSortItem(index, index + 1)}>{ this.$t('bean.pageGenerator.moveBack') }</el-button> }
                         </div>
                       )
                     }
                   },
                   {
                     prop: 'image',
-                    label: '图片',
+                    label: this.$t('bean.pageGenerator.image'),
                     renderCell: {
                       component: 'upload',
                       props: {
@@ -210,7 +210,7 @@
                   },
                   {
                     prop: 'text',
-                    label: '文本',
+                    label: this.$t('bean.pageGenerator.text'),
                     renderCell: {
                       component: 'uncontrolledInput'
                     }
@@ -228,80 +228,82 @@
       ]
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'height',
-        label: '高度',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'textContainer.backgroundColor',
-        label: '文字栏背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'height',
+          label: this.$t('bean.pageGenerator.height'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'textContainer.backgroundColor',
+          label: this.$t('bean.pageGenerator.swiperTextBackgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'textContainer.paddingTop',
+          label: this.$t('bean.pageGenerator.swiperTextBackgroundColor'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'textContainer.paddingBottom',
+          label: this.$t('bean.pageGenerator.swiperTextPaddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'textContainer.paddingLeft',
+          label: this.$t('bean.pageGenerator.swiperTextPaddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'textContainer.paddingRight',
+          label: this.$t('bean.pageGenerator.swiperTextPaddingRight'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'text.color',
+          label: this.$t('bean.pageGenerator.fontColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'text.fontSize',
+          label: this.$t('bean.pageGenerator.fontSize'),
+          renderCell: {
+            component: 'inputNumber'
           }
         }
-      },
-      {
-        prop: 'textContainer.paddingTop',
-        label: '文字栏上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'textContainer.paddingBottom',
-        label: '文字栏下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'textContainer.paddingLeft',
-        label: '文字栏左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'textContainer.paddingRight',
-        label: '文字栏右间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'text.color',
-        label: '文字颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
-          }
-        }
-      },
-      {
-        prop: 'text.fontSize',
-        label: '文字大小',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      }
-    ]
+      ];
+    }
 
     handleSortItem(fromIndex, toIndex) {
       const { items = [] } = this.value;

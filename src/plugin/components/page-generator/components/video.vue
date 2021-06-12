@@ -63,102 +63,106 @@
       };
     }
 
-    baseConfigColumns = [
-      {
-        prop: 'video',
-        label: '上传视频',
-        renderCell: {
-          component: 'upload',
-          props: {
-            trackedBy: 'url',
-            accept: 'video/mp4',
-            size: 100,
-            type: 'video'
+    get baseConfigColumns() {
+      return [
+        {
+          prop: 'video',
+          label: this.$t('bean.pageGenerator.uploadVideo'),
+          renderCell: {
+            component: 'upload',
+            props: {
+              trackedBy: 'url',
+              accept: 'video/mp4',
+              size: 100,
+              type: 'video'
+            }
           }
-        }
-      },
-      {
-        prop: 'poster',
-        label: '视频封面',
-        renderCell: {
-          component: 'upload',
-          props: {
-            trackedBy: 'url'
+        },
+        {
+          prop: 'poster',
+          label: this.$t('bean.pageGenerator.videoPoster'),
+          renderCell: {
+            component: 'upload',
+            props: {
+              trackedBy: 'url'
+            }
           }
+        },
+        {
+          prop: 'controls',
+          label: this.$t('bean.pageGenerator.videoShowControls'),
+          renderCell: 'switch'
+        },
+        {
+          prop: 'autoplay',
+          label: this.$t('bean.pageGenerator.videoAutoplay'),
+          renderCell: 'switch'
+        },
+        {
+          prop: 'loop',
+          label: this.$t('bean.pageGenerator.videoLoop'),
+          renderCell: 'switch'
+        },
+        {
+          prop: 'muted',
+          label: this.$t('bean.pageGenerator.uploadVideo'),
+          renderCell: 'switch'
         }
-      },
-      {
-        prop: 'controls',
-        label: '显示播放控件',
-        renderCell: 'switch'
-      },
-      {
-        prop: 'autoplay',
-        label: '自动播放',
-        renderCell: 'switch'
-      },
-      {
-        prop: 'loop',
-        label: '循环播放',
-        renderCell: 'switch'
-      },
-      {
-        prop: 'muted',
-        label: '静音播放',
-        renderCell: 'switch'
-      }
-    ];
+      ];
+    }
 
-    styleConfigColumns = [
-      {
-        prop: 'height',
-        label: '高度',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'objectFit',
-        label: '显示形式',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                label: '包含',
-                value: 'contain'
-              },
-              {
-                label: '填充',
-                value: 'fill'
-              },
-              {
-                label: '覆盖',
-                value: 'cover'
-              }
-            ]
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'height',
+          label: this.$t('bean.pageGenerator.height'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'objectFit',
+          label: this.$t('bean.pageGenerator.objectFit'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  label: this.$t('bean.pageGenerator.contain'),
+                  value: 'contain'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.fill'),
+                  value: 'fill'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.cover'),
+                  value: 'cover'
+                }
+              ]
+            }
           }
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
         }
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ];
+      ];
+    }
 
   }
 </script>

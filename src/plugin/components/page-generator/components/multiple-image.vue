@@ -71,14 +71,14 @@
       return [
         {
           prop: 'items',
-          label: '图片列表',
+          label: this.$t('bean.pageGenerator.imageList'),
           renderCell: {
             component: 'nestForm',
             props: {
               columns: [
                 {
                   prop: 'image',
-                  label: '图片',
+                  label: this.$t('bean.pageGenerator.image'),
                   renderCell: {
                     component: 'upload',
                     props: {
@@ -98,66 +98,68 @@
       ];
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'image.marginRight',
-        label: '图片间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.alignItems',
-        label: '垂直对齐',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                label: '上对齐',
-                value: 'flex-start'
-              },
-              {
-                label: '下对齐',
-                value: 'flex-end'
-              },
-              {
-                label: '居中对齐',
-                value: 'center'
-              }
-            ]
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'image.marginRight',
+          label: this.$t('bean.pageGenerator.imageSpacing'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.alignItems',
+          label: this.$t('bean.pageGenerator.verticalAlignment'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  label: this.$t('bean.pageGenerator.alignTop'),
+                  value: 'flex-start'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.alignBottom'),
+                  value: 'flex-end'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.alignCenter'),
+                  value: 'center'
+                }
+              ]
+            }
           }
-        }
-      },
-      {
-        prop: 'container.backgroundColor',
-        label: '背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'container.backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
+        },
+        {
+          prop: 'container.paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
         }
-      },
-      {
-        prop: 'container.paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ]
+      ];
+    }
 
   }
 </script>

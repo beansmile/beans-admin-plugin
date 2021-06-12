@@ -46,36 +46,40 @@
       return getStyle(_.get(this, 'value.style') || {});
     }
 
-    baseConfigColumns = [
-      {
-        prop: 'richText',
-        label: '富文本',
-        renderCell: 'editor'
-      }
-    ]
+    get baseConfigColumns() {
+      return [
+        {
+          prop: 'richText',
+          label: this.$t('bean.pageGenerator.richText'),
+          renderCell: 'editor'
+        }
+      ]
+    }
 
-    styleConfigColumns = [
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ]
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
+        }
+      ]
+    }
 
   }
 </script>

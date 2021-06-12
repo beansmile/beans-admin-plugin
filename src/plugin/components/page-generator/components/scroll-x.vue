@@ -204,134 +204,136 @@
       ];
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'container.backgroundColor',
-        label: '背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'container.backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'container.textAlign',
-        label: '文字对齐',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                value: 'left',
-                label: '左对齐'
-              },
-              {
-                value: 'right',
-                label: '右对齐'
-              },
-              {
-                value: 'center',
-                label: '居中'
-              }
-            ]
+        },
+        {
+          prop: 'container.textAlign',
+          label: this.$t('bean.pageGenerator.textAlign'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  value: 'left',
+                  label: this.$t('bean.pageGenerator.alignLeft'),
+                },
+                {
+                  value: 'right',
+                  label: this.$t('bean.pageGenerator.alignRight'),
+                },
+                {
+                  value: 'center',
+                  label: this.$t('bean.pageGenerator.alignCenter'),
+                }
+              ]
+            }
           }
-        }
-      },
-      {
-        prop: 'container.paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      },
+        },
+        {
+          prop: 'container.paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
+        },
 
-      {
-        prop: 'image.width',
-        label: '图片宽度',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'image.height',
-        label: '图片高度',
-        renderCell: 'inputNumber'
-      },
+        {
+          prop: 'image.width',
+          label: this.$t('bean.pageGenerator.imageWidth'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'image.height',
+          label: this.$t('bean.pageGenerator.imageHeight'),
+          renderCell: 'inputNumber'
+        },
 
-      {
-        prop: 'title.fontSize',
-        label: '标题字号',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'title.color',
-        label: '标题颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        {
+          prop: 'title.fontSize',
+          label: this.$t('bean.pageGenerator.titleFontSize'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'title.color',
+          label: this.$t('bean.pageGenerator.titleTextColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'title.lineHeight',
-        label: '标题行高',
-        renderCell: 'inputNumber'
-      },
+        },
+        {
+          prop: 'title.lineHeight',
+          label: this.$t('bean.pageGenerator.titleLineHeight'),
+          renderCell: 'inputNumber'
+        },
 
-      {
-        prop: 'subtitle.fontSize',
-        label: '副标题字号',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'subtitle.color',
-        label: '副标题颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        {
+          prop: 'subtitle.fontSize',
+          label: this.$t('bean.pageGenerator.subtitleFontSize'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'subtitle.color',
+          label: this.$t('bean.pageGenerator.subtitleTextColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'subtitle.lineHeight',
-        label: '副标题行高',
-        renderCell: 'inputNumber'
-      },
+        },
+        {
+          prop: 'subtitle.lineHeight',
+          label: this.$t('bean.pageGenerator.subtitleLineHeight'),
+          renderCell: 'inputNumber'
+        },
 
-      {
-        prop: 'desc.fontSize',
-        label: '介绍字号',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'desc.color',
-        label: '介绍颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        {
+          prop: 'desc.fontSize',
+          label: this.$t('bean.pageGenerator.desTextFontSize'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'desc.color',
+          label: this.$t('bean.pageGenerator.desTextColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'desc.lineHeight',
-        label: '介绍行高',
-        renderCell: 'inputNumber'
-      },
-    ]
+        },
+        {
+          prop: 'desc.lineHeight',
+          label: this.$t('bean.pageGenerator.desTextLineHeight'),
+          renderCell: 'inputNumber'
+        },
+      ]
+    }
   }
 </script>

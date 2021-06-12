@@ -51,116 +51,120 @@
       return getStyle(_.get(this, 'value.style') || {});
     }
 
-    baseConfigColumns = [
-      {
-        prop: 'text',
-        label: '文本',
-        renderCell: {
-          component: 'uncontrolledTextarea'
+    get baseConfigColumns() {
+      return [
+        {
+          prop: 'text',
+          label: this.$t('bean.pageGenerator.text'),
+          renderCell: {
+            component: 'uncontrolledTextarea'
+          }
         }
-      }
-    ]
+      ]
+    }
 
-    styleConfigColumns = [
-      {
-        prop: 'fontSize',
-        label: '字体大小',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'textAlign',
-        label: '对齐',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                value: 'left',
-                label: '左对齐'
-              },
-              {
-                value: 'right',
-                label: '右对齐'
-              },
-              {
-                value: 'center',
-                label: '居中'
-              },
-            ]
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'fontSize',
+          label: this.$t('bean.pageGenerator.fontSize'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'textAlign',
+          label: this.$t('bean.pageGenerator.textAlign'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  value: 'left',
+                  label: this.$t('bean.pageGenerator.alignLeft'),
+                },
+                {
+                  value: 'right',
+                  label: this.$t('bean.pageGenerator.alignRight'),
+                },
+                {
+                  value: 'center',
+                  label: this.$t('bean.pageGenerator.alignCenter'),
+                },
+              ]
+            }
           }
-        }
-      },
-      {
-        prop: 'lineHeight',
-        label: '行高',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'color',
-        label: '颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'lineHeight',
+          label: this.$t('bean.pageGenerator.lineHeight'),
+          renderCell: {
+            component: 'inputNumber'
           }
-        }
-      },
-      {
-        prop: 'backgroundColor',
-        label: '背景颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'color',
+          label: this.$t('bean.pageGenerator.color'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'fontWeight',
-        label: '字重',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                label: '默认',
-                value: 'normal'
-              },
-              {
-                label: '加粗',
-                value: 'bold'
-              }
-            ].concat(
-              _.range(100, 1000, 100).map(item => ({
-                label: item,
-                value: item
-              }))
-            )
+        },
+        {
+          prop: 'backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
+        },
+        {
+          prop: 'fontWeight',
+          label: this.$t('bean.pageGenerator.fontWeight'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  label: this.$t('bean.pageGenerator.fontWeightNormal'),
+                  value: 'normal'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.fontWeightBold'),
+                  value: 'bold'
+                }
+              ].concat(
+                _.range(100, 1000, 100).map(item => ({
+                  label: item,
+                  value: item
+                }))
+              )
+            }
+          }
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
         }
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ];
+      ];
+    }
   }
 </script>

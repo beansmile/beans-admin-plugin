@@ -4,22 +4,22 @@
       <div class="preview" :style="getStyle('container')">
         <div class="item">
           <!-- <label>姓名</label> -->
-          <input type="text" placeholder="请输入姓名" :style="getStyle('input')">
+          <input type="text" :placeholder="$t('bean.pageGenerator.formInputPlaceHolder')" :style="getStyle('input')">
         </div>
         <div class="item">
           <!-- <label>联系电话</label> -->
-          <input type="text" placeholder="请输入联系电话" :style="getStyle('input')">
+          <input type="text" :placeholder="$t('bean.pageGenerator.formTelPlaceHolder')" :style="getStyle('input')">
         </div>
         <div class="item">
           <!-- <label>邮箱地址</label> -->
-          <input type="text" placeholder="请输入邮箱地址" :style="getStyle('input')">
+          <input type="text" :placeholder="$t('bean.pageGenerator.formEmailPlaceHolder')" :style="getStyle('input')">
         </div>
         <div class="item">
           <!-- <label>内容</label> -->
-          <textarea type="text" placeholder="请输入内容" :style="getStyle('input')"></textarea>
+          <textarea type="text" :placeholder="$t('bean.pageGenerator.formContentPlaceHolder')" :style="getStyle('input')"></textarea>
         </div>
 
-        <button :style="getStyle('button')">提交</button>
+        <button :style="getStyle('button')">{{ $t('bean.actionSubmit') }}</button>
       </div>
     </Animation>
     <Controller
@@ -79,118 +79,120 @@
 
     baseConfigColumns = []
 
-    styleConfigColumns = [
-      {
-        prop: 'title',
-        label: '',
-        renderCell: {
-          component: 'title',
-          props: {
-            text: '设置'
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'title',
+          label: '',
+          renderCell: {
+            component: 'title',
+            props: {
+              text: this.$t('bean.pageGenerator.setting')
+            }
           }
-        }
-      },
-      {
-        prop: 'container.backgroundColor',
-        label: '背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'container.backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'container.paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'container.paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      },
+        },
+        {
+          prop: 'container.paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'container.paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
+        },
 
-      {
-        prop: 'input.color',
-        label: '输入字体颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        {
+          prop: 'input.color',
+          label: this.$t('bean.pageGenerator.inputFontColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'input.borderColor',
-        label: '边框色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'input.borderColor',
+          label: this.$t('bean.pageGenerator.borderColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'input.borderRadius',
-        label: '输入框圆角',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'input.fontSize',
-        label: '字体大小',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
+        },
+        {
+          prop: 'input.borderRadius',
+          label: this.$t('bean.pageGenerator.inputBorderRadius'),
+          renderCell: {
+            component: 'inputNumber'
+          }
+        },
+        {
+          prop: 'input.fontSize',
+          label: this.$t('bean.pageGenerator.fontSize'),
+          renderCell: {
+            component: 'inputNumber'
+          }
+        },
 
-      {
-        prop: 'button.color',
-        label: '按钮字体颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        {
+          prop: 'button.color',
+          label: this.$t('bean.pageGenerator.buttonFontColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'button.backgroundColor',
+          label: this.$t('bean.pageGenerator.buttonBackgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'button.fontSize',
+          label: this.$t('bean.pageGenerator.buttonFontSize'),
+          renderCell: {
+            component: 'inputNumber'
+          }
+        },
+        {
+          prop: 'button.borderRadius',
+          label: this.$t('bean.pageGenerator.buttonBorderRadius'),
+          renderCell: {
+            component: 'inputNumber'
           }
         }
-      },
-      {
-        prop: 'button.backgroundColor',
-        label: '按钮背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
-          }
-        }
-      },
-      {
-        prop: 'button.fontSize',
-        label: '按钮字体大小',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'button.borderRadius',
-        label: '按钮圆角',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      }
-    ]
+      ]
+    }
 
     getStyle(key) {
       return getStyle(_.get(this, `value.style.${key}`) || {});
