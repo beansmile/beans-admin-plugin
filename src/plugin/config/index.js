@@ -22,5 +22,8 @@ export default {
       en: 'English'
     }
   },
-  sourcePage: {}
+  sourcePage: {},
+  pageGenerator: {
+    enableModuleName: false
+  }
 };
