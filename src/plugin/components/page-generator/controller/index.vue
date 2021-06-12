@@ -82,7 +82,7 @@
       if (enableModuleName) {
         return [
           {
-            prop: 'muduleName',
+            prop: 'moduleName',
             label: this.$t('bean.pageGenerator.moduleName'),
             renderCell: {
               component: 'input',
