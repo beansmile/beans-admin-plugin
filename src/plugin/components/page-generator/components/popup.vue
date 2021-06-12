@@ -61,69 +61,73 @@
       return getStyle(_.get(this, 'value.style') || {});
     }
 
-    baseConfigColumns = [
-      {
-        prop: 'name',
-        label: '弹窗名称',
-        renderCell: 'uncontrolledInput'
-      },
-      {
-        prop: 'autoOpen',
-        label: '自动弹窗',
-        renderCell: 'switch'
-      },
-      {
-        prop: 'showTimes',
-        label: '自动弹窗次数',
-        renderCell: {
-          component: 'inputNumber',
-          hint: '选择了"自动弹窗"，才会生效',
-          props: {
-            min: 1
+    get baseConfigColumns() {
+      return [
+        {
+          prop: 'name',
+          label: this.$t('bean.pageGenerator.popupName'),
+          renderCell: 'uncontrolledInput'
+        },
+        {
+          prop: 'autoOpen',
+          label: this.$t('bean.pageGenerator.popupAutoOpen'),
+          renderCell: 'switch'
+        },
+        {
+          prop: 'showTimes',
+          label: this.$t('bean.pageGenerator.popupShowTimes'),
+          renderCell: {
+            component: 'inputNumber',
+            hint: this.$t('bean.pageGenerator.popupShowTimesTip'),
+            props: {
+              min: 1
+            }
+          }
+        },
+        {
+          prop: 'closeBtnTriggerEvent',
+          label: this.$t('bean.pageGenerator.popupCloseButtonTriggerEvent'),
+          renderCell: {
+            component: 'switch',
+            hint: this.$t('bean.pageGenerator.popupCloseButtonTip'),
+          }
+        },
+        {
+          prop: 'image',
+          label: this.$t('bean.pageGenerator.image'),
+          renderCell: {
+            component: 'upload',
+            props: {
+              trackedBy: 'url'
+            }
           }
         }
-      },
-      {
-        prop: 'closeBtnTriggerEvent',
-        label: '关闭按钮触发事件',
-        renderCell: {
-          component: 'switch',
-          hint: '点底部"x"按钮时触发关闭弹窗的同时也触发"事件设置"'
-        }
-      },
-      {
-        prop: 'image',
-        label: '图片',
-        renderCell: {
-          component: 'upload',
-          props: {
-            trackedBy: 'url'
-          }
-        }
-      }
-    ];
+      ];
+    }
 
-    styleConfigColumns = [
-      {
-        prop: 'height',
-        label: '展示高度',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'borderRadius',
-        label: '弹窗圆角',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'backgroundColor',
-        label: '背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'height',
+          label: this.$t('bean.pageGenerator.popupRenderHeight'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'borderRadius',
+          label: this.$t('bean.pageGenerator.popupBorderRadius'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
         }
-      }
-    ];
+      ];
+    }
   }
 </script>

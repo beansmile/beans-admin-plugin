@@ -66,122 +66,125 @@
       return getStyle(_.get(this, 'value.type.style') || {});
     }
 
-    baseConfigColumns = [
-      {
-        prop: 'text',
-        label: '文本',
-        renderCell: 'uncontrolledInput'
-      },
-      {
-        prop: 'type.name',
-        label: '风格',
-        // TODO 这里的样式要和小程序的对的上
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                label: '风格一',
-                value: 1
-              },
-              {
-                label: '风格二',
-                value: 2
-              },
-            ]
+    get baseConfigColumns() {
+      return [
+        {
+          prop: 'text',
+          label: this.$t('bean.pageGenerator.text'),
+          renderCell: 'uncontrolledInput'
+        },
+        {
+          prop: 'type.name',
+          label: this.$t('bean.pageGenerator.titleStyle'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  label: this.$t('bean.pageGenerator.titleStyle1'),
+                  value: 1
+                },
+                {
+                  label: this.$t('bean.pageGenerator.titleStyle2'),
+                  value: 2
+                },
+              ]
+            }
+          }
+        },
+        {
+          prop: 'type.style.backgroundColor',
+          label: this.$t('bean.pageGenerator.titleStyleBackgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
         }
-      },
-      {
-        prop: 'type.style.backgroundColor',
-        label: '样式颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
-          }
-        }
-      }
-    ]
+      ]
+    }
 
-    styleConfigColumns = [
-      {
-        prop: 'fontSize',
-        label: '字体大小',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'lineHeight',
-        label: '行高',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'color',
-        label: '颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'fontSize',
+          label: this.$t('bean.pageGenerator.fontSize'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'lineHeight',
+          label: this.$t('bean.pageGenerator.lineHeight'),
+          renderCell: {
+            component: 'inputNumber'
           }
-        }
-      },
-      {
-        prop: 'backgroundColor',
-        label: '背景颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'color',
+          label: this.$t('bean.pageGenerator.color'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'fontWeight',
-        label: '字重',
-        renderCell: {
-          component: 'select',
-          props: {
-            options: [
-              {
-                label: '默认',
-                value: 'normal'
-              },
-              {
-                label: '加粗',
-                value: 'bold'
-              }
-            ].concat(
-              _.range(100, 1000, 100).map(item => ({
-                label: item,
-                value: item
-              }))
-            )
+        },
+        {
+          prop: 'backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
+        },
+        {
+          prop: 'fontWeight',
+          label: this.$t('bean.pageGenerator.fontWeight'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: [
+                {
+                  label: this.$t('bean.pageGenerator.fontWeightNormal'),
+                  value: 'normal'
+                },
+                {
+                  label: this.$t('bean.pageGenerator.fontWeightBold'),
+                  value: 'bold'
+                }
+              ].concat(
+                _.range(100, 1000, 100).map(item => ({
+                  label: item,
+                  value: item
+                }))
+              )
+            }
+          }
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
         }
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ]
+      ]
+    }
 
   }
 </script>

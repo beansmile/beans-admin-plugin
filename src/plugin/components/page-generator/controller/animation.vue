@@ -24,51 +24,53 @@
   export default class PageEditorAnimation extends Vue {
     @Prop({ type: Object, default: () => ({}) }) value;
 
-    columns = [
-      {
-        prop: 'type',
-        label: '动画类型',
-        renderCell: {
-          component: 'select',
-          props: {
-            clearable: true,
-            options: [
-              {
-                value: 'fade',
-                label: '淡入'
-              },
-              {
-                value: 'scale-up',
-                label: '放大'
-              },
-              {
-                value: 'scale-down',
-                label: '缩小'
-              },
-              {
-                value: 'slide-top',
-                label: '上滑进入'
-              },
-              {
-                value: 'slide-bottom',
-                label: '下滑进入'
-              },
-              {
-                value: 'slide-left',
-                label: '左滑进入'
-              },
-              {
-                value: 'slide-right',
-                label: '右滑进入'
-              },
-              {
-                value: 'shake',
-                label: '抖动'
-              }
-            ]
+    get columns() {
+      return [
+        {
+          prop: 'type',
+          label: this.$t('bean.pageGenerator.animationType'),
+          renderCell: {
+            component: 'select',
+            props: {
+              clearable: true,
+              options: [
+                {
+                  value: 'fade',
+                  label: this.$t('bean.pageGenerator.fade')
+                },
+                {
+                  value: 'scale-up',
+                  label: this.$t('bean.pageGenerator.scaleUp')
+                },
+                {
+                  value: 'scale-down',
+                  label: this.$t('bean.pageGenerator.scaleDown')
+                },
+                {
+                  value: 'slide-top',
+                  label: this.$t('bean.pageGenerator.slideTop')
+                },
+                {
+                  value: 'slide-bottom',
+                  label: this.$t('bean.pageGenerator.slideBottom')
+                },
+                {
+                  value: 'slide-left',
+                  label: this.$t('bean.pageGenerator.slideLeft')
+                },
+                {
+                  value: 'slide-right',
+                  label: this.$t('bean.pageGenerator.slideRight')
+                },
+                {
+                  value: 'shake',
+                  label: this.$t('bean.pageGenerator.shake')
+                }
+              ]
+            }
           }
         }
-      }
-    ]
+      ]
+    }
   }
 </script>

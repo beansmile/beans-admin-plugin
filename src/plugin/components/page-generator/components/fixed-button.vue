@@ -70,25 +70,25 @@
       return [
         {
           prop: 'position',
-          label: '按钮位置',
+          label: this.$t('bean.pageGenerator.buttonPosition'),
           renderCell: {
             component: 'select',
             props: {
               options: [
-                { label: '右下', value: 'right.bottom' },
-                { label: '右上', value: 'right.top' },
-                { label: '左下', value: 'left.bottom' },
-                { label: '左上', value: 'left.top' },
+                { label: this.$t('bean.pageGenerator.rightBottom'), value: 'right.bottom' },
+                { label: this.$t('bean.pageGenerator.rightTop'), value: 'right.top' },
+                { label: this.$t('bean.pageGenerator.leftBottom'), value: 'left.bottom' },
+                { label: this.$t('bean.pageGenerator.leftTop'), value: 'left.top' },
               ]
             }
           }
         },
         positionX && {
           prop: 'x',
-          label: '横向距离',
+          label: this.$t('bean.pageGenerator.lateralDistance'),
           renderCell: {
             component: 'inputNumber',
-            hint: `距离可视窗口${positionX === 'left' ? '左边' : '右边'}距离`,
+            hint: this.$t('bean.pageGenerator.distanceWithWindow', { position: positionX === 'left' ? this.$t('bean.pageGenerator.leftSide') : this.$t('bean.pageGenerator.rightSide') }),
             props: {
               min: 0
             }
@@ -96,10 +96,10 @@
         },
         positionY && {
           prop: 'y',
-          label: '纵向距离',
+          label: this.$t('bean.pageGenerator.longitudinalDistance'),
           renderCell: {
             component: 'inputNumber',
-            hint: `距离可视窗口${positionY === 'top' ? '顶部' : '底部'}距离`,
+            hint: this.$t('bean.pageGenerator.distanceWithWindow', { position: positionY === 'top' ? this.$t('bean.pageGenerator.topSide') : this.$t('bean.pageGenerator.bottomSide') }),
             props: {
               min: 0
             }
@@ -107,7 +107,7 @@
         },
         {
           prop: 'image',
-          label: '按钮图片',
+          label: this.$t('bean.pageGenerator.buttomImage'),
           renderCell: {
             component: 'upload',
             props: {
@@ -118,39 +118,41 @@
       ].filter(Boolean);
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'width',
-        label: '按钮宽度',
-        renderCell: {
-          component: 'inputNumber',
-          props: {
-            min: 0
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'width',
+          label: this.$t('bean.pageGenerator.buttonWidth'),
+          renderCell: {
+            component: 'inputNumber',
+            props: {
+              min: 0
+            }
+          }
+        },
+        {
+          prop: 'height',
+          label: this.$t('bean.pageGenerator.buttonHeight'),
+          renderCell: {
+            component: 'inputNumber',
+            props: {
+              min: 0
+            }
+          }
+        },
+        {
+          prop: 'zIndex',
+          label: this.$t('bean.pageGenerator.buttonZIndex'),
+          renderCell: {
+            component: 'inputNumber',
+            hint: this.$t('bean.pageGenerator.buttonZIndexInfo'),
+            props: {
+              min: 9
+            }
           }
         }
-      },
-      {
-        prop: 'height',
-        label: '按钮高度',
-        renderCell: {
-          component: 'inputNumber',
-          props: {
-            min: 0
-          }
-        }
-      },
-      {
-        prop: 'zIndex',
-        label: '按钮层级',
-        renderCell: {
-          component: 'inputNumber',
-          hint: '多个固定按钮，层级高的会显示在上面',
-          props: {
-            min: 9
-          }
-        }
-      }
-    ]
+      ]
+    }
 
   }
 </script>

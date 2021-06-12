@@ -86,18 +86,18 @@
       return [
         {
           prop: 'type',
-          label: '样式',
+          label: this.$t('bean.pageGenerator.navbarType'),
           renderCell: {
             component: 'select',
             props: {
               options: [
                 {
                   value: '1',
-                  label: '样式1'
+                  label: this.$t('bean.pageGenerator.navbarType1')
                 },
                 {
                   value: '2',
-                  label: '样式2'
+                  label: this.$t('bean.pageGenerator.navbarType2')
                 }
               ]
             }
@@ -105,19 +105,19 @@
         },
         {
           prop: 'items',
-          label: '导航',
+          label: this.$t('bean.pageGenerator.navbarItems'),
           renderCell: {
             component: 'nestForm',
             props: {
               columns: [
                 {
                   prop: 'text',
-                  label: '文字',
+                  label: this.$t('bean.pageGenerator.text'),
                   renderCell: 'uncontrolledInput'
                 },
                 {
                   prop: 'selected',
-                  label: '是否选中',
+                  label: this.$t('bean.pageGenerator.isSelected'),
                   renderCell: 'switch'
                 },
                 {
@@ -132,57 +132,59 @@
       ];
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'backgroundColor',
-        label: '背景色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
-        }
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'fontSize',
-        label: '文字大小',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'color',
-        label: '文字颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: {
+            component: 'inputNumber'
           }
-        }
-      },
-      {
-        prop: 'selected.color',
-        label: '选中状态颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: {
+            component: 'inputNumber'
           }
-        }
-      },
-    ];
+        },
+        {
+          prop: 'fontSize',
+          label: this.$t('bean.pageGenerator.fontSize'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'color',
+          label: this.$t('bean.pageGenerator.fontColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'selected.color',
+          label: this.$t('bean.pageGenerator.selectedStateColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+      ];
+    }
 
   }
 </script>

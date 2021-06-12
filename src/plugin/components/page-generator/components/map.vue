@@ -56,7 +56,7 @@
       return [
         {
           prop: 'address',
-          label: '地址名',
+          label: this.$t('bean.pageGenerator.address'),
           renderCell: {
             component: 'el-autocomplete',
             domProps: {
@@ -81,7 +81,7 @@
         },
         {
           prop: 'longitude',
-          label: '经度',
+          label: this.$t('bean.pageGenerator.longitude'),
           renderCell: {
             component: 'inputNumber',
             props: {
@@ -91,7 +91,7 @@
         },
         {
           prop: 'latitude',
-          label: '纬度',
+          label: this.$t('bean.pageGenerator.latitude'),
           renderCell: {
             component: 'inputNumber',
             props: {
@@ -102,33 +102,35 @@
       ];
     }
 
-    styleConfigColumns = [
-      {
-        prop: 'height',
-        label: '高度',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingTop',
-        label: '上间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingBottom',
-        label: '下间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingLeft',
-        label: '左间距',
-        renderCell: 'inputNumber'
-      },
-      {
-        prop: 'paddingRight',
-        label: '右间距',
-        renderCell: 'inputNumber'
-      }
-    ]
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'height',
+          label: this.$t('bean.pageGenerator.height'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingTop',
+          label: this.$t('bean.pageGenerator.paddingTop'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingBottom',
+          label: this.$t('bean.pageGenerator.paddingBottom'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingLeft',
+          label: this.$t('bean.pageGenerator.paddingLeft'),
+          renderCell: 'inputNumber'
+        },
+        {
+          prop: 'paddingRight',
+          label: this.$t('bean.pageGenerator.paddingRight'),
+          renderCell: 'inputNumber'
+        }
+      ]
+    }
 
     async mounted() {
       this.map = new qq.maps.Map(this.$refs.map, {

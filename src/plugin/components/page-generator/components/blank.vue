@@ -51,25 +51,27 @@
 
     baseConfigColumns = []
 
-    styleConfigColumns = [
-      {
-        prop: 'height',
-        label: '高度',
-        renderCell: {
-          component: 'inputNumber'
-        }
-      },
-      {
-        prop: 'backgroundColor',
-        label: '背景颜色',
-        renderCell: {
-          component: 'colorPicker',
-          props: {
-            'show-alpha': true
+    get styleConfigColumns() {
+      return [
+        {
+          prop: 'height',
+          label: this.$t('bean.pageGenerator.height'),
+          renderCell: {
+            component: 'inputNumber'
+          }
+        },
+        {
+          prop: 'backgroundColor',
+          label: this.$t('bean.pageGenerator.backgroundColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
           }
         }
-      }
-    ]
+      ]
+    }
 
   }
 </script>

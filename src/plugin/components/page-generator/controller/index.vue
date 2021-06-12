@@ -2,7 +2,7 @@
   <portal to="page-editor-controller" v-if="visible">
     <div class="admin-page-editor-controller">
       <el-tabs v-model="tab">
-        <el-tab-pane label="基本设置" name="base" v-if="columns.length">
+        <el-tab-pane :label="$t('bean.pageGenerator.baseSettings')" name="base" v-if="columns.length">
           <AdminForm
             label-width="80px"
             :columns="baseColumns"
@@ -15,7 +15,7 @@
           </AdminForm>
           <slot />
         </el-tab-pane>
-        <el-tab-pane label="样式设置" name="style" v-if="styleColumns.length">
+        <el-tab-pane :label="$t('bean.pageGenerator.styleSettings')" name="style" v-if="styleColumns.length">
           <AdminForm
             label-width="80px"
             :columns="styleColumns"
@@ -28,7 +28,7 @@
           </AdminForm>
           <slot name="style" />
         </el-tab-pane>
-        <el-tab-pane label="事件设置" name="event" v-if="event">
+        <el-tab-pane :label="$t('bean.pageGenerator.eventSettings')" name="event" v-if="event">
           <EventForm
             :value="value.event"
             :popup-components="popupComponents"
@@ -38,7 +38,7 @@
           />
           <slot name="event" />
         </el-tab-pane>
-        <el-tab-pane label="动画设置" name="animation" v-if="animation">
+        <el-tab-pane :label="$t('bean.pageGenerator.animationSettings')" name="animation" v-if="animation">
           <AnimationForm
             :value="value.animation"
             v-bind="$attrs"
@@ -83,10 +83,10 @@
         return [
           {
             prop: 'muduleName',
-            label: '模块名称',
+            label: this.$t('bean.pageGenerator.moduleName'),
             renderCell: {
               component: 'input',
-              hint: '仅用于标记，可不填，不影响客户端页面渲染'
+              hint: this.$t('bean.pageGenerator.moduleNameTip')
             }
           },
           ...this.columns,

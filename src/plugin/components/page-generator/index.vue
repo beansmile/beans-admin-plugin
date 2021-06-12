@@ -21,7 +21,7 @@
       />
     </div>
     <div class="box-controller">
-      <div class="box-type">{{ !activeComponentKey ? '页面' : '组件' }}设置</div>
+      <div class="box-type">{{ activeComponentKey ? $t('bean.pageGenerator.componentSettings') : $t('bean.pageGenerator.pageSettings') }}</div>
       <portal-target name="page-editor-controller" class="portal-page-editor-controller" />
     </div>
   </div>
@@ -31,7 +31,7 @@
   import { Vue, Component, Model, Prop } from 'vue-property-decorator';
   import ComponentList from './component-list';
   import Screen from './screen';
-  import defaultComponents from './components';
+  import createDefaultComponents from './components';
   import _ from 'lodash';
   import { arrayMove } from '../../utils';
   import { v4 as uuid } from 'uuid';
@@ -54,6 +54,7 @@
     activeComponentKey = '';
 
     get allComponents() {
+      const defaultComponents = createDefaultComponents({ $t: this.$t.bind(this) })
       if (!this.useComponents.length) {
         return defaultComponents;
       }

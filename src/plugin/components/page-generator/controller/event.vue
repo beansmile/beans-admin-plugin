@@ -37,21 +37,21 @@
       return [
         {
           prop: 'navType',
-          label: '跳转类型',
+          label: this.$t('bean.pageGenerator.navigateType'),
           renderCell: {
             component: 'select',
             props: {
               options: [
                 {
-                  label: '小程序内页',
+                  label: this.$t('bean.pageGenerator.miniprogramPage'),
                   value: 'mp_link'
                 },
                 {
-                  label: '其他小程序页面',
+                  label: this.$t('bean.pageGenerator.externalMiniprogramPage'),
                   value: 'external_mp_link'
                 },
                 {
-                  label: 'webview页面',
+                  label: this.$t('bean.pageGenerator.webviewPage'),
                   value: 'web_link'
                 }
               ]
@@ -60,7 +60,7 @@
         },
         {
           prop: 'link',
-          label: '选择页面',
+          label: this.$t('bean.pageGenerator.selectPage'),
           if: navType === 'mp_link',
           renderCell: _.isArray(this.pages) ? {
             component: 'select',
@@ -74,20 +74,20 @@
         },
         {
           prop: 'web_link',
-          label: 'webview地址',
+          label: this.$t('bean.pageGenerator.webviewLink'),
           if: navType === 'web_link',
           renderCell: 'uncontrolledInput'
         },
         {
           prop: 'appid',
           if: navType === 'external_mp_link',
-          label: '跳转小程序的appid',
+          label: this.$t('bean.pageGenerator.externalMiniprogramPageAppid'),
           renderCell: 'uncontrolledInput'
         },
         {
           prop: 'external_mp_link',
           if: navType === 'external_mp_link',
-          label: '跳转小程序的页面路径',
+          label: this.$t('bean.pageGenerator.externalMiniprogramPagePath'),
           renderCell: 'uncontrolledInput'
         }
       ].filter(item => item.if !== false);
@@ -97,7 +97,7 @@
       return [
         {
           prop: 'address',
-          label: '地址名',
+          label: this.$t('bean.pageGenerator.address'),
           renderCell: {
             component: 'el-autocomplete',
             domProps: {
@@ -123,7 +123,7 @@
         },
         {
           prop: 'longitude',
-          label: '经度',
+          label: this.$t('bean.pageGenerator.longitude'),
           renderCell: {
             component: 'uncontrolledInput',
             props: {
@@ -133,7 +133,7 @@
         },
         {
           prop: 'latitude',
-          label: '纬度',
+          label: this.$t('bean.pageGenerator.latitude'),
           renderCell: {
             component: 'uncontrolledInput',
             props: {
@@ -149,7 +149,7 @@
 
       return [
         {
-          label: '选择事件',
+          label: this.$t('bean.pageGenerator.selectEvent'),
           prop: 'name',
           renderCell: {
             component: 'select',
@@ -160,35 +160,35 @@
               clearable: true,
               options: [
                 {
-                  label: '跳转页面',
+                  label: this.$t('bean.pageGenerator.navigateToPage'),
                   value: 'link'
                 },
                 {
-                  label: '拨打电话',
+                  label: this.$t('bean.pageGenerator.makePhoneCall'),
                   value: 'tel'
                 },
                 {
-                  label: '打开地图查看地址',
+                  label: this.$t('bean.pageGenerator.openMap'),
                   value: 'address'
                 },
                 {
-                  label: '分享给好友(触发页面设置分享)',
+                  label: this.$t('bean.pageGenerator.shareWithFriend'),
                   value: 'share'
                 },
                 {
-                  label: '生成海报(触发页面设置生成海报)',
+                  label: this.$t('bean.pageGenerator.shareByPoster'),
                   value: 'poster',
                 },
                 {
-                  label: '联系客服',
+                  label: this.$t('bean.pageGenerator.contact'),
                   value: 'contact'
                 },
                 !this.isPopup && {
-                  label: '弹窗',
+                  label: this.$t('bean.pageGenerator.popup'),
                   value: 'popup'
                 },
                 this.isImage && {
-                  label: '图片预览',
+                  label: this.$t('bean.pageGenerator.previewImage'),
                   value: 'image-preview'
                 }
               ].filter(Boolean)
@@ -199,14 +199,14 @@
         ...(eventName === 'address' ? this.addressTypeColumns : []),
         eventName === 'tel' && {
           prop: 'tel',
-          label: '电话号码',
+          label: this.$t('bean.pageGenerator.phoneNumber'),
           renderCell: {
             component: 'uncontrolledInput'
           }
         },
         eventName === 'popup' && {
           prop: 'popup',
-          label: '选择弹窗',
+          label: this.$t('bean.pageGenerator.selectPopup'),
           renderCell: {
             component: 'select',
             props: {
