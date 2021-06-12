@@ -5,7 +5,7 @@
         <el-tab-pane label="基本设置" name="base" v-if="columns.length">
           <AdminForm
             label-width="80px"
-            :columns="columns"
+            :columns="baseColumns"
             :value="value"
             @change="$emit('change', $event)"
           >
@@ -75,6 +75,20 @@
     @Prop({ type: Array, default: () => [] }) popupComponents;
 
     tab = 'base'
+
+    get baseColumns() {
+      return [
+        {
+          prop: 'muduleName',
+          label: '模块名称',
+          renderCell: {
+            component: 'input',
+            hint: '仅用于埋点做标记，可不填，不影响客户端页面渲染'
+          }
+        },
+        ...this.columns,
+      ]
+    }
 
     @Watch('visible', { immediate: true })
     onVisibleChange(visible) {
