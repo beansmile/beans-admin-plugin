@@ -5,7 +5,7 @@
         <el-tab-pane label="基本设置" name="base" v-if="columns.length">
           <AdminForm
             label-width="80px"
-            :columns="columns"
+            :columns="baseColumns"
             :value="value"
             @change="$emit('change', $event)"
           >
@@ -53,6 +53,7 @@
 
 <script>
   import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+  import _ from 'lodash';
   import AdminForm from '../../form';
   import EventForm from './event';
   import AnimationForm from './animation';
@@ -75,6 +76,24 @@
     @Prop({ type: Array, default: () => [] }) popupComponents;
 
     tab = 'base'
+
+    get baseColumns() {
+      const { enableModuleName } = _.get(this.$vadminConfig, 'pageGenerator', {});
+      if (enableModuleName) {
+        return [
+          {
+            prop: 'muduleName',
+            label: '模块名称',
+            renderCell: {
+              component: 'input',
+              hint: '仅用于标记，可不填，不影响客户端页面渲染'
+            }
+          },
+          ...this.columns,
+        ];
+      }
+      return this.columns;
+    }
 
     @Watch('visible', { immediate: true })
     onVisibleChange(visible) {
