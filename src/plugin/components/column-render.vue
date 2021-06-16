@@ -157,12 +157,11 @@ export const ConfirmButton = {
       return null;
     }
     return (
-      // elementui 这里的事件名是onConfirm, onCancel...
       <el-popconfirm
         title={`${context.parent.$t('bean.actionConfirm')} ${buttonName}？`}
         on={context.listeners}
-        onOnConfirm={context.listeners.confirm || _.noop}
-        onOnCancel={context.listeners.cancel || _.noop}
+        onConfirm={context.listeners.confirm || _.noop}
+        onCancel={context.listeners.cancel || _.noop}
         confirm-button-text={context.parent.$t('bean.actionConfirm')}
         cancel-button-text={context.parent.$t('bean.actionCancel')}
         scopedSlots={{
