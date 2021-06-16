@@ -58,7 +58,7 @@
             <el-popconfirm
               :title="$t('bean.confirmDeleteTip')"
               class="btn-delete"
-              @onConfirm="handleDelete(item)"
+              @confirm="handleDelete(item)"
             >
               <i class="el-icon-circle-close" slot="reference" @click.stop></i>
             </el-popconfirm>
