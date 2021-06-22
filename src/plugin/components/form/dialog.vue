@@ -67,7 +67,7 @@ export default class FormDialog extends Vue {
     this.visible = false;
   }
 
-  @Watch('value')
+  @Watch('value', { immediate: true })
   onValueChange(val) {
     this.form = _.cloneDeep(val);
   }
