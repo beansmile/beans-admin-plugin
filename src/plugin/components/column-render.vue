@@ -160,8 +160,6 @@ export const ConfirmButton = {
       <el-popconfirm
         title={`${context.parent.$t('bean.actionConfirm')} ${buttonName}？`}
         on={context.listeners}
-        onConfirm={context.listeners.confirm || _.noop}
-        onCancel={context.listeners.cancel || _.noop}
         confirm-button-text={context.parent.$t('bean.actionConfirm')}
         cancel-button-text={context.parent.$t('bean.actionCancel')}
         scopedSlots={{
