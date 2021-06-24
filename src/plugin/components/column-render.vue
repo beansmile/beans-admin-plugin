@@ -52,11 +52,36 @@ const UncontrolledTextArea = {
   }
 }
 
+function triggerEvent(event, ...args) {
+  if (_.isArray(event)) {
+    event.forEach(function(eventFn) {
+      triggerEvent(eventFn, ...args);
+    });
+    return;
+  }
+  if (_.isFunction(event)) {
+    event.call(this, ...args);
+  }
+}
+
+const DatePicker = {
+  functional: true,
+  render(h, context) {
+    const change = _.get(context, 'data.on.change');
+    // 不触发datepicker的input事件了，都用change
+    // column-render-helper组件拦截了input事件，会导致datepicker组件validator取到错误的value
+    const handleInput = function(val) {
+      triggerEvent(change, val);
+    }
+    return <el-date-picker {...context} onInput={handleInput} />
+  }
+}
+
 const DateTimePicker = {
   functional: true,
   render(h, context) {
     const data = _.merge({}, context.data, { props: { type: 'datetime' } });
-    return h('el-date-picker', data, context.children);
+    return h(DatePicker, data, context.children);
   }
 }
 
@@ -220,6 +245,7 @@ const COMPONENT_PRE_INSTALLED = {
   date: RenderDate,
   time: DateTime,
   textarea: TextArea,
+  datePicker: DatePicker,
   dateTimePicker: DateTimePicker,
   routeButton: RouteButton,
   confirmButton: ConfirmButton,
