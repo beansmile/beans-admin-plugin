@@ -54,6 +54,7 @@ export default {
     importSuccess: 'Import success',
     importFail: 'Import fail. Please check the "error_massage.xlsx" file for details',
     formValidateError: 'There is an error in validate the form item',
+    selectEvent: 'Select event',
     pageGenerator: {
       text: 'Text',
       title: 'Title',
@@ -110,7 +111,6 @@ export default {
       address: 'Address name',
       longitude: 'Longitude',
       latitude: 'Latitude',
-      selectEvent: 'Select event',
       navigateToPage: 'Navigate to page',
       makePhoneCall: 'Make a call',
       openMap: 'Open the map to see the address',

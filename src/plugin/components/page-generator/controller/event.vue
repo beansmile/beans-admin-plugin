@@ -1,26 +1,22 @@
 <template>
-  <div>
-    <AdminForm
-      label-width="80px"
-      :columns="columns"
-      :value="value"
-      @change="$emit('change', $event)"
-    >
-      <template v-slot:action>
-        <span />
-      </template>
-    </AdminForm>
-  </div>
+  <EventForm
+    :events="events"
+    :value="value"
+    label-width="80px"
+    @change="$emit('change', $event)"
+  />
 </template>
 
 <script>
-  import { Vue, Component, Prop } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Inject } from 'vue-property-decorator';
+  import EventForm from '../../event-form.vue';
   import AdminForm from '../../form';
   import _ from 'lodash';
   import { getQQMapPlaceSuggestions } from '../utils';
 
   @Component({
     components: {
+      EventForm,
       AdminForm
     }
   })
@@ -30,6 +26,37 @@
     @Prop({ type: Array, default: () => [] }) popupComponents;
     @Prop(Boolean) isImage;
     @Prop(Boolean) isPopup;
+    @Inject('useEvents') useEvents;
+
+    get telColumns() {
+      return [
+        {
+          prop: 'tel',
+          label: this.$t('bean.pageGenerator.phoneNumber'),
+          renderCell: {
+            component: 'uncontrolledInput'
+          }
+        }
+      ];
+    }
+
+    get popupColumns() {
+      return [
+        {
+          prop: 'popup',
+          label: this.$t('bean.pageGenerator.selectPopup'),
+          renderCell: {
+            component: 'select',
+            props: {
+              options: this.popupComponents.map(item => ({
+                label: _.get(item, 'config.name'),
+                value: item.key
+              }))
+            }
+          }
+        }
+      ];
+    }
 
     get linkTypeColumns() {
       const navType = _.get(this.value, 'navType');
@@ -144,81 +171,57 @@
       ]
     }
 
-    get columns() {
-      const eventName = _.get(this.value, 'name');
-
-      return [
-        {
-          label: this.$t('bean.pageGenerator.selectEvent'),
-          prop: 'name',
-          renderCell: {
-            component: 'select',
-            domProps: {
-              style: 'width: 100%'
-            },
-            props: {
-              clearable: true,
-              options: [
-                {
-                  label: this.$t('bean.pageGenerator.navigateToPage'),
-                  value: 'link'
-                },
-                {
-                  label: this.$t('bean.pageGenerator.makePhoneCall'),
-                  value: 'tel'
-                },
-                {
-                  label: this.$t('bean.pageGenerator.openMap'),
-                  value: 'address'
-                },
-                {
-                  label: this.$t('bean.pageGenerator.shareWithFriend'),
-                  value: 'share'
-                },
-                {
-                  label: this.$t('bean.pageGenerator.shareByPoster'),
-                  value: 'poster',
-                },
-                {
-                  label: this.$t('bean.pageGenerator.contact'),
-                  value: 'contact'
-                },
-                !this.isPopup && {
-                  label: this.$t('bean.pageGenerator.popup'),
-                  value: 'popup'
-                },
-                this.isImage && {
-                  label: this.$t('bean.pageGenerator.previewImage'),
-                  value: 'image-preview'
-                }
-              ].filter(Boolean)
-            }
-          }
+    get events() {
+      const events = {
+        link: {
+          label: this.$t('bean.pageGenerator.navigateToPage'),
+          columns: this.linkTypeColumns
         },
-        ...(eventName === 'link' ? this.linkTypeColumns : []),
-        ...(eventName === 'address' ? this.addressTypeColumns : []),
-        eventName === 'tel' && {
-          prop: 'tel',
-          label: this.$t('bean.pageGenerator.phoneNumber'),
-          renderCell: {
-            component: 'uncontrolledInput'
-          }
+        tel: {
+          label: this.$t('bean.pageGenerator.makePhoneCall'),
+          columns: this.telColumns
         },
-        eventName === 'popup' && {
-          prop: 'popup',
-          label: this.$t('bean.pageGenerator.selectPopup'),
-          renderCell: {
-            component: 'select',
-            props: {
-              options: this.popupComponents.map(item => ({
-                label: _.get(item, 'config.name'),
-                value: item.key
-              }))
-            }
-          }
+        address: {
+          label: this.$t('bean.pageGenerator.openMap'),
+          columns: this.addressTypeColumns
+        },
+        share: {
+          label: this.$t('bean.pageGenerator.shareWithFriend'),
+          columns: []
+        },
+        poster: {
+          label: this.$t('bean.pageGenerator.shareByPoster'),
+          columns: []
+        },
+        contact: {
+          label: this.$t('bean.pageGenerator.contact'),
+          columns: []
+        },
+      };
+      if (!this.isPopup) {
+        events.popup = {
+          label: this.$t('bean.pageGenerator.popup'),
+          columns: this.popupColumns
         }
-      ].filter(Boolean);
+      }
+      if (this.isImage) {
+        events['image-preview'] = {
+          label: this.$t('bean.pageGenerator.previewImage'),
+          columns: []
+        }
+      }
+      if (_.isArray(this.useEvents)) {
+        const useEvents = {};
+        this.useEvents.forEach(item => {
+          if (_.isString(item) && events[item]) {
+            useEvents[item] = events[item];
+          } else if (_.isPlainObject(item) && item.key) {
+            useEvents[item.key] = item;
+          }
+        });
+        return useEvents;
+      }
+      return events;
     }
-
   }
 </script>
