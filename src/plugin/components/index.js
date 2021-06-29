@@ -128,6 +128,10 @@ export function install(Vue, config = {}) {
     {
       name: 'attach-dir',
       component: require('./attach-dir').default
+    },
+    {
+      name: 'image-area',
+      component: require('./image-area').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);

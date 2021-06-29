@@ -28,7 +28,7 @@
 </template>
 
 <script>
-  import { Vue, Component, Model, Prop } from 'vue-property-decorator';
+  import { Vue, Component, Model, Prop, Provide } from 'vue-property-decorator';
   import ComponentList from './component-list';
   import Screen from './screen';
   import createDefaultComponents from './components';
@@ -50,6 +50,7 @@
     }) }) value;
     @Prop({ type: Array, default: () => [] }) useComponents;
     @Prop({ type: [Array, Function], default: () => [] }) pages;
+    @Prop(Array) @Provide() useEvents; // ./controller/event.vue
 
     activeComponentKey = '';
 

@@ -36,7 +36,8 @@
             :title="`${$t('bean.pageGenerator.hotArea')}-${index + 1}`"
             :name="index"
           >
-            <Event
+            <component
+              :is="usePageGeneratorEvent ? 'PageGenEvent' : 'EventForm'"
               v-bind="eventProps"
               :value="item.event"
               @change="handleEventChange($event, index)"
@@ -62,7 +63,8 @@
   import { Vue, Component, Prop, Model, Watch, Emit } from 'vue-property-decorator';
   import _ from 'lodash';
   import AdminForm from '../form';
-  import Event from '../page-generator/controller/event';
+  import PageGenEvent from '../page-generator/controller/event';
+  import EventForm from '../event-form';
   import Area from './area';
   import { sleep } from '../../utils';
 
@@ -75,13 +77,15 @@
   @Component({
     components: {
       AdminForm,
-      Event,
-      Area
+      PageGenEvent,
+      Area,
+      EventForm
     }
   })
   export default class AdminImageArea extends Vue {
     @Model('change', { type: Object, default: () => defaultValue }) value;
     @Prop({ type: Object, default: () => ({}) }) eventProps;
+    @Prop({ type: Boolean, default: true }) usePageGeneratorEvent;
 
     form = _.cloneDeep(defaultValue);
 

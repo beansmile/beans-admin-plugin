@@ -55,6 +55,7 @@ export default {
     importSuccess: '導入成功',
     importFail: '導入失敗，請查看"錯誤信息.xlsx"文件了解詳情',
     formValidateError: '表單項填寫有錯誤',
+    selectEvent: '選擇事件',
     pageGenerator: {
       text: '文字',
       title: '標題',
@@ -111,7 +112,6 @@ export default {
       address: '地址名',
       longitude: '經度',
       latitude: '緯度',
-      selectEvent: '選擇事件',
       navigateToPage: '跳轉頁面',
       makePhoneCall: '撥打電話',
       openMap: '打開地圖查看地址',
