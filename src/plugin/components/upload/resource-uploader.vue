@@ -16,31 +16,13 @@
           :limit="50"
           @success="handleUploadSuccess"
         />
-        <el-form inline @submit.prevent.native="handleFilter">
-          <el-form-item :label="$t('bean.folder')" v-if="useResourceFolders">
-            <AttachDir v-model="params.dir_path" />
-          </el-form-item>
-          <el-form-item :label="$t('bean.fileName')">
-            <el-input v-model="params.filename_cont" />
-          </el-form-item>
-
-          <el-form-item :label="$t('bean.tag')" v-if="useResourceBlobTag">
-            <el-select
-              v-model="params.tags_name_in"
-              multiple
-              filterable
-              remote
-              :remote-method="handleGetTags"
-            >
-              <el-option v-for="(item, index) in tags" :key="index" :label="item.label" :value="item.value"></el-option>
-            </el-select>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" native-type="submit">{{ $t('bean.actionFilter') }}</el-button>
-            <el-button @click="handleReset">{{ $t('bean.actionReset') }}</el-button>
-          </el-form-item>
-        </el-form>
+        <AdminFilter
+          v-if="filterColumns.length"
+          :columns="filterColumns"
+          v-model="filterForm"
+          @filter="handleFilter"
+          @reset="handleReset"
+        />
       </div>
       <div class="box-list">
         <div
@@ -93,24 +75,13 @@
   import ResourceRender from '../resource-render';
   import Uploader from './index';
   import _ from 'lodash';
-  import AttachDir from '../attach-dir';
-
-  const TYPES = {
-    image: '图片',
-    video: '视频',
-    audio: '音频',
-    text: '文本',
-    xml: 'XML',
-    json: 'JSON',
-    pdf: 'PDF',
-    sheet: 'Sheet'
-  }
+  import AdminFilter from '../form/filter';
 
   @Component({
     components: {
       Uploader,
       ResourceRender,
-      AttachDir
+      AdminFilter
     }
   })
   export default class AdminResourceUploader extends Vue {
@@ -118,29 +89,59 @@
     @Prop({ type: String, default: 'image' }) type;
     @Prop({ type: Number, default: 1 }) limit;
 
-    TYPES = TYPES;
     loading = false;
     data = [];
     selected = [];
     pagination = {
       'current-page': 1
     };
-    params = {};
-    tags = [];
-    tagLoading = false;
+    filterForm = {};
+
+    get tagColumn() {
+      const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
+      const requestFunction = _.get(this, '$vadminConfig.upload.onFetchResourceBlobTag');
+      if (requestURL || requestFunction) {
+        return {
+          prop: 'tags_name_in',
+          label: this.$t('bean.tag'),
+          renderCell: {
+            component: 'select',
+            props: {
+              multiple: true,
+              filterable: true,
+              xRemoteSearch: async (name) => {
+                const params = { name_cont: name };
+                const fetchResource = requestFunction || (() => this.$request.get(requestURL, { params }));
+                const data = await fetchResource(params);
+                return data.map(item => ({
+                  label: item.name,
+                  value: item.name
+                }));
+              }
+            }
+          }
+        }
+      }
+      return null;
+    }
+
+    get filterColumns() {
+      const columns = _.get(this, '$vadminConfig.upload.resourceUploader.filterColumns') || [];
+      const filterColumns = [...columns];
+      const fileNameColumn = {
+        prop: 'filename_cont',
+        label: this.$t('bean.fileName'),
+        renderCell: 'input'
+      }
+      if (this.tagColumn) {
+        filterColumns.unshift(this.tagColumn);
+      }
+      filterColumns.unshift(fileNameColumn);
+      return filterColumns;
+    }
 
     get selectedIds() {
       return this.selected.map(item => item.id);
-    }
-
-    get useResourceFolders() {
-      return !!_.get(this, '$vadminConfig.upload.attachDirUrl');
-    }
-
-    get useResourceBlobTag() {
-      const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
-      const requestFunction = _.get(this, '$vadminConfig.upload.onFetchResourceBlobTag');
-      return Boolean(requestURL || requestFunction);
     }
 
     handleClose() {
@@ -149,7 +150,7 @@
 
     handleClosed() {
       this.selected = [];
-      this.params = {};
+      this.filterForm = {};
     }
 
     handleOpen() {
@@ -164,7 +165,7 @@
       this.loading = true;
       try {
         const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
-        const params = { content_type_cont: this.type, per_page: 14, page: this.pagination['current-page'], ...this.params }
+        const params = { content_type_cont: this.type, per_page: 14, page: this.pagination['current-page'], ...this.filterForm }
         const fetchResource = _.get(this, '$vadminConfig.upload.onFetchResourceBlob') || (() => this.$request.get(requestURL, { params }));
         const { data, pagination } = await fetchResource(params);
         this.data = data;
@@ -177,22 +178,6 @@
     handlePageChange(page) {
       this.pagination['current-page'] = page;
       this.fetchData();
-    }
-
-    async handleGetTags(name) {
-      this.tagLoading = true;
-      try {
-        const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
-        const params = { name_cont: name }
-        const fetchResource = _.get(this, '$vadminConfig.upload.onFetchResourceBlobTag') || (() => this.$request.get(requestURL, { params }));
-        const data = await fetchResource(params)
-        this.tags = data.map(item => ({
-          label: item.name,
-          value: item.name
-        }));
-      } finally {
-        this.tagLoading = false;
-      }
     }
 
     handleSelect(item) {
@@ -232,7 +217,7 @@
     }
 
     handleReset() {
-      this.params = {};
+      this.filterForm = {};
       this.fetchData();
     }
   }

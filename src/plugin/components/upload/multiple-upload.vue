@@ -11,11 +11,15 @@
     @closed="$emit('closed')"
   >
     <div class="admin-multiple-upload" v-loading="loading">
-      <el-form inline v-if="useResourceFolders">
-        <el-form-item label="上传到文件夹">
-          <AttachDir v-model="dir_path" />
-        </el-form-item>
-      </el-form>
+      <AdminForm
+        v-if="formColumns.length"
+        v-model="uploadForm"
+        :columns="formColumns"
+        inline
+      >
+        <template #action>
+        </template>
+      </AdminForm>
 
       <input
         type="file"
@@ -43,18 +47,6 @@
         <el-button type="danger" @click="handleDeleteAll" :disabled="!tableData.length">{{ $t('bean.actionRemoveAll') }}</el-button>
       </el-row>
 
-      <FormSelect
-        v-if="resourceTagURL"
-        class="tags-selector"
-        clearable
-        multiple
-        :xRemoteSearch="fetchTags"
-        default-first-option
-        :placeholder="$t('bean.chooseBlobTagTip')"
-        allowCreate
-        v-model="tags"
-      />
-
       <el-alert show-icon type="warning" :title="uploadHint" :closable="false"></el-alert>
 
       <div class="box-table">
@@ -77,16 +69,16 @@
 import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import AdminTable from '../table';
 import FormSelect from '../form/select';
+import AdminForm from '../form';
 import { checkFileSize, uploadFile } from '../../utils';
 import _ from 'lodash';
 import ImageCropperAction from './image-cropper-action';
-import AttachDir from '../attach-dir';
 
 @Component({
   components: {
     AdminTable,
     FormSelect,
-    AttachDir
+    AdminForm
   }
 })
 export default class MultipleUploadDialog extends Vue {
@@ -101,10 +93,50 @@ export default class MultipleUploadDialog extends Vue {
   FILE_INPUT_REF_NAME = 'fileInput';
   DIRECTORY_INPUT_REF_NAME = 'fileDirectory';
 
+  uploadForm = {};
   tableData = [];
-  tags = [];
   loading = false;
-  dir_path = '';
+
+  get tagColumns() {
+    const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
+    const requestFunction = _.get(this, '$vadminConfig.upload.onFetchResourceBlobTag');
+    if (requestURL || requestFunction) {
+      return {
+        prop: 'tags',
+        label: this.$t('bean.tag'),
+        renderCell: {
+          component: 'select',
+          props: {
+            clearable: true,
+            placeholder: this.$t('bean.chooseBlobTagTip'),
+            multiple: true,
+            filterable: true,
+            'default-first-option': true,
+            allowCreate: true,
+            xRemoteSearch: async (name) => {
+              const params = { name_cont: name };
+              const fetchResource = requestFunction || (() => this.$request.get(requestURL, { params }));
+              const data = await fetchResource(params);
+              return data.map(item => ({
+                label: item.name,
+                value: item.name
+              }));
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  get formColumns() {
+    const columns = _.get(this, '$vadminConfig.upload.resourceUploader.formColumns') || [];
+    const filterColumns = [...columns];
+    if (this.tagColumns) {
+      columns.unshift(this.tagColumns);
+    }
+    return filterColumns;
+  }
 
   get columns() {
     return [
@@ -163,10 +195,6 @@ export default class MultipleUploadDialog extends Vue {
 
   get showCropperButton() {
     return _.get(this.cropper, 'width') && this.accept.includes('image');
-  }
-
-  get useResourceFolders() {
-    return !!_.get(this, '$vadminConfig.upload.attachDirUrl');
   }
 
   handleCropSuccess(file, $index) {
@@ -233,7 +261,7 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   async handleUpload(row, index) {
-    const result = await uploadFile(row.file, { ...this.$attrs, tags: this.tags, dir_path: this.dir_path });
+    const result = await uploadFile(row.file, { ...this.$attrs, ...this.uploadForm });
     this.$set(this.tableData[index], 'result', result);
     return result;
   }

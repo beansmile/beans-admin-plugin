@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-attach-dir" v-if="ability.read">
+  <div class="admin-attach-dir" v-if="abilityMap.read">
     <el-cascader
       :options="dirs"
       :value="value"
@@ -18,18 +18,18 @@
       <template slot-scope="{ node, data }">
         <div class="admin-attach-dir">
           <span>{{ data.name }}</span>
-          <el-dropdown @command="handleCommand($event, data, node)" v-if="ability.create || ability.update || ability.destroy">
+          <el-dropdown @command="handleCommand($event, data, node)" v-if="abilityMap.create || abilityMap.update || abilityMap.destroy">
             <span class="el-dropdown-link"><i class="el-icon-arrow-down el-icon--right"></i></span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-if="ability.create" command="create">新建子文件夹</el-dropdown-item>
-              <el-dropdown-item v-if="ability.update" command="edit">编辑</el-dropdown-item>
-              <el-dropdown-item v-if="ability.destroy" command="delete">删除</el-dropdown-item>
+              <el-dropdown-item v-if="abilityMap.create" command="create">新建子文件夹</el-dropdown-item>
+              <el-dropdown-item v-if="abilityMap.update" command="edit">编辑</el-dropdown-item>
+              <el-dropdown-item v-if="abilityMap.destroy" command="delete">删除</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
       </template>
     </el-cascader>
-    <el-popover content="新建根目录文件夹" trigger="hover" v-if="ability.create">
+    <el-popover content="新建根目录文件夹" trigger="hover" v-if="abilityMap.create">
       <el-button slot="reference" class="btn-create-root" circle icon="el-icon-plus" @click="handleCreateChild()"></el-button>
     </el-popover>
   </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { Vue, Component, Model } from 'vue-property-decorator';
+import { Vue, Component, Model, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
 import { abilityService } from '../services';
 
@@ -48,13 +48,15 @@ const state = Vue.observable({ dirs: [] })
 @Component
 export default class AttachDir extends Vue {
   @Model('change', { type: String }) value;
+  @Prop(Object) ability;
+  @Prop(String) apiPath;
 
   get dirs() {
     return state.dirs;
   }
 
-  get ability() {
-    const ability = _.get(this, '$vadminConfig.upload.attachDirAbility');
+  get abilityMap() {
+    const ability = this.ability || _.get(this, '$vadminConfig.attachDir.ability');
     if (!ability) {
       return {
         read: true,
@@ -67,11 +69,11 @@ export default class AttachDir extends Vue {
   }
 
   get requestUrl() {
-    return _.get(this, '$vadminConfig.upload.attachDirUrl');
+    return this.apiPath || _.get(this, '$vadminConfig.attachDir.apiPath');
   }
 
   mounted() {
-    if (this.ability.read) {
+    if (this.abilityMap.read) {
       this.fetchData();
     }
   }
