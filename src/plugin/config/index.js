@@ -8,8 +8,13 @@ export default {
   upload: {
     directUploadURL: '/blobs/direct_upload',
     resourceBlobURL: '',
-    resourceBlobTagURL: ''
+    resourceBlobTagURL: '',
+    resourceUploader: {
+      formColumns: [],
+      filterColumns: []
+    }
   },
+  attachDir: {},
   cropper: {},
   request: {
     baseURL: '/admin_api/v1',
