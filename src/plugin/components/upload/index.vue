@@ -12,7 +12,7 @@
     <MultipleUpload
       v-if="renderMultipleUploadDialog && limit > 1"
       v-model="showMultipleUploadDialog"
-      v-bind="{ ...$props, ...$attrs }"
+      v-bind="{ limit, cropper, accept, size, ...$attrs }"
       @success="$emit('success', $event)"
       @closed="handleMultipleUploadDialogClosed"
     />
