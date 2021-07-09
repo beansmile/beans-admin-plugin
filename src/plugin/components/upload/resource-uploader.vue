@@ -136,7 +136,9 @@
       if (this.tagColumn) {
         filterColumns.unshift(this.tagColumn);
       }
-      filterColumns.unshift(fileNameColumn);
+      if (!filterColumns.find(item => item.prop === 'filename_cont')) {
+        filterColumns.unshift(fileNameColumn);
+      }
       return filterColumns;
     }
 
