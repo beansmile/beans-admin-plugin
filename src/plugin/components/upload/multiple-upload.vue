@@ -133,7 +133,7 @@ export default class MultipleUploadDialog extends Vue {
     const columns = _.get(this, '$vadminConfig.upload.resourceUploader.formColumns') || [];
     const filterColumns = [...columns];
     if (this.tagColumns) {
-      columns.unshift(this.tagColumns);
+      filterColumns.unshift(this.tagColumns);
     }
     return filterColumns;
   }
