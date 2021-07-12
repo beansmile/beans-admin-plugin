@@ -112,7 +112,8 @@
               xRemoteSearch: async (name) => {
                 const params = { name_cont: name };
                 const fetchResource = requestFunction || (() => this.$request.get(requestURL, { params }));
-                const data = await fetchResource(params);
+                const result = await fetchResource(params);
+                const data = _.isArray(result) ? result : _.get(result, 'data', []);
                 return data.map(item => ({
                   label: item.name,
                   value: item.name
