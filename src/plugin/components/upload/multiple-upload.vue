@@ -106,9 +106,9 @@ export default class MultipleUploadDialog extends Vue {
         label: this.$t('bean.tag'),
         renderCell: {
           component: 'select',
+          hint: this.$t('bean.chooseBlobTagTip'),
           props: {
             clearable: true,
-            placeholder: this.$t('bean.chooseBlobTagTip'),
             multiple: true,
             filterable: true,
             'default-first-option': true,
