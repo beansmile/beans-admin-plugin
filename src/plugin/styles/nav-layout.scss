@@ -1,15 +1,19 @@
-.vadmin-nav-layout {
-  width: 100%;
+.admin-nav-layout {
   height: 100%;
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
-  > .box-sidebar {
+  > .el-container {
+    overflow: hidden;
+  }
+
+  .nav-layout-aside {
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
     border-right: 1px solid $border-light;
 
-    .box-logo {
+    .nav-layout-aside-box-logo {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -26,72 +30,39 @@
       }
     }
 
-    .box-menu {
+    .nav-layout-aside-box-menu {
       flex: 1;
       overflow: hidden;
     }
-
-    &.collapsed {
-      .box-logo {
-        .logo {
-          width: 40px;
-        }
-      }
-    }
   }
 
-  > .vadmin-nav-menu {
+  .nav-layout-header {
     flex-shrink: 0;
-  }
-
-  > .layout-content {
-    flex: 1;
-    height: 100%;
+    border-bottom: 1px solid $border-light;
     display: flex;
-    flex-direction: column;
-    overflow: hidden;
+    align-items: center;
 
-    > .page-header {
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      height: 55px;
-      border-bottom: 1px solid $border-light;
-      padding: 0 20px;
-
-      .btn-back,
-      .page-title {
-        font-size: 16px;
-      }
-
-      .btn-back {
-        &:after {
-          display: inline-block;
-          content: '';
-          width: 1px;
-          height: 14px;
-          margin: 0 15px;
-          background: #dcdfe6;
-          vertical-align: -1px;
-        }
-      }
-
-      .content {
-        flex: 1;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
-        .el-icon-s-operation {
-          font-size: 20px;
-          font-weight: 800;
-        }
-      }
+    .nav-layout-header-btn-back,
+    .nav-layout-header-title {
+      font-size: 16px;
     }
 
-    > .page-content {
+    .nav-layout-header-content {
       flex: 1;
-      overflow: auto;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .el-icon-s-operation {
+        font-size: 20px;
+        font-weight: 800;
+      }
     }
+  }
+}
+
+.admin-nav-layout-menu-drawer {
+  .el-drawer__body {
+    overflow: hidden;
   }
 }
