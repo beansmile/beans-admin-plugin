@@ -47,6 +47,7 @@
     .el-input__inner {
       border: none;
       width: 100px;
+      padding-left: 0;
     }
   }
 </style>

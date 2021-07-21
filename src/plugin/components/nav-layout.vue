@@ -61,7 +61,7 @@
           </div>
           <el-button v-if="showLogout" @click="$emit('logout')">{{ $t('bean.actionLogout') }}</el-button>
         </el-header>
-        <el-main>
+        <el-main class="nav-layout-main">
           <router-view :key="routerViewKey" />
         </el-main>
       </el-container>
