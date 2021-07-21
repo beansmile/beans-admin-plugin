@@ -1,38 +1,54 @@
 <template>
-  <div class="vadmin-nav-layout">
-    <div class="box-sidebar" :class="{ collapsed }">
-      <div class="box-logo">
-        <router-link to="/">
-          <img :src="logoUrl" class="logo" v-if="logoUrl" />
-          <slot name="logo" v-if="!collapsed" />
-        </router-link>
-      </div>
-      <div class="box-menu">
-        <NavMenu :menus="menus" v-model="collapsed" v-bind="$attrs" />
-      </div>
-    </div>
-    <div class="layout-content">
-      <div class="page-header">
-        <el-button
-          v-if="showBack"
-          class="btn-back"
-          type="text"
-          icon="el-icon-back"
-          @click="$emit('back')"
-        >{{ $t('bean.actionNavBack') }}</el-button>
+  <div class="admin-nav-layout">
+    <el-drawer
+      title="导航"
+      :visible.sync="drawerMenuOpen"
+      direction="ltr"
+      modal-append-to-body
+      size="200px"
+      custom-class="admin-nav-layout-menu-drawer"
+    >
+      <NavMenu disableCollapse :menus="menus" v-model="collapsed" v-bind="$attrs" />
+    </el-drawer>
 
-        <div class="page-title">
-          <slot name="header-title" />
+    <el-container>
+      <el-aside class="nav-layout-aside hidden-xs-only" width="auto">
+        <div class="nav-layout-aside-box-logo" v-if="!collapsed">
+          <router-link to="/">
+            <img :src="logoUrl" class="logo" v-if="logoUrl" />
+            <slot name="logo" />
+          </router-link>
         </div>
-        <slot />
-        <div class="content">
-          <slot name="header-content" />
+        <div class="nav-layout-aside-box-menu">
+          <NavMenu :menus="menus" v-model="collapsed" v-bind="$attrs" />
         </div>
-      </div>
-      <div class="page-content">
-        <router-view :key="routerViewKey" />
-      </div>
-    </div>
+      </el-aside>
+      <el-container>
+        <el-header class="nav-layout-header">
+          <el-button type="default" size="mini" icon="el-icon-s-unfold" class="hidden-sm-and-up" @click="drawerMenuOpen = !drawerMenuOpen"></el-button>
+
+          <el-button
+            v-if="showBack"
+            class="nav-layout-header-btn-back"
+            type="text"
+            icon="el-icon-back"
+            @click="$emit('back')"
+          >
+          {{ $t('bean.actionNavBack') }}
+          </el-button>
+          <div class="nav-layout-header-title">
+            <slot name="header-title" />
+          </div>
+          <slot />
+          <div class="nav-layout-header-content">
+            <slot name="header-content" />
+          </div>
+        </el-header>
+        <el-main>
+          <router-view :key="routerViewKey" />
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
@@ -52,6 +68,7 @@
     @Prop({ type: String }) logoUrl;
     @Prop({ type: Boolean }) initCollapsed;
 
+    drawerMenuOpen = false;
     collapsed = false;
 
     created() {
