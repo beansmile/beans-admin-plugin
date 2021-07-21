@@ -6,14 +6,16 @@
   & > .page-content {
     box-sizing: border-box;
     flex: 1;
-    padding: 20px;
+    padding: 15px;
     overflow: auto;
     background: #fff;
   }
 
   & > .page-footer {
+    display: flex;
+    justify-content: flex-end;
     flex-shrink: 0;
-    padding: 15px 20px;
+    padding: 10px 15px;
     border-top: 1px solid $border-light;
   }
 
@@ -44,6 +46,21 @@
     .el-button, .button, button {
       margin-right: 15px;
       margin-bottom: 10px;
+    }
+  }
+
+  @media screen and (min-width: $lg) {
+    & > .page-content {
+      padding: 20px;
+    }
+
+    & > .page-footer {
+      padding: 15px 20px;
+      justify-content: unset;
+    }
+
+    .box-action-render {
+      justify-content: unset;
     }
   }
 }
@@ -102,6 +119,17 @@
     .el-form-show {
       .el-form-item {
         border-bottom: 1px solid $border-light;
+        margin: 0;
+        padding: 15px 0;
+
+        @media screen and (min-width: $lg) {
+          padding: 20px 0;
+        }
+
+        .el-form-item__label,
+        .el-form-item__content {
+          line-height: 16px;
+        }
       }
 
       .form-item-lang {

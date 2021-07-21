@@ -75,6 +75,7 @@
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid $border-light;
+    padding: 0 15px;
 
     .nav-layout-header-title {
       font-size: 14px;
@@ -85,6 +86,10 @@
     .btn-menu {
       font-size: 20px;
     }
+  }
+
+  .nav-layout-main {
+    padding: 0;
   }
 }
 
