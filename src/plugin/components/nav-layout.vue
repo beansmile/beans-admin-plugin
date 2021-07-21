@@ -1,18 +1,27 @@
 <template>
   <div class="admin-nav-layout">
     <el-drawer
-      title="导航"
       :visible.sync="drawerMenuOpen"
-      direction="ltr"
+      direction="rtl"
       modal-append-to-body
       size="200px"
       custom-class="admin-nav-layout-menu-drawer"
+      :with-header="false"
     >
-      <NavMenu disableCollapse :menus="menus" v-model="collapsed" v-bind="$attrs" />
+      <div class="menu-drawer-top">
+        <slot />
+        <slot name="header-content" />
+      </div>
+      <div class="menu-drawer-menu">
+        <NavMenu disableCollapse :menus="menus" v-bind="$attrs" @select="drawerMenuOpen = false" />
+      </div>
+      <div class="menu-drawer-footer" v-if="showLogout">
+        <el-button size="mini" @click="$emit('logout')">{{ $t('bean.actionLogout') }}</el-button>
+      </div>
     </el-drawer>
 
     <el-container>
-      <el-aside class="nav-layout-aside hidden-xs-only" width="auto">
+      <el-aside class="nav-layout-aside hidden-sm-and-down" width="auto">
         <div class="nav-layout-aside-box-logo" v-if="!collapsed">
           <router-link to="/">
             <img :src="logoUrl" class="logo" v-if="logoUrl" />
@@ -24,9 +33,16 @@
         </div>
       </el-aside>
       <el-container>
-        <el-header class="nav-layout-header">
-          <el-button type="default" size="mini" icon="el-icon-s-unfold" class="hidden-sm-and-up" @click="drawerMenuOpen = !drawerMenuOpen"></el-button>
+        <el-header height="40px" class="nav-layout-header-sm hidden-md-and-up">
+          <i v-if="showBack" class="el-icon-arrow-left btn-back" @click="$emit('back')"></i>
+          <span v-else></span>
+          <div class="nav-layout-header-title text-overflow">
+            <slot name="header-title" />
+          </div>
+          <i class="el-icon-more-outline btn-menu" @click="drawerMenuOpen = !drawerMenuOpen"></i>
+        </el-header>
 
+        <el-header class="nav-layout-header hidden-sm-and-down">
           <el-button
             v-if="showBack"
             class="nav-layout-header-btn-back"
@@ -43,6 +59,7 @@
           <div class="nav-layout-header-content">
             <slot name="header-content" />
           </div>
+          <el-button v-if="showLogout" @click="$emit('logout')">{{ $t('bean.actionLogout') }}</el-button>
         </el-header>
         <el-main>
           <router-view :key="routerViewKey" />
@@ -67,6 +84,7 @@
     @Prop({ type: Boolean }) showBack;
     @Prop({ type: String }) logoUrl;
     @Prop({ type: Boolean }) initCollapsed;
+    @Prop(Boolean) showLogout;
 
     drawerMenuOpen = false;
     collapsed = false;
