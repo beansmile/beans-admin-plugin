@@ -22,6 +22,7 @@ export default {
     actionChooseDirectory: 'Choose Folder',
     actionUploadAll: 'Upload All',
     actionRemoveAll: 'Remove All',
+    actionLogout: 'Log Out',
     deleteSuccess: 'Deletion succeeded',
     createSuccess: 'Created successfully',
     updateSuccess: 'Update succeeded',

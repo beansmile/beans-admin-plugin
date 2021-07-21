@@ -23,6 +23,7 @@ export default {
     actionChooseDirectory: '選擇文件夾',
     actionUploadAll: '全部上傳',
     actionRemoveAll: '全部移除',
+    actionLogout: '退出登錄',
     deleteSuccess: '刪除成功',
     createSuccess: '創建成功',
     updateSuccess: '更新成功',

@@ -96,6 +96,7 @@
             collapse={this.value}
             default-active={this.defaultActive}
             mode={this.mode}
+            on={this.$listeners}
           >
             { this.menus.map(this.renderItem)}
           </el-menu>

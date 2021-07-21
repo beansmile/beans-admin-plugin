@@ -23,6 +23,7 @@ export default {
     actionChooseDirectory: '选择文件夹',
     actionUploadAll: '全部上传',
     actionRemoveAll: '全部移除',
+    actionLogout: '退出登录',
     deleteSuccess: '删除成功',
     createSuccess: '创建成功',
     updateSuccess: '更新成功',
