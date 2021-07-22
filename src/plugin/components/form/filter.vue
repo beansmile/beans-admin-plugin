@@ -1,9 +1,8 @@
 <template>
   <AdminForm
-    inline
     :value="value"
     :columns="columns"
-    v-bind="$attrs"
+    v-bind="{ inline: true, ...$attrs }"
     @submit="handleFilter"
     @change="$emit('change', $event)"
   >

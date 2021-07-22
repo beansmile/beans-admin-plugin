@@ -9,6 +9,7 @@
 
 <script>
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
+import { screenService } from '../services';
 
 @Component
 export default class AdminPagination extends Vue {
@@ -17,7 +18,10 @@ export default class AdminPagination extends Vue {
   @Prop({ type: Number }) currentPage;
 
   pagesizes = [10, 25, 35, 50, 100]
-  layout = 'total, prev, pager, next, sizes, jumper'
+
+  get layout() {
+    return (screenService.isSm || screenService.isXs) ? 'total, prev, next' : 'total, prev, pager, next, sizes, jumper'
+  }
 
   @Emit('submit')
   onPageChange(currentPage) {
