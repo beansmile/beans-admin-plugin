@@ -77,8 +77,12 @@
     }
 
     & > .el-form {
-      width: 60%;
-      min-width: 800px;
+      width: 100%;
+
+      @media screen and (min-width: $--lg) {
+        width: 60%;
+        min-width: 800px;
+      }
     }
 
     .form-item-locale {
@@ -147,10 +151,10 @@
     .box-actions {
       display: flex;
       flex-wrap: wrap;
-      margin-bottom: 15px;
 
       .el-button {
         margin-right: 15px;
+        margin-bottom: 15px;
       }
     }
   }
