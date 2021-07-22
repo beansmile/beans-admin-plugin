@@ -20,3 +20,28 @@
 .el-image-viewer__wrapper .el-image-viewer__close {
   color: #fff;
 }
+
+.el-form--label-top .el-form-item__label {
+  padding-bottom: 0;
+}
+
+.el-message-box__wrapper, .el-loading-mask {
+  z-index: 20030 !important;
+}
+
+.el-message-box__wrapper {
+  .el-message-box {
+    max-width: 90%;
+  }
+}
+
+.el-dialog {
+  margin: 0 auto !important;
+  top: 50%;
+  transform: translateY(-50%);
+
+  @media screen and (max-width: $--sm) {
+    width: 95% !important;
+  }
+}
+
