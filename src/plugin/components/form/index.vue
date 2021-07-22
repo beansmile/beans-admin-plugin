@@ -2,6 +2,7 @@
 import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
 import Collapse from '../collapse';
+import { screenService } from '../../services';
 
 const COLLAPSED_CONTENT_CLASS = 'collapsed-content-class'
 
@@ -10,6 +11,14 @@ export default class AdminForm extends Vue {
   @Model('change', { type: Object, default: () => ({}) }) value;
   @Prop({ type: Array, default: () => [] }) columns;
   @Prop(Boolean) loading;
+
+  get labelProps() {
+    const isMobile = screenService.isXs || screenService.isSm;
+    return {
+      ...(isMobile ? { 'label-position': 'top' } : { 'label-position': 'left', 'label-width': 'auto' }),
+      ...this.$attrs
+    };
+  }
 
   get formColumns() {
     return this.columns.filter(item => item.renderCell);
@@ -213,7 +222,7 @@ export default class AdminForm extends Vue {
       <el-form
         class="admin-form"
         label-position="left"
-        props={{ ...this.$attrs, model: this.value }}
+        props={{ ...this.labelProps, ...this.$attrs, model: this.value }}
         nativeOnSubmit={this.handleSubmit}
       >
         {this.renderHeader()}

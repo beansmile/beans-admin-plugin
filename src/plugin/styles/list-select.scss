@@ -34,7 +34,7 @@
     justify-content: space-between;
     height: 36px;
     line-height: 36px;
-    background: #F5F7FA;
+    background: $--border-color-light;
     padding: 0 15px;
     border-bottom: 1px solid $--border-color-light;
     color: #000000;
@@ -65,6 +65,19 @@
       &:last-child {
         border-bottom: 0;
       }
+    }
+  }
+
+  @media screen and (max-width: $--sm) {
+    .panel-container {
+      flex-direction: column-reverse;
+    }
+
+    .box-panel {
+      flex: unset;
+      margin-right: 0;
+      margin-bottom: 15px;
+      height: 200px;
     }
   }
 }

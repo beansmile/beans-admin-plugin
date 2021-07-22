@@ -1,7 +1,6 @@
 <template>
   <div class="admin-list-select">
     <AdminForm
-      inline
       :columns="filterColumns"
       @submit="handleSearch"
       class="form-filter"
