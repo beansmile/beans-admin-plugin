@@ -12,12 +12,15 @@
       :table-props="tableProps"
       :action-column-props="actionColumnProps"
       :collapse-filter="collapseFilter"
+      :showFilterDrawer.sync="showFilterDrawer"
+      :renderFilterDrawer="renderFilterDrawer"
       ref="tablePage"
     >
       <template #after-filter>
         <div class="box-actions">
+          <el-button v-if="renderFilterDrawer" type="primary" icon="el-icon-s-operation" @click="showFilterDrawer = true">筛选</el-button>
           <AdminLink :to="{ name: `${resource}.new` }" v-if="actionButtons.includes('new')">
-            <el-button type="primary">{{ $t('bean.actionNew') }}</el-button>
+            <el-button icon="el-icon-plus" type="primary">{{ $t('bean.actionNew') }}</el-button>
           </AdminLink>
           <ColumnRender
             v-for="(batchAction, index) in sourcePageBatchAction"
@@ -74,6 +77,7 @@ import AdminLink from '../link';
 import ExportButton from '../export-button';
 import ImportButton from '../import-button';
 import ColumnRender from '../column-render';
+import { screenService } from '../../services';
 
 @Component({
   components: {
@@ -112,8 +116,13 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: Object }) actionColumnProps;
   @Prop(Boolean) collapseFilter;
 
+  showFilterDrawer = false;
   formLoading = false;
   state = {}
+
+  get renderFilterDrawer() {
+    return this.collapseFilter || screenService.isXs || screenService.isSm;
+  }
 
   get exportButtonProps() {
     return {

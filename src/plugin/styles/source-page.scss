@@ -125,6 +125,7 @@
         .el-form-item__label,
         .el-form-item__content {
           line-height: 16px;
+          word-break: break-all;
         }
       }
 
@@ -157,5 +158,17 @@
   .box-table {
     flex: 1;
     overflow: hidden;
+  }
+}
+
+.source-page-filter-drawer {
+  width: 100%;
+
+  .el-drawer__body {
+    padding: 0 15px;
+  }
+
+  @media screen and (min-width: $--lg) {
+    width: 450px;
   }
 }
