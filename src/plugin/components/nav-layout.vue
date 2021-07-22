@@ -16,7 +16,7 @@
         <NavMenu disableCollapse :menus="menus" v-bind="$attrs" @select="drawerMenuOpen = false" />
       </div>
       <div class="menu-drawer-footer" v-if="showLogout">
-        <el-button size="mini" @click="$emit('logout')">{{ $t('bean.actionLogout') }}</el-button>
+        <el-button @click="$emit('logout')">{{ $t('bean.actionLogout') }}</el-button>
       </div>
     </el-drawer>
 

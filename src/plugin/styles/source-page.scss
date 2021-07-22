@@ -16,7 +16,7 @@
     justify-content: flex-end;
     flex-shrink: 0;
     padding: 10px 15px;
-    border-top: 1px solid $border-light;
+    border-top: 1px solid $--border-color-light;
   }
 
   .multi-attachments {
@@ -49,7 +49,7 @@
     }
   }
 
-  @media screen and (min-width: $lg) {
+  @media screen and (min-width: $--lg) {
     & > .page-content {
       padding: 20px;
     }
@@ -68,11 +68,11 @@
 .source-page-form {
   & > .page-content {
     & > .locale-tip {
-      font-size: 16px;
+      font-size: $--font-size-base;
       margin-bottom: 30px;
 
       span {
-        color: $primary;
+        color: $--color-primary;
       }
     }
 
@@ -118,13 +118,9 @@
 
     .el-form-show {
       .el-form-item {
-        border-bottom: 1px solid $border-light;
+        border-bottom: 1px solid $--border-color-light;
         margin: 0;
         padding: 15px 0;
-
-        @media screen and (min-width: $lg) {
-          padding: 20px 0;
-        }
 
         .el-form-item__label,
         .el-form-item__content {

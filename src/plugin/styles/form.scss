@@ -1,10 +1,6 @@
 .admin-form {
-  .el-form-item .el-form-item {
-    margin-bottom: 22px;
-  }
-
   .form-item-hint {
-    font-size: 12px;
+    font-size: $--font-size-base;
     font-weight: normal;
     color: #b1b1b1;
     line-height: 1.4;

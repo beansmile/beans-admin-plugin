@@ -11,7 +11,7 @@
   .nav-layout-aside {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid $border-light;
+    border-right: 1px solid $--border-color-light;
 
     .nav-layout-aside-box-logo {
       display: flex;
@@ -38,13 +38,13 @@
 
   .nav-layout-header {
     flex-shrink: 0;
-    border-bottom: 1px solid $border-light;
+    border-bottom: 1px solid $--border-color-light;
     display: flex;
     align-items: center;
 
     .nav-layout-header-btn-back,
     .nav-layout-header-title {
-      font-size: 16px;
+      font-size: $--font-size-medium;
     }
 
     .nav-layout-header-btn-back:after {
@@ -53,7 +53,7 @@
       width: 1px;
       height: 14px;
       margin: 0 15px;
-      background: $border-light;
+      background: $--border-color-light;
       vertical-align: -1px;
     }
 
@@ -74,11 +74,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid $border-light;
+    border-bottom: 1px solid $--border-color-light;
     padding: 0 15px;
 
     .nav-layout-header-title {
-      font-size: 14px;
+      font-size: $--font-size-medium;
       max-width: 60%;
     }
 
@@ -116,12 +116,12 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      border-bottom: 1px solid $border-light;
+      border-bottom: 1px solid $--border-color-light;
     }
 
     .menu-drawer-footer {
       text-align: center;
-      border-top: 1px solid $border-light;
+      border-top: 1px solid $--border-color-light;
     }
   }
 }

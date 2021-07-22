@@ -9,7 +9,7 @@
           @change="handleGroupChange(index, $event)"
         >
           <template v-slot:header>
-            <el-button class="btn-delete" type="danger" size="small" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
+            <el-button class="btn-delete" type="danger" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
           </template>
           <template v-slot:action>
             <span />
@@ -17,7 +17,7 @@
         </AdminForm>
       </div>
     </template>
-    <el-button class="btn-add" type="primary" size="small" @click="handleAdd" icon="el-icon-plus" v-if="!limitOne">{{ addButtonTextI18n }}</el-button>
+    <el-button class="btn-add" type="primary" @click="handleAdd" icon="el-icon-plus" v-if="!limitOne">{{ addButtonTextI18n }}</el-button>
   </div>
 </template>
 

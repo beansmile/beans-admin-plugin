@@ -1,42 +1,25 @@
 .admin-table {
   &.el-table {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    .sort-caret {
+      &.ascending {
+        border-bottom-color: rgba($--border-color-light, .5);
+      }
 
-    .el-table__header-wrapper,
-    .el-table__fixed-header-wrapper {
-      flex-shrink: 0;
-
-      .caret-wrapper {
-        width: 15px;
-        height: 25px;
-
-        .ascending {
-          margin-top: -5px;
-        }
-
-        .descending {
-          margin-bottom: -5px;
-        }
+      &.descending {
+        border-top-color: rgba($--border-color-light, .5);
       }
     }
 
-    th + th {
-      border-left: 1px solid $border-light;
+    .ascending .sort-caret.ascending {
+      border-bottom-color: #fff;
     }
-
-    th, td {
-      padding: 8px 0;
-      font-size: 12px;
+    .descending .sort-caret.descending {
+      border-top-color: #fff;
     }
 
     tr th {
       color: #fff;
-      background-color: rgba($primary, 0.9);
-      padding: 4px 0;
+      background-color: rgba($--color-primary, 0.9);
     }
 
     .box-action-render {

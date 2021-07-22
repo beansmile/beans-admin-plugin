@@ -6,7 +6,6 @@
     :value="components"
   >
     <el-button
-      size="medium"
       v-for="(item, index) in components"
       :key="index"
       :icon="item.icon"

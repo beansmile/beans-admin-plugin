@@ -10,9 +10,9 @@
 
   .table {
     display: table;
-    border-top: 1px solid $border-light;
-    border-left: 1px solid $border-light;
-    border-bottom: 1px solid $border-light;
+    border-top: 1px solid $--border-color-light;
+    border-left: 1px solid $--border-color-light;
+    border-bottom: 1px solid $--border-color-light;
 
     .table-header,
     .table-row {
@@ -20,11 +20,11 @@
     }
 
     .table-row {
-      border-top: 1px solid $border-light;
+      border-top: 1px solid $--border-color-light;
     }
 
     .table-header {
-      font-size: 14px;
+      font-size: $--font-size-base;
       height: 40px;
       font-weight: bold;
     }
@@ -36,7 +36,7 @@
       width: 130px;
       margin-bottom: 0;
       padding: 15px;
-      border-right: 1px solid $border-light;
+      border-right: 1px solid $--border-color-light;
 
       .el-form-item__error {
         position: initial;

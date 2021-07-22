@@ -156,7 +156,7 @@ export const Button = {
       return null;
     }
     const buttonName = context.children || context.props.label || context.props.title;
-    return h('el-button', _.merge({}, { props: { size: 'mini' }, on: context.listeners }, context), buttonName);
+    return h('el-button', _.merge({}, { on: context.listeners }, context), buttonName);
   }
 }
 
@@ -166,7 +166,7 @@ export const RouteButton = {
     const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.link');
     return (
       <Link {...context}>
-        <el-button type="primary" size="mini" props={context.props}>{buttonName}</el-button>
+        <el-button type="primary" props={context.props}>{buttonName}</el-button>
       </Link>
     )
   }
@@ -188,7 +188,7 @@ export const ConfirmButton = {
         confirm-button-text={context.parent.$t('bean.actionConfirm')}
         cancel-button-text={context.parent.$t('bean.actionCancel')}
         scopedSlots={{
-          reference: () => <el-button type={buttonType} size="mini">{buttonName}</el-button>
+          reference: () => <el-button type={buttonType}>{buttonName}</el-button>
         }}
         props={context.props}
       >
@@ -214,7 +214,7 @@ export const DialogFormButton = {
         on={context.listeners}
         props={context.props}
       >
-        <el-button type="primary" size="mini">{buttonName}</el-button>
+        <el-button type="primary">{buttonName}</el-button>
       </DialogForm>
     )
   }

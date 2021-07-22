@@ -32,7 +32,7 @@
             <template v-slot:label>
               <div>
                 {{ property.text }}
-                <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
+                <el-button style="margin-left: 10px" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
               </div>
             </template>
             <el-select
@@ -51,11 +51,11 @@
                 :value="item.value"
                 :disabled="isPropertyValueDisabed(item.value)"
               >
-                <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
+                <el-button style="margin-right: 10px" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
                 <span>{{ item.text }}</span>
               </el-option>
             </el-select>
-            <el-button style="margin-left: 10px" size="mini" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
+            <el-button style="margin-left: 10px" icon="el-icon-plus" circle @click="handleAddPropertyValue(property.value, property.text)"></el-button>
           </el-form-item>
         </el-form>
 
