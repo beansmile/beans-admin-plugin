@@ -54,7 +54,7 @@
       </div>
     </div>
    <div class="component-footer">
-     <el-button size="medium" type="primary" @click="handleSave">{{ $t('bean.pageGenerator.save') }}</el-button>
+     <el-button type="primary" @click="handleSave">{{ $t('bean.pageGenerator.save') }}</el-button>
    </div>
   </div>
 </template>

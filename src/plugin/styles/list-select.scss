@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     height: 500px;
-    border: 1px solid $border-light;
+    border: 1px solid $--border-color-light;
     border-radius: 4px;
     overflow: hidden;
     margin-right: 15px;
@@ -36,7 +36,7 @@
     line-height: 36px;
     background: #F5F7FA;
     padding: 0 15px;
-    border-bottom: 1px solid $border-light;
+    border-bottom: 1px solid $--border-color-light;
     color: #000000;
     margin: 0;
   }
@@ -50,7 +50,7 @@
       align-items: center;
       padding: 4px 10px;
       color: #606266;
-      border-bottom: 1px solid $border-light;
+      border-bottom: 1px solid $--border-color-light;
 
       .item-label {
         flex: 1;

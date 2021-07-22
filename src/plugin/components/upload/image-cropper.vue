@@ -13,8 +13,8 @@
       </div>
     </div>
     <template #footer>
-      <el-button @click="handleReset" size="medium">{{ $t('bean.actionReset') }}</el-button>
-      <el-button type="primary" @click="handleSave" size="medium">{{ $t('bean.actionConfirm') }}</el-button>
+      <el-button @click="handleReset">{{ $t('bean.actionReset') }}</el-button>
+      <el-button type="primary" @click="handleSave">{{ $t('bean.actionConfirm') }}</el-button>
     </template>
   </el-dialog>
 </template>

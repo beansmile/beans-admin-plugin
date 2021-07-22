@@ -59,8 +59,8 @@
       </div>
     </div>
     <template #footer>
-      <el-button @click="handleCloseDialog" :disabled="loading" size="medium">{{ $t('bean.actionClose') }}</el-button>
-      <el-button type="primary" @click="handleSubmit" :disabled="loading" size="medium">{{ $t('bean.actionConfirm') }}</el-button>
+      <el-button @click="handleCloseDialog" :disabled="loading">{{ $t('bean.actionClose') }}</el-button>
+      <el-button type="primary" @click="handleSubmit" :disabled="loading">{{ $t('bean.actionConfirm') }}</el-button>
     </template>
   </el-dialog>
 </template>

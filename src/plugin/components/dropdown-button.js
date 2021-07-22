@@ -19,7 +19,7 @@ export default {
     if (buttonsHasPermission.length) {
       return (
         <el-dropdown trigger={trigger}>
-          <el-button size="mini" type="primary">{buttonName}<i class="el-icon-arrow-down el-icon--right" /></el-button>
+          <el-button type="primary">{buttonName}<i class="el-icon-arrow-down el-icon--right" /></el-button>
           <el-dropdown-menu slot="dropdown" class="admin-dropdown-button-menu">
             { buttonsHasPermission.map((item, index) =>
               <el-dropdown-item key={index}>

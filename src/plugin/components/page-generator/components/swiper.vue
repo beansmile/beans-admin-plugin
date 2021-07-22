@@ -192,8 +192,8 @@
                     renderCell: (h) => {
                       return (
                         <div>
-                          { !!items[index - 1] && <el-button h={h} size="mini" type="danger" onClick={() => this.handleSortItem(index, index - 1)}>{ this.$t('bean.pageGenerator.moveForward') }</el-button> }
-                          { !!items[index + 1]  && <el-button size="mini" type="warning" onClick={() => this.handleSortItem(index, index + 1)}>{ this.$t('bean.pageGenerator.moveBack') }</el-button> }
+                          { !!items[index - 1] && <el-button h={h} type="danger" onClick={() => this.handleSortItem(index, index - 1)}>{ this.$t('bean.pageGenerator.moveForward') }</el-button> }
+                          { !!items[index + 1]  && <el-button type="warning" onClick={() => this.handleSortItem(index, index + 1)}>{ this.$t('bean.pageGenerator.moveBack') }</el-button> }
                         </div>
                       )
                     }

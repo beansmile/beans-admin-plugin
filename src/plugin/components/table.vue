@@ -1,6 +1,7 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
+import { screenService } from '../services';
 
 @Component
 export default class AdminTable extends Vue {
@@ -21,8 +22,8 @@ export default class AdminTable extends Vue {
     return {
       prop: '_action',
       label: this.$t('bean.actionOperation'),
-      fixed: 'right',
-      'min-width': 200,
+      fixed: (screenService.isXs || screenService.isSm) ? undefined : 'right',
+      'min-width': 180,
       ...this.actionColumnProps,
       renderCell: (h, context) => {
         const scope = context.props.scope;
@@ -45,7 +46,7 @@ export default class AdminTable extends Vue {
           </div>
         );
       }
-    }
+    };
   }
 
   get tableColumns() {
@@ -95,7 +96,7 @@ export default class AdminTable extends Vue {
         height="100%"
         stripe
         highlight-current-row
-        size="small"
+        border
         props={this.$attrs}
         on={this.$listeners}
         scopedSlots={this.$slots}

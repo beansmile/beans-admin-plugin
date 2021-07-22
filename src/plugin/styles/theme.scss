@@ -1,7 +1,13 @@
-@import '~element-ui/lib/theme-chalk/display.css';
-@import './screen.scss';
-@import './color';
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+// 可覆盖的变量
+// element-ui/packages/theme-chalk/src/common/var.scss;
+
+@import '~element-ui/packages/theme-chalk/src/display';
+@import "~element-ui/packages/theme-chalk/src/index";
+
 @import './mixin';
+@import './flex.scss';
 @import './app';
 @import './element-ui';
 @import './table.scss';

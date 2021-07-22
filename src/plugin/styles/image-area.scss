@@ -13,8 +13,8 @@ $indicator-size: 6px;
     padding: 15px;
     flex: 1;
     overflow: hidden;
-    border-top: 1px solid $border-light;
-    border-bottom: 1px solid $border-light;
+    border-top: 1px solid $--border-color-light;
+    border-bottom: 1px solid $--border-color-light;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -33,7 +33,7 @@ $indicator-size: 6px;
     justify-content: center;
 
     .title {
-      font-size: 18px;
+      font-size: $--font-size-large;
       margin: 0;
     }
   }
@@ -94,7 +94,7 @@ $indicator-size: 6px;
     cursor: move;
 
     &.active {
-      border-color: $primary;
+      border-color: $--color-primary;
     }
   }
 
@@ -120,7 +120,7 @@ $indicator-size: 6px;
 
     .btn-edit {
       position: absolute;
-      background: $primary;
+      background: $--color-primary;
       padding: 3px 7px;
       color: #fff;
       top: 0;
@@ -128,7 +128,7 @@ $indicator-size: 6px;
       transform: translate(100%, $indicator-size / 2);
       cursor: pointer;
       z-index: 2;
-      font-size: 12px;
+      font-size: $--font-size-base;
       opacity: 0;
       transition: opacity .3s;
     }

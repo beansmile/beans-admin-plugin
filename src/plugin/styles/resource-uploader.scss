@@ -22,7 +22,7 @@
       .item-content {
         box-sizing: border-box;
         position: relative;
-        border: 1px solid $border-light;
+        border: 1px solid $--border-color-light;
         cursor: pointer;
 
         .resource-item {
@@ -59,7 +59,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 40px;
-        color: $primary;
+        color: $--color-primary;
         z-index: 3;
       }
 
