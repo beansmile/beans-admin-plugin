@@ -1,14 +1,15 @@
 <template>
   <div class="admin-import-block">
-    <el-tooltip :disabled="!excelTemplateDownloadLink" placement="top" effect="light">
-      <a slot="content" :href="encodeURI(excelTemplateDownloadLink)" style="text-decoration: underline;">
+    <el-button icon="el-icon-upload" type="primary" :loading="importing" @click="handleButtonClick">{{ buttonText }}</el-button>
+
+    <el-popover v-if="excelTemplateDownloadLink" trigger="hover">
+      <a download :href="encodeURI(excelTemplateDownloadLink)">
         {{ tooltipText || '下载模板' }}
       </a>
-      <div class="import-btn">
-        <el-button type="primary" :loading="importing">{{ buttonText }}</el-button>
-        <input type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
-      </div>
-    </el-tooltip>
+      <i class="el-icon-info btn-tip-trigger" slot="reference"></i>
+    </el-popover>
+
+    <input ref="fileInput" type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
   </div>
 </template>
 
@@ -61,6 +62,10 @@
         this.download(new Blob([result.data]), `${this.$t('bean.error_massage')}.xlsx`);
         throw new Error(this.$t('bean.importFail'));
       }
+    }
+
+    handleButtonClick() {
+      this.$refs.fileInput.click();
     }
 
     async handleFileChange(e) {

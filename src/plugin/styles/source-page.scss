@@ -152,7 +152,7 @@
       display: flex;
       flex-wrap: wrap;
 
-      .el-button {
+      & > * {
         margin-right: 15px;
         margin-bottom: 15px;
       }

@@ -1,0 +1,9 @@
+.admin-dropdown-button-menu {
+  padding-top: 8px;
+  .el-dropdown-menu__item {
+    & > * {
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+}
