@@ -1,7 +1,11 @@
+import { screenService } from '../../services';
+
 window.CKEDITOR_BASEPATH = process.env.BASE_URL + 'ckeditor/'
 
+const isMobile = screenService.isSm || screenService.isXs;
+
 export default function (config) {
-  config.height = 300
+  config.height = isMobile ? 200 : 300;
 
   // Define changes to default configuration here. For example:
   // config.language = 'fr'
@@ -40,8 +44,23 @@ export default function (config) {
 
   config.extraPlugins = 'html5video,widget,widgetselection,clipboard,lineutils,lineheight'
 
-  // Toolbar groups configuration.
-  config.toolbar = [
+  const toolbarMobile = [
+    {
+      name: 'paragraph',
+      groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+      items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']
+    },
+    { name: 'styles', items: ['Font', 'FontSize'] },
+    { name: 'colors', items: ['TextColor', 'BGColor'] },
+    {
+      name: 'basicstyles',
+      groups: ['basicstyles', 'cleanup'],
+      items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
+    },
+    { name: 'insert', items: ['Image', 'Html5video', 'Table'] }
+  ];
+
+  const toolbar = [
     { name: 'document', groups: ['mode', 'document', 'doctools'], items: ['Source'] },
     {
       name: 'clipboard',
@@ -67,6 +86,9 @@ export default function (config) {
       items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']
     }
   ]
+
+  // Toolbar groups configuration.
+  config.toolbar = isMobile ? toolbarMobile : toolbar;
 
   config.toolbar_mini = [
     {

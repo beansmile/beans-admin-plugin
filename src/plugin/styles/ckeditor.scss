@@ -1,3 +1,24 @@
 body .cke_screen_reader_only {
   position: fixed;
 }
+
+@media screen and (max-width: $--sm) {
+  .cke_dialog {
+    .cke_dialog_body {
+      a.cke_dialog_tab {
+        padding: 2px 0;
+        min-width: 80px;
+      }
+
+      .cke_dialog_tab_selected {
+        padding: 2px 0;
+        outline: none;
+      }
+
+      .ImagePreviewBox  {
+        width: 180px;
+      }
+    }
+  }
+
+}
