@@ -18,7 +18,7 @@
     >
       <template #after-filter>
         <div class="box-actions">
-          <el-button v-if="renderFilterDrawer" type="primary" icon="el-icon-s-operation" @click="showFilterDrawer = true">筛选</el-button>
+          <el-button v-if="renderFilterDrawer && sourcePageFilterColumns.length" type="primary" icon="el-icon-s-operation" @click="showFilterDrawer = true">筛选</el-button>
           <AdminLink :to="{ name: `${resource}.new` }" v-if="actionButtons.includes('new')">
             <el-button icon="el-icon-plus" type="primary">{{ $t('bean.actionNew') }}</el-button>
           </AdminLink>
@@ -121,7 +121,7 @@ export default class AdminSourcePage extends Vue {
   state = {}
 
   get renderFilterDrawer() {
-    return this.collapseFilter || screenService.isXs || screenService.isSm;
+    return this.collapseFilter || screenService.isMobile;
   }
 
   get exportButtonProps() {

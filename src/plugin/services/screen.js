@@ -13,6 +13,10 @@ class ScreenService {
     }, 500));
   }
 
+  get isMobile() {
+    return this.isXs || this.isSm;
+  }
+
   get innerWidth() {
     return this.state.innnerWidth;
   }

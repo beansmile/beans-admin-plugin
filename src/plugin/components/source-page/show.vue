@@ -1,7 +1,7 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
-import { abilityService } from '../../services';
+import { abilityService, screenService } from '../../services';
 
 @Component
 export default class AdminSourcePageShow extends Vue {
@@ -11,6 +11,10 @@ export default class AdminSourcePageShow extends Vue {
   @Prop({ type: Object }) value;
 
   activeTab = '0';
+
+  get defaultLabelWidth() {
+    return screenService.isMobile ? '80px' : '150px';
+  }
 
   get allActions() {
     if (_.isEmpty(this.value)) {
@@ -84,7 +88,7 @@ export default class AdminSourcePageShow extends Vue {
     const value = _.get(this.value, column.prop);
     const renderCell = column.renderCell || (() => <div>{value}</div>);
     return (
-      <el-form-item class={column.prop} label-width={column.labelWidth || '150px'} label={column.label} key={column.prop}>
+      <el-form-item class={column.prop} label-width={column.defaultLabelWidth || this.defaultLabelWidth} label={column.label} key={column.prop}>
         {
           _.isNil(value) ? <span>/</span> : (
             <ColumnRender
@@ -119,7 +123,7 @@ export default class AdminSourcePageShow extends Vue {
 
   renderColumnsContent(columns) {
     return (
-      <el-form class="el-form-show" label-width="150px" label-position="left" props={this.$attrs}>
+      <el-form class="el-form-show" label-width={this.defaultLabelWidth} label-position="left" props={this.$attrs}>
         {columns.map(this.renderCellDispatcher)}
       </el-form>
     )

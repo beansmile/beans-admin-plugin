@@ -22,7 +22,7 @@ export default class AdminTable extends Vue {
     return {
       prop: '_action',
       label: this.$t('bean.actionOperation'),
-      fixed: (screenService.isXs || screenService.isSm) ? undefined : 'right',
+      fixed: screenService.isMobile ? undefined : 'right',
       'min-width': 180,
       ...this.actionColumnProps,
       renderCell: (h, context) => {

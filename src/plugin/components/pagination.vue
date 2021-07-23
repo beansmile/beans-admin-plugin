@@ -20,7 +20,7 @@ export default class AdminPagination extends Vue {
   pagesizes = [10, 25, 35, 50, 100]
 
   get layout() {
-    return (screenService.isSm || screenService.isXs) ? 'total, prev, next' : 'total, prev, pager, next, sizes, jumper'
+    return screenService.isMobile ? 'total, prev, next' : 'total, prev, pager, next, sizes, jumper'
   }
 
   @Emit('submit')

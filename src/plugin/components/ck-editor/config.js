@@ -2,7 +2,7 @@ import { screenService } from '../../services';
 
 window.CKEDITOR_BASEPATH = process.env.BASE_URL + 'ckeditor/'
 
-const isMobile = screenService.isSm || screenService.isXs;
+const isMobile = screenService.isMobile;
 
 export default function (config) {
   config.height = isMobile ? 200 : 300;
