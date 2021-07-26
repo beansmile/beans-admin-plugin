@@ -4,11 +4,14 @@
       <div class="content">
         <slot />
       </div>
-      <el-button :icon="`el-icon-arrow-${collapsed ? 'down' : 'up'}`" circle @click="collapsed = !collapsed"></el-button>
+      <el-button v-if="(!$slots.trigger) && (!$scopedSlots.trigger)" :icon="`el-icon-arrow-${collapsed ? 'down' : 'up'}`" circle @click="collapsed = !collapsed"></el-button>
     </div>
     <div class="box-collapsed" :class="[collapsedContentClass]" v-show="!collapsed">
       <slot name="collapsed" />
     </div>
+    <span @click="collapsed = !collapsed">
+      <slot name="trigger" v-bind="{ collapsed }" />
+    </span>
   </div>
 </template>
 

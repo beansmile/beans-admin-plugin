@@ -13,7 +13,7 @@ export default class AdminForm extends Vue {
   @Prop(Boolean) loading;
 
   get labelProps() {
-    const isMobile = screenService.isXs || screenService.isSm;
+    const isMobile = screenService.isMobile;
     return {
       ...(isMobile ? { 'label-position': 'top' } : { 'label-position': 'left', 'label-width': 'auto' }),
       ...this.$attrs
@@ -58,11 +58,15 @@ export default class AdminForm extends Vue {
       if (this.locales.length) {
         return (
           <el-form-item label={column.label}>
-            <Collapse class="form-item-locale" collapsedContentClass={COLLAPSED_CONTENT_CLASS}>
+            <Collapse
+              class="form-item-locale"
+              collapsedContentClass={COLLAPSED_CONTENT_CLASS}
+              scopedSlots={{
+                trigger: ({ collapsed }) => <el-button size="mini" icon={`el-icon-arrow-${collapsed ? 'down' : 'up'}`} circle />,
+                collapsed: () => this.locales.slice(1).map(render)
+              }}
+            >
               {render(this.locales[0])}
-              <div slot="collapsed">
-                {this.locales.slice(1).map(render)}
-              </div>
             </Collapse>
           </el-form-item>
         );
