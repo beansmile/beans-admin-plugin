@@ -48,3 +48,15 @@
 [class^="el-icon-"] {
   outline: none;
 }
+
+
+.el-message {
+  .el-message__content {
+    word-break: break-all;
+  }
+
+  @media screen and (max-width: $--sm) {
+    max-width: 98%;
+    min-width: 90%;
+  }
+}
