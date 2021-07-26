@@ -3,9 +3,6 @@ import _ from 'lodash';
 
 class ScreenService {
   state = Vue.observable({ innnerWidth: window.innerWidth });
-  xs = 768;
-  md = 992;
-  lg = 1200;
 
   constructor() {
     window.addEventListener('resize', _.debounce(() => {
@@ -13,8 +10,18 @@ class ScreenService {
     }, 500));
   }
 
+  get breakPoint() {
+    return {
+      sm: 768,
+      md: 992,
+      lg: 1200,
+      xl: 1920,
+      ...Vue.vadminConfig.screen
+    }
+  }
+
   get isMobile() {
-    return this.isXs || this.isSm;
+    return this.isXs;
   }
 
   get innerWidth() {
@@ -22,19 +29,19 @@ class ScreenService {
   }
 
   get isXs() {
-    return this.innerWidth < this.xs;
+    return this.innerWidth < this.breakPoint.sm;
   }
 
   get isSm() {
-    return this.innnerWidth >= this.xs && this.innnerWidth < this.md;
+    return this.innerWidth >= this.breakPoint.sm && innerWidth < this.breakPoint.md;
   }
 
   get isMd() {
-    return this.innnerWidth >= this.md && innerWidth < this.lg;
+    return this.innerWidth >= this.breakPoint.md && innerWidth < this.breakPoint.lg;
   }
 
   get isLg() {
-    return this.innnerWidth >= this.lg;
+    return this.innerWidth >= this.breakPoint.lg;
   }
 }
 
