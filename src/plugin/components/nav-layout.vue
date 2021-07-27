@@ -4,7 +4,7 @@
       :visible.sync="drawerMenuOpen"
       direction="rtl"
       modal-append-to-body
-      size="200px"
+      size="230px"
       custom-class="admin-nav-layout-menu-drawer"
       :with-header="false"
     >
