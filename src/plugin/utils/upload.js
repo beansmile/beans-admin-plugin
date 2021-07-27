@@ -3,6 +3,7 @@ import SparkMD5 from 'spark-md5'
 import request from './request';
 import { randomFileName } from './random';
 import Vue from 'vue';
+import _ from 'lodash';
 
 const fileSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
 
@@ -68,7 +69,7 @@ function createChecksum(file) {
   });
 }
 
-export async function uploadFile(file, { tags, dirPath, ...props } = {}) {
+export async function uploadFile(file, { tags, dirPath, ...props } = {}, { onProgress = _.noop } = {}) {
   const body = {
     filename: file.name || randomFileName(''),
     content_type: file.type || 'application/octet-stream',
@@ -80,12 +81,15 @@ export async function uploadFile(file, { tags, dirPath, ...props } = {}) {
   const { directUploadURL, customUpload } = uploadConfig;
 
   if (customUpload) {
-    return customUpload(file, { ...body, dirPath, ...props });
+    return customUpload(file, { ...body, dirPath, ...props }, { onProgress });
   }
 
   const result = await request.post(directUploadURL, body);
   // 1小时超时
-  await request.put(result.direct_upload.url, file.slice(), { headers: result.direct_upload.headers, timeout: 1 * 60 * 60 * 1000 });
+  const uploadTask = request.put(result.direct_upload.url, file.slice(), { headers: result.direct_upload.headers, timeout: 1 * 60 * 60 * 1000 });
+  // 处理进度
+  uploadTask.engine.upload.onprogress = ({ total, loaded }) => onProgress(Math.floor(loaded / total * 100));
+  await uploadTask;
 
   return {
     ...result,
