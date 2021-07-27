@@ -2,7 +2,6 @@ import Vue from 'vue'
 import _ from 'lodash'
 import qs from 'qs'
 import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 import { loadingService } from '../../services'
 import decoder from '../decoder'
 
