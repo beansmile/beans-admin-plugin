@@ -9,6 +9,7 @@ body {
   padding: 0;
   font-size: $--font-size-base;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  line-height: 1.4;
 }
 
 a {
@@ -27,17 +28,6 @@ a {
     height: auto !important;
     vertical-align: top;
   }
-}
-
-
-#app {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  height: 100vh;
-  overflow: auto;
-  line-height: 1.4;
-  display: flex;
 }
 
 .text-overflow {

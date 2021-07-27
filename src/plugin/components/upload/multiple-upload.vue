@@ -10,12 +10,13 @@
     @close="$emit('change', false)"
     @closed="$emit('closed')"
   >
-    <div class="admin-multiple-upload" v-loading="loading">
+    <div class="admin-multiple-upload">
       <AdminForm
         v-if="formColumns.length"
         v-model="uploadForm"
         :columns="formColumns"
         inline
+        :disabled="loading"
       >
         <template #action>
         </template>
@@ -41,10 +42,10 @@
       >
 
       <el-row class="btn-group">
-        <el-button type="primary" icon="el-icon-plus" :disabled="tableData.length >= limit" @click="handleUploadBtnClick">{{ $t('bean.actionChooseFile') }}</el-button>
-        <el-button v-if="directory" type="primary" icon="el-icon-plus" :disabled="tableData.length >= limit" @click="handleUploadDirectoryBtnClick">{{ $t('bean.actionChooseDirectory') }}</el-button>
-        <el-button type="warning" @click="handleUploadAll" :disabled="!needUploadData.length">{{ $t('bean.actionUploadAll') }}</el-button>
-        <el-button type="danger" @click="handleDeleteAll" :disabled="!tableData.length">{{ $t('bean.actionRemoveAll') }}</el-button>
+        <el-button type="primary" icon="el-icon-plus" :disabled="loading || (tableData.length >= limit)" @click="handleUploadBtnClick">{{ $t('bean.actionChooseFile') }}</el-button>
+        <el-button v-if="directory" type="primary" icon="el-icon-plus" :disabled="loading || (tableData.length >= limit)" @click="handleUploadDirectoryBtnClick">{{ $t('bean.actionChooseDirectory') }}</el-button>
+        <el-button type="warning" @click="handleUploadAll" :loading="loading" :disabled="loading || (!needUploadData.length)">{{ $t('bean.actionUploadAll') }}</el-button>
+        <el-button type="danger" @click="handleDeleteAll" :disabled="loading || (!tableData.length)">{{ $t('bean.actionRemoveAll') }}</el-button>
       </el-row>
 
       <el-alert show-icon type="warning" :title="uploadHint" :closable="false"></el-alert>
@@ -60,7 +61,7 @@
     </div>
     <template #footer>
       <el-button @click="handleCloseDialog" :disabled="loading">{{ $t('bean.actionClose') }}</el-button>
-      <el-button type="primary" @click="handleSubmit" :disabled="loading">{{ $t('bean.actionConfirm') }}</el-button>
+      <el-button type="primary" @click="handleSubmit" :loading="loading" :disabled="loading">{{ $t('bean.actionConfirm') }}</el-button>
     </template>
   </el-dialog>
 </template>
@@ -169,7 +170,17 @@ export default class MultipleUploadDialog extends Vue {
         prop: 'result.url',
         width: 120,
         label: this.$t('bean.uploadSuccess'),
-        renderCell: 'bool'
+        renderCell: (h, { props: { value, scope: { row } } }) => {
+          if (_.has(row, 'progress')) {
+            return <el-progress text-inside stroke-width={20} percentage={row.progress || 0}></el-progress>
+          }
+          const map = {
+            true: { type: 'success', name: this.$t('bean.yes') },
+            false: { type: 'danger', name: this.$t('bean.no') }
+          }
+          const bool = Boolean(value);
+          return <el-tag type={map[bool].type}>{map[bool].name}</el-tag>
+        }
       }
     ];
   }
@@ -211,8 +222,8 @@ export default class MultipleUploadDialog extends Vue {
 
   actions({ $index, row }) {
     return [
-      h => <ImageCropperAction h={h} file={row.file} disabled={row.cropped} cropper={this.cropper} onSuccess={(e) => this.handleCropSuccess(e, $index)} />,
-      (h) => <el-button h={h} type="danger" onClick={() => this.tableData.splice($index, 1)}>移除</el-button>
+      h => <ImageCropperAction h={h} file={row.file} disabled={row.uploading || row.cropped} cropper={this.cropper} onSuccess={(e) => this.handleCropSuccess(e, $index)} />,
+      (h) => <el-button h={h} disabled={row.uploading} type="danger" onClick={() => this.tableData.splice($index, 1)}>移除</el-button>
     ].filter(Boolean);
   }
 
@@ -262,9 +273,15 @@ export default class MultipleUploadDialog extends Vue {
   }
 
   async handleUpload(row, index) {
-    const result = await uploadFile(row.file, { ...this.$attrs, ...this.uploadForm });
-    this.$set(this.tableData[index], 'result', result);
-    return result;
+    this.$set(this.tableData[index], 'uploading', true);
+    try {
+      const updateUploadProgress = pct => this.$set(this.tableData[index], 'progress', pct);
+      const result = await uploadFile(row.file, { ...this.$attrs, ...this.uploadForm }, { onProgress: updateUploadProgress });
+      this.$set(this.tableData[index], 'result', result);
+      return result;
+    } finally {
+      this.$set(this.tableData[index], 'uploading', false);
+    }
   }
 
   async handleUploadAll() {

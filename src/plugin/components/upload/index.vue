@@ -8,7 +8,18 @@
       :accept="accept"
       @change="handleFileChange"
     />
-    <el-button type="primary" icon="el-icon-upload" @click="handleUploadBtnClick" :disabled="disabled" :loading="loading">{{ uploadButtonTextI18n }}</el-button>
+    <el-button
+      type="primary"
+      icon="el-icon-upload"
+      @click="handleUploadBtnClick"
+      :disabled="disabled"
+      :loading="loading"
+    >
+      {{ uploadButtonTextI18n }}
+      <template v-if="loading">
+        ({{ uploadProgressPct }}%)
+      </template>
+    </el-button>
     <MultipleUpload
       v-if="renderMultipleUploadDialog && limit > 1"
       v-model="showMultipleUploadDialog"
@@ -54,6 +65,7 @@ export default class AdminUpload extends Vue {
   showCroppper = false;
   cropperImageURL = '';
   loading = false;
+  uploadProgressPct = 0; // 上传进度(百分比)
 
   get uploadButtonTextI18n() {
     return this.uploadButtonText || this.$t('bean.actionUpload');
@@ -88,8 +100,9 @@ export default class AdminUpload extends Vue {
   async handleUpload(blob, tags) {
     this.loading = true;
     try {
+      const updateUploadProgress = pct => this.uploadProgressPct = pct;
       const [uploadRes, imageInfo] = await Promise.all([
-        uploadFile(blob, { ...this.$attrs, tags }),
+        uploadFile(blob, { ...this.$attrs, tags }, { onProgress: updateUploadProgress }),
         isImageFile(blob) ? getImageInfo(blob) : {}
       ]);
       return {
