@@ -41,7 +41,7 @@
   @Component
   export default class AdminResourceRender extends Vue {
     @Prop([Object, String]) value;
-    @Prop(String) type;
+    @Prop({ type: [Array, String] }) type;
     @Prop(String) filename;
     @Prop(String) url;
     @Prop(Object) imageProps;
@@ -50,6 +50,9 @@
     @Prop({ type: Boolean, default: true }) showFilename;
 
     get resourceType() {
+      if (_.isArray(this.type)) {
+        return _.get(this.value, 'content_type') || '';
+      }
       return this.type || _.get(this.value, 'content_type') || '';
     }
 
