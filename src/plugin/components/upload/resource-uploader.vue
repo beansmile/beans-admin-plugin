@@ -86,7 +86,7 @@
   })
   export default class AdminResourceUploader extends Vue {
     @Model('change', { type: Boolean }) value;
-    @Prop({ type: String, default: 'image' }) type;
+    @Prop({ type: [Array, String], default: 'image' }) type;
     @Prop({ type: Number, default: 1 }) limit;
 
     loading = false;
@@ -168,7 +168,12 @@
       this.loading = true;
       try {
         const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobURL');
-        const params = { content_type_cont: this.type, per_page: 14, page: this.pagination['current-page'], ...this.filterForm }
+        const params = { per_page: 14, page: this.pagination['current-page'], ...this.filterForm }
+        if (_.isArray(this.type)) {
+          params.main_content_type_in = this.type;
+        } else {
+          params.content_type_cont = this.type;
+        }
         const fetchResource = _.get(this, '$vadminConfig.upload.onFetchResourceBlob') || (() => this.$request.get(requestURL, { params }));
         const { data, pagination } = await fetchResource(params);
         this.data = data;

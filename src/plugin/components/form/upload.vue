@@ -78,7 +78,7 @@ export default class AdminFormUpload extends Vue {
   @Prop({ type: Number, default: 3 }) size; // 单位M
   @Prop({ type: String, default: 'signed_id' }) trackedBy;
   @Prop({ type: String }) uploadButtonText;
-  @Prop({ type: String, default: 'image' }) type; // 资源类型
+  @Prop({ type: [Array, String], default: 'image' }) type; // 资源类型
   @Prop(Boolean) disableResourceUploader;
 
   disalogVisible = false;
