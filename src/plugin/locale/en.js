@@ -106,6 +106,7 @@ export default {
       externalMiniprogramPage: 'Other Miniprogram page',
       webviewPage: 'WebView page',
       selectPage: 'Select Page',
+      selectComponent: 'Select Component',
       webviewLink: 'Webview address',
       externalMiniprogramPageAppid: 'Appid of navigation miniprogram',
       externalMiniprogramPagePath: 'Page path of navigation miniprogram',

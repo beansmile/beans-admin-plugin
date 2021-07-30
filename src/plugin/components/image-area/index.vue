@@ -63,7 +63,7 @@
   import { Vue, Component, Prop, Model, Watch, Emit } from 'vue-property-decorator';
   import _ from 'lodash';
   import AdminForm from '../form';
-  import PageGenEvent from '../page-generator/controller/event';
+  import PageGenEvent from '../page-creator/event';
   import EventForm from '../event-form';
   import Area from './area';
   import { sleep } from '../../utils';

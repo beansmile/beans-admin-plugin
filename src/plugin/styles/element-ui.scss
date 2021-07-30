@@ -41,7 +41,9 @@
   transform: translateY(-50%);
 
   @media screen and (max-width: $--sm) {
-    width: 95% !important;
+    &:not(.is-fullscreen) {
+      width: 95% !important;
+    }
   }
 }
 
