@@ -4,7 +4,7 @@
       <h3 class="title">{{ $t('bean.pageGenerator.imageHotArea') }}</h3>
     </div>
     <div class="component-body">
-      <div class="panel panel-canvas" :style="{ width: form.containerWidth + 'px' }" v-loading="loading" v-if="form.image">
+      <div class="panel panel-canvas" :style="panelCanvasStyle" v-loading="loading" v-if="form.image">
         <img :src="form.image" class="preview-img" @load="handleImageLoaded" @error="handleImageLoadError">
         <div class="main">
           <div class="action-map-container" ref="main" @mousedown="handleMouseDown">
@@ -42,12 +42,13 @@
               :value="item.event"
               @change="handleEventChange($event, index)"
             />
-            <div>
-              <el-tag>{{ $t('bean.pageGenerator.zIndex') }}: {{ item.zIndex }}</el-tag>
-              <br>
-              <p>{{ $t('bean.pageGenerator.zIndexBigOneOnTop') }}</p>
-            </div>
-            <el-button type="danger" @click="handleDelete(index)">{{ $t('bean.actionDelete') }}</el-button>
+            <el-form label-width="80px">
+              <el-form-item :label="$t('bean.pageGenerator.zIndex')">
+                <el-input-number :min="1" :value="item.zIndex" v-model="form.areas[index].zIndex"></el-input-number>
+                <div>{{ $t('bean.pageGenerator.zIndexBigOneOnTop') }}</div>
+              </el-form-item>
+            </el-form>
+            <el-button icon="el-icon-delete" type="danger" @click="handleDelete(index)">{{ $t('bean.actionDelete') }}</el-button>
           </el-collapse-item>
         </el-collapse>
 
@@ -88,10 +89,10 @@
     @Prop({ type: Boolean, default: true }) usePageGeneratorEvent;
 
     form = _.cloneDeep(defaultValue);
-
     activeIndex = -1;
     loading = false;
     containerRect = {};
+    panelCanvasStyle = {};
 
     get formColumns() {
       return [
@@ -109,15 +110,33 @@
     }
 
     async handleImageLoaded(e) {
+      this.loading = true;
       const { height } = e.target;
       // 等渲染完
-      await sleep(400);
+      await sleep(500);
       this.containerRect = this.$refs.main.getBoundingClientRect();
       const { width: containerW, height: containerH } = this.containerRect;
       if (height > containerH) {
         const w = Math.ceil(containerH / height * containerW);
-        this.form.containerWidth = w;
-        await sleep(400);
+        this.form = {
+          ...this.form,
+          containerWidth: w,
+          // 计算新容器宽度下的位置
+          areas: (this.form.areas || []).map(item => {
+            const ratio = w / this.form.containerWidth;
+            return {
+              ...item,
+              width: ratio * item.width,
+              height: ratio * item.height,
+              left: ratio * item.left,
+              top: ratio * item.top
+            }
+          })
+        };
+        this.panelCanvasStyle = {
+          width: w + 'px'
+        };
+        await sleep(500);
         this.containerRect = this.$refs.main.getBoundingClientRect();
       }
       this.loading = false;
