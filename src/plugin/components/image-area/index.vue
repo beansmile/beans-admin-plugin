@@ -110,35 +110,42 @@
     }
 
     async handleImageLoaded(e) {
+      // 先重置掉之前计算好的容器宽度样式
+      this.panelCanvasStyle = {};
+      await this.$nextTick();
+
       this.loading = true;
       const { height } = e.target;
       // 等渲染完
       await sleep(500);
       this.containerRect = this.$refs.main.getBoundingClientRect();
-      const { width: containerW, height: containerH } = this.containerRect;
+      const { width, height: containerH } = this.containerRect;
+      // 当前图片容器宽
+      let containerWidth = width;
       if (height > containerH) {
-        const w = Math.ceil(containerH / height * containerW);
-        this.form = {
-          ...this.form,
-          containerWidth: w,
-          // 计算新容器宽度下的位置
-          areas: (this.form.areas || []).map(item => {
-            const ratio = w / this.form.containerWidth;
-            return {
-              ...item,
-              width: ratio * item.width,
-              height: ratio * item.height,
-              left: ratio * item.left,
-              top: ratio * item.top
-            }
-          })
-        };
-        this.panelCanvasStyle = {
-          width: w + 'px'
-        };
-        await sleep(500);
-        this.containerRect = this.$refs.main.getBoundingClientRect();
+        // 修正图片容器宽
+        containerWidth = Math.ceil(containerH / height * containerWidth);
       }
+      this.form = {
+        ...this.form,
+        containerWidth: containerWidth,
+        // 计算新容器宽度下的位置
+        areas: (this.form.areas || []).map(item => {
+          const ratio = containerWidth / this.form.containerWidth;
+          return {
+            ...item,
+            width: ratio * item.width,
+            height: ratio * item.height,
+            left: ratio * item.left,
+            top: ratio * item.top
+          }
+        })
+      };
+      this.panelCanvasStyle = {
+        width: containerWidth + 'px'
+      };
+      await sleep(500);
+      this.containerRect = this.$refs.main.getBoundingClientRect();
       this.loading = false;
     }
 
