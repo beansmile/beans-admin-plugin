@@ -19,7 +19,7 @@
   import { uploadFile } from '../utils/upload';
 
   @Component
-  export default class ExportButton extends Vue {
+  export default class ImportButton extends Vue {
     @Prop({ type: String }) buttonText;
     @Prop(String) excelTemplateDownloadLink;
     @Prop(String) tooltipText;
@@ -30,6 +30,8 @@
     @Prop(Function) customUpload;
     @Prop({ type: Boolean, default: false }) useGlobalUpload; // 使用全局的upload
     @Prop({ type: Object }) globalUploadProps;
+    @Prop({ type: String, default: 'file_message' }) fileName
+    @Prop(Function) onUploadError // 自定义错误方法
 
     importing = false;
 
@@ -45,7 +47,7 @@
 
     async upload(file) {
       const form = new FormData();
-      form.append('file_message', file);
+      form.append(this.fileName, file);
       const requestConfig = {
         headers: { 'Content-Type': 'multipart/form-data' },
         responseType: 'blob',
@@ -88,8 +90,12 @@
         }
         this.$message.success(this.$t('bean.importSuccess'));
       } catch (e) {
-        const msg = e.message || this.$t('bean.importFail');
-        this.$message.error(msg);
+        if (this.onUploadError) {
+          this.onUploadError(e);
+        } else {
+          const msg = e.message || this.$t('bean.importFail');
+          this.$message.error(msg);
+        }
       } finally {
         this.importing = false;
         if (toastInstance) {
