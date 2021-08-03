@@ -1,5 +1,9 @@
 <template>
-  <div>beans-admin-plugin</div>
+  <div>
+    首页
+    <!-- <bean-link keepNode :to="{ name: 'tests.index' }">跳转到测试页</bean-link> -->
+    <!-- {{ $t('home.title') }} -->
+  </div>
 </template>
 
 <script>
@@ -7,7 +11,5 @@
 
   @Component
   export default class Home extends Vue {
-
-
   }
 </script>

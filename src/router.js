@@ -10,9 +10,19 @@ export const routes = [
     redirect: '/home'
   },
   {
-    path: '/home',
-    name: 'home',
-    component: require('./views/home').default
+    path: '',
+    component: require('@/layout').default,
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        meta: {
+          can: []
+        },
+        component: require('@/views/home').default,
+      },
+      ...require('@/views/tests').route
+    ]
   }
 ]
 

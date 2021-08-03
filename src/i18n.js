@@ -11,9 +11,20 @@ Vue.use(VueI18n);
 const messages = {};
 
 export const i18n = new VueI18n({
-  locale: 'zh_cn',
+  locale: localStorage.getItem('demo-locale-key'),
   fallbackLocale: 'zh_cn',
-  messages: _.merge({}, {
+  messages: _.merge({
+    zh_cn: {
+      home: {
+        title: '标题'
+      }
+    },
+    en: {
+      home: {
+        title: 'Title'
+      }
+    }
+  }, {
     zh_cn: locale['zh-CN'],
     en: locale.en
   }, {

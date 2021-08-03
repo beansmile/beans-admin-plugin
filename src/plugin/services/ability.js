@@ -1,8 +1,9 @@
+import Vue from 'vue';
 import _ from 'lodash';
 
 class AbilityService {
-  $rules = null; // 转换后的 rules
   _rules = null; // 原 rules
+  state = Vue.observable({ $rules: null }); // 转换后的 rules
 
   /**
    * @param  {Object} rules { resource: ['create', 'read', 'update', 'delete'] }
@@ -32,7 +33,7 @@ class AbilityService {
       return newRules
     }
 
-    this.$rules = transformRules(value)
+    this.state.$rules = transformRules(value)
   }
 
   get rules() {
@@ -40,7 +41,7 @@ class AbilityService {
   }
 
   check(rule) {
-    return _.get(this.$rules, rule, false)
+    return _.get(this.state.$rules, rule, false)
   }
 
   // admin_users.index
@@ -58,7 +59,7 @@ class AbilityService {
 
   // admin_users.read || [admin_users.read]
   can(rules) {
-    if (!this.$rules) {
+    if (!this.state.$rules) {
       return true;
     }
     return _.flatten([rules]).filter(Boolean).every(rule => this.check(rule));
