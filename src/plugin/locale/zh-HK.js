@@ -107,6 +107,7 @@ export default {
       externalMiniprogramPage: '其他小程式頁面',
       webviewPage: 'webview頁面',
       selectPage: '選擇頁面',
+      selectComponent: '選擇组件',
       webviewLink: 'wenbview地址',
       externalMiniprogramPageAppid: '跳轉小程式的appid',
       externalMiniprogramPagePath: '跳轉小程式的頁面路徑',

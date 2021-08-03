@@ -132,6 +132,10 @@ export function install(Vue, config = {}) {
     {
       name: 'image-area',
       component: require('./image-area').default
+    },
+    {
+      name: 'page-creator',
+      component: require('./page-creator').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
