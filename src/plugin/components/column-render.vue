@@ -1,6 +1,7 @@
 <script>
 import Moment from './moment';
 import _ from 'lodash';
+import { isMobile } from '../utils';
 import NestForm from './form/nest';
 import StaticNestForm from './form/static-nest';
 import FormSelect from './form/select';
@@ -73,14 +74,16 @@ const DatePicker = {
     const handleInput = function(val) {
       triggerEvent(change, val);
     }
-    return <el-date-picker {...context} onInput={handleInput} />
+    // 移动端默认editable false
+    const data = { ...context.data, props: { editable: !isMobile, ...context.data.props }, on: { ..._.omit(context.data.on, 'input'), input: handleInput } };
+    return h('el-date-picker', data, context.children);
   }
 }
 
 const DateTimePicker = {
   functional: true,
   render(h, context) {
-    const data = _.merge({}, context.data, { props: { type: 'datetime' } });
+    const data = _.merge({}, { props: { type: 'datetime' } }, context.data);
     return h(DatePicker, data, context.children);
   }
 }
