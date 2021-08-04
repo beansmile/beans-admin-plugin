@@ -2,6 +2,8 @@
 import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import _ from 'lodash';
 
+// TODO: IOS下select组件有很多问题
+
 @Component
 export default class Select extends Vue {
   @Prop(Function) xRemoteSearch;

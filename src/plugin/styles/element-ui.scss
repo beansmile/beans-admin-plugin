@@ -47,10 +47,9 @@
   }
 }
 
-[class^="el-icon-"] {
+[class^="el-icon-"], [class*=" el-icon-"] {
   outline: none;
 }
-
 
 .el-message {
   .el-message__content {
@@ -60,5 +59,12 @@
   @media screen and (max-width: $--sm) {
     max-width: 98%;
     min-width: 90%;
+  }
+}
+
+// https://github.com/ElemeFE/element/issues/17716#issuecomment-544416498
+.el-scrollbar {
+  > .el-scrollbar__bar {
+      opacity: 1 !important;
   }
 }
