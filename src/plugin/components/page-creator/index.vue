@@ -79,20 +79,22 @@
             @change="handleDragChange"
           >
             <section class="section-component" :class="{ active: item.key === activeComponentKey }" v-for="item in renderComponents.common" :key="item.key">
-              <div class="component-toolbar">
-                <span class="component-title">{{ item.title }}</span>
-                <el-button class="btn-ctrl" size="mini" icon="el-icon-arrow-up" circle :disabled="getPrePosition(item._index) === -1" @click="handleMoveUp(item._index)"></el-button>
-                <el-button class="btn-ctrl" size="mini" icon="el-icon-arrow-down" circle :disabled="getNextPosition(item._index) === -1" @click="handleMoveDown(item._index)"></el-button>
-                <el-button class="btn-ctrl" size="mini" icon="el-icon-edit" type="primary" circle @click="handleShowComponentController(item)"></el-button>
-                <el-button class="btn-ctrl" size="mini" icon="el-icon-delete" type="danger" circle @click="handleDelete(item)"></el-button>
-              </div>
-              <Animation :type="$get(item.config, 'animation.type', '')">
-                <component
-                  :is="componentsKeyByName[item.name].component"
-                  :value="item.config"
-                  @change="handleComponentChange(item.key, $event)"
-                />
-              </Animation>
+              <template v-if="$get(componentsKeyByName, `${item.name}.component`)">
+                <div class="component-toolbar">
+                  <span class="component-title">{{ componentsKeyByName[item.name].title }}</span>
+                  <el-button class="btn-ctrl" size="mini" icon="el-icon-arrow-up" circle :disabled="getPrePosition(item._index) === -1" @click="handleMoveUp(item._index)"></el-button>
+                  <el-button class="btn-ctrl" size="mini" icon="el-icon-arrow-down" circle :disabled="getNextPosition(item._index) === -1" @click="handleMoveDown(item._index)"></el-button>
+                  <el-button class="btn-ctrl" size="mini" icon="el-icon-edit" type="primary" :disabled="!$get(componentsKeyByName, `${item.name}.controller`)" circle @click="handleShowComponentController(item)"></el-button>
+                  <el-button class="btn-ctrl" size="mini" icon="el-icon-delete" type="danger" circle @click="handleDelete(item)"></el-button>
+                </div>
+                <Animation :type="$get(item.config, 'animation.type', '')">
+                  <component
+                    :is="componentsKeyByName[item.name].component"
+                    :value="item.config"
+                    @change="handleComponentChange(item.key, $event)"
+                  />
+                </Animation>
+              </template>
             </section>
           </component>
         </Page>
@@ -112,6 +114,7 @@
         >
           <div v-if="activeComponent" :key="activeComponent.key" style="height: 100%">
             <component
+              v-if="$get(componentsKeyByName, `${activeComponent.name}.controller`)"
               :is="componentsKeyByName[activeComponent.name].controller"
               :value="activeComponent.config || {}"
               :useEvents="useEvents"
