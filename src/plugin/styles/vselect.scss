@@ -1,0 +1,46 @@
+$vs-colors: (
+  lightest: rgba(60, 60, 60, 0.26),
+  light: rgba(60, 60, 60, 0.5),
+  dark: $--color-text-regular,
+  darkest: $--color-text-primary,
+) !default;
+
+$vs-state-disabled-bg: $--disabled-fill-base !default;
+$vs-state-disabled-color: $--disabled-color-base !default;
+
+$vs-border-radius: 4px !default;
+$vs-border-color: $--border-color-base !default;
+
+$vs-state-active-color: $--color-primary !default;
+$vs-state-active-bg: $--background-color-base !default;
+
+$vs-selected-bg: #f4f4f5 !default;
+$vs-selected-border-color: #e9e9eb !default;
+
+$vs-dropdown-max-height: 200px !default;
+
+$vs-dropdown-box-shadow: none;
+
+$vs-component-placeholder-color: $--color-text-placeholder !default;
+
+.v-select {
+  font-size: $--tag-font-size;
+  display: inline-block;
+  width: 192px;
+
+  .vs__dropdown-toggle {
+    padding: 4px 0 4px 0;
+  }
+
+  .vs__selected {
+    margin: 4px 2px 0px 2px;
+  }
+}
+
+.vs__selected-options input::placeholder {
+  font-weight: normal;
+}
+
+.vs__dropdown-option--highlight {
+  color: $--color-primary;
+}

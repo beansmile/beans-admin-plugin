@@ -7,6 +7,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import '~element-ui/packages/theme-chalk/src/display';
 @import "~element-ui/packages/theme-chalk/src/index";
+@import './vselect.scss';
+@import '~vue-select/src/scss/vue-select.scss';
 
 @import './mixin';
 @import './flex.scss';

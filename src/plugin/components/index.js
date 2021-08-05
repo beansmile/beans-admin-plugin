@@ -136,6 +136,10 @@ export function install(Vue, config = {}) {
     {
       name: 'page-creator',
       component: require('./page-creator').default
+    },
+    {
+      name: 'vselect',
+      component: require('./form/vselect').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
