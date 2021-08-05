@@ -87,9 +87,29 @@ export default class Select extends Vue {
     }
   }
 
+  // 移动端键盘弹不出来
+  // https://github.com/ElemeFE/element/issues/12742
+  cancalReadOnly(onOff) {
+    this.$nextTick(() => {
+      if (!onOff) {
+        const { select } = this.$refs;
+        const input = select.$el.querySelector('.el-input__inner');
+        input.removeAttribute('readonly');
+      }
+    });
+  }
+
   render() {
     return (
-      <el-select props={{ ...this.$props, ...this.$attrs, value: this.value, ...this.localProps }} onChange={val => this.$emit('change', val)}>
+      <el-select
+        ref="select"
+        on={{
+          'hook:mounted': this.cancalReadOnly,
+          'visible-change': this.cancalReadOnly,
+        }}
+        props={{ ...this.$props, ...this.$attrs, value: this.value, ...this.localProps }}
+        onChange={val => this.$emit('change', val)}
+      >
         {
           this.renderOptions()
         }

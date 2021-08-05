@@ -68,3 +68,7 @@
       opacity: 1 !important;
   }
 }
+
+.el-drawer__header, .el-drawer__header span {
+  outline: none;
+}
