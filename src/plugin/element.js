@@ -1,3 +1,5 @@
+import { isMobile } from './utils';
+
 import {
   Pagination,
   Dialog,
@@ -77,6 +79,22 @@ import {
   Message,
   Notification
 } from 'element-ui';
+
+// https://github.com/ElemeFE/element/blob/dev/packages/select/src/select.vue#L184
+// 清除按钮hover时出现，移动端没有hover事件，会导致select要点两次
+Select.computed.showClose = function() {
+  if (isMobile) {
+    return false;
+  }
+  let hasValue = this.multiple
+    ? Array.isArray(this.value) && this.value.length > 0
+    : this.value !== undefined && this.value !== null && this.value !== '';
+  let criteria = this.clearable &&
+    !this.selectDisabled &&
+    this.inputHovering &&
+    hasValue;
+  return criteria;
+}
 
 export const Element = {
   Pagination,
