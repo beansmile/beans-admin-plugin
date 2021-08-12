@@ -1,9 +1,11 @@
 <template>
   <el-dialog
+    custom-class="dialog-admin-multiple-upload"
     width="70%"
     :visible="value"
     :title="$t('bean.actionUpload')"
     append-to-body
+    :fullscreen="screenService.isMobile"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :show-close="false"
@@ -74,6 +76,7 @@ import AdminForm from '../form';
 import { checkFileSize, uploadFile } from '../../utils';
 import _ from 'lodash';
 import ImageCropperAction from './image-cropper-action';
+import { screenService } from '../../services';
 
 @Component({
   components: {
@@ -97,6 +100,8 @@ export default class MultipleUploadDialog extends Vue {
   uploadForm = {};
   tableData = [];
   loading = false;
+
+  screenService = screenService;
 
   get tagColumns() {
     const requestURL = _.get(this, '$vadminConfig.upload.resourceBlobTagURL');
