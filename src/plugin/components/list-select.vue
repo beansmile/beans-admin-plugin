@@ -19,14 +19,14 @@
       <div class="box-panel">
         <div class="panel-header">
           <span>{{ $t('bean.selected') }}
-            <template v-if="sort">
+            <template v-if="enableDrag">
             （{{ $t('bean.dragSort') }}）
             </template>
           </span>
           <span class="num">{{ value.length }}</span>
         </div>
         <component
-          :is="sort ? 'draggable' : 'div'"
+          :is="enableDrag ? 'draggable' : 'div'"
           :value="value"
           class="panel-content"
           @end="handleDragChange"
@@ -50,7 +50,11 @@
                 {{ item[label] }}
               </template>
             </div>
-            <el-button icon="el-icon-close" circle @click="handleCancelSelect(index)"></el-button>
+            <template v-if="sort">
+              <el-button icon="el-icon-arrow-up" size="mini" circle :disabled="index - 1 < 0" @click="handeMove({ oldIndex: index, newIndex: index - 1  })"></el-button>
+              <el-button icon="el-icon-arrow-down" size="mini" circle :disabled="index + 1 >= value.length" @click="handeMove({ oldIndex: index, newIndex: index + 1  })"></el-button>
+            </template>
+            <el-button icon="el-icon-close" size="mini" circle @click="handleCancelSelect(index)"></el-button>
           </div>
         </component>
         <div class="empty" v-else>{{ $t('bean.blankSelected') }}</div>
@@ -94,6 +98,7 @@
   import { arrayMove } from '../utils';
   import AdminForm from './form';
   import ColumnRender from './column-render';
+  import { screenService } from '../services';
 
   @Component({
     components: {
@@ -115,6 +120,11 @@
     loading = false;
     data = [];
     params = {};
+
+    // 移动端不打开拖拽功能
+    get enableDrag() {
+      return this.sort && (!screenService.isMobile);
+    }
 
     get valueTrackByValues() {
       return this.value.map(item => item[this.trackBy]);
@@ -146,6 +156,12 @@
     }
 
     handleDragChange({ oldIndex, newIndex }) {
+      if (oldIndex !== newIndex) {
+        this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
+      }
+    }
+
+    handeMove({ oldIndex, newIndex }) {
       if (oldIndex !== newIndex) {
         this.$emit('change', arrayMove(this.value, oldIndex, newIndex));
       }
