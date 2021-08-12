@@ -61,7 +61,7 @@
 </template>
 
 <script>
-  import { Vue, Component, Prop, Model, Watch, Emit } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator';
   import _ from 'lodash';
   import AdminForm from '../form';
   import PageGenEvent from '../page-creator/event';
@@ -87,6 +87,7 @@
     @Model('change', { type: Object, default: () => defaultValue }) value;
     @Prop({ type: Object, default: () => ({}) }) eventProps;
     @Prop({ type: Boolean, default: true }) usePageGeneratorEvent;
+    @Prop(Function) beforeSubmit;
 
     form = _.cloneDeep(defaultValue);
     activeIndex = -1;
@@ -222,9 +223,11 @@
       document.addEventListener('mouseup', mouseUpHandler);
     }
 
-    @Emit('change')
-    handleSave() {
-      return this.form;
+    async handleSave() {
+      if (_.isFunction(this.beforeSubmit)) {
+        await this.beforeSubmit(this.form);
+      }
+      this.$emit('change', this.form);
     }
 
     @Watch('value', { immediate: true })
