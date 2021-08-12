@@ -62,10 +62,20 @@ export var renderCellByType = function renderCellByType(h) {
             return '/';
           }
 
+          var transformSrc = _get(Vue, 'appConfig.sourceRender.image.transformSrc') || function (src) {
+            return src;
+          };
+
+          var transformPreviewSrc = _get(Vue, 'appConfig.sourceRender.image.transformPreviewSrc') || function (src) {
+            return src;
+          };
+
           return h("div", {
             "class": "multi-images"
           }, [images.map(function (img, index) {
-            var previewSrcList = images.slice(index, images.length).concat(images.slice(0, index));
+            var previewSrcList = images.slice(index, images.length).concat(images.slice(0, index)).map(function (item) {
+              return transformPreviewSrc(item, options);
+            });
             return h("el-image", {
               "class": "image",
               "style": _objectSpread({
@@ -74,7 +84,7 @@ export var renderCellByType = function renderCellByType(h) {
                 borderRadius: borderRadius
               }, opts),
               "attrs": {
-                "src": img,
+                "src": transformSrc(img, options),
                 "fit": fit,
                 "preview-src-list": previewSrcList
               }

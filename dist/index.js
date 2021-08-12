@@ -230,12 +230,12 @@ export default function install(Vue) {
   Vue.prototype.$notify = _Notification;
   Vue.prototype.$message = _Message;
   var router = options.router;
-  router && initRouter(router);
 
   _merge(config, options.config);
 
-  Vue.appRouter = router;
   Vue.appConfig = config;
+  router && initRouter(router);
+  Vue.appRouter = router;
   Vue.prototype.$appConfig = config;
   Vue.prototype.$get = _get;
 
