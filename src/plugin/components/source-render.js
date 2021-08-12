@@ -24,17 +24,20 @@ export const renderCellByType = (h) => ({ column, scope }) => {
       if (!images.length) {
         return '/';
       }
+      const transformSrc = _.get(Vue, 'appConfig.sourceRender.image.transformSrc') ||  (src => src);
+      const transformPreviewSrc = _.get(Vue, 'appConfig.sourceRender.image.transformPreviewSrc') || (src => src);
+
       return (
         <div class="multi-images">
           {
             images.map((img, index) => {
-              const previewSrcList = images.slice(index, images.length).concat(images.slice(0, index));
+              const previewSrcList = images.slice(index, images.length).concat(images.slice(0, index)).map(item => transformPreviewSrc(item, options));
 
               return (
                 <el-image
                   class="image"
                   style={{ width, height, borderRadius, ...opts }}
-                  src={img}
+                  src={transformSrc(img, options)}
                   fit={fit}
                   preview-src-list={previewSrcList}
                 />
