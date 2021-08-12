@@ -478,7 +478,10 @@ export default class PageCreator extends Vue {
   handleShowComponentController(item, event) {
     event && event.stopPropagation();
     this.activeComponentKey = item.key;
-    this.drawer.controller = true;
+    // 没有controller不显示drawer
+    if (_.get(this.componentsKeyByName, `${item.name}.controller`)) {
+      this.drawer.controller = true;
+    }
   }
 
 }
