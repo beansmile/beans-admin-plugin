@@ -1,3 +1,24 @@
+.dialog-admin-multiple-upload {
+  &.is-fullscreen {
+    display: flex;
+    flex-direction: column;
+
+    .el-dialog__body {
+      flex: 1;
+
+      .box-table {
+        flex: 1;
+        height: unset;
+      }
+    }
+
+    .el-dialog__header,
+    .el-dialog__footer {
+      flex-shrink: 0;
+    }
+  }
+}
+
 .admin-upload,
 .admin-multiple-upload {
   .input-file {
@@ -16,11 +37,17 @@
 
   .btn-group {
     flex-shrink: 0;
+
+    .el-button {
+      margin-bottom: 10px;
+      margin-right: 10px;
+      margin-left: 0;
+    }
   }
 
   .el-alert {
-    margin-top: 20px;
     flex-shrink: 0;
+    margin-top: 10px;
   }
 
   .box-table {
