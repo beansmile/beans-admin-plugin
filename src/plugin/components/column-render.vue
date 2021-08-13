@@ -191,7 +191,7 @@ export const ConfirmButton = {
         confirm-button-text={context.parent.$t('bean.actionConfirm')}
         cancel-button-text={context.parent.$t('bean.actionCancel')}
         scopedSlots={{
-          reference: () => <el-button type={buttonType}>{buttonName}</el-button>
+          reference: () => <el-button onClick={e => e.stopPropagation()} type={buttonType}>{buttonName}</el-button>
         }}
         props={context.props}
       >
