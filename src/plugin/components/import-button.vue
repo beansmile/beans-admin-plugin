@@ -6,7 +6,7 @@
       <a download :href="encodeURI(excelTemplateDownloadLink)">
         {{ tooltipText || '下载模板' }}
       </a>
-      <i class="el-icon-info btn-tip-trigger" slot="reference"></i>
+      <i class="el-icon-info btn-tip-trigger" slot="reference" @click.stop></i>
     </el-popover>
 
     <input ref="fileInput" type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
