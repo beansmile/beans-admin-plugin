@@ -5,6 +5,26 @@ body .cke_screen_reader_only {
 @media screen and (max-width: $--sm) {
   .cke_dialog {
     .cke_dialog_body {
+      max-height: 100vh;
+
+      input.cke_dialog_ui_input_text,
+      input.cke_dialog_ui_input_password,
+      input.cke_dialog_ui_input_tel,
+      textarea.cke_dialog_ui_input_textarea {
+        width: 99%;
+      }
+
+      &::-webkit-scrollbar,
+      *::-webkit-scrollbar {
+        display: none;
+      }
+
+      .cke_dialog_page_contents {
+        height: 100%;
+        min-height: 230px;
+        overflow-y: auto;
+      }
+
       a.cke_dialog_tab {
         padding: 2px 0;
         min-width: 80px;
