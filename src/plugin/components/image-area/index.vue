@@ -95,7 +95,7 @@
     panelCanvasStyle = {};
 
     get formColumns() {
-      return [
+      const columns = [
         {
           prop: 'image',
           label: this.$t('bean.pageGenerator.selectImage'),
@@ -107,6 +107,20 @@
           }
         }
       ];
+      const { enableModuleName } = _.get(this.$vadminConfig, 'pageGenerator', {});
+      if (enableModuleName) {
+        columns.unshift(
+          {
+            prop: 'moduleName',
+            label: this.$t('bean.pageGenerator.moduleName'),
+            renderCell: {
+              component: 'input',
+              hint: this.$t('bean.pageGenerator.moduleNameTip')
+            }
+          }
+        )
+      }
+      return columns;
     }
 
     async handleImageLoaded(e) {
