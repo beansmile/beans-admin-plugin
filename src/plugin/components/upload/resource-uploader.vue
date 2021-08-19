@@ -51,7 +51,7 @@
               :show-filename="false"
             />
           </div>
-          <p>{{ item.filename }}</p>
+          <p class="text-overflow-2">{{ item.filename }}</p>
         </div>
       </div>
       <div class="box-pagination" v-if="data.length > 0">
