@@ -8,6 +8,7 @@
     @Prop([String, Array]) can;
     @Prop([Object, String]) to;
     @Prop(Boolean) keepNode; // 没权限时是否也渲染slot
+    @Prop(Boolean) disabled;
 
     get hasPermission() {
       if (this.can) {
@@ -23,11 +24,15 @@
     }
 
     render() {
+      const spanNode = <span props={this.$attrs} attrs={this.$attrs}>{this.$slots.default}</span>
+      if (this.disabled) {
+        return spanNode;
+      }
       if (this.hasPermission) {
         return <router-link to={this.to} props={this.$attrs} attrs={this.$attrs}>{this.$slots.default}</router-link>
       }
       if (this.keepNode) {
-        return <span props={this.$attrs} attrs={this.$attrs}>{this.$slots.default}</span>
+        return spanNode;
       }
       return null;
     }
