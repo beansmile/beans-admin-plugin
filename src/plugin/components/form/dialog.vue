@@ -5,9 +5,11 @@
       :visible="visible"
       :title="title"
       append-to-body
+      @open="handleOpenDialog"
       @close="handleCloseDialog"
     >
       <AdminForm
+        v-if="renderForm"
         :columns="columns"
         :disabled="loading"
         v-bind="$attrs"
@@ -42,13 +44,24 @@ export default class FormDialog extends Vue {
   @Prop(Array) columns;
   @Prop({ type: String, default: '' }) title;
   @Prop(Function) submitHandler;
+  @Prop(Boolean) resetFormOnOpenDialog;
 
   loading = false;
   visible = false;
   form = {};
+  renderForm = true;
 
   handleShowDialog() {
     this.visible = true;
+  }
+
+  async handleOpenDialog() {
+    if (this.resetFormOnOpenDialog) {
+      this.renderForm = false;
+      this.form = _.cloneDeep(this.value);
+      await this.$nextTick();
+      this.renderForm = true;
+    }
   }
 
   handleCloseDialog() {
