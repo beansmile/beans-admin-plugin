@@ -208,16 +208,14 @@ export const DialogFormButton = {
     if (!abilityService.can(can)) {
       return null;
     }
+    const triggerButtonProps = _.merge({ type: 'primary' }, context.props.triggerButtonProps);
     return (
       <DialogForm
         title={buttonName}
-        columns={context.props.columns}
-        value={context.props.value}
-        submitHandler={context.props.submitHandler}
         on={context.listeners}
         props={context.props}
       >
-        <el-button type="primary">{buttonName}</el-button>
+        <el-button props={triggerButtonProps}>{buttonName}</el-button>
       </DialogForm>
     )
   }
