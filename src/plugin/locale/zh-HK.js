@@ -57,6 +57,7 @@ export default {
     importFail: '導入失敗，請查看"錯誤信息.xlsx"文件了解詳情',
     formValidateError: '表單項填寫有錯誤',
     selectEvent: '選擇事件',
+    checksumPending: '文件校驗中...',
     pageGenerator: {
       text: '文字',
       title: '標題',

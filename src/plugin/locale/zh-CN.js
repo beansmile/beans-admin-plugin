@@ -57,6 +57,7 @@ export default {
     importFail: '导入失败，请查看"错误信息.xlsx"文件了解详情',
     formValidateError: '表单项填写有错误',
     selectEvent: '选择事件',
+    checksumPending: '文件校验中...',
     pageGenerator: {
       text: '文本',
       title: '标题',
