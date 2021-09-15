@@ -17,7 +17,12 @@
     >
       {{ uploadButtonTextI18n }}
       <template v-if="loading">
-        ({{ uploadProgressPct }}%)
+        <template v-if="checksumPending">
+          {{ $t('bean.checksumPending') }}
+        </template>
+        <template v-else>
+          ({{ uploadProgressPct }}%)
+        </template>
       </template>
     </el-button>
     <MultipleUpload
@@ -66,6 +71,7 @@ export default class AdminUpload extends Vue {
   cropperImageURL = '';
   loading = false;
   uploadProgressPct = 0; // 上传进度(百分比)
+  checksumPending = false; // 文件计算checksum中
 
   get uploadButtonTextI18n() {
     return this.uploadButtonText || this.$t('bean.actionUpload');
@@ -100,9 +106,12 @@ export default class AdminUpload extends Vue {
   async handleUpload(blob, tags) {
     this.loading = true;
     try {
-      const updateUploadProgress = pct => this.uploadProgressPct = pct;
       const [uploadRes, imageInfo] = await Promise.all([
-        uploadFile(blob, { ...this.$attrs, tags }, { onProgress: updateUploadProgress }),
+        uploadFile(blob, { ...this.$attrs, tags }, {
+          onProgress: pct => this.uploadProgressPct = pct,
+          onChecksumStart: () => this.checksumPending = true,
+          onChecksumEnd: () => this.checksumPending = false
+        }),
         isImageFile(blob) ? getImageInfo(blob) : {}
       ]);
       return {

@@ -176,8 +176,13 @@ export default class MultipleUploadDialog extends Vue {
         width: 120,
         label: this.$t('bean.uploadSuccess'),
         renderCell: (h, { props: { value, scope: { row } } }) => {
-          if (_.has(row, 'progress')) {
-            return <el-progress text-inside stroke-width={20} percentage={row.progress || 0}></el-progress>
+          if (_.get(row, 'uploading')) {
+            if (_.get(row, 'checksumPending')) {
+              return <span>{this.$t('bean.checksumPending')}</span>;
+            }
+            if (_.has(row, 'progress')) {
+              return <el-progress size="mini" text-inside stroke-width={20} percentage={row.progress || 0}></el-progress>
+            }
           }
           const map = {
             true: { type: 'success', name: this.$t('bean.yes') },
@@ -280,8 +285,11 @@ export default class MultipleUploadDialog extends Vue {
   async handleUpload(row, index) {
     this.$set(this.tableData[index], 'uploading', true);
     try {
-      const updateUploadProgress = pct => this.$set(this.tableData[index], 'progress', pct);
-      const result = await uploadFile(row.file, { ...this.$attrs, ...this.uploadForm }, { onProgress: updateUploadProgress });
+      const result = await uploadFile(row.file, { ...this.$attrs, ...this.uploadForm }, {
+        onProgress: pct => this.$set(this.tableData[index], 'progress', pct),
+        onChecksumStart: () => this.$set(this.tableData[index], 'checksumPending', true),
+        onChecksumEnd: () => this.$set(this.tableData[index], 'checksumPending', false)
+      });
       this.$set(this.tableData[index], 'result', result);
       return result;
     } finally {

@@ -56,6 +56,7 @@ export default {
     importFail: 'Import fail. Please check the "error_massage.xlsx" file for details',
     formValidateError: 'There is an error in validate the form item',
     selectEvent: 'Select event',
+    checksumPending: 'File verification...',
     pageGenerator: {
       text: 'Text',
       title: 'Title',
