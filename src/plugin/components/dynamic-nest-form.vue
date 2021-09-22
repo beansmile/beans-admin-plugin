@@ -43,7 +43,7 @@
       }
     }
 
-    @Watch('value')
+    @Watch('value', { immediate: true })
     onValueChange(val) {
       this.form = val || [];
     }
