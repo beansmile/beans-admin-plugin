@@ -48,7 +48,9 @@ var DynamicNestForm = (_dec = Model('change', {
 }), _dec3 = Prop({
   type: String,
   default: 'id'
-}), _dec4 = Watch('value'), Component(_class = (_class2 = (_temp =
+}), _dec4 = Watch('value', {
+  immediate: true
+}), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(DynamicNestForm, _Vue);
