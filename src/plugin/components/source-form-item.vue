@@ -130,6 +130,8 @@ export default class SourceFormItem extends Vue {
     const value = getDate(this.getPropValue(prop));
 
     return <el-date-picker
+      format="yyyy-MM-dd HH:mm"
+      value-format="yyyy-MM-dd HH:mm"
       props={props}
       value={value}
       onInput={this.handleValueChange(prop)}
