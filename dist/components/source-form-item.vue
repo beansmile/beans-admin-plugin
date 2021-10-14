@@ -354,7 +354,12 @@ function (_Vue) {
           props = _ref12.props;
       var h = this.$createElement;
       var value = getDate(this.getPropValue(prop));
-      return h("el-date-picker", _mergeJSXProps11([{}, {
+      return h("el-date-picker", _mergeJSXProps11([{
+        "attrs": {
+          "format": "yyyy-MM-dd HH:mm",
+          "value-format": "yyyy-MM-dd HH:mm"
+        }
+      }, {
         "props": props
       }, {
         "attrs": {
