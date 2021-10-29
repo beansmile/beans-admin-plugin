@@ -1,7 +1,8 @@
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import _ from 'lodash';
-import { abilityService, screenService } from '../../services';
+import { abilityService } from '../../services';
+import List from '../list';
 
 @Component
 export default class AdminSourcePageShow extends Vue {
@@ -11,10 +12,6 @@ export default class AdminSourcePageShow extends Vue {
   @Prop({ type: Object }) value;
 
   activeTab = '0';
-
-  get defaultLabelWidth() {
-    return screenService.isMobile ? '80px' : '150px';
-  }
 
   get allActions() {
     if (_.isEmpty(this.value)) {
@@ -43,16 +40,6 @@ export default class AdminSourcePageShow extends Vue {
     return false;
   }
 
-  get locales() {
-    const locales = _.get(this.$vadminConfig, 'i18n.locales', {});
-    const locale = _.get(this.$i18n, 'locale');
-    const localesArr = _.map(locales, (localeLabel, lacaleValue) => ({ label: localeLabel, locale: lacaleValue }));
-    const currentIndex = localesArr.findIndex(item => item.locale === locale);
-    // 当前语言排在第一个
-    localesArr.unshift(localesArr.splice(currentIndex, 1)[0]);
-    return localesArr;
-  }
-
   mounted() {
     this.activeTab = this.$route.hash.slice(1) || '0';
   }
@@ -63,44 +50,6 @@ export default class AdminSourcePageShow extends Vue {
       this.activeTab = activeTab;
       this.$router.replace({ path: this.$route.fullPath, hash: `#${activeTab}` });
     }
-  }
-
-  renderCellDispatcher(column) {
-    if (column.locale) {
-      if (this.locales.length) {
-        return (
-          <el-form-item class="form-item-lang" label={column.label}>
-            {
-              this.locales.map(item => {
-                const localeColumn = _.merge({ labelWidth: '80px' }, column, { prop: `${column.prop}_${item.locale}`, label: item.label }, _.get(column.locale, item.locale, {}));
-                return this.renderCell(localeColumn);
-              })
-            }
-          </el-form-item>
-        )
-      }
-    }
-    return this.renderCell(column);
-  }
-
-  renderCell(column) {
-    const ColumnRender = require('../column-render').default;
-    const value = _.get(this.value, column.prop);
-    const renderCell = column.renderCell || (() => <div>{value}</div>);
-    return (
-      <el-form-item class={column.prop} label-width={column.defaultLabelWidth || this.defaultLabelWidth} label={column.label} key={column.prop}>
-        {
-          _.isNil(value) ? <span>/</span> : (
-            <ColumnRender
-              value={value}
-              scope={{ row: this.value }}
-              renderCell={renderCell}
-              column={column}
-            />
-          )
-        }
-      </el-form-item>
-    )
   }
 
   renderAction(action, index) {
@@ -122,11 +71,7 @@ export default class AdminSourcePageShow extends Vue {
   }
 
   renderColumnsContent(columns) {
-    return (
-      <el-form class="el-form-show" label-width={this.defaultLabelWidth} label-position="left" props={this.$attrs}>
-        {columns.map(this.renderCellDispatcher)}
-      </el-form>
-    )
+    return <List columns={columns} value={this.value} attrs={this.$attrs} />
   }
 
   renderComponentContent(renderCell) {

@@ -20,6 +20,7 @@ import SkuEditor from './sku-editor';
 import DialogForm from './form/dialog';
 import ImportButton from './import-button';
 import DropdownButton from './dropdown-button';
+import List from './list';
 
 const RenderDate = {
   functional: true,
@@ -272,7 +273,8 @@ const COMPONENT_PRE_INSTALLED = {
   skuEditor: SkuEditor,
   importButton: RenderImportButton,
   dropdownButton: DropdownButton,
-  button: Button
+  button: Button,
+  list: List
 }
 
 function getRenderContext({ context, config = {} }) {
