@@ -136,6 +136,10 @@ export function install(Vue, config = {}) {
     {
       name: 'page-creator',
       component: require('./page-creator').default
+    },
+    {
+      name: 'list',
+      component: require('./list').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
