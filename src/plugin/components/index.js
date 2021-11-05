@@ -140,6 +140,10 @@ export function install(Vue, config = {}) {
     {
       name: 'list',
       component: require('./list').default
+    },
+    {
+      name: 'ability',
+      component: require('./ability').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);

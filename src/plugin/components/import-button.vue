@@ -1,16 +1,18 @@
 <template>
-  <div class="admin-import-block">
-    <el-button icon="el-icon-upload" type="primary" :loading="importing" @click="handleButtonClick">{{ buttonText }}</el-button>
+  <Ability :can="can">
+    <div class="admin-import-block">
+      <el-button icon="el-icon-upload" type="primary" :loading="importing" @click="handleButtonClick">{{ buttonText }}</el-button>
 
-    <el-popover v-if="excelTemplateDownloadLink" trigger="hover">
-      <a download :href="encodeURI(excelTemplateDownloadLink)">
-        {{ tooltipText || '下载模板' }}
-      </a>
-      <i class="el-icon-info btn-tip-trigger" slot="reference" @click.stop></i>
-    </el-popover>
+      <el-popover v-if="excelTemplateDownloadLink" trigger="hover">
+        <a download :href="encodeURI(excelTemplateDownloadLink)">
+          {{ tooltipText || '下载模板' }}
+        </a>
+        <i class="el-icon-info btn-tip-trigger" slot="reference" @click.stop></i>
+      </el-popover>
 
-    <input ref="fileInput" type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
-  </div>
+      <input ref="fileInput" type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
+    </div>
+  </Ability>
 </template>
 
 <script>
@@ -18,8 +20,13 @@
   import _ from 'lodash';
   import { Message } from 'element-ui';
   import { uploadFile } from '../utils/upload';
+  import Ability from './ability';
 
-  @Component
+  @Component({
+    components: {
+      Ability
+    }
+  })
   export default class ExportButton extends Vue {
     @Prop({ type: String }) buttonText;
     @Prop(String) excelTemplateDownloadLink;
@@ -31,6 +38,7 @@
     @Prop(Function) customUpload;
     @Prop({ type: Boolean, default: false }) useGlobalUpload; // 使用全局的upload
     @Prop({ type: Object }) globalUploadProps;
+    @Prop({ type: [String, Array] }) can;
 
     importing = false;
 
