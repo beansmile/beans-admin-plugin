@@ -1,6 +1,6 @@
 <template>
   <div @click="handleShowDialog">
-    <slot />
+    <slot v-bind="{ disabled }" />
     <el-dialog
       :visible="visible"
       :title="title"
@@ -45,6 +45,7 @@ export default class FormDialog extends Vue {
   @Prop({ type: String, default: '' }) title;
   @Prop(Function) submitHandler;
   @Prop(Boolean) resetFormOnOpenDialog;
+  @Prop(Boolean) disabled;
 
   loading = false;
   visible = false;
@@ -52,6 +53,9 @@ export default class FormDialog extends Vue {
   renderForm = true;
 
   handleShowDialog() {
+    if (this.disabled) {
+      return;
+    }
     this.visible = true;
   }
 
