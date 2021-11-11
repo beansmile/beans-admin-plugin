@@ -50,6 +50,7 @@ export default class AdminForm extends Vue {
   renderFormItemDispatcher(column) {
     if (column.locale) {
       const locale = _.get(this.$i18n, 'locale');
+      const { showController, initValue } = column.localeCollapse || {};
       const render = item => {
         const required = (_.has(column, 'required') ? column.required : _.get(column, 'renderCell.required', false)) && (locale === item.locale);
         const localeColumn = _.merge({ 'label-width': '200px' }, { prop: `${column.prop}_${item.locale}`, label: item.label, _label: column.label, renderCell: { required: false } }, { ..._.omit(column, ['prop', 'label']) },  _.get(column.locale, item.locale, { renderCell: { required } }));
@@ -59,6 +60,8 @@ export default class AdminForm extends Vue {
         return (
           <el-form-item label={column.label}>
             <Collapse
+              showController={showController}
+              initValue={initValue}
               class="form-item-locale"
               collapsedContentClass={COLLAPSED_CONTENT_CLASS}
               scopedSlots={{
