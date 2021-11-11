@@ -27,6 +27,10 @@ export default {
       en: 'English'
     }
   },
+  collapse: {
+    showController: true,
+    initValue: true
+  },
   sourcePage: {},
   pageGenerator: {
     enableModuleName: false
