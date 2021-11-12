@@ -10,9 +10,16 @@ export const routes = [
     redirect: '/home'
   },
   {
-    path: '/home',
-    name: 'home',
-    component: require('./views/home').default
+    path: '',
+    component: require('@/layout').default,
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: require('@/views/index').default,
+      },
+      ...require('@/views/column-render').route,
+    ]
   }
 ]
 
