@@ -35,6 +35,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@highlightjs/vue-plugin": "https://github.com/highlightjs/vue-plugin.git#1-stable",
     "@sentry/webpack-plugin": "^1.9.3",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-plugin-eslint": "^3.7.0",
@@ -56,6 +57,7 @@
     "node-sass": "^4.9.2",
     "node-ssh": "^6.0.0",
     "os": "^0.1.1",
+    "raw-loader": "^4.0.2",
     "sass-loader": "^7.0.3",
     "vue-template-compiler": "^2.5.21"
   },

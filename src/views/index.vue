@@ -1,5 +1,7 @@
 <template>
-  <div>beans-admin-plugin</div>
+  <div>
+    文档
+  </div>
 </template>
 
 <script>
@@ -7,7 +9,5 @@
 
   @Component
   export default class Home extends Vue {
-
-
   }
 </script>
