@@ -144,6 +144,10 @@ export function install(Vue, config = {}) {
     {
       name: 'ability',
       component: require('./ability').default
+    },
+    {
+      name: 'column-render',
+      component: require('./column-render').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
