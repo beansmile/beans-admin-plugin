@@ -28,7 +28,6 @@
             :renderCell="batchAction"
           />
           <ExportButton
-            :button-text="$t('bean.actionExport')"
             v-bind="exportButtonProps"
             v-if="exportProps"
             :before-export="handleBeforeExport"
@@ -129,6 +128,7 @@ export default class AdminSourcePage extends Vue {
       url: `${this.namespace}${this.resource}/export`,
       params: { ...this.$route.query, page: undefined },
       fileName: `${this.pageTitle}.xlsx`,
+      buttonText: this.$t('bean.actionExport'),
       ...this.exportProps
     }
   }
