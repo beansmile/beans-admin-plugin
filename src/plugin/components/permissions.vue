@@ -79,8 +79,9 @@
       return data.label && data.label.indexOf(value) !== -1 || parentLableEqual;
     }
 
-    @Watch('checkedKeys')
-    setCheckedKeys() {
+    @Watch('checkedKeys', { immediate: true })
+    async setCheckedKeys() {
+      await this.$nextTick();
       this.$refs.tree.setCheckedKeys(this.checkedKeys);
     }
 
