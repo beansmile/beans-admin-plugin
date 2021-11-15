@@ -19,6 +19,10 @@ export const routes = [
         component: require('@/views/index').default,
       },
       ...require('@/views/column-render').route,
+      ...require('@/views/source-page').route,
+      ...require('@/views/source-page/topics').route,
+      ...require('@/views/source-page/topics-detail-tab').route,
+      ...require('@/views/source-page/topics-form').route,
     ]
   }
 ]
