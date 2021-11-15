@@ -2,21 +2,26 @@
   <div class="page-doc">
     <h2 class="title">{{ title }}</h2>
     <slot />
+
     <div v-for="item in renderAttributes" :key="item.title">
-      <h3>{{ item.title }}</h3>
-      <bean-table
-        :value="item.attributes"
-        :columns="attributesColumn"
-        :height="null"
-      />
+      <template v-if="item.attributes && item.attributes.length">
+        <h3>{{ item.title }}</h3>
+        <bean-table
+          :value="item.attributes"
+          :columns="attributesColumn"
+          :height="null"
+        />
+      </template>
     </div>
 
-    <h3>Events</h3>
-    <bean-table
-      :value="events"
-      :columns="eventsColumn"
-      :height="null"
-    />
+    <template v-if="events && events.length">
+      <h3>Events</h3>
+      <bean-table
+        :value="events"
+        :columns="eventsColumn"
+        :height="null"
+      />
+    </template>
     <h3>Examples</h3>
     <div class="example" v-for="(item, index) in examples" :key="index">
       <h3>{{ item.title }}</h3>
@@ -35,7 +40,7 @@
   @Component
   export default class CreateDoc extends Vue {
     @Prop(String) title;
-    @Prop(Array) attributes;
+    @Prop({ type: Array, default: () => [] }) attributes;
     @Prop(Array) events;
     @Prop(Array) examples;
     attributesColumn = [
