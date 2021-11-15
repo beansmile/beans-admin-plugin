@@ -5,6 +5,11 @@ export default [
     route: { name: 'home' },
   },
   {
+    title: '全局配置',
+    icon: 'el-icon-menu',
+    route: { name: 'config' }
+  },
+  {
     title: 'column-render',
     icon: 'el-icon-menu',
     route: { name: 'column-render' }
