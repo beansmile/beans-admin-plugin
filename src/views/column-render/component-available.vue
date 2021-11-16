@@ -221,6 +221,21 @@ export default class ComponentAvaliable extends Vue {
         },
         {
           prop: '',
+          desc: '其他prop https://element.eleme.cn/#/zh-CN/component/button#attributes'
+        }
+      ]
+    },
+    {
+      title: 'routeButton',
+      attributes: [
+        {
+          prop: 'buttonName',
+          desc: 'button文案',
+          type: 'String',
+          defaultValue: '链接'
+        },
+        {
+          prop: '',
           desc: '其他prop 见Link组件文档'
           // TODO: 文档链接
         }
@@ -241,12 +256,6 @@ export default class ComponentAvaliable extends Vue {
           type: 'String',
           defaultValue: 'danger',
           optionalValue: 'primary | success | warning | danger | text | link'
-        },
-        {
-          prop: 'can',
-          desc: '权限判断 AbilityService.can(can)',
-          type: 'String | Array'
-          // TODO: 文档链接
         },
         {
           prop: 'title',
@@ -320,12 +329,6 @@ export default class ComponentAvaliable extends Vue {
     {
       title: 'importButton',
       attributes: [
-        {
-          prop: 'can',
-          desc: '权限判断 AbilityService.can(can)',
-          type: 'String | Array'
-          // TODO: 文档链接
-        },
         {
           prop: '',
           desc: '其他ImportButton prop ',
