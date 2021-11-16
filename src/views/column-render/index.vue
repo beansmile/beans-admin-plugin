@@ -19,6 +19,12 @@ export default class ColumnRender extends Vue {
       type: 'String | Function | Object'
     },
     {
+      prop: 'renderCell.can',
+      desc: '权限判断',
+      type: 'String | Array',
+      // TODO: 文档链接
+    },
+    {
       prop: 'renderCell.component',
       desc: '组件/组件名',
       type: 'String | Function | Object',

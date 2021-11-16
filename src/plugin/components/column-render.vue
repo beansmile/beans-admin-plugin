@@ -298,6 +298,10 @@ const ColumnRender = {
   functional: true,
   render(h, context) {
     const { renderCell } = context.props;
+    const can = _.get(renderCell, 'can');
+    if (!abilityService.can(can)) {
+      return null;
+    }
     if (_.get(renderCell, 'component')) {
       if (_.isFunction(renderCell.component)) {
         return renderCell.component(h, getRenderContext({ context, config: renderCell }));
