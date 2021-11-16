@@ -29,7 +29,6 @@
       />
     </template>
     <template v-if="examples && examples.length">
-      <h3>Examples</h3>
       <div class="example" v-for="(item, index) in examples" :key="index">
         <h3>{{ item.title }}</h3>
         <div class="example-exec" v-if="item.example">

@@ -7,17 +7,13 @@ Vue.use(Router);
 export const routes = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/install'
   },
   {
     path: '',
     component: require('@/layout').default,
     children: [
-      {
-        path: '/home',
-        name: 'home',
-        component: require('@/views/index').default,
-      },
+      ...require('@/views/install').route,
       ...require('@/views/column-render').route,
       ...require('@/views/column-render/component-available').route,
       ...require('@/views/source-page').route,
