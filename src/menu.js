@@ -1,8 +1,8 @@
 export default [
   {
-    title: '首页',
+    title: '安装',
     icon: 'el-icon-menu',
-    route: { name: 'home' },
+    route: { name: 'install' },
   },
   {
     title: '全局配置',
