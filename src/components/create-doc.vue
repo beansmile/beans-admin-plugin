@@ -11,6 +11,12 @@
           :columns="attributesColumn"
           :height="null"
         />
+        <bean-table
+          v-if="item.events && item.events.length"
+          :value="item.events"
+          :columns="eventsColumn"
+          :height="null"
+        />
       </template>
     </div>
 
@@ -22,14 +28,16 @@
         :height="null"
       />
     </template>
-    <h3>Examples</h3>
-    <div class="example" v-for="(item, index) in examples" :key="index">
-      <h3>{{ item.title }}</h3>
-      <div class="example-exec" v-if="item.example">
-        <component :is="item.example" />
+    <template v-if="examples && examples.length">
+      <h3>Examples</h3>
+      <div class="example" v-for="(item, index) in examples" :key="index">
+        <h3>{{ item.title }}</h3>
+        <div class="example-exec" v-if="item.example">
+          <component :is="item.example" />
+        </div>
+        <highlightjs autodetect :code="item.code" />
       </div>
-      <highlightjs autodetect :code="item.code" />
-    </div>
+    </template>
   </div>
 </template>
 

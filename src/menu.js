@@ -12,7 +12,16 @@ export default [
   {
     title: 'column-render',
     icon: 'el-icon-menu',
-    route: { name: 'column-render' }
+    children: [
+      {
+        title: 'column-render',
+        route: { name: 'column-render' }
+      },
+      {
+        title: '内置组件',
+        route: { name: 'column-render.available-components' }
+      }
+    ],
   },
   {
     title: 'source-page',
