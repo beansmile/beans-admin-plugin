@@ -89,6 +89,7 @@ export default class AdminTable extends Vue {
   }
 
   render() {
+    // FIXME: element-ui append slot 无法通过scopedSlots 传过去
     return (
       <el-table
         class="admin-table"
@@ -99,7 +100,8 @@ export default class AdminTable extends Vue {
         border
         props={this.$attrs}
         on={this.$listeners}
-        scopedSlots={this.$slots}
+        slots={this.$slots}
+        scopedSlots={this.$scopedSlots}
       >
         {this.tableColumns.map(this.renderTableColumn)}
       </el-table>

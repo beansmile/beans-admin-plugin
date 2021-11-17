@@ -23,7 +23,7 @@ export default class Form extends Vue {
         },
         {
           prop: 'columns',
-          desc: 'ColunRender描述的columns',
+          desc: 'ColumnRender描述的columns',
           type: 'Array',
           defaultValue: '[ ]'
         },

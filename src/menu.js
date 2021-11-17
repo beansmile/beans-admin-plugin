@@ -60,5 +60,10 @@ export default [
         route: { name: 'form' }
       }
     ]
+  },
+  {
+    title: '表格',
+    icon: 'el-icon-menu',
+    route: { name: 'table' }
   }
 ];
