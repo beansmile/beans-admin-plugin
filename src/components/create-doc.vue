@@ -19,6 +19,14 @@
         />
       </template>
     </div>
+    <template v-if="slots && slots.length">
+      <h3>Slot</h3>
+      <bean-table
+        :value="slots"
+        :columns="slotsColumn"
+        :height="null"
+      />
+    </template>
 
     <template v-if="events && events.length">
       <h3>Events</h3>
@@ -49,6 +57,7 @@
     @Prop(String) title;
     @Prop({ type: Array, default: () => [] }) attributes;
     @Prop(Array) events;
+    @Prop(Array) slots;
     @Prop(Array) examples;
     attributesColumn = [
       {
@@ -84,6 +93,16 @@
       {
         prop: 'args',
         label: '回调参数'
+      }
+    ]
+    slotsColumn = [
+      {
+        prop: 'name',
+        label: 'name'
+      },
+      {
+        prop: 'desc',
+        label: '说明'
       }
     ]
     get renderAttributes() {

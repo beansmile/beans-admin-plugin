@@ -22,6 +22,7 @@ export const routes = [
       ...require('@/views/source-page/topics-form').route,
       ...require('@/views/config').route,
       ...require('@/views/ability').route,
+      ...require('@/views/form').route,
     ]
   }
 ]

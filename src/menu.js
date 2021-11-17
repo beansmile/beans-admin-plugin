@@ -50,5 +50,15 @@ export default [
         route: { name: 'topics-form' }
       }
     ]
+  },
+  {
+    title: '表单',
+    icon: 'el-icon-menu',
+    children: [
+      {
+        title: '表单',
+        route: { name: 'form' }
+      }
+    ]
   }
 ];
