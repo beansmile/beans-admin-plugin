@@ -25,6 +25,11 @@ export default class ColumnRender extends Vue {
       // TODO: 文档链接
     },
     {
+      prop: 'renderCell.hint',
+      desc: '表单项提示，仅表单可用',
+      type: 'String',
+    },
+    {
       prop: 'renderCell.component',
       desc: '组件/组件名',
       type: 'String | Function | Object',
