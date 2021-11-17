@@ -23,6 +23,7 @@ export const routes = [
       ...require('@/views/config').route,
       ...require('@/views/ability').route,
       ...require('@/views/form').route,
+      ...require('@/views/table').route,
     ]
   }
 ]

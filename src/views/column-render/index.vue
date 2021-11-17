@@ -30,6 +30,18 @@ export default class ColumnRender extends Vue {
       type: 'String',
     },
     {
+      prop: 'renderCell.rules',
+      desc: '表单项验证，仅表单可用',
+      type: 'Array',
+      // TODO: 文档链接
+    },
+    {
+      prop: 'renderCell.required',
+      desc: '表单项是否验证必填，仅表单可用',
+      type: 'Boolean',
+      // TODO: 文档链接
+    },
+    {
       prop: 'renderCell.component',
       desc: '组件/组件名',
       type: 'String | Function | Object',
