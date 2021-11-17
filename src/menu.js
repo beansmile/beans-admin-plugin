@@ -10,6 +10,11 @@ export default [
     route: { name: 'config' }
   },
   {
+    title: '权限',
+    icon: 'el-icon-menu',
+    route: { name: 'ability' }
+  },
+  {
     title: 'column-render',
     icon: 'el-icon-menu',
     children: [
