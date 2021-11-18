@@ -1,6 +1,6 @@
 <template>
-  <div @click="handleShowDialog">
-    <slot v-bind="{ disabled }" />
+  <div class="admin-dialog-form">
+    <span class="dialog-trigger" @click="handleShowDialog"><slot v-bind="{ disabled }" /></span>
     <el-dialog
       :visible="visible"
       :title="title"

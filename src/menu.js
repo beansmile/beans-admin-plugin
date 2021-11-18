@@ -58,6 +58,10 @@ export default [
       {
         title: '表单',
         route: { name: 'form' }
+      },
+      {
+        title: '弹窗表单',
+        route: { name: 'form-dialog' }
       }
     ]
   },
