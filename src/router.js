@@ -30,7 +30,7 @@ export const routes = [
 ]
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.VUE_APP_ROUTER_BASE_URL,
   routes,
   scrollBehavior (to, from, savedPosition) {
