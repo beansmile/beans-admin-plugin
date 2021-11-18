@@ -68,7 +68,7 @@ export default class Example extends Vue {
     alert(JSON.stringify(data, null, 2));
   }
 
-  handleSubmit2(data){
+  handleSubmit2(data) {
     alert(JSON.stringify(data, null, 2));
   }
 
