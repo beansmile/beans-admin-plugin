@@ -9,7 +9,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix --max-warnings 0",
     "lint:fix": "vue-cli-service lint",
-    "generate": "node ./scripts/generate-resource.js"
+    "generate": "node ./scripts/generate-resource.js",
+    "build-doc": "vue-cli-service build --dest docs"
   },
   "dependencies": {
     "ckeditor": "https://github.com/beansmile/ckeditor.git#c85ae6d0d58400503e7dd2c3b7705d4236df98e7",
