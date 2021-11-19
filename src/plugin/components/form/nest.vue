@@ -9,7 +9,13 @@
           @change="handleGroupChange(index, $event)"
         >
           <template v-slot:header>
-            <el-button class="btn-delete" type="danger" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
+            <div class="btn-group">
+              <template v-if="sortable">
+                <el-button class="btn btn-sort" size="mini" type="primary" icon="el-icon-arrow-up" v-if="index - 1 >= 0" @click="handleMoveUp(index)" circle></el-button>
+                <el-button class="btn btn-sort" size="mini" type="primary" icon="el-icon-arrow-down" v-if="index + 1 <= value.length -1" circle @click="handleMoveDown(index)"></el-button>
+              </template>
+              <el-button class="btn btn-delete" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
+            </div>
           </template>
           <template v-slot:action>
             <span />
@@ -22,9 +28,10 @@
 </template>
 
 <script>
-  import { Vue, Component, Model, Prop } from 'vue-property-decorator';
+  import { Vue, Component, Model, Prop, Emit } from 'vue-property-decorator';
   import AdminForm from './index';
   import _ from 'lodash';
+  import { arrayMove } from '../../utils';
 
   @Component({
     components: {
@@ -38,6 +45,7 @@
     @Prop({ type: String }) addButtonText;
     @Prop({ type: Boolean }) limitOne; // 为true时不显示添加、删除按钮
     @Prop({ type: Object, default: () => ({}) }) defaultValue;
+    @Prop(Boolean) sortable;
 
     get addButtonTextI18n() {
       return this.addButtonText || this.$t('bean.actionAdd');
@@ -72,6 +80,16 @@
         value.splice(index, 1);
       }
       this.$emit('change', value);
+    }
+
+    @Emit('change')
+    handleMoveUp(index) {
+      return arrayMove(this.value, index, index - 1);
+    }
+
+    @Emit('change')
+    handleMoveDown(index) {
+      return arrayMove(this.value, index, index + 1);
     }
   }
 </script>
