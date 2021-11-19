@@ -2,13 +2,16 @@
   .nest-form-group {
     position: relative;
     border: 1px solid $--border-color-light;
-    padding: 50px 15px 0;
+    padding: 15px 15px 0;
     margin-bottom: 15px;
 
-    .btn-delete {
-      position: absolute;
-      right: 15px;
-      top: 10px
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+
+      .btn {
+        margin-bottom: 15px;
+      }
     }
   }
 }
