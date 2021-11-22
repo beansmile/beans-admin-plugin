@@ -415,11 +415,11 @@ export default class ComponentAvaliable extends Vue {
       ]
     },
     {
-      title: 'pageEditor',
+      title: 'pageCreator',
       attributes: [
         {
           prop: '',
-          desc: '见pageEditor文档',
+          desc: '见pageCreator文档',
           // TODO: 文档链接
           type: ''
         }

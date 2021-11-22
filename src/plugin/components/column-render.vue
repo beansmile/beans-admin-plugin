@@ -13,6 +13,7 @@ import Link from './link';
 import ListSelect from './list-select';
 import LinkSelect from './link-select';
 import PageGenerator from './page-generator';
+import PageCreator from './page-creator';
 import ResourceRender from './resource-render';
 import { abilityService } from '../services';
 import UncontrolledInput from './form/uncontrolled-input';
@@ -266,6 +267,7 @@ const COMPONENT_PRE_INSTALLED = {
   linkSelect: LinkSelect,
   pageEditor: PageGenerator,
   pageGenerator: PageGenerator,
+  pageCreator: PageCreator,
   mail: Mail,
   uncontrolledInput: UncontrolledInput,
   uncontrolledTextarea: UncontrolledTextArea,
