@@ -11,8 +11,8 @@
           :routes="$router.options.routes"
           :key="menuRenderKey"
         />
-        <el-tooltip class="item" effect="light" content="收起除当前页面之外的所有二级目录" placement="top-end">
-          <el-button :class="elementClass('renderNavBtn')" @click="reRenderMenu">收起二级目录</el-button>
+        <el-tooltip class="item" effect="light" :content="$t('收起除当前页面之外的所有二级目录')" placement="top-end">
+          <el-button :class="elementClass('renderNavBtn')" @click="reRenderMenu">{{ $t('收起二级目录') }}</el-button>
         </el-tooltip>
         <el-button :class="elementClass('handleCollapseNavBtn')"  @click="toggleIsCollapse"></el-button>
       </div>
