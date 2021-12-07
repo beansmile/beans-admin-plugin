@@ -81,6 +81,8 @@ export default _objectSpread({}, enLocale, {
   下移: 'Move down',
   移除图片: 'Remove Image',
   默认: 'Default',
+  收起二级目录: 'Collapse directory',
+  收起除当前页面之外的所有二级目录: 'Collapse all secondary directories except the current page',
   pageEditor: {
     图片: 'Image',
     视频: 'Video',
@@ -129,8 +131,6 @@ export default _objectSpread({}, enLocale, {
     添加图片: 'Add Image',
     包含: 'Contain',
     填充: 'Fill',
-    覆盖: 'Cover',
-    收起二级目录: 'Collapse directory',
-    收起除当前页面之外的所有二级目录: 'Collapse all secondary directories except the current page'
+    覆盖: 'Cover'
   }
 });
