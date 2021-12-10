@@ -1,20 +1,20 @@
 <template>
   <div id="app" class="layout-app" v-if="$route.name" :data-page="$route.name">
     <template v-if="showLayout">
-      <div :class="elementClass('nav')" :style="`background-color: ${menu['background-color']}`">
-        <div :class="elementClass('brand')">
+      <div class="c-admin-nav" :class="{ collapsed: menu.collapse }" :style="`background-color: ${menu['background-color']}`">
+        <div class="brand">
           <img :src="$appConfig.logo" class="logo"/>
         </div>
         <c-nav-menu
           :menu="menu"
           :filter="filterRoute"
           :routes="$router.options.routes"
-          :key="menuRenderKey"
+          ref="navMenu"
         />
         <el-tooltip class="item" effect="light" :content="$t('收起除当前页面之外的所有二级目录')" placement="top-end">
-          <el-button :class="elementClass('renderNavBtn')" @click="reRenderMenu">{{ $t('收起二级目录') }}</el-button>
+          <el-button class="render-nav-btn" @click="reRenderMenu">{{ $t('收起二级目录') }}</el-button>
         </el-tooltip>
-        <el-button :class="elementClass('handleCollapseNavBtn')"  @click="toggleIsCollapse"></el-button>
+        <el-button class="handle-collapse-btn" :class="[menu.collapse ? 'el-icon-s-unfold' : 'el-icon-s-fold']"  @click="toggleIsCollapse"></el-button>
       </div>
       <div class="admin-content">
         <header>
@@ -81,7 +81,6 @@ function (_Vue) {
       collapse: false,
       'background-color': '#fff'
     };
-    _this.menuRenderKey = 1;
     return _this;
   }
 
@@ -139,31 +138,43 @@ function (_Vue) {
       return handleExit;
     }()
   }, {
-    key: "elementClass",
-    value: function elementClass(name) {
-      return (this.menu.collapse ? {
-        nav: 'c-collapse-nav',
-        brand: 'brand-collapse',
-        renderNavBtn: 'render-nav-btn-collapse',
-        handleCollapseNavBtn: 'handle-collapse-btn-collapse el-icon-s-unfold'
-      } : {
-        nav: 'c-admin-nav',
-        brand: 'brand',
-        renderNavBtn: 'render-nav-btn',
-        handleCollapseNavBtn: 'handle-collapse-btn el-icon-s-fold'
-      })[name];
-    }
-  }, {
     key: "toggleIsCollapse",
     value: function toggleIsCollapse() {
       this.$set(this.menu, 'collapse', !this.menu.collapse);
     }
   }, {
     key: "reRenderMenu",
-    value: function reRenderMenu() {
-      // key值更改后menu组件会重新渲染
-      ++this.menuRenderKey;
-    }
+    value: function () {
+      var _reRenderMenu = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        var elMenu;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                elMenu = _get(this.$refs, 'navMenu.$refs.menu');
+
+                if (elMenu) {
+                  // https://github.com/ElemeFE/element/blob/dev/packages/menu/src/menu.vue#L285
+                  elMenu.openedMenus = [];
+                  elMenu.initOpenedMenu();
+                }
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function reRenderMenu() {
+        return _reRenderMenu.apply(this, arguments);
+      }
+
+      return reRenderMenu;
+    }()
   }, {
     key: "showBackButton",
     get: function get() {
