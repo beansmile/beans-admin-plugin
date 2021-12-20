@@ -4,6 +4,7 @@ export default {
   ckeditor: {
     editorConfig: new Function,
     contentsCss: [],
+    directUploadExtraBody: {}
   },
   upload: {
     directUploadURL: '/blobs/direct_upload',
