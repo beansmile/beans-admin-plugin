@@ -56,12 +56,12 @@
     }
 
     async fileUploadRequest(evt) {
-      const { fakeUploadUrl = location.origin } = this.$vadminConfig.ckeditor
+      const { fakeUploadUrl = location.origin, directUploadExtraBody = {} } = this.$vadminConfig.ckeditor
       // Prevented the default behavior.
       evt.stop()
       const { fileLoader } = evt.data
       const { xhr } = fileLoader
-      xhr.$uploadResult = await autoLoading(uploadFile(fileLoader.file))
+      xhr.$uploadResult = await autoLoading(uploadFile(fileLoader.file, directUploadExtraBody))
       xhr.open('get', fakeUploadUrl, true)
       xhr.send()
     }
