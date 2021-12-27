@@ -1,6 +1,6 @@
 <template>
   <div v-if="showButton" style="display: inline-block;">
-    <el-button type="primary" @click="handleShowCropper" :disabled="disabled">裁剪图片</el-button>
+    <el-button type="primary" @click="handleShowCropper" :disabled="disabled">{{ $t('bean.resizeImage') }}</el-button>
     <ImageCropper
       v-model="show"
       v-bind="cropper"
