@@ -38,9 +38,10 @@
       <div class="box-table">
         <slot name="table" :value="value">
           <Table
+            v-if="renderTable"
             v-bind="tableProps"
             v-on="tableEvents"
-            :columns="sourcePageTableColumns"
+            :columns="sourcePageTableColumnsSelected"
             :value="value"
             :actions="actions"
             :action-column-props="actionColumnProps"
@@ -58,6 +59,9 @@
         @submit="handlePagination"
       />
       <slot name="after-pagination" />
+      <div class="box-btn-setting">
+        <ColumnSetting :columns="tableColumns" v-model="selectedTableColumnProps" />
+      </div>
     </div>
   </div>
 </template>
@@ -69,13 +73,14 @@ import Table from '../table';
 import Pagination from '../pagination';
 import _ from 'lodash';
 import { sleep } from '../../utils';
-
+import ColumnSetting from './column-setting.vue';
 
 @Component({
   components: {
     AdminFilter,
     Table,
-    Pagination
+    Pagination,
+    ColumnSetting
   }
 })
 export default class AdminSourcePageTable extends Vue {
@@ -93,6 +98,21 @@ export default class AdminSourcePageTable extends Vue {
 
   filterForm = {};
   defaultSort = {};
+  selectedTableColumnProps = [];
+  renderTable = true;
+
+  get SELECTED_COLUMN_PROPS_STORAGE_KEY() {
+    return `${location.hostname}_${location.pathname}_admin-source-page-selected-column-props`;
+  }
+
+  get sourcePageTableColumnsSelected() {
+    if (this.selectedTableColumnProps.length) {
+      return _.filter(this.sourcePageTableColumns, (column) => {
+        return _.includes(this.selectedTableColumnProps, column.prop);
+      });
+    }
+    return this.sourcePageTableColumns;
+  }
 
   get sourcePageTableColumns() {
     const defaultSortable = _.get(this, '$vadminConfig.sourcePage.sortable', []);
@@ -104,13 +124,33 @@ export default class AdminSourcePageTable extends Vue {
     }))
   }
 
-  created() {
+  async created() {
+    // 重新渲染table
+    this.reRenderTable = _.debounce(async () => {
+      this.renderTable = false;
+      await this.$nextTick();
+      this.renderTable = true;
+    }, 500);
+
     this.filterForm = JSON.parse(JSON.stringify(this.$route.query));
     const sortParams = _.get(this.filterForm, 'order', {});
     const sortKey = Object.keys(sortParams)[0];
     if (sortKey) {
       this.defaultSort = { prop: sortKey, order: { asc: 'ascending', desc: 'descending' }[sortParams[sortKey]] }
     }
+    try {
+      this.selectedTableColumnProps = JSON.parse(localStorage.getItem(this.SELECTED_COLUMN_PROPS_STORAGE_KEY)) || [];
+    // eslint-disable-next-line no-empty
+    } catch (e) {}
+
+    this.dispose = this.$watch('selectedTableColumnProps', () => {
+      this.reRenderTable();
+    });
+  }
+
+  beforeDestroy() {
+    this.dispose && this.dispose();
+    return localStorage.setItem(this.SELECTED_COLUMN_PROPS_STORAGE_KEY, JSON.stringify(this.selectedTableColumnProps));
   }
 
   handleSortChange(e) {

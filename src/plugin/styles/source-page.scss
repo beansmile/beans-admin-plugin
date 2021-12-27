@@ -164,6 +164,12 @@
     flex: 1;
     overflow: hidden;
   }
+
+  .page-footer {
+    .box-btn-setting {
+      margin-left: auto;
+    }
+  }
 }
 
 .source-page-filter-drawer {
