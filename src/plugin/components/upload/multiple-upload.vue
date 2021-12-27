@@ -153,7 +153,7 @@ export default class MultipleUploadDialog extends Vue {
         renderCell(h, { props: { value, scope: { row } } }) {
           return (
             <a href={window.URL.createObjectURL(row.file)} target="_blank">
-              <span>{value}{ row.cropped ? <el-tag style="margin-left: 10px" type="danger">已裁剪</el-tag> : '' }</span>
+              <span>{value}{ row.cropped ? <el-tag style="margin-left: 10px" type="danger">{ this.$t('bean.imageResized') }</el-tag> : '' }</span>
             </a>
           )
         }
@@ -197,7 +197,7 @@ export default class MultipleUploadDialog extends Vue {
 
   get cropperHint() {
     if (this.cropper) {
-      return `图片裁剪：${this.cropper.width}x${this.cropper.height}`;
+      return `${this.$t('bean.imageResizer')}: ${this.cropper.width}x${this.cropper.height}`;
     }
     return '';
   }
@@ -233,7 +233,7 @@ export default class MultipleUploadDialog extends Vue {
   actions({ $index, row }) {
     return [
       h => <ImageCropperAction h={h} file={row.file} disabled={row.uploading || row.cropped} cropper={this.cropper} onSuccess={(e) => this.handleCropSuccess(e, $index)} />,
-      (h) => <el-button h={h} disabled={row.uploading} type="danger" onClick={() => this.tableData.splice($index, 1)}>移除</el-button>
+      (h) => <el-button h={h} disabled={row.uploading} type="danger" onClick={() => this.tableData.splice($index, 1)}>{ this.$t('bean.actionRemove') }</el-button>
     ].filter(Boolean);
   }
 
