@@ -5,6 +5,7 @@
     title="Topics"
     :columns="columns"
     :filterColumns="filterColumns"
+    :scopeColumns="scopeColumns"
     :formColumns="formColumns"
     :onFetchData="onFetchData"
     :actions="actions"
@@ -40,6 +41,19 @@ export default class Topics extends Vue {
         props: {
           options: _.map(TABS, (label, value) => ({ label, value })),
           clearable: true
+        }
+      }
+    }
+  ]
+
+  scopeColumns = [
+    {
+      prop: 'tab',
+      label: '主题分类',
+      renderCell: {
+        component: 'radioGroup',
+        props: {
+          options: _.map(TABS, (label, value) => ({ label, value }))
         }
       }
     }

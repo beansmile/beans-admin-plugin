@@ -39,6 +39,16 @@ export default class {[ className ]} extends Vue {
    * @param {String} params.type - 页面类型 enum: ['index', 'show', 'edit', 'new']
    * @param {String} params.resource -页面RESTful api资源名
    */
+  scopeColumns() {
+    return [];
+  }
+
+  /**
+   * @param {Function} h - createElement
+   * @param {Object} params
+   * @param {String} params.type - 页面类型 enum: ['index', 'show', 'edit', 'new']
+   * @param {String} params.resource -页面RESTful api资源名
+   */
   columns() {
     return [
       {

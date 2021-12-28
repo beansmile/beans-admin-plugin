@@ -32,6 +32,17 @@
         />
       </template>
 
+      <template v-if="scopeColumns.length">
+        <AdminForm
+          v-model="filterForm"
+          :columns="scopeColumnsWithoutLable"
+          @change="handleScopeChange"
+        >
+          <template v-slot:action>
+          </template>
+        </AdminForm>
+      </template>
+
       <slot name="after-filter" />
 
       <slot name="before-table" />
@@ -69,6 +80,7 @@
 <script>
 import { Vue, Component, Prop, PropSync } from 'vue-property-decorator';
 import AdminFilter from '../form/filter';
+import AdminForm from '../form/index';
 import Table from '../table';
 import Pagination from '../pagination';
 import _ from 'lodash';
@@ -78,6 +90,7 @@ import ColumnSetting from './column-setting.vue';
 @Component({
   components: {
     AdminFilter,
+    AdminForm,
     Table,
     Pagination,
     ColumnSetting
@@ -95,6 +108,7 @@ export default class AdminSourcePageTable extends Vue {
   @Prop({ type: Object, default: () => ({}) }) tableEvents;
   @Prop(Boolean) renderFilterDrawer;
   @PropSync('showFilterDrawer', Boolean) filterDrawerVisible;
+  @Prop({ type: Array, default: () => [] }) scopeColumns;
 
   filterForm = {};
   defaultSort = {};
@@ -122,6 +136,10 @@ export default class AdminSourcePageTable extends Vue {
         false :
         (item.sortable || defaultSortable.includes(item.prop) ? 'custom' : false)
     }))
+  }
+
+  get scopeColumnsWithoutLable() {
+    return this.scopeColumns.map(item => _.omit(item, 'label'));
   }
 
   async created() {
@@ -177,11 +195,16 @@ export default class AdminSourcePageTable extends Vue {
 
   async handleReset() {
     await this.handleCloseDrawer();
-    this.$router.replace({ query: {}, hash: this.$route.hash });
+    // scopeColumns除外
+    this.$router.replace({ query: _.pick(this.$route.query, this.scopeColumns.map(item => item.prop)), hash: this.$route.hash });
   }
 
   handlePagination({ page, size }) {
     this.$router.replace({ query: { ...this.$route.query, page, per_page: size }, hash: this.$route.hash });
+  }
+
+  handleScopeChange(params) {
+    this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 }, hash: this.$route.hash });
   }
 }
 </script>

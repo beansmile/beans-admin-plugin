@@ -6,6 +6,7 @@
       :value="state.data"
       :table-columns="sourcePageIndexColumns"
       :filter-columns="sourcePageFilterColumns"
+      :scope-columns="sourcePageScopeColumns"
       :actions="sourcePageAction"
       :pagination-props="state.pagination"
       :table-events="tablePageEvents"
@@ -98,6 +99,7 @@ export default class AdminSourcePage extends Vue {
   @Prop(Array) tabs;
   @Prop([Array, Function]) formColumns;
   @Prop([Array, Function]) filterColumns;
+  @Prop([Array, Function]) scopeColumns;
   @Prop({ type: Array, default: () => ['new', 'show'] }) actionButtons;
   @Prop(Object) exportProps;
   @Prop(Object) importProps;
@@ -158,11 +160,7 @@ export default class AdminSourcePage extends Vue {
     const defaultColumns = this
       .getColumns(_.get(this, '$vadminConfig.sourcePage.columns', []))
       .filter(defaultColumn => !columns.find(userColumn => userColumn.prop === defaultColumn.prop));
-    return columns.concat(defaultColumns)
-      .map(item => ({
-        ...item,
-        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
-      }));
+    return this.transformColumns(columns.concat(defaultColumns));
   }
 
   get sourcePageFormColumns() {
@@ -174,11 +172,7 @@ export default class AdminSourcePage extends Vue {
     const defaultColumns = this
       .getColumns(_.get(this, '$vadminConfig.sourcePage.formColumns', []), exportParams)
         .filter(defaultColumn => !columns.find(userColumn => userColumn.prop === defaultColumn.prop));
-    return columns.concat(defaultColumns)
-      .map(item => ({
-        ...item,
-        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
-      }));
+    return this.transformColumns(columns.concat(defaultColumns));
   }
 
   get sourcePageFilterColumns() {
@@ -186,11 +180,12 @@ export default class AdminSourcePage extends Vue {
     const defaultColumns = this
       .getColumns(_.get(this, '$vadminConfig.sourcePage.filterColumns', []))
       .filter(defaultColumn => !columns.find(userColumn => userColumn.prop === defaultColumn.prop));
-    return columns.concat(defaultColumns)
-      .map(item => ({
-        ...item,
-        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
-      }));
+    return this.transformColumns(columns.concat(defaultColumns));
+  }
+
+  get sourcePageScopeColumns() {
+    const columns = this.getColumns(this.scopeColumns);
+    return this.transformColumns(columns);
   }
 
   get exportActionParams() {
@@ -268,6 +263,13 @@ export default class AdminSourcePage extends Vue {
       this.originData = _.cloneDeep(this.form);
       this.$set(this.state, 'data', this.form);
     }
+  }
+
+  transformColumns(columns = []) {
+    return columns.map(item => ({
+      ...item,
+      label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
+    }));
   }
 
   getColumns(columns, exportParams = {}) {
