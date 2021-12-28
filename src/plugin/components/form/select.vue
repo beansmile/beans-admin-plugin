@@ -19,7 +19,7 @@ export default class Select extends Vue {
   @Prop(Boolean) allowCreate;
   @Prop(Boolean) defaultFirstOption;
 
-  @Model('change', { type: [String, Number, Object, Array, Boolean], default: '' }) value;
+  @Model('change', { type: [String, Number, Object, Array, Boolean] }) value;
 
   localOptions = []
   localProps = {}
