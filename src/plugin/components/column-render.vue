@@ -112,13 +112,29 @@ export const BoolTag = {
 const RadioGroup = {
   functional: true,
   render(h, context) {
-    const { options } = context.props;
+    const { options, isButtonStyle = false, ...props } = context.props;
+    const componentName = isButtonStyle ? 'el-radio-button' : 'el-radio';
     return (
-      <el-radio-group {...context} on={context.listeners}>
+      <el-radio-group props={props} on={context.listeners}>
         {options.map(option => (
-          <el-radio label={option.value}>{option.label}</el-radio>
+          h(componentName, { props: { ..._.omit(option, 'value'), label: option.value } }, option.label)
         ))}
       </el-radio-group>
+    )
+  }
+}
+
+const CheckboxGroup = {
+  functional: true,
+  render(h, context) {
+    const { options, isButtonStyle = false, value = [], ...props } = context.props;
+    const componentName = isButtonStyle ? 'el-checkbox-button' : 'el-checkbox';
+    return (
+      <el-checkbox-group value={value} props={props} on={context.listeners}>
+        {options.map(option => (
+          h(componentName, { props: { ..._.omit(option, 'value'), label: option.value } }, option.label)
+        ))}
+      </el-checkbox-group>
     )
   }
 }
@@ -263,6 +279,7 @@ const COMPONENT_PRE_INSTALLED = {
   storageAttachment: StorageAttachment,
   editor: CKEditor,
   radioGroup: RadioGroup,
+  checkboxGroup: CheckboxGroup,
   listSelect: ListSelect,
   linkSelect: LinkSelect,
   pageEditor: PageGenerator,
