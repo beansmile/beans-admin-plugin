@@ -185,11 +185,7 @@ export default class AdminSourcePage extends Vue {
 
   get sourcePageScopeColumns() {
     const columns = this.getColumns(this.scopeColumns);
-    return columns
-      .map(item => ({
-        ...item,
-        label: item.label || this.$t(`${this.namespace}${this.resource}.${item.prop}`)
-      }));
+    return this.transformColumns(columns);
   }
 
   get exportActionParams() {
