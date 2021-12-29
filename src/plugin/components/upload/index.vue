@@ -81,12 +81,16 @@ export default class AdminUpload extends Vue {
     return this.limit > 1;
   }
 
-  handleUploadBtnClick() {
+  triggerUpload() {
     if (this.fileInputIsMultiple) {
       this.showMultipleUploadDialog = true;
       return;
     }
     this.$refs[this.FILE_INPUT_REF_NAME].click();
+  }
+
+  handleUploadBtnClick() {
+    this.triggerUpload();
   }
 
   async handleMultipleUploadDialogClosed() {

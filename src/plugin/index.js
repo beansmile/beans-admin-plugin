@@ -3,10 +3,13 @@ import _ from 'lodash';
 import PortalVue from 'portal-vue';
 import installElement from './element';
 import { request, fly, autoLoading } from './utils';
+import mavonEditor from 'mavon-editor';
+import 'mavon-editor/dist/css/index.css';
 
 export default function install(Vue, options = {}) {
   installElement(Vue);
   Vue.use(PortalVue);
+  Vue.use(mavonEditor);
 
   const pluginConfig = _.merge({}, config, options);
   // 筛选出来locales里面有值的

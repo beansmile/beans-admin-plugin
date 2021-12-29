@@ -78,11 +78,13 @@
     }
 
     & > .el-form {
-      width: 100%;
+      & > .el-form-item {
+        width: 100%;
 
-      @media screen and (min-width: $--lg) {
-        width: 60%;
-        min-width: 800px;
+        @media screen and (min-width: $--lg) {
+          width: 60%;
+          min-width: 800px;
+        }
       }
     }
 
