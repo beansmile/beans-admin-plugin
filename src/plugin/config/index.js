@@ -6,6 +6,9 @@ export default {
     contentsCss: [],
     directUploadExtraBody: {}
   },
+  markdownEditor: {
+    language: 'zh-CN'
+  },
   upload: {
     directUploadURL: '/blobs/direct_upload',
     resourceBlobURL: '',

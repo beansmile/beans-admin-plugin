@@ -22,6 +22,7 @@ import DialogForm from './form/dialog';
 import ImportButton from './import-button';
 import DropdownButton from './dropdown-button';
 import List from './list';
+import MarkdownEditor from './markdown-editor';
 
 const RenderDate = {
   functional: true,
@@ -278,6 +279,7 @@ const COMPONENT_PRE_INSTALLED = {
   upload: Upload,
   storageAttachment: StorageAttachment,
   editor: CKEditor,
+  markdownEditor: MarkdownEditor,
   radioGroup: RadioGroup,
   checkboxGroup: CheckboxGroup,
   listSelect: ListSelect,

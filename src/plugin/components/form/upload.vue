@@ -31,6 +31,7 @@
       v-bind="$attrs"
       :uploadButtonTextI18n="uploadButtonTextI18n"
       @success="handleSuccess"
+      ref="uploader"
     />
 
     <draggable
@@ -135,6 +136,14 @@ export default class AdminFormUpload extends Vue {
       }
       return item;
     });
+  }
+
+  triggerUpload() {
+    if (this.useResourceUploader) {
+      this.disalogVisible = true;
+    } else {
+      this.$refs.uploader.triggerUpload();
+    }
   }
 
   @Watch('value', { immediate: true })

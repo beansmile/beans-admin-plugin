@@ -78,6 +78,10 @@ export function install(Vue, config = {}) {
       component: require('./ck-editor').default
     },
     {
+      name: 'markdown-editor',
+      component: require('./markdown-editor').default
+    },
+    {
       name: 'link',
       component: Link
     },
