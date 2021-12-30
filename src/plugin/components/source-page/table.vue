@@ -71,7 +71,7 @@
       />
       <slot name="after-pagination" />
       <div class="box-btn-setting">
-        <ColumnSetting :columns="tableColumns" v-model="selectedTableColumnProps" />
+        <ColumnSetting :columns="tableColumnsCanControl" v-model="selectedTableColumnProps" />
       </div>
     </div>
   </div>
@@ -114,6 +114,12 @@ export default class AdminSourcePageTable extends Vue {
   defaultSort = {};
   selectedTableColumnProps = [];
   renderTable = true;
+
+  get tableColumnsCanControl() {
+    return this.tableColumns.filter(item => {
+      return !!(item.label && item.prop) && item.type !== 'selection';
+    });
+  }
 
   get SELECTED_COLUMN_PROPS_STORAGE_KEY() {
     return `${location.hostname}_${location.pathname}_admin-source-page-selected-column-props`;
