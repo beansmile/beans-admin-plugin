@@ -1,7 +1,8 @@
 <script>
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import _ from 'lodash';
-import { screenService } from '../services';
+import { screenService } from '../../services';
+import HeaderFilter from './header-filter';
 
 @Component
 export default class AdminTable extends Vue {
@@ -9,9 +10,10 @@ export default class AdminTable extends Vue {
   @Prop({ type: Array, default: () => [] }) value;
   @Prop({ type: [Function, Array] }) actions;
   @Prop({ type: Object, default: () => ({}) }) actionColumnProps;
+  @Prop({ type: Object, default: () => ({}) }) filterForm;
 
   get actionColumn() {
-    const ColumnRender = require('./column-render').default;
+    const ColumnRender = require('../column-render').default;
 
     if (!this.actions) {
       return null;
@@ -61,8 +63,23 @@ export default class AdminTable extends Vue {
     ));
   }
 
+  @Emit('filter')
+  handleHeaderFilter(data) {
+    return data;
+  }
+
+  @Emit('reset-filter')
+  handleHeaderFilterReset(columns) {
+    return columns;
+  }
+
+  @Emit('filter-form-change')
+  handleHeaderFilterChange(data) {
+    return data;
+  }
+
   renderCell(column) {
-    const ColumnRender = require('./column-render').default;
+    const ColumnRender = require('../column-render').default;
     return scope => {
       return <ColumnRender
         key={column.prop}
@@ -74,8 +91,40 @@ export default class AdminTable extends Vue {
     }
   }
 
+  renderHeader(column) {
+    const ColumnRender = require('../column-render').default;
+    return scope => {
+      const filterColumns = _.get(column, 'filterColumns');
+      const renderHeader = _.get(column, 'renderHeader') || _.get(column, 'render-header');
+      const renderLabel = () => renderHeader ? (
+        <ColumnRender
+          key={column.prop}
+          value={column.label}
+          scope={scope}
+          column={column}
+          renderCell={renderHeader}
+        />
+      ) : (column.label || '');
+      return (
+        filterColumns ? (
+          <HeaderFilter
+            columns={column.filterColumns}
+            value={this.filterForm}
+            onChange={this.handleHeaderFilterChange}
+            onFilter={(e) => this.handleHeaderFilter(e)}
+            onReset={() => this.handleHeaderFilterReset(filterColumns)}
+          >
+            {renderLabel()}
+          </HeaderFilter>
+        ) : renderLabel()
+      );
+    }
+  }
+
   renderTableColumn(column) {
-    const scopedSlots = {};
+    const scopedSlots = {
+      header: this.renderHeader(column)
+    };
     if (column.renderCell) {
       scopedSlots.default = this.renderCell(column);
     }

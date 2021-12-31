@@ -39,3 +39,26 @@
     }
   }
 }
+
+.admin-table-header-filter-trigger {
+  display: inline-flex;
+  align-items: center;
+
+  .icon {
+    margin-left: 5px;
+  }
+
+  &.isActive {
+    transform: scale(1.2);
+
+    .icon {
+      transform: rotate(-90deg);
+    }
+  }
+}
+
+.admin-table-header-filter {
+  .el-form-item:last-of-type {
+    margin-bottom: 0;
+  }
+}

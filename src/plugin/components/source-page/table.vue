@@ -57,7 +57,11 @@
             :actions="actions"
             :action-column-props="actionColumnProps"
             :default-sort="defaultSort"
+            :filterForm="filterForm"
+            @filter-form-change="handleFilterFormChange"
             @sort-change="handleSortChange"
+            @filter="handleTableFilter"
+            @reset-filter="handleResetTableFilter"
           />
         </slot>
       </div>
@@ -194,15 +198,36 @@ export default class AdminSourcePageTable extends Vue {
     }
   }
 
+  handleFilterFormChange(data) {
+    this.filterForm = data;
+  }
+
+  execFilter(params) {
+    this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 }, hash: this.$route.hash });
+  }
+
+  execResetFilter(resets = []) {
+    const query = _.omit({ ...this.$route.query, page: 1 }, resets);
+    this.$router.replace({ query, hash: this.$route.hash });
+  }
+
   async handleFilter(params) {
     await this.handleCloseDrawer();
-    this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 }, hash: this.$route.hash });
+    this.execFilter(params);
   }
 
   async handleReset() {
     await this.handleCloseDrawer();
-    // scopeColumns除外
-    this.$router.replace({ query: _.pick(this.$route.query, this.scopeColumns.map(item => item.prop)), hash: this.$route.hash });
+    // 只重置filterColumn
+    this.execResetFilter(this.filterColumns.map(item => item.prop));
+  }
+
+  handleTableFilter(params) {
+    this.execFilter(params);
+  }
+
+  handleResetTableFilter(columns) {
+    this.execResetFilter(columns.map(item => item.prop));
   }
 
   handlePagination({ page, size }) {
