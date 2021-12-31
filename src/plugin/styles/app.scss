@@ -17,19 +17,6 @@ a {
   color: $--color-primary;
 }
 
-.html-content {
-  font-size: $--font-size-base;
-  color: #333333;
-  line-height: 1.6;
-  word-wrap: break-word;
-
-  img, video {
-    max-width: 100%;
-    height: auto !important;
-    vertical-align: top;
-  }
-}
-
 .text-overflow {
   @include text-overflow;
 }

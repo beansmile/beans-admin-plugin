@@ -152,6 +152,10 @@ export function install(Vue, config = {}) {
     {
       name: 'column-render',
       component: require('./column-render').default
+    },
+    {
+      name: 'rich-text',
+      component: require('./rich-text').default
     }
   ].forEach(item => {
     Vue.component(`${componentPrefix}-${item.name}`, item.component);

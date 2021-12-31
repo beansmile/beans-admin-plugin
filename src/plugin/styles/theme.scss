@@ -10,6 +10,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import './mixin';
 @import './flex.scss';
+@import './scrollbar';
 @import './app';
 @import './element-ui';
 @import './nprogress';
@@ -35,3 +36,4 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import './ckeditor.scss';
 @import './dropdown-button.scss';
 @import './page-creator.scss';
+@import './rich-text.scss';
