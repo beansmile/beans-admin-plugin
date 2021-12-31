@@ -23,6 +23,7 @@ import ImportButton from './import-button';
 import DropdownButton from './dropdown-button';
 import List from './list';
 import MarkdownEditor from './markdown-editor';
+import RichText from './rich-text';
 
 const RenderDate = {
   functional: true,
@@ -94,7 +95,7 @@ const DateTimePicker = {
 export const RenderHtml = {
   functional: true,
   render(h, context) {
-    return <div class="html-content" domProps={{ innerHTML: context.props.value }}/>
+    return h(RichText, _.merge({ type: 'richText' }, context.data), context.children);
   }
 }
 
@@ -276,6 +277,7 @@ const COMPONENT_PRE_INSTALLED = {
   table: Table,
   bool: BoolTag,
   html: RenderHtml,
+  richText: RichText,
   upload: Upload,
   storageAttachment: StorageAttachment,
   editor: CKEditor,
