@@ -17,12 +17,6 @@
       border-top-color: #fff;
     }
 
-    tr th {
-      color: #fff;
-      background-color: rgba($--color-primary, 0.9);
-      line-height: 1.3;
-    }
-
     .box-action-render {
       display: flex;
       flex-wrap: wrap;
@@ -49,7 +43,7 @@
   }
 
   &.isActive {
-    transform: scale(1.2);
+    color: $--color-primary;
 
     .icon {
       transform: rotate(-90deg);
