@@ -132,7 +132,8 @@ export default class AdminSourcePageTable extends Vue {
   get sourcePageTableColumnsSelected() {
     if (this.selectedTableColumnProps.length) {
       return _.filter(this.sourcePageTableColumns, (column) => {
-        return _.includes(this.selectedTableColumnProps, column.prop);
+        // selection 列一直需要显示
+        return !column.prop || !column.label || column.type === 'selection' || _.includes(this.selectedTableColumnProps, column.prop);
       });
     }
     return this.sourcePageTableColumns;
@@ -173,12 +174,17 @@ export default class AdminSourcePageTable extends Vue {
 
     this.dispose = this.$watch('selectedTableColumnProps', () => {
       this.reRenderTable();
+      this.handleSaveColumnSetting();
     });
   }
 
   beforeDestroy() {
     this.dispose && this.dispose();
-    return localStorage.setItem(this.SELECTED_COLUMN_PROPS_STORAGE_KEY, JSON.stringify(this.selectedTableColumnProps));
+    return this.handleSaveColumnSetting();
+  }
+
+  handleSaveColumnSetting() {
+    localStorage.setItem(this.SELECTED_COLUMN_PROPS_STORAGE_KEY, JSON.stringify(this.selectedTableColumnProps));
   }
 
   handleSortChange(e) {
