@@ -32,7 +32,19 @@ export default class AdminTableHeaderFilter extends Vue {
   @Prop({ type: Array, default: () => [] }) columns;
 
   get isActive() {
-    return !!this.columns.find(item => _.has(this.value, item.prop));
+    return !!this.columns.find(item => {
+      if (item.prop && _.has(this.value, item.prop)) {
+        const val = this.value[item.prop];
+        if (_.isPlainObject(val)) {
+          return !_.isEmpty(val);
+        }
+        if (_.isArray(val)) {
+          return val.length > 0;
+        }
+        return val !== undefined && val !== null && val !== '';
+      }
+      return false;
+    });
   }
 }
 </script>
