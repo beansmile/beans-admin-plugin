@@ -6,6 +6,7 @@
         v-on="$listeners"
         :columns="columns"
         :value="value"
+        label-width="auto"
         @change="$emit('change', $event)"
       >
         <template #action><span /></template>

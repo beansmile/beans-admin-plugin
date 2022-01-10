@@ -15,7 +15,7 @@ export default class AdminForm extends Vue {
   get labelProps() {
     const isMobile = screenService.isMobile;
     return {
-      ...(isMobile ? { 'label-position': 'top' } : { 'label-position': 'left', 'label-width': 'auto' }),
+      ...(isMobile ? { 'label-position': 'top' } : { 'label-position': 'left' }),
       ...this.$attrs
     };
   }
