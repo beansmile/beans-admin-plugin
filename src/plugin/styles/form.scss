@@ -6,7 +6,7 @@
     line-height: 1.4;
   }
 
-  .markdown-body {
+  .markdown-body:not(.fullscreen) {
     max-height: 400px;
   }
 }
