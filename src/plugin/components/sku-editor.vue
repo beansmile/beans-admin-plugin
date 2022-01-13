@@ -51,10 +51,29 @@
       </el-form-item>
     </el-form>
 
-    <c-source-table
-      :columns="tableColumns"
-      :table="{ data: value, border: true }"
-    />
+    <div class="table-container">
+      <div class="table">
+        <div class="table-header">
+          <div class="item">规格</div>
+          <div class="item" v-for="item in skuColumns" :key="item.label">{{ item.label }}</div>
+        </div>
+        <div class="table-body">
+          <template v-for="(row, rowIndex) in value">
+            <div class="table-row" :key="rowIndex">
+              <div class="item">{{ getPropertiesText(row) }}</div>
+              <div class="item" v-for="(column, index) in skuColumns" :key="column.prop">
+                <c-source-form-item
+                  :in-form="false"
+                  :column="skuColumns[index]"
+                  :value="row"
+                  @change="handleSkuChange(rowIndex, column.prop, $event)"
+                />
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -87,21 +106,8 @@
       return this.localSkuProperties.filter(item => this.shownProperty.includes(item.value));
     }
 
-    get tableColumns() {
-      const propertyColumn = {
-        prop: 'properties',
-        label: '规格',
-        renderCell: (h, { row }) => {
-          return row.properties.split(';').map(this.getPropertyText).join('、');
-        }
-      }
-      const columns = this.skuColumns.map(item => ({
-        renderCell: item.form ?
-          (h, { row, $index }) => <c-source-form-item in-form={false} column={item} value={row} onChange={val => this.handleSkuChange($index, item.prop, val)} /> :
-          undefined,
-        ...item
-      }));
-      return [propertyColumn].concat(columns);
+    getPropertiesText(row) {
+      return row.properties.split(';').map(this.getPropertyText).join('、');
     }
 
     mounted() {

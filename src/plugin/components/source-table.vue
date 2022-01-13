@@ -100,6 +100,7 @@ export default class SourceTable extends Vue {
           {
             tableColumns.map((column, index) =>
               <el-table-column
+                key={index}
                 align="center"
                 props={column}
                 scopedSlots={this.renderScopedSlots(column, index)}
