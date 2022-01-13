@@ -3,7 +3,48 @@
     font-size: 16px;
   }
 
-  .el-select {
-    width: 400px;
+
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .table {
+    display: table;
+    border-top: 1px solid $border-light;
+    border-left: 1px solid $border-light;
+    border-bottom: 1px solid $border-light;
+
+    .table-header,
+    .table-row {
+      display: flex;
+    }
+
+    .table-row {
+      border-top: 1px solid $border-light;
+
+      .btn-group {
+        display: none !important;
+      }
+    }
+
+    .table-header {
+      font-size: 14px;
+      height: 40px;
+      font-weight: bold;
+    }
+
+    .table-header > .item,
+    .table-row > .item {
+      display: table-cell;
+      width: 130px;
+      margin-bottom: 0;
+      padding: 15px;
+      border-right: 1px solid $border-light;
+
+      .el-form-item__error {
+        position: initial;
+      }
+    }
   }
 }
