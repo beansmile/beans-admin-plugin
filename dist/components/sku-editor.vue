@@ -51,10 +51,29 @@
       </el-form-item>
     </el-form>
 
-    <c-source-table
-      :columns="tableColumns"
-      :table="{ data: value, border: true }"
-    />
+    <div class="table-container">
+      <div class="table">
+        <div class="table-header">
+          <div class="item">规格</div>
+          <div class="item" v-for="item in skuColumns" :key="item.label">{{ item.label }}</div>
+        </div>
+        <div class="table-body">
+          <template v-for="(row, rowIndex) in value">
+            <div class="table-row" :key="rowIndex">
+              <div class="item">{{ getPropertiesText(row) }}</div>
+              <div class="item" v-for="(column, index) in skuColumns" :key="column.prop">
+                <c-source-form-item
+                  :in-form="false"
+                  :column="skuColumns[index]"
+                  :value="row"
+                  @change="handleSkuChange(rowIndex, column.prop, $event)"
+                />
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -67,10 +86,10 @@ import "core-js/modules/web.dom.iterable";
 import _defineProperty from "@babel/runtime-corejs2/helpers/esm/defineProperty";
 import "core-js/modules/es6.array.sort";
 import "core-js/modules/es6.array.find";
-import "core-js/modules/es6.regexp.split";
 import _slicedToArray from "@babel/runtime-corejs2/helpers/esm/slicedToArray";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
+import "core-js/modules/es6.regexp.split";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
@@ -143,6 +162,11 @@ function (_Vue) {
   }
 
   _createClass(SkuEditor, [{
+    key: "getPropertiesText",
+    value: function getPropertiesText(row) {
+      return row.properties.split(';').map(this.getPropertyText).join('、');
+    }
+  }, {
     key: "mounted",
     value: function mounted() {
       if (this.value.length) {
@@ -489,42 +513,6 @@ function (_Vue) {
       return this.localSkuProperties.filter(function (item) {
         return _this3.shownProperty.includes(item.value);
       });
-    }
-  }, {
-    key: "tableColumns",
-    get: function get() {
-      var _this4 = this;
-
-      var h = this.$createElement;
-      var propertyColumn = {
-        prop: 'properties',
-        label: '规格',
-        renderCell: function renderCell(h, _ref6) {
-          var row = _ref6.row;
-          return row.properties.split(';').map(_this4.getPropertyText).join('、');
-        }
-      };
-      var columns = this.skuColumns.map(function (item) {
-        return _objectSpread({
-          renderCell: item.form ? function (h, _ref7) {
-            var row = _ref7.row,
-                $index = _ref7.$index;
-            return h("c-source-form-item", {
-              "attrs": {
-                "in-form": false,
-                "column": item,
-                "value": row
-              },
-              "on": {
-                "change": function change(val) {
-                  return _this4.handleSkuChange($index, item.prop, val);
-                }
-              }
-            });
-          } : undefined
-        }, item);
-      });
-      return [propertyColumn].concat(columns);
     }
   }]);
 

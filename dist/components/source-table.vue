@@ -191,6 +191,7 @@ function (_Vue) {
         "ref": "table"
       }]), [tableColumns.map(function (column, index) {
         return h("el-table-column", _mergeJSXProps2([{
+          "key": index,
           "attrs": {
             "align": "center"
           }
