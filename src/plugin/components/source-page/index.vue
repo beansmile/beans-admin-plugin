@@ -138,7 +138,19 @@ export default class AdminSourcePage extends Vue {
   get tablePageEvents() {
     const defaultEvents = {};
     if (this.actionButtons.includes('show')) {
-      defaultEvents['row-click'] =  ({ id }) => this.$router.push({ name: `${this.resource}.show`, params: { id } });
+      defaultEvents['row-click'] =  ({ id }) => {
+        // 用户准备进行复制文字操作不要发生跳转
+        if (window.getSelection) {
+          const oSelection = window.getSelection();
+          if (oSelection.toString) {
+            const selection = oSelection.toString();
+            if (selection) {
+              return;
+            }
+          }
+        }
+        this.$router.push({ name: `${this.resource}.show`, params: { id } })
+      };
     }
     if (this.sourcePageBatchAction.length) {
       defaultEvents['selection-change'] = selection => this.$set(this.state, 'selection', selection);
