@@ -24,7 +24,7 @@
         v-for="property in localSkuPropertiesShown"
         :key="property.text"
       >
-        <template v-slot:label>
+        <template v-slot:label v-if="!disableEditPropertyValueText">
           <div>
             {{ property.text }}
             <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
@@ -88,6 +88,7 @@
     @Prop({ type: Array, default: () => [] }) skuProperties;
     @Prop({ type: Array, default: () => [] }) skuColumns;
     @Model('change', { type: Array, default: () => [] }) value;
+    @Prop(Boolean) disableEditPropertyValueText;
 
     propertySelected = {};
     shownProperty = []; // 显示在外面的规格
