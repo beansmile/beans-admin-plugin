@@ -24,7 +24,7 @@
         v-for="property in localSkuPropertiesShown"
         :key="property.text"
       >
-        <template v-slot:label>
+        <template v-slot:label v-if="!disableEditPropertyValueText">
           <div>
             {{ property.text }}
             <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
@@ -105,7 +105,7 @@ import _get from "lodash/get";
 import _cloneDeep from "lodash/cloneDeep";
 import _forEach from "lodash/forEach";
 
-var _dec, _dec2, _dec3, _dec4, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
+var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -130,7 +130,7 @@ var SkuEditor = (_dec = Prop({
   default: function _default() {
     return [];
   }
-}), Component(_class = (_class2 = (_temp =
+}), _dec5 = Prop(Boolean), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(SkuEditor, _Vue);
@@ -155,6 +155,8 @@ function (_Vue) {
     _initializerDefineProperty(_this, "skuColumns", _descriptor3, _assertThisInitialized(_this));
 
     _initializerDefineProperty(_this, "value", _descriptor4, _assertThisInitialized(_this));
+
+    _initializerDefineProperty(_this, "disableEditPropertyValueText", _descriptor5, _assertThisInitialized(_this));
 
     _this.propertySelected = {};
     _this.shownProperty = [];
@@ -533,6 +535,11 @@ function (_Vue) {
   writable: true,
   initializer: null
 }), _descriptor4 = _applyDecoratedDescriptor(_class2.prototype, "value", [_dec4], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "disableEditPropertyValueText", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
