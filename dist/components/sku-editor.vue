@@ -24,7 +24,7 @@
         v-for="property in localSkuPropertiesShown"
         :key="property.text"
       >
-        <template v-slot:label v-if="!disableEditPropertyValueText">
+        <template v-slot:label v-if="!disableEditPropertyText">
           <div>
             {{ property.text }}
             <el-button style="margin-left: 10px" size="mini" icon="el-icon-edit" circle @click="handleEditPropertyText(property.value, property.text)"></el-button>
@@ -156,7 +156,7 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "value", _descriptor4, _assertThisInitialized(_this));
 
-    _initializerDefineProperty(_this, "disableEditPropertyValueText", _descriptor5, _assertThisInitialized(_this));
+    _initializerDefineProperty(_this, "disableEditPropertyText", _descriptor5, _assertThisInitialized(_this));
 
     _this.propertySelected = {};
     _this.shownProperty = [];
@@ -539,7 +539,7 @@ function (_Vue) {
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "disableEditPropertyValueText", [_dec5], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class2.prototype, "disableEditPropertyText", [_dec5], {
   configurable: true,
   enumerable: true,
   writable: true,
