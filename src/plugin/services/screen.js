@@ -24,6 +24,10 @@ class ScreenService {
     return this.isXs;
   }
 
+  get isTablet() {
+    return this.isSm || this.isMd;
+  }
+
   get innerWidth() {
     return this.state.innnerWidth;
   }

@@ -122,7 +122,7 @@ export default class AdminSourcePage extends Vue {
   state = {}
 
   get renderFilterDrawer() {
-    return this.collapseFilter || screenService.isMobile;
+    return this.collapseFilter || screenService.isMobile || screenService.isTablet;
   }
 
   get exportButtonProps() {
