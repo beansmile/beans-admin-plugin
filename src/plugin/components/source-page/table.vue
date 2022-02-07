@@ -92,6 +92,19 @@ export default class AdminSourcePageTable extends Vue {
     }
   }
 
+  trim(obj) {
+    const trimFilter = _.get(this, '$vadminConfig.sourcePage.trimFilter');
+    if (trimFilter) {
+      return _.mapValues(obj, val => {
+        if (_.isString(val)) {
+          return _.trim(val);
+        }
+        return val;
+      });
+    }
+    return obj;
+  }
+
   handleSortChange(e) {
     const { prop, order } = e;
     // 只支持一列排序
@@ -103,7 +116,7 @@ export default class AdminSourcePageTable extends Vue {
   }
 
   handleFilter(params) {
-    this.$router.replace({ query: { ...this.$route.query, ...params, page: 1 }, hash: this.$route.hash });
+    this.$router.replace({ query: { ...this.$route.query, ...this.trim(params), page: 1 }, hash: this.$route.hash });
   }
 
   handleReset() {
