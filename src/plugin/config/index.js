@@ -35,7 +35,9 @@ export default {
     showController: true,
     initValue: true
   },
-  sourcePage: {},
+  sourcePage: {
+    trimFilter: false, // 筛选时去掉字符串前后空格
+  },
   pageGenerator: {
     enableModuleName: false
   },
