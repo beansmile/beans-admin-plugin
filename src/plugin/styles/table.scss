@@ -11,10 +11,10 @@
     }
 
     .ascending .sort-caret.ascending {
-      border-bottom-color: #fff;
+      border-bottom-color: $--color-primary;
     }
     .descending .sort-caret.descending {
-      border-top-color: #fff;
+      border-top-color: $--color-primary;
     }
 
     .box-action-render {
