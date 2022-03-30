@@ -28,7 +28,7 @@ import RichText from './rich-text';
 const RenderDate = {
   functional: true,
   render(h, context) {
-    const data = _.merge({}, context.data, { props: { format: 'YYYY-MM-DD' } });
+    const data = _.merge({}, { props: { format: 'YYYY-MM-DD' } }, context.data);
     return h(Moment, data, context.children);
   }
 }
@@ -36,7 +36,7 @@ const RenderDate = {
 const DateTime = {
   functional: true,
   render(h, context) {
-    const data = _.merge({}, context.data, { props: { format: 'YYYY-MM-DD HH:mm' } });
+    const data = _.merge({}, { props: { format: 'YYYY-MM-DD HH:mm:ss' } }, context.data);
     return h(Moment, data, context.children);
   }
 }
