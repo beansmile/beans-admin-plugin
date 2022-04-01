@@ -1,5 +1,6 @@
 <template>
   <mavon-editor
+    class="admin-mavon-editor"
     :value="value"
     v-bind="options"
     v-on="$listeners"
@@ -77,6 +78,17 @@ export default class MarkdownEditor extends Vue {
       ...(_.get(Vue, 'vadminConfig.markdownEditor') || {}),
       ...this.$attrs
     }
+  }
+
+  mounted() {
+    const markdownIt = this.$refs.editor.markdownIt;
+    markdownIt.use(
+      require('markdown-it-implicit-figures'),
+      {
+        figcaption: true,
+        link: false
+      }
+    );
   }
 
   @Emit('change')

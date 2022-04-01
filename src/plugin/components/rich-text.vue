@@ -19,6 +19,7 @@
 
 <script>
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import MarkdownEditor from './markdown-editor.vue';
 
 const RichText = {
   functional: true,
@@ -35,7 +36,7 @@ const RichText = {
       )
     }
     if (type === 'markdown') {
-      return <mavon-editor
+      return <MarkdownEditor
         value={value}
         editable={false}
         toolbarsFlag={false}
