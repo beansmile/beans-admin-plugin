@@ -24,6 +24,7 @@ export default {
     actionRemoveAll: 'Remove All',
     actionRemove: 'Remove',
     actionLogout: 'Log Out',
+    actionTableToExcel: 'Export to Excel',
     deleteSuccess: 'Deletion succeeded',
     createSuccess: 'Created successfully',
     updateSuccess: 'Update succeeded',

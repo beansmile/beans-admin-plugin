@@ -90,7 +90,7 @@ import Pagination from '../pagination';
 import _ from 'lodash';
 import { sleep } from '../../utils';
 import ColumnSetting from './column-setting.vue';
-
+import * as XLSX from 'xlsx';
 @Component({
   components: {
     AdminFilter,
@@ -154,12 +154,38 @@ export default class AdminSourcePageTable extends Vue {
   }
 
   async created() {
+
     // 重新渲染table
     this.reRenderTable = _.debounce(async () => {
       this.renderTable = false;
       await this.$nextTick();
       this.renderTable = true;
     }, 500);
+
+    this.tableToExcel = _.debounce((fileName) => {
+      const TableConstructor = Vue.extend(Table);
+      // 渲染新table
+      let tableInstance = new TableConstructor(
+        {
+          i18n: this.$i18n,
+          router: this.$router,
+          propsData: {
+            // 只导出有label的，只渲染这部分属性
+            columns: _.filter(this.sourcePageTableColumnsSelected, item => item.label)
+              .map(item => _.pick(item, ['label', 'prop', 'minWidth', 'width', 'renderCell'])),
+            value: this.value
+          }
+        }
+      );
+      tableInstance.$mount();
+      // 等dom
+      setTimeout(() => {
+        const book = XLSX.utils.table_to_book(tableInstance.$el);
+        XLSX.writeFileXLSX(book, `${fileName || 'table'}.xlsx`);
+        tableInstance.$destroy();
+        tableInstance = null;
+      }, 500);
+    }, 1000, { leading: true });
 
     this.filterForm = JSON.parse(JSON.stringify(this.$route.query));
     const sortParams = _.get(this.filterForm, 'order', {});

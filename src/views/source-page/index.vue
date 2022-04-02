@@ -166,6 +166,13 @@ export default class SourcePage extends Vue {
       optionalValue: '',
       defaultValue: ''
     },
+    {
+      prop: 'enableTableToExcel',
+      desc: '显示表格导出excel按钮',
+      type: 'Boolean',
+      optionalValue: '',
+      defaultValue: ''
+    },
   ];
   events = [];
   examples = [

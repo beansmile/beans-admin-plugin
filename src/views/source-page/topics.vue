@@ -12,6 +12,7 @@
     :batchActions="batchActions"
     :exportProps="exportProps"
     :importProps="importProps"
+    enableTableToExcel
   />
 </template>
 
