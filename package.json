@@ -58,7 +58,7 @@
     "glob": "^7.1.6",
     "minimist": "^1.2.5",
     "mustache": "^3.0.1",
-    "node-sass": "^4.9.2",
+    "node-sass": "^7.0.0",
     "node-ssh": "^6.0.0",
     "os": "^0.1.1",
     "raw-loader": "^4.0.2",
