@@ -37,6 +37,12 @@
             v-bind="importProps"
             v-if="importProps"
           />
+          <el-button
+            v-if="enableTableToExcel"
+            @click="handleTableToExcel"
+            type="primary"
+            icon="el-icon-download"
+          >{{ $t('bean.actionTableToExcel') }}</el-button>
           <slot name="action" />
         </div>
       </template>
@@ -116,6 +122,7 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: Object, default: () => ({}) }) form;
   @Prop({ type: Object }) actionColumnProps;
   @Prop(Boolean) collapseFilter;
+  @Prop(Boolean) enableTableToExcel;
 
   showFilterDrawer = false;
   formLoading = false;
@@ -364,6 +371,10 @@ export default class AdminSourcePage extends Vue {
         page: undefined
       }
     }
+  }
+
+  handleTableToExcel() {
+    this.$refs.tablePage.tableToExcel(this.pageTitle);
   }
 }
 </script>

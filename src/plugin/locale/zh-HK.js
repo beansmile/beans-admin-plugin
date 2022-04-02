@@ -25,6 +25,7 @@ export default {
     actionRemoveAll: '全部移除',
     actionRemove: '移除',
     actionLogout: '退出登錄',
+    actionTableToExcel: '導出表格',
     deleteSuccess: '刪除成功',
     createSuccess: '創建成功',
     updateSuccess: '更新成功',
