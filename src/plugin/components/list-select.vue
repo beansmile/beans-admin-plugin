@@ -5,6 +5,8 @@
       @submit="handleSearch"
       class="form-filter"
       v-model="params"
+      inline
+      v-bind="{ inline: true, ...formProps }"
     >
       <template v-slot:action>
         <el-form-item>
@@ -116,6 +118,7 @@
     @Prop({ type: Array, default: () => [] }) filterColumns;
     @Prop({ type: Function, default: () => [] }) onFilter;
     @Prop({ type: Function }) onLoad;
+    @Prop({ type: Object, default: () => ({}) }) formProps;
 
     loading = false;
     data = [];
