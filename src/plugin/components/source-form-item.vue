@@ -268,7 +268,14 @@ export default class SourceFormItem extends Vue {
       )
     }
 
-    return renderMap[component](this.formItem);
+    return (
+      <div class="source-form-item">
+        {headerVNode}
+        {renderMap[component](this.formItem)}
+        {footerVNode}
+        {hint && <div class="hint">{ hint }</div>}
+      </div>
+    );
 
   }
 }
