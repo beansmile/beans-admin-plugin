@@ -586,7 +586,11 @@ function (_Vue) {
         }, [hint])]);
       }
 
-      return renderMap[component](this.formItem);
+      return h("div", {
+        "class": "source-form-item"
+      }, [headerVNode, renderMap[component](this.formItem), footerVNode, hint && h("div", {
+        "class": "hint"
+      }, [hint])]);
     }
   }, {
     key: "formItem",

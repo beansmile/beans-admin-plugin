@@ -55,13 +55,13 @@
       <div class="table">
         <div class="table-header">
           <div class="item">规格</div>
-          <div class="item" v-for="item in skuColumns" :key="item.label">{{ item.label }}</div>
+          <div class="item" :style="{ width: getWidth(item.width) }" v-for="item in skuColumns" :key="item.label">{{ item.label }}</div>
         </div>
         <div class="table-body">
           <template v-for="(row, rowIndex) in value">
             <div class="table-row" :key="rowIndex">
               <div class="item">{{ getPropertiesText(row) }}</div>
-              <div class="item" v-for="(column, index) in skuColumns" :key="column.prop">
+              <div class="item" :style="{ width: getWidth(column.width) }" v-for="(column, index) in skuColumns" :key="column.prop">
                 <c-source-form-item
                   :in-form="false"
                   :column="skuColumns[index]"
@@ -90,6 +90,7 @@ import _slicedToArray from "@babel/runtime-corejs2/helpers/esm/slicedToArray";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import "core-js/modules/es6.regexp.split";
+import "core-js/modules/es6.number.constructor";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
@@ -164,6 +165,11 @@ function (_Vue) {
   }
 
   _createClass(SkuEditor, [{
+    key: "getWidth",
+    value: function getWidth(width) {
+      return Number(width) ? "".concat(width, "px") : width;
+    }
+  }, {
     key: "getPropertiesText",
     value: function getPropertiesText(row) {
       return row.properties.split(';').map(this.getPropertyText).join('、');
