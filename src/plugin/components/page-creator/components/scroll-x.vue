@@ -84,7 +84,7 @@ export default class PageCreatorScrollX extends Vue {
   static Controller = {
     functional: true,
     render(h, context) {
-      const { parent, props: { pages, popupComponents } } = context;
+      const { parent, props: { pages, popupComponents, useEvents } } = context;
       const configColumns = [
         {
           prop: 'items',
@@ -162,7 +162,7 @@ export default class PageCreatorScrollX extends Vue {
                 {
                   prop: 'event',
                   label: '事件设置',
-                  renderCell: (h, context) => <EventForm pages={pages} popupComponents={popupComponents} {...context} />
+                  renderCell: (h, context) => <EventForm useEvents={useEvents} pages={pages} popupComponents={popupComponents} {...context} />
                 }
               ]
             }
