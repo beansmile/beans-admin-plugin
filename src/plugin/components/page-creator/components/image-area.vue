@@ -33,7 +33,7 @@ export default class PageCreatorImageArea extends Vue {
   static Controller = {
     functional: true,
     render(h, context) {
-      const { listeners, props: { pages, popupComponents, value, visible } } = context;
+      const { listeners, props: { pages, popupComponents, useEvents, value, visible } } = context;
       const change = (val) => {
         listeners.close && listeners.close();
         listeners.change(val);
@@ -41,7 +41,7 @@ export default class PageCreatorImageArea extends Vue {
       return (
         <el-dialog fullscreen append-to-body visible={visible} onClose={listeners.close} custom-class="dialog-image-area">
           <ImageArea
-            event-props={{ pages, popupComponents }}
+            event-props={{ pages, popupComponents, useEvents }}
             value={value}
             onChange={change}
           />

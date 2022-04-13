@@ -48,7 +48,7 @@ export default class PageCreatorNavbar extends Vue {
   static Controller = {
     functional: true,
     render(h, context) {
-      const { parent, props: { pages } } = context;
+      const { parent, props: { pages, useEvents, popupComponents } } = context;
       const configColumns = [
         {
           prop: 'type',
@@ -89,7 +89,7 @@ export default class PageCreatorNavbar extends Vue {
                 {
                   prop: 'event',
                   label: '',
-                  renderCell: (h, context) => <EventForm pages={pages} {...context} />
+                  renderCell: (h, context) => <EventForm useEvents={useEvents} pages={pages} popupComponents={popupComponents} {...context} />
                 }
               ]
             }

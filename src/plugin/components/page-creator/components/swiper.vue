@@ -81,7 +81,7 @@ export default class PageCreatorSwiper extends Vue {
   static Controller = {
     functional: true,
     render(h, context) {
-      const { parent, props: { pages, popupComponents } } = context;
+      const { parent, props: { pages, popupComponents, useEvents } } = context;
       const configColumns = [
         {
           prop: 'indicatorDots',
@@ -190,7 +190,7 @@ export default class PageCreatorSwiper extends Vue {
                   {
                     prop: 'event',
                     label: '',
-                    renderCell: (h, context) => <EventForm is-image pages={pages} popupComponents={popupComponents} {...context} />
+                    renderCell: (h, context) => <EventForm is-image useEvents={useEvents} pages={pages} popupComponents={popupComponents} {...context} />
                   }
                 ].filter(Boolean);
               }
