@@ -246,7 +246,12 @@ export default {
       slideRight: 'Slide right in',
       shake: 'shake',
       moveForward: 'Move forward',
-      moveBack: 'Move back'
+      moveBack: 'Move back',
+      collapse: 'Collapse',
+      collapseItems: 'Items',
+      collapseContent: 'Content',
+      collapseTitle: 'Title',
+      collapseIndicator: 'Indicator icon'
     }
   }
 }

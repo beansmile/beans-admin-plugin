@@ -247,7 +247,12 @@ export default {
       slideRight: '右滑進入',
       shake: '抖動',
       moveForward: '前移',
-      moveBack: '後移'
+      moveBack: '後移',
+      collapse: '折疊面板',
+      collapseItems: '折疊項',
+      collapseContent: '折疊內容',
+      collapseTitle: '折疊標題',
+      collapseIndicator: '指示Icon'
     }
   }
 }

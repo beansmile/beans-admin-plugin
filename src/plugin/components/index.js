@@ -158,6 +158,7 @@ export function install(Vue, config = {}) {
       component: require('./rich-text').default
     }
   ].forEach(item => {
+    Vue.component(`bean-admin-${item.name}`, item.component);
     Vue.component(`${componentPrefix}-${item.name}`, item.component);
   });
 }

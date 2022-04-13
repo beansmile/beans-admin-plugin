@@ -63,6 +63,7 @@
               :is="componentsKeyByName[item.name].component"
               :class="{ active: item.key === activeComponentKey }"
               :value="item.config"
+              :enabled-components="componentsKeyByName"
               @change="handleComponentChange(item.key, $event)"
             />
           </div>
@@ -91,6 +92,7 @@
                   <component
                     :is="componentsKeyByName[item.name].component"
                     :value="item.config"
+                    :enabled-components="componentsKeyByName"
                     @change="handleComponentChange(item.key, $event)"
                   />
                 </Animation>
@@ -119,6 +121,7 @@
               :value="activeComponent.config || {}"
               :useEvents="useEvents"
               :pages="pages"
+              :enabled-components="componentsKeyByName"
               :popupComponents="globalComponentsGroupedByName.popup"
               :visible="drawer.controller"
               @change="handleComponentChange(activeComponent.key, $event)"
@@ -161,6 +164,7 @@ import Map from './components/map';
 import Navbar from './components/navbar';
 import Popup from './components/popup';
 import FixedButton from './components/fixed-button';
+import Collpase from './components/collapse';
 
 @Component({
   components: {
@@ -323,6 +327,14 @@ export default class PageCreator extends Vue {
         component: Navbar,
         controller: Navbar.Controller,
         defaultValue: Navbar.defaultValue
+      },
+      {
+        title: this.$t('bean.pageGenerator.collapse'),
+        name: 'collapse',
+        icon: 'el-icon-arrow-down',
+        component: Collpase,
+        controller: Collpase.controller,
+        defaultValue: Collpase.defaultValue
       },
       {
         title: this.$t('bean.pageGenerator.popup'),

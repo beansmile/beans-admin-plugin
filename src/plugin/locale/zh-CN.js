@@ -248,6 +248,11 @@ export default {
       shake: '抖动',
       moveForward: '前移',
       moveBack: '后移',
+      collapse: '折叠面板',
+      collapseItems: '折叠项',
+      collapseContent: '折叠内容',
+      collapseTitle: '折叠标题',
+      collapseIndicator: '指示Icon'
     }
   }
 }
