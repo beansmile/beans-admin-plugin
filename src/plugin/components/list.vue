@@ -43,19 +43,15 @@ export default class AdminList extends Vue {
   renderCell(column) {
     const ColumnRender = require('./column-render').default;
     const value = _.get(this.value, column.prop);
-    const renderCell = column.renderCell || (() => <div>{value}</div>);
+    const renderCell = column.renderCell || (() => <div>{_.isNil(value) ? '/' : value}</div>);
     return (
       <el-form-item class={column.prop} label-width={column.defaultLabelWidth || this.defaultLabelWidth} label={column.label} key={column.prop}>
-        {
-          _.isNil(value) ? <span>/</span> : (
-            <ColumnRender
-              value={value}
-              scope={{ row: this.value }}
-              renderCell={renderCell}
-              column={column}
-            />
-          )
-        }
+        <ColumnRender
+          value={value}
+          scope={{ row: this.value }}
+          renderCell={renderCell}
+          column={column}
+        />
       </el-form-item>
     )
   }
