@@ -36,10 +36,6 @@
 }
 
 .el-dialog {
-  margin: 0 auto !important;
-  top: 50%;
-  transform: translateY(-50%);
-
   @media screen and (max-width: $--sm) {
     &:not(.is-fullscreen) {
       width: 95% !important;
