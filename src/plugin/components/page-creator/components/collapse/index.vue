@@ -48,12 +48,12 @@ export default class PageCreatorCollapse extends Vue {
 
   get containerStyle() {
     const styleObj = _.get(this, 'value.style') || {};
-    return getStyle(_.pick(styleObj, ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom']), this.pageWidth);
+    return getStyle(_.pick(styleObj, ['paddingLeft', 'paddingRight', 'paddingTop', 'paddingBottom', 'backgroundColor']), this.pageWidth);
   }
 
   get style() {
     const styleObj = _.get(this, 'value.style') || {};
-    return getStyle(_.pick(styleObj, ['height', 'fontSize', 'color', 'fontWeight']), this.pageWidth);
+    return getStyle(_.pick(styleObj, ['height', 'fontSize', 'color', 'fontWeight', 'backgroundColor']), this.pageWidth);
   }
 
   static defaultValue = {
@@ -76,7 +76,8 @@ export default class PageCreatorCollapse extends Vue {
       paddingBottom: 0,
       paddingLeft: 24,
       paddingRight: 24,
-      borderColor: '#D3F2D9'
+      borderColor: '#D3F2D9',
+      backgroundColor: '#fff'
     }
   }
 
@@ -175,6 +176,16 @@ export default class PageCreatorCollapse extends Vue {
         {
           prop: 'borderColor',
           label: parent.$t('bean.pageGenerator.borderColor'),
+          renderCell: {
+            component: 'colorPicker',
+            props: {
+              'show-alpha': true
+            }
+          }
+        },
+        {
+          prop: 'backgroundColor',
+          label: parent.$t('bean.pageGenerator.backgroundColor'),
           renderCell: {
             component: 'colorPicker',
             props: {

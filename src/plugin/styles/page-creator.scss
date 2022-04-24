@@ -649,6 +649,10 @@
 }
 
 .page-creator-collapse {
+  .el-collapse {
+    border: none;
+  }
+
   .el-collapse-item__header {
     height: unset;
     line-height: unset;
