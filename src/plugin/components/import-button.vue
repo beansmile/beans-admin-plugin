@@ -64,7 +64,7 @@
       }
       const result = await this.$request.post(this.url, form, requestConfig);
       if (result.headers['x-error-message']) {
-        throw new Error(decodeURI(result.headers['x-error-message']));
+        throw new Error(decodeURIComponent(result.headers['x-error-message']));
       }
       if (+result.headers['x-error-count'] > 0) {
         this.download(new Blob([result.data]), `${this.$t('bean.error_massage')}.xlsx`);
