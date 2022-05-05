@@ -14,7 +14,9 @@
                 <el-button class="btn btn-sort" size="mini" type="primary" icon="el-icon-arrow-up" v-if="index - 1 >= 0" @click="handleMoveUp(index)" circle></el-button>
                 <el-button class="btn btn-sort" size="mini" type="primary" icon="el-icon-arrow-down" v-if="index + 1 <= value.length -1" circle @click="handleMoveDown(index)"></el-button>
               </template>
-              <el-button class="btn btn-delete" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
+              <template v-if="deletable">
+                <el-button class="btn btn-delete" size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(index)" circle v-if="!limitOne"></el-button>
+              </template>
             </div>
           </template>
           <template v-slot:action>
@@ -46,6 +48,7 @@
     @Prop({ type: Boolean }) limitOne; // 为true时不显示添加、删除按钮
     @Prop({ type: Object, default: () => ({}) }) defaultValue;
     @Prop(Boolean) sortable;
+    @Prop({ type: Boolean, default: true }) deletable;
 
     get addButtonTextI18n() {
       return this.addButtonText || this.$t('bean.actionAdd');
