@@ -41,7 +41,7 @@
           >
             <div class="item-label">
               <template v-if="renderLabel">
-                <ColumnRender
+                <bean-admin-column-render
                   :render-cell="renderLabel"
                   :item="item"
                   :index="index"
@@ -74,7 +74,7 @@
           >
             <div class="item-label">
               <template v-if="renderLabel">
-                <ColumnRender
+                <bean-admin-column-render
                   :render-cell="renderLabel"
                   :item="item"
                   :index="index"
@@ -99,12 +99,10 @@
   import draggable from 'vuedraggable';
   import { arrayMove } from '../utils';
   import AdminForm from './form';
-  import ColumnRender from './column-render';
   import { screenService } from '../services';
 
   @Component({
     components: {
-      ColumnRender,
       AdminForm,
       draggable
     }
