@@ -17,6 +17,12 @@
       :renderFilterDrawer="renderFilterDrawer"
       ref="tablePage"
     >
+      <template
+        v-for="(slot, slotName) in $scopedSlots"
+        #[slotName]="scope"
+      >
+        <component :key="slotName" :is="{ functional: true, render: () => slot(scope) }" />
+      </template>
       <template #after-filter>
         <div class="box-actions">
           <el-button v-if="renderFilterDrawer && sourcePageFilterColumns.length" type="primary" icon="el-icon-s-operation" @click="showFilterDrawer = true">{{ $t('bean.actionFilter') }}</el-button>
@@ -45,9 +51,6 @@
           >{{ $t('bean.actionTableToExcel') }}</el-button>
           <slot name="action" />
         </div>
-      </template>
-      <template #table="scope">
-        <slot name="table" v-bind="scope" />
       </template>
     </TablePage>
     <slot name="show" v-else-if="type === 'show'" :value="state.data">

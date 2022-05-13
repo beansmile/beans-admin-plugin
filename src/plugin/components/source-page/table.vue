@@ -43,9 +43,9 @@
         </AdminForm>
       </template>
 
-      <slot name="after-filter" />
+      <slot name="after-filter" :value="value" />
 
-      <slot name="before-table" />
+      <slot name="before-table" :value="value" />
       <div class="box-table">
         <slot name="table" :value="value">
           <Table
@@ -65,15 +65,15 @@
           />
         </slot>
       </div>
-      <slot name="after-table" />
+      <slot name="after-table" :value="value" />
     </div>
     <div class="page-footer">
-      <slot name="before-pagination" />
+      <slot name="before-pagination" :value="value" />
       <Pagination
         v-bind="paginationProps"
         @submit="handlePagination"
       />
-      <slot name="after-pagination" />
+      <slot name="after-pagination" :value="value" />
       <div class="box-btn-setting">
         <ColumnSetting :columns="tableColumnsCanControl" v-model="selectedTableColumnProps" />
       </div>
