@@ -3,12 +3,14 @@
     <div class="admin-import-block">
       <el-button icon="el-icon-upload" type="primary" :loading="importing" @click="handleButtonClick">{{ buttonText }}</el-button>
 
-      <el-popover v-if="excelTemplateDownloadLink" trigger="hover">
-        <a download :href="encodeURI(excelTemplateDownloadLink)">
-          {{ tooltipText || '下载模板' }}
-        </a>
-        <i class="el-icon-info btn-tip-trigger" slot="reference" @click.stop></i>
-      </el-popover>
+      <slot name="download">
+        <el-popover v-if="excelTemplateDownloadLink" trigger="hover">
+          <a download :href="encodeURI(excelTemplateDownloadLink)">
+            {{ tooltipText || '下载模板' }}
+          </a>
+          <i class="el-icon-info btn-tip-trigger" slot="reference" @click.stop></i>
+        </el-popover>
+      </slot>
 
       <input ref="fileInput" type="file" :accept="fileAccept" :disabled="importing" @change="handleFileChange" />
     </div>
