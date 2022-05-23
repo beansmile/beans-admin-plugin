@@ -19,6 +19,20 @@
       :src="resourceUrl"
       v-bind="{ controls: true, ...audioProps }"
     />
+    <div
+      v-else-if="resourceType.includes('pdf')"
+      class="resource-item attachment"
+    >
+      <i class="el-icon-document"></i>
+      <a
+        v-if="showFilename"
+        :href="resourceUrl"
+        style="display: block;"
+        target="_blank"
+      >
+        {{ resourceFilename }}
+      </a>
+    </div>
     <div v-else class="resource-item attachment">
       <i class="el-icon-document"></i>
       <a
