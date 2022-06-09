@@ -10,10 +10,10 @@
     >
       <div class="admin-sku-editor">
         <div style="margin-bottom: 20px" v-if="!propertyDisabled">
-          <el-button @click="handleAddProperty" type="primary">新建规格</el-button>
+          <el-button @click="handleAddProperty" type="primary">{{$t('bean.addNewOptionType')}}</el-button>
         </div>
         <el-form label-position="right" label-width="auto">
-          <el-form-item label="选择使用规格">
+          <el-form-item :label="$t('bean.chooseOptionType')">
             <el-select
               v-model="shownProperty"
               multiple
@@ -85,8 +85,8 @@
       </div>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleSubmit">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{$t('bean.actionCancel')}}</el-button>
+        <el-button type="primary" @click="handleSubmit">{{$t('bean.actionConfirm')}}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -97,6 +97,7 @@
   import _ from 'lodash';
   import AdminTable from './table';
   import AdminForm from './form';
+  import { i18n } from '@/i18n';
 
   @Component({
     components: {
@@ -105,7 +106,7 @@
     }
   })
   export default class SkuEditor extends Vue {
-    @Prop({ type: String, default: '编辑SKU' }) title;
+    @Prop({ type: String, default: i18n.t('bean.editVariant') }) title;
     @Prop(Boolean) propertyDisabled; // 禁止添加修改规格
     @Prop({ type: Array, default: () => [] }) skuProperties;
     @Prop({ type: Array, default: () => [] }) skuColumns;
@@ -119,7 +120,7 @@
     get propertyColumn() {
       return {
         prop: 'properties',
-        label: '规格',
+        label: this.$t('bean.optionTypes'),
         renderCell: (h, { props: { scope: { row } } }) => {
           return <span>{row.properties.split(';').map(this.getPropertyText).join('、')}</span>;
         }
@@ -175,9 +176,9 @@
     }
 
     async handleAddProperty() {
-      const { value } = await this.$prompt('请输入规格名', '新建规格', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      const { value } = await this.$prompt(this.$t('bean.pleaseInputOptionTypeName'), this.$t('bean.addNewOptionType'), {
+        confirmButtonText: this.$t('bean.actionConfirm'),
+        cancelButtonText: this.$t('bean.actionCancel')
       });
       if (value) {
         this.$emit('add-property', value);
@@ -185,9 +186,9 @@
     }
 
     async handleAddPropertyValue(propertyCategory, propertyCategoryText) {
-      const { value } = await this.$prompt('请输入规格值', propertyCategoryText, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      const { value } = await this.$prompt(this.$t('bean.pleaseInputOptionValueName'), propertyCategoryText, {
+        confirmButtonText: this.$t('bean.actionConfirm'),
+        cancelButtonText: this.$t('bean.actionCancel')
       });
       if (value) {
         this.$emit('add-property-value', { value, id: propertyCategory });
@@ -195,9 +196,9 @@
     }
 
     async handleEditPropertyText(propertyValue, valueText) {
-      const { value } = await this.$prompt('请输入新名称', valueText, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      const { value } = await this.$prompt(this.$t('bean.pleaseInputNewOptionTypeName'), valueText, {
+        confirmButtonText: this.$t('bean.actionConfirm'),
+        cancelButtonText: this.$t('bean.actionCancel')
       });
       if (value) {
         this.$emit('edit-property-text', { value, id: propertyValue });
@@ -205,9 +206,9 @@
     }
 
     async handleEditPropertyValueText(propertyValue, valueText) {
-      const { value } = await this.$prompt('请输入新名称', valueText, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      const { value } = await this.$prompt(this.$t('bean.pleaseInputNewOptionValueName'), valueText, {
+        confirmButtonText: this.$t('bean.actionConfirm'),
+        cancelButtonText: this.$t('bean.actionCancel')
       });
       if (value) {
         this.$emit('edit-property-value-text', { value, id: propertyValue });
