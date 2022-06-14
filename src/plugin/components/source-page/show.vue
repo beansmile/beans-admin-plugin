@@ -6,7 +6,7 @@ import List from '../list';
 
 @Component
 export default class AdminSourcePageShow extends Vue {
-  @Prop({ type: Array, default: () => [] }) tabs;
+  @Prop({ type: [Array, Function], default: () => [] }) tabs;
   @Prop({ type: Array, default: () => [] }) columns;
   @Prop({ type: [Function, Array], default: () => [] }) actions;
   @Prop({ type: Object }) value;
@@ -27,6 +27,9 @@ export default class AdminSourcePageShow extends Vue {
   }
 
   get allTabs() {
+    if (_.isFunction(this.tabs)) {
+      return this.tabs({ value: this.value || {} });
+    }
     return this.tabs.filter(tab => tab.can ? abilityService.can(tab.can) : true);
   }
 
@@ -97,7 +100,7 @@ export default class AdminSourcePageShow extends Vue {
   }
 
   renderContent(columns) {
-    if (this.tabs.length) {
+    if (this.allTabs.length) {
       return this.renderTabContent(this.allTabs);
     } else {
       return this.renderColumnsContent(columns);
