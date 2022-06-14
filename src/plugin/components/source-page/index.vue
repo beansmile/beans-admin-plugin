@@ -105,7 +105,7 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: String, default: '' }) namespace;
   @Prop(String) resource;
   @Prop([Array, Function]) columns;
-  @Prop(Array) tabs;
+  @Prop([Array, Function]) tabs;
   @Prop([Array, Function]) formColumns;
   @Prop([Array, Function]) filterColumns;
   @Prop([Array, Function]) scopeColumns;
