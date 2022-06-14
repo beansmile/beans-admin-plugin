@@ -27,10 +27,8 @@ export default class AdminSourcePageShow extends Vue {
   }
 
   get allTabs() {
-    if (_.isFunction(this.tabs)) {
-      return this.tabs({ value: this.value || {} });
-    }
-    return this.tabs.filter(tab => tab.can ? abilityService.can(tab.can) : true);
+    const tabs = _.isFunction(this.tabs) ? this.tabs({ value: this.value || {} }) : this.tabs;
+    return tabs.filter(tab => tab.can ? abilityService.can(tab.can) : true);
   }
 
   get showActions() {
