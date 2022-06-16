@@ -17,4 +17,10 @@
       }
     }
   }
+
+  .icon-br {
+    &:after {
+      content: 'N';
+    }
+  }
 }
