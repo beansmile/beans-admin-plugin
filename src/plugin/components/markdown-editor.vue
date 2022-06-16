@@ -22,6 +22,12 @@
         :title="$t('bean.pageGenerator.image')"
         @click="handleUploadImgClick"
       ></button>
+      <button
+        type="button"
+        class="op-icon icon-br"
+        @click="handleInsertBr"
+      >
+      </button>
     </template>
   </mavon-editor>
 </template>
@@ -106,6 +112,16 @@ export default class MarkdownEditor extends Vue {
       $editor.getTextareaDom(),
       { prefix: '![](', subfix: ')', str: src
     });
+  }
+
+  handleInsertBr() {
+    const $editor = this.$refs.editor;
+    const dom = $editor.getTextareaDom();
+    $editor.insertText(
+      dom,
+      { prefix: '', str: '\n<br>\n', subfix: '' },
+    );
+    dom.selectionStart = dom.selectionEnd;
   }
 }
 </script>
