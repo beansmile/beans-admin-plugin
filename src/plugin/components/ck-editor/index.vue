@@ -98,7 +98,9 @@
       evt.stop()
       const { fileLoader } = evt.data
       const { xhr } = fileLoader
-      xhr.$uploadResult = await autoLoading(uploadFile(fileLoader.file, directUploadExtraBody))
+      const file = fileLoader.file;
+      // 不知道ckeditor做了什么 file对象有点问题
+      xhr.$uploadResult = await autoLoading(uploadFile(new File([file], file.name, { type: file.type }), directUploadExtraBody))
       xhr.open('get', fakeUploadUrl, true)
       xhr.send()
     }
