@@ -14,6 +14,43 @@
   const CKEDITOR = window.CKEDITOR
   setConfig(CKEDITOR.config)
 
+  // https://github.com/ckeditor/ckeditor4/blob/a6dbe7467be13411cc6c85cb808cc7c10acab01c/plugins/filebrowser/plugin.js#L344
+  // https://github.com/ckeditor/ckeditor4/blob/c08cfedb607fab87866052e4aff2ec8facfb115d/plugins/filetools/plugin.js#L815
+  // https://github.com/ckeditor/ckeditor4/blob/c08cfedb607fab87866052e4aff2ec8facfb115d/plugins/filetools/plugin.js#L507
+  CKEDITOR.fileTools.fileLoader.prototype.load = function() {
+    const loader = this;
+    this.reader = new FileReader();
+    const reader = this.reader;
+    loader.changeStatus('loading');
+    this.abort = function() {
+      loader.reader.abort();
+    };
+    reader.onabort = function() {
+      loader.changeStatus('abort');
+    };
+    reader.onerror = function() {
+      loader.message = loader.lang.filetools.loadError;
+      loader.changeStatus('error');
+    };
+    reader.onprogress = function(evt) {
+      loader.loaded = evt.loaded;
+      loader.update();
+    };
+    reader.onload = function() {
+      loader.loaded = loader.total;
+      loader.data = reader.result;
+      loader.changeStatus('loaded');
+    };
+    const MAX_SIZE_READER_CAN_READ = 1024 * 1024 * 500; // 500M
+    if (this.file.size > MAX_SIZE_READER_CAN_READ) {
+      loader.data = this.file;
+      this.loaded = 0;
+      loader.changeStatus('loaded');
+      return;
+    }
+    reader.readAsDataURL(this.file);
+  };
+
   @Component
   export default class CKEditor extends Vue {
     @Model('change', { type: String, default: '' }) value
