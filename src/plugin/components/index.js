@@ -156,6 +156,10 @@ export function install(Vue, config = {}) {
     {
       name: 'rich-text',
       component: require('./rich-text').default
+    },
+    {
+      name: 'trim-input',
+      component: require('./form/trim-input').default
     }
   ].forEach(item => {
     Vue.component(`bean-admin-${item.name}`, item.component);

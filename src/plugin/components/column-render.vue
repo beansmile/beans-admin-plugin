@@ -24,6 +24,7 @@ import DropdownButton from './dropdown-button';
 import List from './list';
 import MarkdownEditor from './markdown-editor';
 import RichText from './rich-text';
+import TrimInput from './form/trim-input';
 
 const RenderDate = {
   functional: true,
@@ -260,6 +261,14 @@ export const RenderImportButton = {
   }
 }
 
+const AdminInput = {
+  functional: true,
+  render(h, context) {
+    const trim = context.props.trim;
+    return h(trim ? TrimInput : 'el-input', context.data, context.children);
+  }
+}
+
 const COMPONENT_PRE_INSTALLED = {
   ..._.mapKeys(Element, (value, key) => key.charAt(0).toLowerCase() + key.slice(1)),
   moment: Moment,
@@ -297,7 +306,9 @@ const COMPONENT_PRE_INSTALLED = {
   importButton: RenderImportButton,
   dropdownButton: DropdownButton,
   button: Button,
-  list: List
+  list: List,
+  input: AdminInput,
+  trimInput: TrimInput,
 }
 
 function getRenderContext({ context, config = {} }) {
