@@ -22,7 +22,7 @@
     "lodash": "^4.17.15",
     "markdown-it-implicit-figures": "^0.10.0",
     "mavon-editor": "^2.10.4",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "nprogress": "^0.2.0",
     "pluralize": "^8.0.0",
     "portal-vue": "^2.1.7",
