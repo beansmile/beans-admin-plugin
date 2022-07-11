@@ -2193,8 +2193,8 @@ circular-json@^0.3.1:
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
 
 "ckeditor@https://github.com/beansmile/ckeditor.git":
-  version "0.0.0"
-  resolved "https://github.com/beansmile/ckeditor.git#4ec0c09fa6689a0c140e31d3d6b7d57f107cfd38"
+  version "1.0.0"
+  resolved "https://github.com/beansmile/ckeditor.git#143aefa91ef2b38ee7b640a11e337714671bdbed"
 
 class-utils@^0.3.5:
   version "0.3.6"
