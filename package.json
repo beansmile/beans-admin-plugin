@@ -13,7 +13,7 @@
     "build-doc": "vue-cli-service build --dest docs"
   },
   "dependencies": {
-    "ckeditor": "https://github.com/beansmile/ckeditor.git",
+    "ckeditor": "https://github.com/beansmile/ckeditor.git#fix-add-packagejson",
     "content-disposition": "^0.5.3",
     "cropperjs": "^1.5.7",
     "element-ui": "2.15.2",
