@@ -5,6 +5,7 @@ import installElement from './element';
 import { request, fly, autoLoading } from './utils';
 import MavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
+import alertEnvTips from './utils/alert-env-tips.js';
 
 export default function install(Vue, options = {}) {
   installElement(Vue);
@@ -30,6 +31,7 @@ export default function install(Vue, options = {}) {
       throw err;
     }
   }
+  alertEnvTips();
 }
 
 export * from './services';
