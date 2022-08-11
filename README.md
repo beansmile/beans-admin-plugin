@@ -1,6 +1,6 @@
 ## alert env tips
 非正式环境显示提示，防止客户将 staging 环境，误认为是正式环境。
-通过以下三个环境变量控制
+通过以下环境变量控制
 
 VUE_APP_ENV: 不为 production 时，会有弹窗
 
