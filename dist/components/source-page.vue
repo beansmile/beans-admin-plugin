@@ -105,7 +105,9 @@ function (_Vue) {
     _this.importing = false;
     _this.tableHeight = 0;
     _this.selectedRows = [];
-    _this.debouncedCalcTableHeight = _debounce(_this.calcTableHeight, 500);
+    _this.debouncedCalcTableHeightAndReRenderTable = _debounce(function () {
+      _this.calcTableHeight(true);
+    }, 800);
     return _this;
   }
 
@@ -268,19 +270,31 @@ function (_Vue) {
       var _calcTableHeight = _asyncToGenerator(
       /*#__PURE__*/
       regeneratorRuntime.mark(function _callee2() {
-        var table;
+        var reRenderTable,
+            table,
+            elTableCom,
+            _args2 = arguments;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                reRenderTable = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : false;
+                _context2.next = 3;
                 return this.$nextTick();
 
-              case 2:
+              case 3:
                 table = this.$refs.sourceTable;
-                this.tableHeight = table.$el.offsetHeight;
 
-              case 4:
+                if (table) {
+                  this.tableHeight = table.$el.offsetHeight; // resize后要重新render一次table，不然可能出现fixed在右边的操作栏显示位置不对
+
+                  if (reRenderTable) {
+                    elTableCom = table.getTableComponent();
+                    elTableCom.doLayout();
+                  }
+                }
+
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -298,12 +312,12 @@ function (_Vue) {
     key: "mounted",
     value: function mounted() {
       this.calcTableHeight();
-      window.addEventListener('resize', this.debouncedCalcTableHeight, false);
+      window.addEventListener('resize', this.debouncedCalcTableHeightAndReRenderTable, false);
     }
   }, {
     key: "beforeDestroy",
     value: function beforeDestroy() {
-      window.removeEventListener('resize', this.debouncedCalcTableHeight, false);
+      window.removeEventListener('resize', this.debouncedCalcTableHeightAndReRenderTable, false);
     }
   }, {
     key: "handleTableSetting",
