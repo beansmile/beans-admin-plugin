@@ -110,21 +110,30 @@ export default class SourcePage extends Vue {
     )
   }
 
-  async calcTableHeight() {
+  async calcTableHeight(reRenderTable = false) {
     await this.$nextTick();
     const table = this.$refs.sourceTable;
-    this.tableHeight = table.$el.offsetHeight;
+    if (table) {
+      this.tableHeight = table.$el.offsetHeight;
+      // resize后要重新render一次table，不然可能出现fixed在右边的操作栏显示位置不对
+      if (reRenderTable) {
+        const elTableCom = table.getTableComponent();
+        elTableCom.doLayout();
+      }
+    }
   }
 
-  debouncedCalcTableHeight = _.debounce(this.calcTableHeight, 500);
+  debouncedCalcTableHeightAndReRenderTable = _.debounce(() => {
+    this.calcTableHeight(true);
+  }, 800);
 
   mounted() {
     this.calcTableHeight();
-    window.addEventListener('resize', this.debouncedCalcTableHeight, false);
+    window.addEventListener('resize', this.debouncedCalcTableHeightAndReRenderTable, false);
   }
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.debouncedCalcTableHeight, false);
+    window.removeEventListener('resize', this.debouncedCalcTableHeightAndReRenderTable, false);
   }
 
   get tableKey() {
