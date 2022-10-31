@@ -2,6 +2,7 @@ export default {
   bean: {
     actionNew: 'Create',
     actionExport: 'Export',
+    actionImport: 'Import',
     actionEdit: 'Edit',
     actionDetail: 'Detail',
     actionSubmit: 'Submit',
@@ -22,6 +23,7 @@ export default {
     actionChooseDirectory: 'Choose Folder',
     actionUploadAll: 'Upload All',
     actionRemoveAll: 'Remove All',
+    actionSelectAll: 'Select All',
     actionRemove: 'Remove',
     actionLogout: 'Log Out',
     actionTableToExcel: 'Export to Excel',

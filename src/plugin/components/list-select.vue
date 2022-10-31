@@ -25,7 +25,8 @@
             （{{ $t('bean.dragSort') }}）
             </template>
           </span>
-          <span class="num">{{ value.length }}</span>
+          <el-button v-if="showSelectAll" type="text" :disabled="value.length === 0" @click="handleRemoveAll">{{ $t('bean.actionRemoveAll') }}({{ value.length }})</el-button>
+          <span class="num" v-else>{{ value.length }}</span>
         </div>
         <component
           :is="enableDrag ? 'draggable' : 'div'"
@@ -64,7 +65,8 @@
       <div class="box-panel">
         <div class="panel-header">
           <span>{{ $t('bean.list') }}</span>
-          <span class="num">{{ renderList.length }}</span>
+          <el-button v-if="showSelectAll" type="text" :disabled="renderList.length === 0" @click="handleSelectAll">{{ $t('bean.actionSelectAll') }}({{ renderList.length }})</el-button>
+          <span class="num" v-else>{{ renderList.length }}</span>
         </div>
         <div class="panel-content" v-if="renderList.length" v-loading="loading">
           <div
@@ -100,6 +102,7 @@
   import { arrayMove } from '../utils';
   import AdminForm from './form';
   import { screenService } from '../services';
+  import _ from 'lodash';
 
   @Component({
     components: {
@@ -117,6 +120,7 @@
     @Prop({ type: Function, default: () => [] }) onFilter;
     @Prop({ type: Function }) onLoad;
     @Prop({ type: Object, default: () => ({}) }) formProps;
+    @Prop(Boolean) showSelectAll;
 
     loading = false;
     data = [];
@@ -150,10 +154,18 @@
       this.$emit('change', [item].concat(this.value));
     }
 
+    handleSelectAll() {
+      this.$emit('change', _.cloneDeep(this.renderList).concat(this.value))
+    }
+
     handleCancelSelect(index) {
       const value = JSON.parse(JSON.stringify(this.value));
       value.splice(index, 1);
       this.$emit('change', value);
+    }
+
+    handleRemoveAll() {
+      this.$emit('change', []);
     }
 
     handleDragChange({ oldIndex, newIndex }) {

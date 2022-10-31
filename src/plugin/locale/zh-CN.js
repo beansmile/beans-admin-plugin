@@ -23,6 +23,7 @@ export default {
     actionChooseDirectory: '选择文件夹',
     actionUploadAll: '全部上传',
     actionRemoveAll: '全部移除',
+    actionSelectAll: '全部选择',
     actionRemove: '移除',
     actionLogout: '退出登录',
     actionTableToExcel: '导出表格',
