@@ -2194,7 +2194,7 @@ circular-json@^0.3.1:
 
 "ckeditor@https://github.com/beansmile/ckeditor.git":
   version "1.0.0"
-  resolved "https://github.com/beansmile/ckeditor.git#143aefa91ef2b38ee7b640a11e337714671bdbed"
+  resolved "https://github.com/beansmile/ckeditor.git#b11fd0e91e7517f7c7a8f0598806258babd02298"
 
 class-utils@^0.3.5:
   version "0.3.6"
