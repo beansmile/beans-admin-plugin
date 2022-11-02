@@ -42,7 +42,9 @@ export default function (config) {
 
   config.allowedContent = true
 
-  config.extraPlugins = 'html5video,widget,widgetselection,clipboard,lineutils,lineheight'
+  config.extraPlugins = 'tab,html5video,widget,widgetselection,clipboard,lineutils,lineheight,pastefromgdocs'
+
+  config.tabSpaces = 4
 
   const toolbarMobile = [
     {
