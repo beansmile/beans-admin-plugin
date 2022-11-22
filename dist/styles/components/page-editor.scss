@@ -1,15 +1,24 @@
 .control-box-drawer {
   .el-drawer__body {
-    overflow-y: auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 }
 
 .c-control-box {
   padding: 20px;
+  flex: 1;
+  overflow-y: auto;
 
   .btn-add {
     margin-bottom: 20px;
   }
+}
+
+.control-box-drawer-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #DCDFE6;
 }
 
 .c-page-editor {
@@ -65,9 +74,9 @@
       overflow-y: auto;
     }
 
-    .sortable-ghost,
-    .sortable-chosen,
-    .sortable-drag {
+    .sortable-ghost:not(.item-global-component),
+    .sortable-chosen:not(.item-global-component),
+    .sortable-drag:not(.item-global-component) {
       border: 2px dashed $primary !important;
     }
 

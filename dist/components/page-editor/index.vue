@@ -1,9 +1,11 @@
 <script>import "core-js/modules/es7.array.includes";
 import "core-js/modules/es6.string.includes";
+import "core-js/modules/es6.string.starts-with";
 import "regenerator-runtime/runtime";
 import _asyncToGenerator from "@babel/runtime-corejs2/helpers/esm/asyncToGenerator";
 import "core-js/modules/es6.function.name";
 import "core-js/modules/es6.array.find";
+import "core-js/modules/es6.array.find-index";
 import _initializerDefineProperty from "@babel/runtime-corejs2/helpers/esm/initializerDefineProperty";
 import _classCallCheck from "@babel/runtime-corejs2/helpers/esm/classCallCheck";
 import _createClass from "@babel/runtime-corejs2/helpers/esm/createClass";
@@ -77,9 +79,33 @@ function (_Vue) {
   }
 
   _createClass(PageEditor, [{
+    key: "created",
+    value: function created() {
+      var _this2 = this;
+
+      this.$root.$on('page-editor:delete-component', function (componentKey) {
+        _this2.handleDeleteByKey(componentKey);
+      });
+    }
+  }, {
     key: "handleFocusComponent",
     value: function handleFocusComponent(key) {
       this.currentKey = key;
+    }
+  }, {
+    key: "handleDeleteByKey",
+    value: function handleDeleteByKey(key) {
+      var index = this.value.findIndex(function (item) {
+        return item.key === key;
+      });
+
+      if (index !== -1) {
+        var value = _cloneDeep(this.value);
+
+        value.splice(index, 1);
+        this.$emit('change', value);
+        this.currentKey = '';
+      }
     }
   }, {
     key: "handleDelete",
@@ -120,7 +146,7 @@ function (_Vue) {
   }, {
     key: "renderComponent",
     value: function renderComponent(row, index) {
-      var _this2 = this;
+      var _this3 = this;
 
       var h = this.$createElement;
 
@@ -136,14 +162,15 @@ function (_Vue) {
         "attrs": {
           "value": row.data,
           "data": this.data,
+          "componentKey": row.key,
           "show-controller": this.currentKey === row.key
         },
         "on": {
           "close": function close() {
-            return _this2.currentKey = '';
+            return _this3.currentKey = '';
           },
           "change": function change(e) {
-            return _this2.handleComponentDataChange(e, index);
+            return _this3.handleComponentDataChange(e, index);
           }
         }
       });
@@ -229,9 +256,64 @@ function (_Vue) {
       }
     }
   }, {
+    key: "renderCommonComponent",
+    value: function renderCommonComponent(row, index) {
+      var _this4 = this;
+
+      var h = this.$createElement;
+      return h("div", {
+        "key": row.key,
+        "class": "item-component ".concat(this.currentKey === row.key && 'active'),
+        "on": {
+          "click": function click() {
+            return _this4.handleFocusComponent(row.key);
+          }
+        }
+      }, [h("div", {
+        "class": "box-control"
+      }, [h("i", [this.$t("pageEditor.".concat(row.title))]), index - 1 >= 0 && h("i", {
+        "class": "el-icon-arrow-up",
+        "on": {
+          "click": function click(e) {
+            return _this4.handleUp(e, index);
+          }
+        }
+      }), index + 1 < this.value.length && h("i", {
+        "class": "el-icon-arrow-down",
+        "on": {
+          "click": function click(e) {
+            return _this4.handleDown(e, index);
+          }
+        }
+      }), h("i", {
+        "class": "el-icon-delete",
+        "on": {
+          "click": function click(e) {
+            return _this4.handleDelete(e, index);
+          }
+        }
+      })]), this.renderComponent(row, index)]);
+    }
+  }, {
+    key: "renderGlobalComponent",
+    value: function renderGlobalComponent(row, index) {
+      var _this5 = this;
+
+      var h = this.$createElement;
+      return h("div", {
+        "key": row.key,
+        "class": "item-global-component ".concat(this.currentKey === row.key && 'active'),
+        "on": {
+          "click": function click() {
+            return _this5.handleFocusComponent(row.key);
+          }
+        }
+      }, [this.renderComponent(row, index)]);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this6 = this;
 
       var h = arguments[0];
       return h("div", {
@@ -254,7 +336,8 @@ function (_Vue) {
             pull: 'clone',
             put: false
           },
-          "value": this.renderComponents
+          "value": this.renderComponents,
+          "handle": ".item-component"
         }
       }, [this.renderComponents.map(function (item) {
         return h("el-button", {
@@ -266,10 +349,10 @@ function (_Vue) {
           "class": "item",
           "on": {
             "click": function click() {
-              return _this3.handleAddByClick(item);
+              return _this6.handleAddByClick(item);
             }
           }
-        }, [_this3.$t("pageEditor.".concat(item.title))]);
+        }, [_this6.$t("pageEditor.".concat(item.title))]);
       })])]), h("div", {
         "class": "box-preview"
       }, [h("div", {
@@ -299,38 +382,7 @@ function (_Vue) {
         },
         "ref": "draggableContent"
       }, [this.value.map(function (row, index) {
-        return h("div", {
-          "key": row.key,
-          "class": "item-component ".concat(_this3.currentKey === row.key && 'active'),
-          "on": {
-            "click": function click() {
-              return _this3.handleFocusComponent(row.key);
-            }
-          }
-        }, [h("div", {
-          "class": "box-control"
-        }, [h("i", [_this3.$t("pageEditor.".concat(row.title))]), index - 1 >= 0 && h("i", {
-          "class": "el-icon-arrow-up",
-          "on": {
-            "click": function click(e) {
-              return _this3.handleUp(e, index);
-            }
-          }
-        }), index + 1 < _this3.value.length && h("i", {
-          "class": "el-icon-arrow-down",
-          "on": {
-            "click": function click(e) {
-              return _this3.handleDown(e, index);
-            }
-          }
-        }), h("i", {
-          "class": "el-icon-delete",
-          "on": {
-            "click": function click(e) {
-              return _this3.handleDelete(e, index);
-            }
-          }
-        })]), _this3.renderComponent(row, index)]);
+        return row.name.startsWith('global-') ? _this6.renderGlobalComponent(row, index) : _this6.renderCommonComponent(row, index);
       })])]), h("div", {
         "class": "home"
       }), h("div", {
@@ -349,11 +401,11 @@ function (_Vue) {
   }, {
     key: "renderComponents",
     get: function get() {
-      var _this4 = this;
+      var _this7 = this;
 
       // 组件name不能重复
       var useedDefaultComponents = this.useComponents.length ? defaultComponents.filter(function (item) {
-        return _this4.useComponents.includes(item.name);
+        return _this7.useComponents.includes(item.name);
       }) : defaultComponents;
       return _uniqBy(useedDefaultComponents.concat(this.customComponents), 'name');
     }

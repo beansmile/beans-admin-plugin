@@ -9,6 +9,9 @@
       <div class="c-control-box">
         <slot />
       </div>
+      <div class="control-box-drawer-footer" v-if="componentKey">
+        <el-button icon="el-icon-delete" type="danger" @click="handleDeleteComponent" round>删除组件</el-button>
+      </div>
     </el-drawer>
   </portal>
 </template>
@@ -23,10 +26,10 @@ import _inherits from "@babel/runtime-corejs2/helpers/esm/inherits";
 import _applyDecoratedDescriptor from "@babel/runtime-corejs2/helpers/esm/applyDecoratedDescriptor";
 import _initializerWarningHelper from "@babel/runtime-corejs2/helpers/esm/initializerWarningHelper";
 
-var _dec, _dec2, _class, _class2, _descriptor, _descriptor2, _temp;
+var _dec, _dec2, _dec3, _class, _class2, _descriptor, _descriptor2, _descriptor3, _temp;
 
 import { Vue, Component, Prop } from 'vue-property-decorator';
-var controlBox = (_dec = Prop(Boolean), _dec2 = Prop(String), Component(_class = (_class2 = (_temp =
+var controlBox = (_dec = Prop(Boolean), _dec2 = Prop(String), _dec3 = Prop(String), Component(_class = (_class2 = (_temp =
 /*#__PURE__*/
 function (_Vue) {
   _inherits(controlBox, _Vue);
@@ -48,6 +51,8 @@ function (_Vue) {
 
     _initializerDefineProperty(_this, "title", _descriptor2, _assertThisInitialized(_this));
 
+    _initializerDefineProperty(_this, "componentKey", _descriptor3, _assertThisInitialized(_this));
+
     return _this;
   }
 
@@ -56,6 +61,11 @@ function (_Vue) {
     value: function created() {
       var component = this.$mount();
       document.querySelector('body').appendChild(component.$el);
+    }
+  }, {
+    key: "handleDeleteComponent",
+    value: function handleDeleteComponent() {
+      this.$root.$emit('page-editor:delete-component', this.componentKey);
     }
   }]);
 
@@ -66,6 +76,11 @@ function (_Vue) {
   writable: true,
   initializer: null
 }), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "title", [_dec2], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: null
+}), _descriptor3 = _applyDecoratedDescriptor(_class2.prototype, "componentKey", [_dec3], {
   configurable: true,
   enumerable: true,
   writable: true,
