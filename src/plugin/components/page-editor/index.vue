@@ -16,6 +16,12 @@
 
     currentKey = '';
 
+    created() {
+      this.$root.$on('page-editor:delete-component', componentKey => {
+        this.handleDeleteByKey(componentKey);
+      });
+    }
+
     get renderComponents() {
       // 组件name不能重复
       const useedDefaultComponents = this.useComponents.length ? defaultComponents.filter(item => this.useComponents.includes(item.name)) : defaultComponents;
@@ -24,6 +30,16 @@
 
     handleFocusComponent(key) {
       this.currentKey = key;
+    }
+
+    handleDeleteByKey(key) {
+      const index = this.value.findIndex(item => item.key === key);
+      if (index !== -1) {
+        const value = _.cloneDeep(this.value);
+        value.splice(index, 1);
+        this.$emit('change', value);
+        this.currentKey = '';
+      }
     }
 
     handleDelete(e, $index) {
@@ -61,6 +77,7 @@
       return <component
         value={row.data}
         data={this.data}
+        componentKey={row.key}
         show-controller={this.currentKey === row.key}
         onClose={() => this.currentKey = ''}
         onChange={e => this.handleComponentDataChange(e, index)}
@@ -106,6 +123,36 @@
       }
     }
 
+    renderCommonComponent(row, index) {
+      return (
+        <div
+          key={row.key}
+          class={`item-component ${this.currentKey === row.key && 'active'}`}
+          onClick={() => this.handleFocusComponent(row.key)}
+        >
+          <div class="box-control">
+            <i>{this.$t(`pageEditor.${row.title}`)}</i>
+            { index - 1 >= 0 && <i class="el-icon-arrow-up" onClick={e => this.handleUp(e, index)} /> }
+            { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
+            <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />
+          </div>
+          {this.renderComponent(row, index)}
+        </div>
+      );
+    }
+
+    renderGlobalComponent(row, index) {
+      return (
+        <div
+          key={row.key}
+          class={`item-global-component ${this.currentKey === row.key && 'active'}`}
+          onClick={() => this.handleFocusComponent(row.key)}
+        >
+          {this.renderComponent(row, index)}
+        </div>
+      )
+    }
+
     render() {
       return (
         <div class="c-page-editor">
@@ -121,6 +168,7 @@
                 sort={false}
                 group={{ name: 'component', pull: 'clone', put: false }}
                 value={this.renderComponents}
+                handle=".item-component"
               >
                 {
                   this.renderComponents.map(item => (
@@ -149,21 +197,7 @@
                     ref="draggableContent"
                   >
                     {
-                      this.value.map((row, index) => (
-                        <div
-                          key={row.key}
-                          class={`item-component ${this.currentKey === row.key && 'active'}`}
-                          onClick={() => this.handleFocusComponent(row.key)}
-                        >
-                          <div class="box-control">
-                            <i>{this.$t(`pageEditor.${row.title}`)}</i>
-                            { index - 1 >= 0 && <i class="el-icon-arrow-up" onClick={e => this.handleUp(e, index)} /> }
-                            { index + 1 < this.value.length && <i class="el-icon-arrow-down" onClick={e => this.handleDown(e, index)} /> }
-                            <i class="el-icon-delete" onClick={e => this.handleDelete(e, index)} />
-                          </div>
-                          {this.renderComponent(row, index)}
-                        </div>
-                      ))
+                      this.value.map((row, index) => row.name.startsWith('global-') ? this.renderGlobalComponent(row, index) : this.renderCommonComponent(row, index))
                     }
                   </draggable>
                 </div>
