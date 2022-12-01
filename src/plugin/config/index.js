@@ -46,5 +46,6 @@ export default {
     md: 992,
     lg: 1200,
     xl: 1920
-  }
+  },
+  list: {}
 };

@@ -128,10 +128,12 @@
         border-bottom: 1px solid $--border-color-light;
         margin: 0;
         padding: 15px 0;
+      }
 
+      &.el-form--label-left {
         .el-form-item__label,
         .el-form-item__content {
-          line-height: 16px;
+          line-height: 1.4;
           word-break: break-all;
         }
       }
