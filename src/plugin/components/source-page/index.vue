@@ -59,6 +59,7 @@
         :columns="sourcePageColumns"
         :tabs="tabs"
         :actions="sourcePageAction"
+        v-bind="showPageProps"
       />
     </slot>
     <FormPage
@@ -126,6 +127,7 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: Object }) actionColumnProps;
   @Prop(Boolean) collapseFilter;
   @Prop(Boolean) enableTableToExcel;
+  @Prop(Object) showPageProps;
 
   showFilterDrawer = false;
   formLoading = false;

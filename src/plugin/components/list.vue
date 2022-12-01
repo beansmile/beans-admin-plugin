@@ -8,8 +8,20 @@ export default class AdminList extends Vue {
   @Prop({ type: Array, default: () => [] }) columns;
   @Prop({ type: Object }) value;
 
-  get defaultLabelWidth() {
-    return screenService.isMobile ? '80px' : '150px';
+  get defaultProps() {
+    let props = {};
+    if (screenService.isMobile) {
+      props = {
+        'label-position': 'left',
+        'label-width': '80px'
+      };
+    } else {
+      props = {
+        'label-position': 'left',
+        'label-width': '150px'
+      };
+    }
+    return _.merge(props, this.$vadminConfig.list || {});
   }
 
   get locales() {
@@ -45,7 +57,7 @@ export default class AdminList extends Vue {
     const value = _.get(this.value, column.prop);
     const renderCell = column.renderCell || (() => <div>{_.isNil(value) ? '/' : value}</div>);
     return (
-      <el-form-item class={column.prop} label-width={column.defaultLabelWidth || this.defaultLabelWidth} label={column.label} key={column.prop}>
+      <el-form-item class={column.prop} label={column.label} key={column.prop}>
         <ColumnRender
           value={value}
           scope={{ row: this.value }}
@@ -58,7 +70,7 @@ export default class AdminList extends Vue {
 
   render() {
     return (
-      <el-form class="el-form-show" label-width={this.defaultLabelWidth} label-position="left" props={this.$attrs}>
+      <el-form class="el-form-show" props={{ ...this.defaultProps, ...this.$attrs }}>
         {this.columns.map(this.renderCellDispatcher)}
       </el-form>
     );
