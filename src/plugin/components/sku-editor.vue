@@ -43,7 +43,7 @@
             :label="item.text"
             :value="item.value"
           >
-            <el-button style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
+            <el-button v-if="!disableEditPropertyValueText" style="margin-right: 10px" size="mini" icon="el-icon-edit" circle @click.stop="handleEditPropertyValueText(item.value, item.text)"></el-button>
             <span>{{ item.text }}</span>
           </el-option>
         </el-select>
@@ -89,6 +89,7 @@
     @Prop({ type: Array, default: () => [] }) skuColumns;
     @Model('change', { type: Array, default: () => [] }) value;
     @Prop(Boolean) disableEditPropertyText;
+    @Prop(Boolean) disableEditPropertyValueText;
 
     propertySelected = {};
     shownProperty = []; // 显示在外面的规格
