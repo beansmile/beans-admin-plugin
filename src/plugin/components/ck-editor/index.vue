@@ -81,7 +81,9 @@
         }, 500);
 
         this.editor.on('change', e => {
-          this.$emit('change', e.editor.getData())
+          // TODO: video 标签默认加上playsinline=true 属性，防止IOS自动播放; 先这样处理，之后看有没有更好的做法
+          const value = e.editor.getData().replace("<video", "<video playsinline=\"true\"");
+          this.$emit('change', value)
         })
         this.editor.on('fileUploadRequest', fileUploadRequest)
         this.editor.on('fileUploadResponse', fileUploadResponse)
