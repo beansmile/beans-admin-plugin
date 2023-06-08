@@ -48,6 +48,8 @@
     @Prop(Object) page;
     @Prop(String) activeKey;
     @Prop(Array) components;
+    @Prop({ type: Array, default: () => [] }) pageColumns;
+    @Prop({ type: Array, default: () => [] }) pageStyleColumns;
 
     get style() {
       return getStyle(_.get(this.page, 'config.style') || {});
@@ -58,6 +60,10 @@
     }
 
     get columns() {
+      if (this.pageColumns.length) {
+        return this.pageColumns;
+      }
+
       return [
         {
           prop: 'title',
@@ -125,6 +131,10 @@
     }
 
     get styleColumns() {
+      if (this.pageStyleColumns.length) {
+        return this.pageStyleColumns;
+      }
+
       return [
         {
           prop: 'title.backgroundColor',
