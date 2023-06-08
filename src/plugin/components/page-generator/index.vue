@@ -12,6 +12,8 @@
         :pages="pages"
         :page="value"
         :components="allComponents"
+        :page-columns="pageColumns"
+        :page-style-columns="pageStyleColumns"
         @toggle-active-component-key="toggleActiveComponentKey"
         @delete-component="deleteComponent"
         @update-component="updateComponent"
@@ -51,6 +53,8 @@
     @Prop({ type: Array, default: () => [] }) useComponents;
     @Prop({ type: [Array, Function], default: () => [] }) pages;
     @Prop(Array) @Provide() useEvents; // ./controller/event.vue
+    @Prop({ type: Array, default: () => [] }) pageColumns;
+    @Prop({ type: Array, default: () => [] }) pageStyleColumns;
 
     activeComponentKey = '';
 
