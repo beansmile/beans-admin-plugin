@@ -11,6 +11,10 @@
     @Prop(String) activeKey;
     @Prop(Array) allComponents;
 
+    get allComponentsMap() {
+      return _.keyBy(this.allComponents, 'name');
+    }
+
     get globalComponents() {
       const components =  _.get(this.page, 'components', []).filter(item => item.global);
       return _.pick(
@@ -139,7 +143,7 @@
                   onClick={() => this.handleFocusComponent(row.key)}
                 >
                   <div class="box-control">
-                    <i>{row.title}</i>
+                    <i>{ _.get(this.allComponentsMap, `${row.name}.title`) || row.title}</i>
                     <i class="el-icon-delete" onClick={e => this.handleDelete(e, row)} />
                   </div>
                   {this.renderComponent(row, index)}
