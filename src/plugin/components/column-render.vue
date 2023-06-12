@@ -189,7 +189,7 @@ export const RouteButton = {
   render(h, context) {
     const buttonName = context.children || context.props.label || context.props.title || context.parent.$t('bean.link');
     return (
-      <Link {...context}>
+      <Link {...context.data}>
         <el-button type="primary" props={context.props}>{buttonName}</el-button>
       </Link>
     )
