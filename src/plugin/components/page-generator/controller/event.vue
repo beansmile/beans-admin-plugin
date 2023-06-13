@@ -2,7 +2,7 @@
   <EventForm
     :events="events"
     :value="value"
-    label-width="80px"
+    :label-width="controllerFormLableWidth"
     @change="$emit('change', $event)"
   />
 </template>
@@ -27,6 +27,7 @@
     @Prop(Boolean) isImage;
     @Prop(Boolean) isPopup;
     @Inject('useEvents') useEvents;
+    @Inject('controllerFormLableWidth') controllerFormLableWidth;
 
     get telColumns() {
       return [

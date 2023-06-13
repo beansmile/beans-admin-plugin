@@ -53,6 +53,7 @@
     @Prop({ type: Array, default: () => [] }) useComponents;
     @Prop({ type: [Array, Function], default: () => [] }) pages;
     @Prop(Array) @Provide() useEvents; // ./controller/event.vue
+    @Prop({ type: String, default: '80px' }) @Provide() controllerFormLableWidth;
     @Prop({ type: Array, default: () => [] }) pageColumns;
     @Prop({ type: Array, default: () => [] }) pageStyleColumns;
 

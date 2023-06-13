@@ -4,7 +4,7 @@
       <el-tabs v-model="tab">
         <el-tab-pane :label="$t('bean.pageGenerator.baseSettings')" name="base" v-if="columns.length">
           <AdminForm
-            label-width="80px"
+            :label-width="controllerFormLableWidth"
             :columns="baseColumns"
             :value="value"
             @change="$emit('change', $event)"
@@ -17,7 +17,7 @@
         </el-tab-pane>
         <el-tab-pane :label="$t('bean.pageGenerator.styleSettings')" name="style" v-if="styleColumns.length">
           <AdminForm
-            label-width="80px"
+            :label-width="controllerFormLableWidth"
             :columns="styleColumns"
             :value="value.style"
             @change="$emit('change', { ...value, style: $event })"
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-  import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Watch, Inject } from 'vue-property-decorator';
   import _ from 'lodash';
   import AdminForm from '../../form';
   import EventForm from './event';
@@ -74,6 +74,7 @@
     @Prop({ type: Array, default: () => [] }) columns;
     @Prop({ type: Array, default: () => [] }) styleColumns;
     @Prop({ type: Array, default: () => [] }) popupComponents;
+    @Inject('controllerFormLableWidth') controllerFormLableWidth;
 
     tab = 'base'
 
