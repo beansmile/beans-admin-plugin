@@ -154,14 +154,14 @@
         },
         {
           prop: 'interval',
-          label: `${this.$t('bean.pageGenerator.swiperInterval')}(秒)`,
+          label: `${this.$t('bean.pageGenerator.swiperInterval')}(s)`,
           renderCell: {
             component: 'inputNumber'
           }
         },
         {
           prop: 'duration',
-          label: `${this.$t('bean.pageGenerator.swiperDuration')}(秒)`,
+          label: `${this.$t('bean.pageGenerator.swiperDuration')}(s)`,
           renderCell: {
             component: 'inputNumber',
             props: {
