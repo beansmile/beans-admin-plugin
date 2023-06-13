@@ -1,6 +1,6 @@
 <template>
   <AdminForm
-    label-width="80px"
+    :label-width="controllerFormLableWidth"
     :columns="columns"
     :value="value"
     @change="$emit('change', $event)"
@@ -13,7 +13,7 @@
 
 
 <script>
-  import { Vue, Component, Prop } from 'vue-property-decorator';
+  import { Vue, Component, Prop, Inject } from 'vue-property-decorator';
   import AdminForm from '../../form';
 
   @Component({
@@ -23,6 +23,7 @@
   })
   export default class PageEditorAnimation extends Vue {
     @Prop({ type: Object, default: () => ({}) }) value;
+    @Inject('controllerFormLableWidth') controllerFormLableWidth;
 
     get columns() {
       return [
