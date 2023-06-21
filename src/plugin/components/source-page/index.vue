@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 100%; height: 100%">
+  <div style="width: 100%; height: 100%" v-if="componentDataInited">
     <portal to="layout-nav-title">{{ pageTitle }}</portal>
     <TablePage
       v-if="type === 'index'"
@@ -132,6 +132,7 @@ export default class AdminSourcePage extends Vue {
   showFilterDrawer = false;
   formLoading = false;
   state = {}
+  componentDataInited = false;
 
   get renderFilterDrawer() {
     return this.collapseFilter || screenService.isMobile || screenService.isTablet;
@@ -264,28 +265,34 @@ export default class AdminSourcePage extends Vue {
   }
 
   async fetchData() {
-    if (_.isFunction(this.onFetchData)) {
-      const state = await this.onFetchData({ resource: this.resource, type: this.type, namespace: this.namespace });
-      this.state = state;
-      return;
-    }
+    try {
+      if (_.isFunction(this.onFetchData)) {
+        const state = await this.onFetchData({ resource: this.resource, type: this.type, namespace: this.namespace });
+        this.state = state;
+        return;
+      }
 
-    if (this.type === 'index') {
-      const { data, pagination } = await request.get(`/${this.namespace}${this.resource}`, { params: { ...this.$route.query } });
-      this.$set(this.state, 'data', data);
-      this.$set(this.state, 'pagination', pagination);
-      return;
-    }
+      if (this.type === 'index') {
+        const { data, pagination } = await request.get(`/${this.namespace}${this.resource}`, { params: { ...this.$route.query } });
+        this.$set(this.state, 'data', data);
+        this.$set(this.state, 'pagination', pagination);
+        return;
+      }
 
-    if (this.type === 'edit' || this.type === 'show') {
-      const data = await request.get(`/${this.namespace}${this.resource}/${this.$route.params.id}`);
-      this.originData = _.cloneDeep(data);
-      this.$set(this.state, 'data', data);
-    }
+      if (this.type === 'edit' || this.type === 'show') {
+        const data = await request.get(`/${this.namespace}${this.resource}/${this.$route.params.id}`);
+        this.originData = _.cloneDeep(data);
+        this.$set(this.state, 'data', data);
+      }
 
-    if (this.type === 'new') {
-      this.originData = _.cloneDeep(this.form);
-      this.$set(this.state, 'data', this.form);
+      if (this.type === 'new') {
+        this.originData = _.cloneDeep(this.form);
+        this.$set(this.state, 'data', this.form);
+      }
+    } finally {
+      // 有时候会根据数据动态调整column，会导致加载前和加载后table等显示出问题
+      // 比如数据没加载完时先渲染了空table，加载完多了一列，table header变高了，table没重新渲染，导致fixed的table列对不齐
+      this.componentDataInited = true;
     }
   }
 
