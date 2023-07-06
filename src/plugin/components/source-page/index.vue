@@ -1,6 +1,7 @@
 <template>
   <div style="width: 100%; height: 100%" v-if="componentDataInited">
     <portal to="layout-nav-title">{{ pageTitle }}</portal>
+    <slot name="page-top" />
     <TablePage
       v-if="type === 'index'"
       :value="state.data"
