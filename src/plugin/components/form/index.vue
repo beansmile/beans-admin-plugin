@@ -83,7 +83,7 @@ export default class AdminForm extends Vue {
       prop: column.prop,
       label: column.label
     };
-    const formItemProps = ['required', 'label-width', 'rules', 'error', 'show-message', 'inline-message', 'size', 'hint'];
+    const formItemProps = ['required', 'label-width', 'rules', 'error', 'show-message', 'inline-message', 'size', 'hint', 'class'];
     // 外层的prop优先级更高
     Object.assign(props,
       _.cloneDeep(_.pick(column.renderCell, formItemProps)),
@@ -99,7 +99,7 @@ export default class AdminForm extends Vue {
       });
     }
     return (
-      <el-form-item key={props.prop} props={props} class={props.prop}>
+      <el-form-item key={props.prop} props={props} class={props.class ? props.class : props.prop}>
         {this.renderFormComponent(column)}
         {!!props.hint && <div class="form-item-hint">{props.hint}</div>}
       </el-form-item>
