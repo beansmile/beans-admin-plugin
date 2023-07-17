@@ -25,7 +25,7 @@
         </AdminForm>
       </div>
     </template>
-    <el-button class="btn-add" type="primary" @click="handleAdd" icon="el-icon-plus" v-if="!limitOne">{{ addButtonTextI18n }}</el-button>
+    <el-button class="btn-add" type="primary" @click="handleAdd" icon="el-icon-plus" v-if="addable && !limitOne">{{ addButtonTextI18n }}</el-button>
   </div>
 </template>
 
@@ -49,6 +49,7 @@
     @Prop({ type: Object, default: () => ({}) }) defaultValue;
     @Prop(Boolean) sortable;
     @Prop({ type: Boolean, default: true }) deletable;
+    @Prop({ type: Boolean, default: true }) addable;
 
     get addButtonTextI18n() {
       return this.addButtonText || this.$t('bean.actionAdd');
