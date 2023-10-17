@@ -37,6 +37,7 @@ export default {
   },
   sourcePage: {
     trimFilter: false, // 筛选时去掉字符串前后空格
+    showFilterColumnSetting: false
   },
   pageGenerator: {
     enableModuleName: false
