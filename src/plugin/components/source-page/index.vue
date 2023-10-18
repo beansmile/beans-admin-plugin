@@ -16,6 +16,8 @@
       :collapse-filter="collapseFilter"
       :showFilterDrawer.sync="showFilterDrawer"
       :renderFilterDrawer="renderFilterDrawer"
+      :showFilterColumnSetting="localShowFilterColumnSetting"
+      :filterColumnSettingKey="filterColumnSettingKey"
       ref="tablePage"
     >
       <template
@@ -129,11 +131,20 @@ export default class AdminSourcePage extends Vue {
   @Prop(Boolean) collapseFilter;
   @Prop(Boolean) enableTableToExcel;
   @Prop(Object) showPageProps;
+  @Prop({ type: Boolean, default: undefined }) showFilterColumnSetting;
+  @Prop(String) filterColumnSettingKey;
 
   showFilterDrawer = false;
   formLoading = false;
   state = {}
   componentDataInited = false;
+
+  get localShowFilterColumnSetting() {
+    if (_.isUndefined(this.showFilterColumnSetting)) {
+      return _.get(this, '$vadminConfig.sourcePage.showFilterColumnSetting');
+    }
+    return this.showFilterColumnSetting;
+  }
 
   get renderFilterDrawer() {
     return this.collapseFilter || screenService.isMobile || screenService.isTablet;

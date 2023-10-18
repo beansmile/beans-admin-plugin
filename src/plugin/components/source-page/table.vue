@@ -18,6 +18,8 @@
             v-bind="filterProps"
             v-model="filterForm"
             :columns="filterColumns"
+            :showColumnSetting="showFilterColumnSetting"
+            :columnSettingKey="filterColumnSettingKey"
             @filter="handleFilter"
             @reset="handleReset"
           />
@@ -27,6 +29,8 @@
           v-bind="filterProps"
           v-model="filterForm"
           :columns="filterColumns"
+          :showColumnSetting="showFilterColumnSetting"
+          :columnSettingKey="filterColumnSettingKey"
           @filter="handleFilter"
           @reset="handleReset"
         />
@@ -89,7 +93,7 @@ import Table from '../table';
 import Pagination from '../pagination';
 import _ from 'lodash';
 import { sleep } from '../../utils';
-import ColumnSetting from './column-setting.vue';
+import ColumnSetting from '../column-setting.vue';
 import * as XLSX from 'xlsx';
 @Component({
   components: {
@@ -113,6 +117,8 @@ export default class AdminSourcePageTable extends Vue {
   @Prop(Boolean) renderFilterDrawer;
   @PropSync('showFilterDrawer', Boolean) filterDrawerVisible;
   @Prop({ type: Array, default: () => [] }) scopeColumns;
+  @Prop(Boolean) showFilterColumnSetting;
+  @Prop(String) filterColumnSettingKey;
 
   filterForm = {};
   defaultSort = {};
