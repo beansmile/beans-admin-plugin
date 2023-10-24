@@ -211,7 +211,7 @@ export default class AdminForm extends Vue {
     }
     return (
       <el-form-item>
-        <el-button type="primary" loading={this.loading} onClick={this.handleSubmit}>提交</el-button>
+        <el-button type="primary" loading={this.loading} onClick={this.handleSubmit}>{ this.$t('bean.actionSubmit') }</el-button>
       </el-form-item>
     )
   }
