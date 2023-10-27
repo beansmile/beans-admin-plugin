@@ -13,6 +13,16 @@
     @closed="$emit('closed')"
   >
     <div class="admin-multiple-upload">
+      <DropBox
+        v-if="drag"
+        :accept="accept"
+        :disabled="loading || (tableData.length >= limit)"
+        :size="size"
+        :limit="limit - tableData.length"
+        @error="handleDropboxError"
+        @change="handleDropboxChange"
+      />
+
       <AdminForm
         v-if="formColumns.length"
         v-model="uploadForm"
@@ -44,7 +54,7 @@
       >
 
       <el-row class="btn-group">
-        <el-button type="primary" icon="el-icon-plus" :disabled="loading || (tableData.length >= limit)" @click="handleUploadBtnClick">{{ $t('bean.actionChooseFile') }}</el-button>
+        <el-button v-if="!drag" type="primary" icon="el-icon-plus" :disabled="loading || (tableData.length >= limit)" @click="handleUploadBtnClick">{{ $t('bean.actionChooseFile') }}</el-button>
         <el-button v-if="directory" type="primary" icon="el-icon-plus" :disabled="loading || (tableData.length >= limit)" @click="handleUploadDirectoryBtnClick">{{ $t('bean.actionChooseDirectory') }}</el-button>
         <el-button type="warning" @click="handleUploadAll" :loading="loading" :disabled="loading || (!needUploadData.length)">{{ $t('bean.actionUploadAll') }}</el-button>
         <el-button type="danger" @click="handleDeleteAll" :disabled="loading || (!tableData.length)">{{ $t('bean.actionRemoveAll') }}</el-button>
@@ -77,12 +87,14 @@ import { checkFileSize, uploadFile } from '../../utils';
 import _ from 'lodash';
 import ImageCropperAction from './image-cropper-action';
 import { screenService } from '../../services';
+import DropBox from '../dropbox.vue';
 
 @Component({
   components: {
     AdminTable,
     FormSelect,
-    AdminForm
+    AdminForm,
+    DropBox,
   }
 })
 export default class MultipleUploadDialog extends Vue {
@@ -93,6 +105,7 @@ export default class MultipleUploadDialog extends Vue {
   @Prop({ type: Number, default: 3 }) size; // 单位M
   @Prop(String) hint; // 提示
   @Prop(Boolean) directory;
+  @Prop(Boolean) drag;
 
   FILE_INPUT_REF_NAME = 'fileInput';
   DIRECTORY_INPUT_REF_NAME = 'fileDirectory';
@@ -326,5 +339,12 @@ export default class MultipleUploadDialog extends Vue {
     return this.tableData.map(item => item.result)
   }
 
+  handleDropboxError(errMsg) {
+    this.$message.info(errMsg);
+  }
+
+  handleDropboxChange(files) {
+    this.tableData.push(...files.map(file => ({ file })));
+  }
 }
 </script>

@@ -38,6 +38,8 @@ export default {
     imageResized: 'Resized',
     maximumFileSize: 'Maximum file size: {size}',
     maximumUploadFileCount: 'Up to {count} files can be uploaded',
+    fileTypeisInvalid: 'Wrong file format',
+    dragAndDropUpload: 'Drag your files here, or click Upload',
     filteredUploadFileTip: 'Filtered files that do not meet the requirements',
     chooseBlobTagTip: 'Select or create the tag. Tag to apply to all images to be uploaded',
     fileFormat: 'File format',
