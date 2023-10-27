@@ -1,0 +1,36 @@
+.admin-dropbox {
+  background-color: #fff;
+  border: 2px dashed #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 360px;
+  height: 180px;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: .3;
+  }
+
+  &:not(.disabled) {
+    &.active,
+    &:hover {
+      border-color: $--color-primary;
+    }
+  }
+
+  .el-icon-upload {
+    font-size: 67px;
+    color: #c0c4cc;
+    margin: 40px 0 16px;
+    line-height: 50px;
+  }
+
+  .upload-text {
+    color: #606266;
+    font-size: $--font-size-base;
+    text-align: center;
+  }
+}

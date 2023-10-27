@@ -13,6 +13,7 @@
       <div class="box-header">
         <Uploader
           v-bind="$attrs"
+          :drag="drag"
           :limit="50"
           @success="handleUploadSuccess"
         />
@@ -88,6 +89,7 @@
     @Model('change', { type: Boolean }) value;
     @Prop({ type: [Array, String], default: 'image' }) type;
     @Prop({ type: Number, default: 1 }) limit;
+    @Prop(Boolean) drag;
 
     loading = false;
     data = [];

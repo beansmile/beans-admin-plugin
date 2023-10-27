@@ -38,6 +38,8 @@ export default {
     imageResized: '已裁剪',
     maximumFileSize: '文件大小最大: {size}',
     maximumUploadFileCount: '最多可上傳{count}個文件',
+    fileTypeisInvalid: '文件格式不對',
+    dragAndDropUpload: '將文件拖曳到此處，或點擊上傳',
     filteredUploadFileTip: '已過濾不符合要求的文件',
     chooseBlobTagTip: '選擇標籤 標籤將作用於即將上傳的所有圖片',
     fileFormat: '文件格式',

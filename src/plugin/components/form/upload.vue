@@ -2,6 +2,7 @@
   <div class="admin-form-upload">
     <template v-if="useResourceUploader">
       <ResourceUploader
+        :drag="drag"
         :disabled="disabled || uploadLimit < 1"
         :limit="uploadLimit"
         :cropper="cropper"
@@ -23,6 +24,7 @@
 
     <Uploader
       v-else
+      :drag="drag"
       :disabled="disabled || uploadLimit < 1"
       :limit="uploadLimit"
       :cropper="cropper"
@@ -81,6 +83,7 @@ export default class AdminFormUpload extends Vue {
   @Prop({ type: String }) uploadButtonText;
   @Prop({ type: [Array, String], default: 'image' }) type; // 资源类型
   @Prop(Boolean) disableResourceUploader;
+  @Prop(Boolean) drag;
 
   disalogVisible = false;
 

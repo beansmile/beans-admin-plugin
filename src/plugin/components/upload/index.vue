@@ -8,7 +8,27 @@
       :accept="accept"
       @change="handleFileChange"
     />
+    <DropBox
+      v-if="drag && limit === 1"
+      :accept="accept"
+      :disabled="loading"
+      :size="size"
+      @error="handleDropboxError"
+      @change="handleDropboxChange"
+    >
+      <div v-if="loading">
+        <small>
+          <template v-if="checksumPending">
+            {{ $t('bean.checksumPending') }}
+          </template>
+          <template v-else>
+            ({{ uploadProgressPct }}%)
+          </template>
+        </small>
+      </div>
+    </DropBox>
     <el-button
+      v-else
       type="primary"
       icon="el-icon-upload"
       @click="handleUploadBtnClick"
@@ -27,6 +47,7 @@
     </el-button>
     <MultipleUpload
       v-if="renderMultipleUploadDialog && limit > 1"
+      :drag="drag"
       v-model="showMultipleUploadDialog"
       v-bind="{ limit, cropper, accept, size, ...$attrs }"
       @success="$emit('success', $event)"
@@ -48,11 +69,13 @@ import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import MultipleUpload from './multiple-upload';
 import ImageCropper from './image-cropper';
 import { uploadFile, isImageFile, imageFileNeedCrop, checkFileSize, getImageInfo } from '../../utils';
+import DropBox from '../dropbox.vue';
 
 @Component({
   components: {
     MultipleUpload,
-    ImageCropper
+    ImageCropper,
+    DropBox,
   }
 })
 export default class AdminUpload extends Vue {
@@ -62,6 +85,7 @@ export default class AdminUpload extends Vue {
   @Prop({ type: String, default: 'image/*' }) accept;
   @Prop({ type: Number, default: 3 }) size; // 单位M
   @Prop({ type: String }) uploadButtonText;
+  @Prop(Boolean) drag;
 
   FILE_INPUT_REF_NAME = 'fileInput';
 
@@ -146,6 +170,14 @@ export default class AdminUpload extends Vue {
       return;
     }
     this.handleUpload(file);
+  }
+
+  handleDropboxError(errMsg) {
+    this.$message.error(errMsg);
+  }
+
+  handleDropboxChange(files) {
+    this.handleUpload(files[0]);
   }
 }
 </script>
