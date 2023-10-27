@@ -1,12 +1,41 @@
 <template>
   <div class="c-upload-single">
-    <slot :disabled="disabled" :loading="!showCropper && loading" />
-    <input
-      :disabled="disabled"
-      type="file"
-      @change="handleFileChange"
-      :accept="accept"
-    />
+
+    <slot :disabled="disabled" :loading="!showCropper && loading">
+      <c-dropbox
+        v-if="drag"
+        :accept="accept"
+        :disabled="disabled"
+        :size="size"
+        :loading="loading"
+        :limit="1"
+        @error="handleDropboxError"
+        @change="handleDropboxChange"
+      />
+
+      <el-button
+        class="btn-upload"
+        v-else
+        type="primary"
+        :loading="loading"
+        :disabled="disabled"
+      >
+        {{ $t('上传') }}
+        <i class="el-icon-upload el-icon--right"></i>
+        
+        <input
+          :disabled="loading || disabled"
+          type="file"
+          @change="handleFileChange"
+          :accept="accept"
+          @dragenter.stop.prevent
+          @dragover.stop.prevent
+          @dragleave.stop.prevent
+          @drop.stop.prevent
+          @paste.stop.prevent
+        />
+      </el-button>
+    </slot>
 
     <el-dialog
       v-if="renderCropper"
@@ -38,6 +67,7 @@
     @Prop({ type: String, default: 'image/*' }) accept;
     @Prop({ type: Number, default: 3 }) size; // 单位M
     @Prop({ type: Object }) cropper;
+    @Prop(Boolean) drag;
 
     loading = false;
     renderCropper = true;
@@ -50,15 +80,9 @@
       this.$nextTick(() => this.renderCropper = true);
     }
 
-    async handleFileChange(e) {
-      const file = e.target.files[0];
-      // 相同文件change事件不会触发
-      e.target.value = '';
+    async handleFile(file) {
       this.fileName = file.name;
-      if (file.size > this.size * 1024 * 1024) {
-        this.$message.error(`文件最大 ${this.size}M`);
-        return;
-      }
+      
       if (file.type.startsWith('image') && this.cropper && this.cropper.width && this.cropper.height) {
 
         this.loading = true;
@@ -78,6 +102,25 @@
         }
       }
       this.handleUpload(file);
+    }
+
+    handleDropboxError(errMsg) {
+      this.$message.error(errMsg);
+    }
+
+    handleDropboxChange(files) {
+      this.handleFile(files[0]);
+    }
+
+    async handleFileChange(e) {
+      const file = e.target.files[0];
+      // 相同文件change事件不会触发
+      e.target.value = '';
+      if (file.size > this.size * 1024 * 1024) {
+        this.$message.error(`文件最大 ${this.size}M`);
+        return;
+      }
+      this.handleFile(file);
     }
 
     async getImageInfo(file) {
