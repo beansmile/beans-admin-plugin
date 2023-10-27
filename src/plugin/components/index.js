@@ -34,3 +34,4 @@ Vue.component('c-uncontrolled-input', require('./uncontrolled-input').default);
 Vue.component('c-source-form-v2', require('./source-form-v2/index').default);
 Vue.component('c-nest-form-v2', require('./source-form-v2/nest-form').default);
 Vue.component('c-source-form-dialog', require('./source-form-v2/form-dialog').default);
+Vue.component('c-dropbox', require('./dropbox').default);

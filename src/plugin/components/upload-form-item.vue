@@ -29,18 +29,7 @@
       :disabled="disabled || (isMultiple && filesResouces.length >= limit)"
       :cropper="cropper"
       @change="handleSubmit"
-    >
-      <template v-slot:default="slotProps">
-        <el-button
-          type="primary"
-          :loading="slotProps.loading"
-          :disabled="slotProps.disabled"
-        >
-          {{ $t('上传') }}
-          <i class="el-icon-upload el-icon--right"></i>
-        </el-button>
-      </template>
-    </c-upload-single>
+    />
 
     <el-button
       v-else

@@ -1,10 +1,21 @@
 <template>
   <div class="c-upload" v-loading="loading">
+
+    <c-dropbox
+      v-if="drag"
+      :accept="accept"
+      :disabled="disabledAddFile"
+      :size="size"
+      :limit="limit - table.data.length"
+      @error="handleDropboxError"
+      @change="handleDropboxChange"
+    />
+
     <el-row class="btn-group">
-      <el-button type="primary" class="btn-choose-file" :disabled="this.table.data.length >= limit">
+      <el-button v-if="!drag" type="primary" class="btn-choose-file" :disabled="disabledAddFile">
         {{ $t('选择文件') }}
         <!-- safari不触发input事件 -->
-        <input type="file" @change="handleFileChange" :accept="accept" :multiple="limit > 1" />
+        <input type="file" :disabled="disabledAddFile"  @change="handleFileChange" :accept="accept" :multiple="limit > 1" />
       </el-button>
       <el-button type="warning" @click="handleUploadAll" :disabled="!canUploadData.length">{{ $t('全部上传') }}</el-button>
       <el-button type="danger" @click="handleDeleteAll" :disabled="!table.data.length">{{ $t('全部移除') }}</el-button>
@@ -34,6 +45,7 @@ export default class Upload extends Vue {
   @Prop({ type: Number, default: 3 }) size; // 单位M
   @Prop({ type: String, default: '' }) tip;
   @Prop({ type: Boolean, default: true }) showCancelButton;
+  @Prop(Boolean) drag;
 
   loading = false;
 
@@ -76,6 +88,10 @@ export default class Upload extends Vue {
       }
     }
   ]
+
+  get disabledAddFile() {
+    return this.table.data.length >= this.limit;
+  }
 
   get alert_title() {
     return this.$t('上传提示', this) + (this.tip ? '，' + this.tip : '')
@@ -153,6 +169,14 @@ export default class Upload extends Vue {
 
   handleDeleteAll() {
     this.$set(this.table, 'data', []);
+  }
+
+  handleDropboxError(errMsg) {
+    this.$message.info(errMsg);
+  }
+
+  handleDropboxChange(files) {
+    this.table.data.push(...files.map(file => ({ file, src: '' })));
   }
 }
 
