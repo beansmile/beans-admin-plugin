@@ -42,7 +42,7 @@ export default function (config) {
 
   config.allowedContent = true
 
-  config.extraPlugins = 'tab,html5video,widget,widgetselection,clipboard,lineutils,lineheight,pastefromgdocs'
+  config.extraPlugins = 'tab,html5video,widget,widgetselection,clipboard,lineutils,lineheight,pastefromgdocs,font,colorbutton'
 
   config.tabSpaces = 4
 
