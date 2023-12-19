@@ -16,6 +16,7 @@ export default class SourcePage extends Vue {
   // importExcelOptions 参数包括：text: 按钮文本、tooltipText: 提示链接文本、handleFileChange: 上传操作、downloadLink: 提示链接操作
   @Prop({ type: Object, default: () => {} }) importExcelOptions;
   @Prop({ type: Array, default: () => [] }) batchActions; // 批处理
+  @Prop(Boolean) collapseFilter; // 折叠筛选栏
 
   exporting = false;
   importing = false;
@@ -213,7 +214,7 @@ export default class SourcePage extends Vue {
     return (
       <div class="source-page">
         <div class="source-page-header">
-          <c-source-filter filter={this.filter} ref="sourceFilter" />
+          <c-source-filter filter={this.filter} ref="sourceFilter" collapseFilter={this.collapseFilter} />
         </div>
         {
           this.renderButtons()

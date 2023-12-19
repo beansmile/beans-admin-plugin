@@ -1,18 +1,22 @@
 <template>
-  <el-form
-    inline
-    v-if="filterColumns.length"
-    @submit.native.prevent="onSubmit"
-  >
-    <c-source-form-item v-for="(item, index) in filterColumns" :column="item" v-model="formModel" :key="item.prop" :class="`item-${item.prop} item-${index}`" />
+  <component class="admin-source-filter" :is="collapseFilter ? 'el-collapse' : 'div'" :class="[collapseFilter ? 'collapse-filter' : '']">
+    <compoennt :is="collapseFilter ? 'el-collapse-item' : 'div'" :title="$t('筛选栏')">
+      <el-form
+        inline
+        v-if="filterColumns.length"
+        @submit.native.prevent="onSubmit"
+      >
+        <c-source-form-item v-for="(item, index) in filterColumns" :column="item" v-model="formModel" :key="item.prop" :class="`item-${item.prop} item-${index}`" />
 
-    <el-form-item>
-      <el-button type="primary" native-type="submit">{{ $t('查询') }}</el-button>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="default" @click="onClear">{{ $t('清除') }}</el-button>
-    </el-form-item>
-  </el-form>
+        <el-form-item>
+          <el-button type="primary" native-type="submit">{{ $t('查询') }}</el-button>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="default" @click="onClear">{{ $t('清除') }}</el-button>
+        </el-form-item>
+      </el-form>
+    </compoennt>
+  </component>
 </template>
 
 <script>
@@ -23,6 +27,7 @@ import flatten, { unflatten } from 'flat';
 @Component
 export default class SourceFilter extends Vue {
   @Prop({ type: Array, default: () => [] }) filter;
+  @Prop(Boolean) collapseFilter;
 
   formModel = {
     _search: {
