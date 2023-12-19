@@ -1,0 +1,20 @@
+.vadmin-nav-menu[data-mode='vertical'] {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  > .el-menu {
+    flex: 1;
+    border-right: none;
+    overflow: auto;
+
+    &:not(.el-menu--collapse) {
+      width: 230px;
+    }
+  }
+
+  .btn-collapse {
+    font-size: 24px;
+  }
+}

@@ -35,3 +35,5 @@ Vue.component('c-source-form-v2', require('./source-form-v2/index').default);
 Vue.component('c-nest-form-v2', require('./source-form-v2/nest-form').default);
 Vue.component('c-source-form-dialog', require('./source-form-v2/form-dialog').default);
 Vue.component('c-dropbox', require('./dropbox').default);
+
+Vue.component('c-nav-menu-v3', require('./nav-menu-v3.vue').default);
