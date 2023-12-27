@@ -1,6 +1,6 @@
 <template>
-  <component class="admin-source-filter" :is="collapseFilter ? 'el-collapse' : 'div'" :class="[collapseFilter ? 'collapse-filter' : '']">
-    <compoennt :is="collapseFilter ? 'el-collapse-item' : 'div'" :title="$t('筛选栏')">
+  <component class="admin-source-filter" :is="collapseFilter ? 'el-collapse' : 'div'" :class="[collapseFilter ? 'collapse-filter' : '']" v-model="collapse">
+    <compoennt v-bind="collapseFilter ? { is: 'el-collapse-item', title: $t('筛选栏'), name: 'collapse-item' } : { is: 'div' }">
       <el-form
         inline
         v-if="filterColumns.length"
@@ -28,11 +28,20 @@ import flatten, { unflatten } from 'flat';
 export default class SourceFilter extends Vue {
   @Prop({ type: Array, default: () => [] }) filter;
   @Prop(Boolean) collapseFilter;
+  @Prop({ type: Boolean, default: true }) collapseFilterDefaultExpand; // 是否默认展开
 
   formModel = {
     _search: {
       field: '',
       value: ''
+    }
+  }
+
+  collapse = [];
+
+  created() {
+    if (this.collapseFilterDefaultExpand) {
+      this.collapse = ['collapse-item'];
     }
   }
 

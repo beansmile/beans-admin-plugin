@@ -17,6 +17,7 @@ export default class SourcePage extends Vue {
   @Prop({ type: Object, default: () => {} }) importExcelOptions;
   @Prop({ type: Array, default: () => [] }) batchActions; // 批处理
   @Prop(Boolean) collapseFilter; // 折叠筛选栏
+  @Prop({ type: Boolean, default: true }) collapseFilterDefaultExpand; // 是否默认展开
 
   exporting = false;
   importing = false;
@@ -214,7 +215,7 @@ export default class SourcePage extends Vue {
     return (
       <div class="source-page">
         <div class="source-page-header">
-          <c-source-filter filter={this.filter} ref="sourceFilter" collapseFilter={this.collapseFilter} />
+          <c-source-filter filter={this.filter} ref="sourceFilter" collapseFilter={this.collapseFilter} collapseFilterDefaultExpand={this.collapseFilterDefaultExpand} />
         </div>
         {
           this.renderButtons()
