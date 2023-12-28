@@ -21,7 +21,6 @@ export default class SourcePage extends Vue {
 
   exporting = false;
   importing = false;
-  tableHeight = 0;
   selectedRows = [];
 
   async export() {
@@ -112,31 +111,6 @@ export default class SourcePage extends Vue {
     )
   }
 
-  async calcTableHeight(reRenderTable = false) {
-    await this.$nextTick();
-    const table = this.$refs.sourceTable;
-    if (table) {
-      this.tableHeight = table.$el.offsetHeight;
-      // resize后要重新render一次table，不然可能出现fixed在右边的操作栏显示位置不对
-      if (reRenderTable) {
-        const elTableCom = table.getTableComponent();
-        elTableCom.doLayout();
-      }
-    }
-  }
-
-  debouncedCalcTableHeightAndReRenderTable = _.debounce(() => {
-    this.calcTableHeight(true);
-  }, 800);
-
-  mounted() {
-    this.calcTableHeight();
-    window.addEventListener('resize', this.debouncedCalcTableHeightAndReRenderTable, false);
-  }
-
-  beforeDestroy() {
-    window.removeEventListener('resize', this.debouncedCalcTableHeightAndReRenderTable, false);
-  }
 
   get tableKey() {
     const key = _.get(this, '$route.name');
@@ -223,7 +197,7 @@ export default class SourcePage extends Vue {
         {
           <c-source-table
             ref="sourceTable"
-            table-height={this.tableHeight}
+            table-height={'100%'}
             resource={this.resource}
             table={this.tableProps}
             columns={this.tableRenderColumns}

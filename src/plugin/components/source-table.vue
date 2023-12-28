@@ -9,7 +9,7 @@ export default class SourceTable extends Vue {
   @Prop({ type: Object, default: () => ({ data: [] }) }) table;
   @Prop({ type: Array, default: () => [] }) columns;
   @Prop(String) resource;
-  @Prop(Number) tableHeight;
+  @Prop([Number, String]) tableHeight;
 
   get tableColumns() {
     return this.filterTableColumns(this.columns)
