@@ -66,24 +66,24 @@
       }
 
       return (
-        <el-menu-item
-          key={String(index)}
-          index={String(index)}
+        <router-link
+          active-class={ROUTE_ACTIVE_CLASS}
+          exact-active-class={ROUTE_EXACT_ACTIVE_CLASS}
+          to={item.route}
           data-index={String(index)}
-          route={item.route}
         >
-          <template slot="title">
-            <span>{item.title}</span>
-          </template>
-          {this.renderIcon(item.icon)}
-          <router-link
-            style="display: none;"
-            active-class={ROUTE_ACTIVE_CLASS}
-            exact-active-class={ROUTE_EXACT_ACTIVE_CLASS}
-            to={item.route}
+          <el-menu-item
+            key={String(index)}
+            index={String(index)}
             data-index={String(index)}
-          />
-        </el-menu-item>
+            route={item.route}
+          >
+            <template slot="title">
+              <span>{item.title}</span>
+            </template>
+            {this.renderIcon(item.icon)}
+          </el-menu-item>
+        </router-link>
       );
     }
 
