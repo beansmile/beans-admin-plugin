@@ -2,17 +2,23 @@
   import { Vue, Component, Prop, Model, Emit } from 'vue-property-decorator';
   import _ from 'lodash';
 
-  const ROUTE_ACTIVE_CLASS = 'route-active';
-  const ROUTE_EXACT_ACTIVE_CLASS = 'route-exact-active';
-
   @Component
   export default class BeanNavMenu extends Vue {
     @Model('change', { type: Boolean }) value;
     @Prop({ type: Array, default: () => [] }) menus;
     @Prop({ type: Boolean }) disableCollapse;
     @Prop({ type: String, default: 'vertical' }) mode;
+    @Prop({ type: String, default: 'nav-menu' }) id;
 
     defaultActive = '';
+
+    get ROUTE_ACTIVE_CLASS() {
+      return `${this.id}-route-active`;
+    }
+
+    get ROUTE_EXACT_ACTIVE_CLASS() {
+      return `${this.id}-route-exact-active`;
+    }
 
     mounted() {
       this.handleCalcActive();
@@ -29,8 +35,9 @@
     }
 
     handleCalcActive() {
-      const exactActiveIndex = _.get(this.$el.querySelector(`.${ROUTE_EXACT_ACTIVE_CLASS}`), 'dataset.index');
-      const index = _.get(this.$el.querySelector(`.${ROUTE_ACTIVE_CLASS}`), 'dataset.index');
+      // 折叠时二级菜单dom不在this.$el下面
+      const exactActiveIndex = _.get(document.querySelector(`.${this.ROUTE_EXACT_ACTIVE_CLASS}`), 'dataset.index');
+      const index = _.get(document.querySelector(`.${this.ROUTE_ACTIVE_CLASS}`), 'dataset.index');
       this.defaultActive = exactActiveIndex || index;
     }
 
@@ -67,8 +74,8 @@
 
       return (
         <router-link
-          active-class={ROUTE_ACTIVE_CLASS}
-          exact-active-class={ROUTE_EXACT_ACTIVE_CLASS}
+          active-class={this.ROUTE_ACTIVE_CLASS}
+          exact-active-class={this.ROUTE_EXACT_ACTIVE_CLASS}
           to={item.route}
           data-index={String(index)}
         >
