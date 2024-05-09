@@ -106,17 +106,19 @@ export default class AdminTable extends Vue {
         />
       ) : (column.label || '');
       return (
-        filterColumns ? (
-          <HeaderFilter
-            columns={column.filterColumns}
-            value={this.filterForm}
-            onChange={this.handleHeaderFilterChange}
-            onFilter={(e) => this.handleHeaderFilter(e)}
-            onReset={() => this.handleHeaderFilterReset(filterColumns)}
-          >
-            {renderLabel()}
-          </HeaderFilter>
-        ) : renderLabel()
+        <span>
+          {/* label 仅触发 sort, filter 由内部的箭头图标触发 */}
+          {renderLabel()}
+          {filterColumns ? (
+            <HeaderFilter
+              columns={column.filterColumns}
+              value={this.filterForm}
+              onChange={this.handleHeaderFilterChange}
+              onFilter={(e) => this.handleHeaderFilter(e)}
+              onReset={() => this.handleHeaderFilterReset(filterColumns)}
+            />
+          ) : null}
+        </span>
       );
     }
   }
