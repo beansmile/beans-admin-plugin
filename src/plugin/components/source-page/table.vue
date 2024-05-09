@@ -119,6 +119,8 @@ export default class AdminSourcePageTable extends Vue {
   @Prop({ type: Array, default: () => [] }) scopeColumns;
   @Prop(Boolean) showFilterColumnSetting;
   @Prop(String) filterColumnSettingKey;
+  /** Index 页面执行筛选时, 路由栈提交的方式: push 或 replace */
+  @Prop({ type: String, default: 'replace' }) indexExecFilterRouterType;
 
   filterForm = {};
   defaultSort = {};
@@ -160,6 +162,9 @@ export default class AdminSourcePageTable extends Vue {
   }
 
   async created() {
+    if (!['push', 'replace'].includes(this.indexExecFilterRouterType)) {
+      throw new TypeError('indexExecFilterRouterType 参数必须为 "push" 或 "replace"')
+    }
 
     // 重新渲染table
     this.reRenderTable = _.debounce(async () => {
@@ -254,12 +259,12 @@ export default class AdminSourcePageTable extends Vue {
   }
 
   execFilter(params) {
-    this.$router.replace({ query: { ...this.$route.query, ...this.trim(params), page: 1 }, hash: this.$route.hash });
+    this.$router[this.indexExecFilterRouterType]({ query: { ...this.$route.query, ...this.trim(params), page: 1 }, hash: this.$route.hash });
   }
 
   execResetFilter(resets = []) {
     const query = _.omit({ ...this.$route.query, page: 1 }, resets);
-    this.$router.replace({ query, hash: this.$route.hash });
+    this.$router[this.indexExecFilterRouterType]({ query, hash: this.$route.hash });
   }
 
   async handleFilter(params) {
