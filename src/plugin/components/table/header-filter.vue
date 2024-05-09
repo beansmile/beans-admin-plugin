@@ -1,8 +1,18 @@
 <template>
   <el-popover width="150px">
-    <div class="admin-table-header-filter-trigger" slot="reference" :class="{ isActive }">
+    <!--
+      sort 点击事件由 ele 控制, 我们无法控制, 只能通过阻止冒泡屏蔽其中一种触发方式, 避免与 filter 事件同时触发
+      源码: https://github.com/ElemeFE/element/blob/c345bb453bf11badb4831a6a3f600c9372b3a336/packages/table/src/table-header.js#L330
+      由源码得知事件分别加在两个地方, 1. 两个三角形的排序指示器; 2. 父级 th 标签上
+    -->
+    <div
+      class="admin-table-header-filter-trigger"
+      slot="reference"
+      :class="{ isActive }"
+      @click.stop
+    >
       <slot />
-      <i class="icon el-icon-arrow-down"></i>
+      <i class="icon el-icon-arrow-down" style="cursor: pointer;"></i>
     </div>
     <AdminFilter
       class="admin-table-header-filter"
