@@ -18,6 +18,7 @@
       :renderFilterDrawer="renderFilterDrawer"
       :showFilterColumnSetting="localShowFilterColumnSetting"
       :filterColumnSettingKey="filterColumnSettingKey"
+      :index-exec-filter-router-type="indexExecFilterRouterType"
       ref="tablePage"
     >
       <template
@@ -133,6 +134,7 @@ export default class AdminSourcePage extends Vue {
   @Prop(Object) showPageProps;
   @Prop({ type: Boolean, default: undefined }) showFilterColumnSetting;
   @Prop(String) filterColumnSettingKey;
+  @Prop({ type: String, default: 'replace' }) indexExecFilterRouterType;
 
   showFilterDrawer = false;
   formLoading = false;
