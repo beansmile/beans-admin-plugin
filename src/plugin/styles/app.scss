@@ -24,8 +24,3 @@ a {
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
-@keyframes alertEnvTipsAnimation {
-  from { transform: translateX(0); }
-  to   { transform: translateX(calc(100vw - 100%)); }
-}
