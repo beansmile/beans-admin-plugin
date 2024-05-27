@@ -160,6 +160,10 @@ export function install(Vue, config = {}) {
     {
       name: 'trim-input',
       component: require('./form/trim-input').default
+    },
+    {
+      name: 'watermark',
+      component: require('./watermark').default
     }
   ].forEach(item => {
     Vue.component(`bean-admin-${item.name}`, item.component);

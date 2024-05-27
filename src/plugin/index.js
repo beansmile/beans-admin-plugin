@@ -5,7 +5,7 @@ import installElement from './element';
 import { request, fly, autoLoading } from './utils';
 import MavonEditor from 'mavon-editor';
 import 'mavon-editor/dist/css/index.css';
-import alertEnvTips from './utils/alert-env-tips.js';
+import alertEnvTips from './utils/env-watermark.js';
 
 export default function install(Vue, options = {}) {
   installElement(Vue);
