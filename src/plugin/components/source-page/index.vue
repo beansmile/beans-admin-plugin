@@ -58,7 +58,7 @@
       </template>
     </TablePage>
     <slot name="show" v-else-if="type === 'show'" :value="state.data">
-      <ShowPage
+      <component :is="CustomShowPage ? CustomShowPage : ShowPage"
         :value="state.data"
         :columns="sourcePageColumns"
         :tabs="tabs"
@@ -96,7 +96,6 @@ import { screenService } from '../../services';
 @Component({
   components: {
     TablePage,
-    ShowPage,
     FormPage,
     AdminLink,
     ExportButton,
@@ -135,11 +134,22 @@ export default class AdminSourcePage extends Vue {
   @Prop({ type: Boolean, default: undefined }) showFilterColumnSetting;
   @Prop(String) filterColumnSettingKey;
   @Prop({ type: String, default: 'replace' }) indexExecFilterRouterType;
+  /** 传入组件 */
+  @Prop(Function) customShowPage;
 
   showFilterDrawer = false;
   formLoading = false;
   state = {}
   componentDataInited = false;
+  ShowPage = ShowPage
+
+  get CustomShowPage() {
+    if (!_.isFunction(this.customShowPage)) {
+      return undefined;
+    }
+
+    return this.customShowPage;
+  }
 
   get localShowFilterColumnSetting() {
     if (_.isUndefined(this.showFilterColumnSetting)) {
