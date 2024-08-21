@@ -317,6 +317,10 @@ export default class AdminSourcePage extends Vue {
       // 有时候会根据数据动态调整column，会导致加载前和加载后table等显示出问题
       // 比如数据没加载完时先渲染了空table，加载完多了一列，table header变高了，table没重新渲染，导致fixed的table列对不齐
       this.componentDataInited = true;
+      await this.$nextTick();
+      this.$emit('ready', {
+        el: this.$el
+      });
     }
   }
 
