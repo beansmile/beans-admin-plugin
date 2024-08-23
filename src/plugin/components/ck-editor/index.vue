@@ -57,6 +57,7 @@
     @Prop({ type: String, default: () => 'ck_' + randomString() }) instanceId
     @Prop(Object) config
     @Prop({ type: Function, default: new Function }) onLoad
+    @Prop({ type: Array }) contentCss;
 
     created() {
       const { editorConfig } = this.$vadminConfig.ckeditor
@@ -70,7 +71,8 @@
       const { contentsCss, fileUploadRequest = this.fileUploadRequest, fileUploadResponse = this.fileUploadResponse } = this.$vadminConfig.ckeditor
       const config = Object.assign({ customConfig: '' }, this.config)
       this.editor = CKEDITOR.replace(this.instanceId, config)
-      contentsCss.forEach(link => this.editor.addContentsCss(link))
+      const customContentCss = this.contentCss || contentsCss;
+      (customContentCss || []).forEach(link => this.editor.addContentsCss(link))
       this.editor.on('loaded', e => {
         this.onLoad(e)
 
