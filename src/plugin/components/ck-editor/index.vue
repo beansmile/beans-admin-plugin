@@ -8,9 +8,13 @@
   import { Component, Vue, Model, Prop } from 'vue-property-decorator'
   import { randomString, uploadFile, autoLoading } from '../../utils'
   import setConfig from './config'
-  import 'ckeditor/ckeditor'
 
-  require.context('!file-loader?context=node_modules&name=[path][name].[ext]!ckeditor', true, /\.(js|css|png|html)$/)
+  // 只有在没有设置 EXTERNAL_CKEDITOR 时才加载
+  if (!process.env.VUE_APP_EXTERNAL_CKEDITOR) {
+    require('ckeditor/ckeditor')
+    require.context('!file-loader?context=node_modules&name=[path][name].[ext]!ckeditor', true, /\.(js|css|png|html)$/)
+  }
+
   const CKEDITOR = window.CKEDITOR
   setConfig(CKEDITOR.config)
 
